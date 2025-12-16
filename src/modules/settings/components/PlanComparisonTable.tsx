@@ -76,13 +76,46 @@ export const PlanComparisonTable: React.FC = () => {
 
   return (
     <div className="w-full animate-fade-in">
-        <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-white mb-2">Comparar Planos</h2>
-            <p className="text-zinc-400 text-sm">Veja rapidamente o que cada plano libera em cada parte do sistema.</p>
+        <div className="text-center mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Comparar Planos</h2>
+            <p className="text-zinc-400 text-xs sm:text-sm px-4">Veja o que cada plano libera em cada parte do sistema.</p>
         </div>
 
-        <div className="overflow-x-auto pb-4 rounded-xl border border-zinc-800 bg-zinc-900/50">
-            <table className="w-full min-w-[800px] border-collapse text-sm">
+        {/* Mobile: Cards empilhados */}
+        <div className="block sm:hidden space-y-4 px-2">
+           {categories.map((cat) => (
+              <div key={cat.title} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+                 <h4 className="text-xs font-bold text-zinc-500 uppercase mb-3">{cat.title}</h4>
+                 {cat.rows.map((row, idx) => (
+                    <div key={idx} className="mb-4 last:mb-0">
+                       <p className="text-xs font-medium text-zinc-300 mb-2">{row.feature}</p>
+                       <div className="grid grid-cols-2 gap-2 text-[10px]">
+                          <div className="bg-zinc-950 p-2 rounded-lg text-center">
+                             <span className="block text-zinc-600 mb-1">Free</span>
+                             <span className="text-zinc-400">{row.free}</span>
+                          </div>
+                          <div className="bg-zinc-950 p-2 rounded-lg text-center">
+                             <span className="block text-zinc-500 mb-1">Start</span>
+                             <span className="text-zinc-300">{row.start}</span>
+                          </div>
+                          <div className="bg-amber-500/5 border border-amber-500/20 p-2 rounded-lg text-center">
+                             <span className="block text-amber-500 mb-1 font-bold">Pro</span>
+                             <span className="text-zinc-200">{row.pro}</span>
+                          </div>
+                          <div className="bg-purple-500/5 border border-purple-500/20 p-2 rounded-lg text-center">
+                             <span className="block text-purple-400 mb-1 font-bold">Elite</span>
+                             <span className="text-zinc-200">{row.elite}</span>
+                          </div>
+                       </div>
+                    </div>
+                 ))}
+              </div>
+           ))}
+        </div>
+
+        {/* Desktop: Tabela horizontal */}
+        <div className="hidden sm:block overflow-x-auto pb-4 rounded-xl border border-zinc-800 bg-zinc-900/50">
+            <table className="w-full min-w-[700px] border-collapse text-sm">
                 <thead>
                     <tr>
                         <th className="p-4 text-left text-zinc-500 font-bold uppercase text-xs w-1/3 bg-zinc-900 sticky left-0 z-10 border-b border-zinc-800">Módulo / Recurso</th>
@@ -116,9 +149,9 @@ export const PlanComparisonTable: React.FC = () => {
                 </tbody>
             </table>
         </div>
-        
-        <p className="text-center text-[10px] text-zinc-600 mt-4">
-           * Funcionalidades sujeitas a alteração conforme evolução do sistema. O plano Elite inclui custos de domínio por 1 ano.
+
+        <p className="text-center text-[10px] text-zinc-600 mt-4 px-4">
+           * Anual = 10x o valor mensal. O plano Elite inclui domínio por 1 ano.
         </p>
     </div>
   );

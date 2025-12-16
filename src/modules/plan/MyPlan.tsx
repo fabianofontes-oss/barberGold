@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
-import { Check, Crown, Users, Calendar, DollarSign, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Check, Crown, Users, Calendar, DollarSign, ShieldCheck, ArrowRight, Lock } from 'lucide-react';
 import { PLANS_BR } from '@/domain/plans/plans';
 import { FEATURE_LABELS, FEATURE_ORDER, PLAN_FEATURES } from '@/domain/plans/features';
 import type { BillingInterval, PlanId } from '@/domain/plans/types';
@@ -23,9 +23,9 @@ export const MyPlan = () => {
       return { label: `R$ ${plan.monthlyPriceBRL}`, sub: '/mês' };
     }
 
-    const monthlyEquivalent = (plan.annualPriceBRL / 12).toFixed(2).replace('.', ',');
+    const monthlyEquivalent = (plan.annualPriceBRL / 10).toFixed(0);
     const annualTotal = plan.annualPriceBRL.toFixed(0);
-    return { label: `12x R$ ${monthlyEquivalent}`, sub: `Total R$ ${annualTotal}/ano` };
+    return { label: `R$ ${annualTotal}`, sub: `10x de R$ ${monthlyEquivalent} (2 meses grátis)` };
   };
 
   return (
@@ -40,19 +40,22 @@ export const MyPlan = () => {
             </p>
          </div>
          
-         <div className="flex bg-zinc-900 p-1 rounded-xl border border-zinc-800">
-            <button 
-               onClick={() => setBillingInterval('MONTHLY')}
-               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${billingInterval === 'MONTHLY' ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
-            >
-               Mensal
-            </button>
-            <button 
-               onClick={() => setBillingInterval('ANNUAL')}
-               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${billingInterval === 'ANNUAL' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-zinc-300'}`}
-            >
-               Anual <span className="text-[10px] bg-emerald-500 text-white px-1.5 py-0.5 rounded">-17%</span>
-            </button>
+         <div className="flex flex-col items-end gap-2">
+            <div className="flex bg-zinc-900 p-1 rounded-xl border border-zinc-800">
+               <button 
+                  onClick={() => setBillingInterval('MONTHLY')}
+                  className={`px-4 py-2.5 rounded-lg text-xs font-bold transition-all ${billingInterval === 'MONTHLY' ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
+               >
+                  Mensal
+               </button>
+               <button 
+                  onClick={() => setBillingInterval('ANNUAL')}
+                  className={`px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${billingInterval === 'ANNUAL' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-zinc-300'}`}
+               >
+                  Anual <span className="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded-full font-bold">2 meses grátis</span>
+               </button>
+            </div>
+            <p className="text-[10px] text-zinc-500">Anual = 10x o valor mensal (economia de 2 meses)</p>
          </div>
       </div>
 
@@ -72,7 +75,7 @@ export const MyPlan = () => {
          </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
          {plans.map((plan) => {
             const isCurrent = plan.id === currentPlan;
             const isHighlight = plan.id === 'EQUIPE';
@@ -103,13 +106,20 @@ export const MyPlan = () => {
                      {price.sub && <span className="text-zinc-500 text-xs block mt-1">{price.sub}</span>}
                   </div>
                   
-                  <ul className="space-y-3 mb-6">
-                     {FEATURE_ORDER.filter((k) => featureKeys.includes(k)).map((k) => (
-                        <li key={k} className="flex items-center gap-2 text-sm text-zinc-300">
-                           <Check className={`w-4 h-4 ${isHighlight ? 'text-amber-500' : 'text-emerald-500'}`} />
-                           {FEATURE_LABELS[k]}
-                        </li>
-                     ))}
+                  <ul className="space-y-2 mb-6">
+                     {FEATURE_ORDER.map((k) => {
+                        const hasFeature = featureKeys.includes(k);
+                        return (
+                           <li key={k} className={`flex items-center gap-2 text-sm ${hasFeature ? 'text-zinc-300' : 'text-zinc-600 line-through'}`}>
+                              {hasFeature ? (
+                                 <Check className={`w-4 h-4 flex-shrink-0 ${isHighlight ? 'text-amber-500' : 'text-emerald-500'}`} />
+                              ) : (
+                                 <Lock className="w-4 h-4 flex-shrink-0 text-zinc-700" />
+                              )}
+                              <span className="text-xs">{FEATURE_LABELS[k]}</span>
+                           </li>
+                        );
+                     })}
                   </ul>
                   
                   <button 
@@ -133,7 +143,7 @@ export const MyPlan = () => {
          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <Users className="w-5 h-5 text-amber-500" /> Uso do Plano
          </h3>
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
                <span className="text-xs text-zinc-500 block mb-1">Profissionais</span>
                <div className="flex items-end gap-2">

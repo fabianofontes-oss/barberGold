@@ -58,15 +58,13 @@ export const ReferralDashboard: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-in pb-20 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-end gap-4">
-         <div>
-            <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-               <Trophy className="w-8 h-8 text-emerald-500" /> Programa de Indicações
-            </h1>
-            <p className="text-zinc-400 text-sm max-w-2xl">
-               Transforme sua rede de contatos em uma nova fonte de receita para sua barbearia.
-            </p>
-         </div>
+      <div className="flex flex-col gap-2">
+         <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-2 sm:gap-3">
+            <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-500 flex-shrink-0" /> Programa de Indicações
+         </h1>
+         <p className="text-zinc-400 text-xs sm:text-sm">
+            Transforme sua rede de contatos em receita extra.
+         </p>
       </div>
 
       {/* --- HERO BANNER: THE "ADVERTISEMENT" (OWNER) --- */}
@@ -79,7 +77,7 @@ export const ReferralDashboard: React.FC = () => {
             <Banknote className="w-64 h-64 text-emerald-400" />
          </div>
 
-         <div className="relative z-10 flex flex-col lg:flex-row items-center p-8 md:p-12 gap-10">
+         <div className="relative z-10 flex flex-col lg:flex-row items-center p-5 sm:p-8 md:p-12 gap-6 sm:gap-10">
             
             {/* Left: Copywriting (The Pitch) */}
             <div className="flex-1 space-y-6 text-center lg:text-left">
@@ -88,64 +86,68 @@ export const ReferralDashboard: React.FC = () => {
                   <span className="text-xs font-bold text-emerald-300 uppercase tracking-widest">Comissão Exclusiva de Dono</span>
                </div>
                
-               <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
-                  Sua nova fonte de <br/>
+               <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
+                  Sua nova fonte de <br className="hidden sm:block"/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">Faturamento Extra.</span>
                </h2>
                
-               <p className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  Indique outras barbearias e receba comissão sobre o <strong className="text-white">primeiro pagamento</strong> do plano anual. Sem dividir com ninguém nas suas indicações diretas.
+               <p className="text-zinc-400 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                  Indique barbearias e receba comissão sobre o <strong className="text-white">1º pagamento anual</strong>. Suas indicações diretas = 100% pra você.
                </p>
 
-               <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                  <div className="flex items-center gap-2 text-sm text-zinc-300">
-                     <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500"><Check className="w-3 h-3" /></div>
-                     Pagamento em Dinheiro
+               <div className="flex flex-wrap justify-center lg:justify-start gap-3">
+                  <div className="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-300">
+                     <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500"><Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" /></div>
+                     Pagamento em dinheiro
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-zinc-300">
-                     <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500"><Check className="w-3 h-3" /></div>
-                     Sem limites de indicação
+                  <div className="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-300">
+                     <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500"><Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" /></div>
+                     Sem limites
+                  </div>
+                  <div className="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-300">
+                     <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500"><Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" /></div>
+                     D+60 segurança
                   </div>
                </div>
             </div>
 
             {/* Right: The Golden Ticket (The Link) */}
             <div className="w-full lg:max-w-md">
-               <div className="bg-zinc-950/60 backdrop-blur-xl border border-zinc-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden transform transition-transform hover:scale-[1.02]">
+               <div className="bg-zinc-950/60 backdrop-blur-xl border border-zinc-800 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
                   {/* Glow behind card */}
                   <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none"></div>
                   
-                  <label className="block text-xs font-bold text-zinc-500 uppercase mb-3 text-center tracking-widest">
-                     Seu Link de Parceiro
+                  <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase mb-2 sm:mb-3 text-center tracking-widest">
+                     Seu Link Exclusivo (Owner)
                   </label>
                   
-                  <div className="bg-black/50 border border-zinc-700/50 rounded-xl p-4 mb-4 flex items-center justify-center relative group-hover:border-emerald-500/30 transition-colors">
-                     <p className="text-emerald-400 font-mono font-bold text-lg truncate tracking-tight">
+                  <div className="bg-black/50 border border-zinc-700/50 rounded-xl p-3 sm:p-4 mb-3 sm:mb-4 flex items-center justify-center relative">
+                     <p className="text-emerald-400 font-mono font-bold text-sm sm:text-lg truncate tracking-tight">
                         barberflow.app/r/<span className="text-white">{ownerCode}</span>
                      </p>
                   </div>
 
                   <button
                      onClick={handleCopy}
-                     className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all flex items-center justify-center gap-2 group active:scale-95 mb-4"
+                     className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold py-3 sm:py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2 active:scale-95 mb-3 sm:mb-4 text-sm sm:text-base"
                   >
                      {copied ? (
-                        <>Copiado com Sucesso! <Check className="w-5 h-5" /></>
+                        <>Copiado! <Check className="w-4 h-4 sm:w-5 sm:h-5" /></>
                      ) : (
-                        <>Copiar Link & Divulgar <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>
+                        <>Copiar link <Copy className="w-4 h-4 sm:w-5 sm:h-5" /></>
                      )}
                   </button>
                   
-                  <p className="text-[10px] text-zinc-500 text-center leading-tight px-2">
-                     * A comissão é calculada sobre o primeiro pagamento de planos anuais indicados pelo seu link e é liberada em segurança em até 60 dias após a confirmação, para evitar problemas com cancelamentos e estornos.
+                  <p className="text-[9px] sm:text-[10px] text-zinc-500 text-center leading-tight">
+                     Comissão sobre 1º pagamento anual. Liberada em D+60 (segurança contra estornos).
                   </p>
                </div>
             </div>
          </div>
       </div>
 
-      {/* --- STAFF PROGRAM SECTION (MOVED UP) --- */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* --- STAFF PROGRAM SECTION --- */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
          <div className="lg:col-span-2">
             {!config.allowStaffToParticipate ? (
                // --- INACTIVE STATE (ALERT CARD) ---
@@ -267,59 +269,94 @@ export const ReferralDashboard: React.FC = () => {
          </div>
       </div>
 
-      {/* --- RULES CARD (MOVED TO BOTTOM) --- */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-         <h3 className="text-white font-bold mb-4 flex items-center gap-2 text-lg">
-            <Info className="w-5 h-5 text-zinc-400" /> Regras gerais do programa
-         </h3>
-         <ul className="space-y-3 text-sm text-zinc-400 list-disc list-outside pl-5 leading-relaxed">
-            <li>Gera comissão apenas para novas barbearias que fecharem <strong className="text-zinc-300">PLANO ANUAL</strong> usando o link.</li>
-            <li>A comissão é calculada sobre o primeiro pagamento do plano anual (não é recorrente).</li>
-            <li>O pagamento da comissão é liberado em até 60 dias após a confirmação do pagamento, para cobrir prazo de cancelamento e eventuais estornos.</li>
-            <li>Se o pagamento da barbearia for estornado ou cancelado dentro desse período, a comissão é cancelada ou ajustada em repasses futuros.</li>
-            <li className="text-red-400/80">É proibida auto-indicação (usar o próprio link para comprar desconto para si mesmo).</li>
+      {/* --- RULES CARD (collapsible on mobile) --- */}
+      <details className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden group">
+         <summary className="p-4 sm:p-6 cursor-pointer flex items-center justify-between">
+            <span className="text-white font-bold flex items-center gap-2 text-sm sm:text-lg">
+               <Info className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400" /> Ver regras do programa
+            </span>
+            <span className="text-zinc-500 text-xs group-open:rotate-180 transition-transform">▼</span>
+         </summary>
+         <ul className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-2 text-xs sm:text-sm text-zinc-400 list-disc list-outside pl-5 leading-relaxed">
+            <li>Comissão apenas em <strong className="text-zinc-300">plano anual</strong>, no <strong className="text-zinc-300">1º pagamento</strong>.</li>
+            <li>Liberada em <strong className="text-zinc-300">D+60</strong> (prazo de segurança contra estornos).</li>
+            <li>Se houver estorno/cancelamento, a comissão é ajustada.</li>
+            <li className="text-red-400/80">Proibida auto-indicação.</li>
          </ul>
-      </div>
+      </details>
 
       {/* LISTA DE COMISSÕES (OWNER) */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-         <h3 className="text-white font-bold mb-4 flex items-center gap-2 text-lg">
-            <TrendingUp className="w-5 h-5 text-emerald-500" /> Suas comissões (Owner)
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
+         <h3 className="text-white font-bold mb-4 flex items-center gap-2 text-sm sm:text-lg">
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" /> Suas comissões
          </h3>
          {ownerSales.length === 0 ? (
-            <p className="text-sm text-zinc-500">Nenhuma comissão registrada ainda.</p>
+            <div className="text-center py-8">
+               <p className="text-zinc-500 text-sm mb-2">Nenhuma comissão ainda</p>
+               <p className="text-zinc-600 text-xs">Compartilhe seu link e comece a ganhar!</p>
+            </div>
          ) : (
-            <div className="overflow-x-auto">
-               <table className="w-full text-sm">
-                  <thead>
-                     <tr className="text-zinc-500 border-b border-zinc-800">
-                        <th className="py-2 text-left">Código</th>
-                        <th className="py-2 text-left">Status</th>
-                        <th className="py-2 text-left">Libera em</th>
-                        <th className="py-2 text-right">Valor</th>
-                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-zinc-800/50">
-                     {ownerSales.map((s) => (
-                        <tr key={s.id} className="text-zinc-300">
-                           <td className="py-2 font-mono text-xs">{s.referralCode}</td>
-                           <td className="py-2">
-                              <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${
-                                 s.status === 'AVAILABLE' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                 s.status === 'PENDING' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                                 'bg-red-500/10 text-red-400 border-red-500/20'
-                              }`}>{s.status}</span>
-                           </td>
-                           <td className="py-2 text-xs text-zinc-400">
-                              {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : '—'}
-                           </td>
-                           <td className="py-2 text-right font-bold text-emerald-400">
+            <div className="space-y-3">
+               {/* Mobile: Cards */}
+               <div className="block sm:hidden space-y-2">
+                  {ownerSales.map((s) => (
+                     <div key={s.id} className="bg-zinc-950 border border-zinc-800 rounded-xl p-3">
+                        <div className="flex items-center justify-between mb-2">
+                           <span className="font-mono text-[10px] text-zinc-400">{s.referralCode}</span>
+                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                              s.status === 'AVAILABLE' ? 'bg-emerald-500/10 text-emerald-400' :
+                              s.status === 'PENDING' ? 'bg-amber-500/10 text-amber-400' :
+                              'bg-red-500/10 text-red-400'
+                           }`}>
+                              {s.status === 'PENDING' ? 'Aguardando' : s.status === 'AVAILABLE' ? 'Disponível' : s.status}
+                           </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                           <span className="text-[10px] text-zinc-500">
+                              {s.status === 'PENDING' && s.availableAt ? `Libera ${new Date(s.availableAt).toLocaleDateString('pt-BR')}` : ''}
+                           </span>
+                           <span className="font-bold text-emerald-400 text-sm">
                               R$ {(s.ownerCommissionAmountBRL ?? s.commissionAmountBRL).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                           </td>
+                           </span>
+                        </div>
+                     </div>
+                  ))}
+               </div>
+               {/* Desktop: Table */}
+               <div className="hidden sm:block overflow-x-auto">
+                  <table className="w-full text-sm">
+                     <thead>
+                        <tr className="text-zinc-500 border-b border-zinc-800 text-xs">
+                           <th className="py-2 text-left">Código</th>
+                           <th className="py-2 text-left">Status</th>
+                           <th className="py-2 text-left">Liberação</th>
+                           <th className="py-2 text-right">Valor</th>
                         </tr>
-                     ))}
-                  </tbody>
-               </table>
+                     </thead>
+                     <tbody className="divide-y divide-zinc-800/50">
+                        {ownerSales.map((s) => (
+                           <tr key={s.id} className="text-zinc-300">
+                              <td className="py-2 font-mono text-xs">{s.referralCode}</td>
+                              <td className="py-2">
+                                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
+                                    s.status === 'AVAILABLE' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                                    s.status === 'PENDING' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                                    'bg-red-500/10 text-red-400 border-red-500/20'
+                                 }`}>
+                                    {s.status === 'PENDING' ? 'Aguardando D+60' : s.status === 'AVAILABLE' ? 'Disponível' : s.status}
+                                 </span>
+                              </td>
+                              <td className="py-2 text-xs text-zinc-400">
+                                 {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : '—'}
+                              </td>
+                              <td className="py-2 text-right font-bold text-emerald-400">
+                                 R$ {(s.ownerCommissionAmountBRL ?? s.commissionAmountBRL).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                              </td>
+                           </tr>
+                        ))}
+                     </tbody>
+                  </table>
+               </div>
             </div>
          )}
       </div>
