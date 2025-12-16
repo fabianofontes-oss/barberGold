@@ -1,16 +1,17 @@
 'use client';
 
-
 import React from 'react';
 import { Check, ArrowRight, Crown, Star } from 'lucide-react';
-import { SaasPlan, SaasPlanId } from '@/types';
-import { SAAS_PLANS_BR } from '@/constants';
+import { getPlanDefinition } from '@/domain/plans/plans';
+import { PLAN_FEATURES, FEATURE_LABELS } from '@/domain/plans/features';
+import type { PlanId } from '@/domain/plans/types';
 
 interface PlanSummaryCardProps {
-  currentPlanId: SaasPlanId;
+  currentPlanId: PlanId;
 }
 
-const planHighlights: Record<SaasPlanId, string[]> = {
+// Highlights de marketing por plano (resumo visual)
+const planHighlights: Record<PlanId, string[]> = {
   FREE: [
     'Agenda básica',
     'Cadastro de clientes',
@@ -20,53 +21,39 @@ const planHighlights: Record<SaasPlanId, string[]> = {
     '1 barbeiro',
     'Agenda + Fila Inteligente',
     'PDV e catálogo de serviços',
-    'Agendamento por link',
-    'Site básico da barbearia',
   ],
   SOLO_PRO: [
     '1 barbeiro com modo empresa',
     'Tudo do Solo',
-    'Fidelidade e pontos',
-    'Mensagens de aniversário e win-back',
-    'Financeiro avançado (DRE básico)',
+    'Agendamento Online',
   ],
   EQUIPE: [
     'Até 3 barbeiros',
     'Tudo do Solo PRO',
-    'Gestão de comissões e payout',
-    'Fechamento de caixa cego',
-    'Relatórios por barbeiro',
+    'Fidelidade, Comissões, Caixa Cego',
   ],
   STUDIO: [
-    'Até 6 barbeiros e até 2 unidades',
+    'Até 6 barbeiros e 2 unidades',
     'Tudo do Equipe',
     'Website Premium + domínio próprio',
-    'Relatórios avançados por unidade',
-    'Suporte prioritário',
   ],
   ENTERPRISE: [
     'Barbeiros ilimitados',
     'Múltiplas unidades',
-    'API Aberta',
-    'Gerente de contas dedicado'
+    'Gerente de contas dedicado',
   ],
 };
 
-const planOrder: SaasPlanId[] = ['FREE', 'SOLO', 'SOLO_PRO', 'EQUIPE', 'STUDIO', 'ENTERPRISE'];
+const planOrder: PlanId[] = ['FREE', 'SOLO', 'SOLO_PRO', 'EQUIPE', 'STUDIO', 'ENTERPRISE'];
 
 export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId }) => {
-  const plansById = Object.fromEntries(
-    SAAS_PLANS_BR.map(p => [p.id, p] as const)
-  ) as Record<SaasPlanId, SaasPlan>;
-
-  const currentPlan = plansById[currentPlanId];
+  const currentPlan = getPlanDefinition(currentPlanId);
   const currentIndex = planOrder.indexOf(currentPlanId);
   const nextPlanId = currentIndex >= 0 && currentIndex < planOrder.length - 1
     ? planOrder[currentIndex + 1]
     : undefined;
   
-  // If next plan is Enterprise, we handle it slightly differently visually or just show it
-  const nextPlan = nextPlanId ? plansById[nextPlanId] : undefined;
+  const nextPlan = nextPlanId ? getPlanDefinition(nextPlanId) : undefined;
 
   if (!currentPlan) return null;
 
@@ -84,7 +71,7 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
             Plano {currentPlan.name}
           </h2>
           <p className="text-xs text-zinc-400 mt-1 max-w-sm">
-            {currentPlan.description || 'O plano ideal para o momento do seu negócio.'}
+            O plano ideal para o momento do seu negócio.
           </p>
         </div>
         <div className="text-right bg-zinc-950/50 p-3 rounded-xl border border-zinc-800/50">
@@ -103,7 +90,7 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
             Seus recursos liberados:
           </p>
           <ul className="space-y-2">
-            {(planHighlights[currentPlan.id] || []).map(item => (
+            {(planHighlights[currentPlanId] || []).map((item: string) => (
               <li key={item} className="flex items-start gap-2 text-xs text-zinc-300">
                 <div className="mt-0.5 min-w-[16px]">
                    <Check className="w-3.5 h-3.5 text-emerald-500" />
@@ -136,13 +123,13 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
                </p>
                
                <ul className="space-y-1.5 mb-4">
-                 {(planHighlights[nextPlan.id] || []).slice(0, 3).map(item => (
+                 {(nextPlanId ? planHighlights[nextPlanId] || [] : []).slice(0, 3).map((item: string) => (
                    <li key={item} className="flex items-start gap-2 text-xs text-zinc-200">
                      <span className="mt-[3px] h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0" />
                      <span>{item}</span>
                    </li>
                  ))}
-                 {(planHighlights[nextPlan.id] || []).length > 3 && (
+                 {(nextPlanId ? planHighlights[nextPlanId] || [] : []).length > 3 && (
                     <li className="text-[10px] text-zinc-500 pl-3.5">+ e muito mais</li>
                  )}
                </ul>
