@@ -68,7 +68,7 @@ export const MyReferralsPanel: React.FC = () => {
               Meus Resultados
             </h2>
             <p className="text-zinc-400 mt-1 max-w-sm">
-              Indique barbearias e ganhe comissão recorrente.
+              Indique barbearias e ganhe comissão no primeiro pagamento anual (liberação D+60).
             </p>
           </div>
           
@@ -129,6 +129,37 @@ export const MyReferralsPanel: React.FC = () => {
                 </li>
               ))}
             </ul>
+          )}
+        </div>
+
+        {/* Comissões */}
+        <div className="bg-zinc-950 rounded-xl border border-zinc-800 p-4 relative z-10">
+          <p className="text-[10px] text-zinc-500 font-bold uppercase mb-3">Comissões</p>
+          {mySales.length === 0 ? (
+            <p className="text-xs text-zinc-500">Nenhuma comissão registrada ainda.</p>
+          ) : (
+            <div className="space-y-2">
+              {mySales.slice(0, 5).map((s) => (
+                <div key={s.id} className="flex items-center justify-between gap-3 text-xs">
+                  <div className="min-w-0">
+                    <p className="font-mono text-[10px] text-zinc-400 truncate">{s.referralCode}</p>
+                    <p className="text-[10px] text-zinc-600">
+                      Libera em: {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : '—'}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
+                      s.status === 'AVAILABLE' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                      s.status === 'PENDING' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                      'bg-red-500/10 text-red-400 border-red-500/20'
+                    }`}>{s.status}</span>
+                    <span className="font-bold text-emerald-400">
+                      R$ {(s.staffCommissionAmountBRL || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </div>

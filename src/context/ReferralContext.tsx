@@ -1,8 +1,13 @@
 'use client';
 
-import React, { createContext, useContext, useState, PropsWithChildren } from 'react';
-import { ReferralPartner, ReferralLink, ReferralSale, ReferralSettings, SaasPlan, BillingPeriod, SaasPlanId } from '@/types';
-import { MOCK_REFERRAL_PARTNERS, MOCK_REFERRAL_LINKS, MOCK_REFERRAL_SALES } from '@/constants';
+import React, { createContext, useContext, useMemo, useState, PropsWithChildren } from 'react';
+import { ReferralPartner, ReferralLink, ReferralSale, BillingPeriod } from '@/types';
+import { MOCK_REFERRAL_PARTNERS, MOCK_REFERRAL_SALES } from '@/constants';
+import { useBarber } from '@/context/BarberContext';
+import { useSaasV2 } from '@/context/SaasV2Context';
+import { getAppMode } from '@/lib/appMode';
+import { buildStaffReferralCode, normalizeReferralCode } from '@/domain/referrals/link';
+import { DEFAULT_REFERRAL_PROGRAM_CONFIG, computeReferralSale } from '@/domain/referrals/rules';
 
 interface ReferralContextType {
   partners: ReferralPartner[];
@@ -12,135 +17,207 @@ interface ReferralContextType {
   // Actions
   generateReferralLink: (partnerId: string) => string;
   togglePartnerActive: (partnerId: string) => void;
-  processReferralSale: (
-    referralCode: string, 
-    referredTenantId: string, 
-    plan: SaasPlan, 
-    billingPeriod: BillingPeriod
-  ) => ReferralSale | null;
+  processReferralSale: (params: {
+    referralCode: string;
+    referredTenantId: string;
+    planId: string;
+    billingPeriod: BillingPeriod;
+    annualValueBRL: number;
+    isFirstAnnualPayment: boolean;
+    isNewCustomer: boolean;
+    paidAt: Date;
+    cancelledAt?: Date;
+    chargebackAt?: Date;
+    referrerCpfCnpj?: string;
+    referredCpfCnpj?: string;
+  }) => ReferralSale | null;
 }
 
 const ReferralContext = createContext<ReferralContextType | undefined>(undefined);
 
 export const ReferralProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const [partners, setPartners] = useState<ReferralPartner[]>(MOCK_REFERRAL_PARTNERS);
-  const [links, setLinks] = useState<ReferralLink[]>(MOCK_REFERRAL_LINKS);
+  const { shopSettings, currentUser, staff, shopProfile } = useBarber();
+  const { currentTenantId } = useSaasV2();
+
+  const tenantKey = currentTenantId || shopProfile.slug || 'standalone';
+
+  const [partnersState, setPartnersState] = useState<ReferralPartner[]>(MOCK_REFERRAL_PARTNERS);
   const [sales, setSales] = useState<ReferralSale[]>(MOCK_REFERRAL_SALES);
+
+  const referralConfig = shopSettings.referralConfig;
+  const ownerCode = normalizeReferralCode(referralConfig?.ownerReferralCode || 'CODE');
+  const staffEnabled = Boolean(referralConfig?.allowStaffToParticipate);
+
+  const config = useMemo(() => {
+    return {
+      ...DEFAULT_REFERRAL_PROGRAM_CONFIG,
+      staffEnabled,
+      programCommissionPercent: referralConfig?.programCommissionPercent ?? DEFAULT_REFERRAL_PROGRAM_CONFIG.programCommissionPercent,
+      appMode: getAppMode(),
+    };
+  }, [referralConfig?.allowStaffToParticipate, referralConfig?.programCommissionPercent, staffEnabled]);
+
+  const derivedOwnerPartner: ReferralPartner | null = useMemo(() => {
+    if (!currentUser || currentUser.role !== 'OWNER') return null;
+    return {
+      id: `refp_owner_${tenantKey}`,
+      tenantId: tenantKey,
+      displayName: `${currentUser.name} (Owner)`,
+      partnerType: 'OWNER',
+      baseCommissionPercent: config.programCommissionPercent,
+      eligibleForBonus: false,
+      isActive: true,
+      ownerSharePercent: 100,
+      staffSharePercent: 0,
+    };
+  }, [config.programCommissionPercent, currentUser, tenantKey]);
+
+  const derivedStaffPartners: ReferralPartner[] = useMemo(() => {
+    return (staff || [])
+      .filter((s) => s.role !== 'SUPER_ADMIN' && s.role !== 'OWNER')
+      .map((s) => ({
+        id: `refp_staff_${tenantKey}_${s.id}`,
+        tenantId: tenantKey,
+        staffId: s.id,
+        displayName: s.name,
+        partnerType: 'STAFF',
+        baseCommissionPercent: config.programCommissionPercent,
+        eligibleForBonus: false,
+        isActive: staffEnabled,
+        ownerSharePercent: 30,
+        staffSharePercent: 70,
+      }));
+  }, [config.programCommissionPercent, staff, staffEnabled, tenantKey]);
+
+  const partners: ReferralPartner[] = useMemo(() => {
+    const fixed = partnersState.filter((p) => p.partnerType === 'PARTNER_GENERAL' || p.partnerType === 'PARTNER_PRO');
+    const owner = derivedOwnerPartner ? [derivedOwnerPartner] : [];
+    return [...owner, ...derivedStaffPartners, ...fixed];
+  }, [derivedOwnerPartner, derivedStaffPartners, partnersState]);
+
+  const links: ReferralLink[] = useMemo(() => {
+    const list: ReferralLink[] = [];
+
+    if (derivedOwnerPartner) {
+      list.push({
+        id: `refl_owner_${derivedOwnerPartner.id}`,
+        code: ownerCode,
+        partnerId: derivedOwnerPartner.id,
+        region: 'BR',
+        createdAt: new Date(),
+        isActive: true,
+      });
+    }
+
+    derivedStaffPartners.forEach((p) => {
+      const staffId = p.staffId || 'STAFF';
+      list.push({
+        id: `refl_staff_${p.id}`,
+        code: buildStaffReferralCode(ownerCode, staffId),
+        partnerId: p.id,
+        region: 'BR',
+        createdAt: new Date(),
+        isActive: staffEnabled,
+      });
+    });
+
+    // Parceiros externos (mock)
+    partnersState
+      .filter((p) => p.partnerType === 'PARTNER_GENERAL' || p.partnerType === 'PARTNER_PRO')
+      .forEach((p) => {
+        list.push({
+          id: `refl_partner_${p.id}`,
+          code: normalizeReferralCode(p.displayName.substring(0, 5)) + '01',
+          partnerId: p.id,
+          region: 'BR',
+          createdAt: new Date(),
+          isActive: p.isActive,
+        });
+      });
+
+    return list;
+  }, [derivedOwnerPartner, derivedStaffPartners, ownerCode, partnersState, staffEnabled]);
 
   const generateReferralLink = (partnerId: string) => {
     const partner = partners.find(p => p.id === partnerId);
     if (!partner) throw new Error('Partner not found');
 
-    const prefix = partner.displayName.substring(0, 3).toUpperCase();
-    const unique = Math.floor(Math.random() * 9999).toString();
+    // OWNER: sempre o link principal
+    if (partner.partnerType === 'OWNER') {
+      return ownerCode;
+    }
+
+    // STAFF: link exclusivo baseado no owner
+    if (partner.partnerType === 'STAFF') {
+      return buildStaffReferralCode(ownerCode, partner.staffId || 'STAFF');
+    }
+
+    // Parceiros: gera código novo (mock)
+    const prefix = normalizeReferralCode(partner.displayName.substring(0, 3) || 'PAR');
+    const unique = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
     const newCode = `${prefix}${unique}`;
 
-    const newLink: ReferralLink = {
-      id: Math.random().toString(36).substr(2, 9),
-      code: newCode,
-      partnerId,
-      region: 'BR', // Defaulting for now
-      createdAt: new Date(),
-      isActive: true
-    };
-
-    setLinks(prev => [...prev, newLink]);
     return newCode;
   };
 
   const togglePartnerActive = (partnerId: string) => {
-    setPartners(prev => prev.map(p => p.id === partnerId ? { ...p, isActive: !p.isActive } : p));
+    setPartnersState(prev => prev.map(p => p.id === partnerId ? { ...p, isActive: !p.isActive } : p));
   };
 
-  const processReferralSale = (
-    referralCode: string, 
-    referredTenantId: string, 
-    plan: SaasPlan, 
-    billingPeriod: BillingPeriod
-  ): ReferralSale | null => {
-    
-    // Find the link
-    const link = links.find(l => l.code === referralCode && l.isActive);
+  const processReferralSale: ReferralContextType['processReferralSale'] = (params) => {
+    const normalizedCode = normalizeReferralCode(params.referralCode);
+
+    const link = links.find((l) => normalizeReferralCode(l.code) === normalizedCode && l.isActive);
     if (!link) return null;
 
-    // Find the partner
-    const partner = partners.find(p => p.id === link.partnerId && p.isActive);
+    const partner = partners.find((p) => p.id === link.partnerId && p.isActive);
     if (!partner) return null;
 
-    // Somente planos ANUAIS geram comissão no modelo atual
-    if (billingPeriod !== 'ANNUAL') {
-      console.warn('Monthly billing does not generate referral commission in this program version');
+    const computed = computeReferralSale(
+      config,
+      {
+        referralCode: normalizedCode,
+        partnerType: partner.partnerType,
+        annualValueBRL: params.annualValueBRL,
+        isAnnual: params.billingPeriod === 'ANNUAL',
+        isFirstAnnualPayment: params.isFirstAnnualPayment,
+        isNewCustomer: params.isNewCustomer,
+        paidAt: params.paidAt,
+        referrerCpfCnpj: params.referrerCpfCnpj,
+        referredCpfCnpj: params.referredCpfCnpj,
+      },
+      new Date()
+    );
+
+    if (computed.shouldBlock) {
       return null;
-    }
-
-    const saleValueBRL = plan.yearlyPriceBRL;
-    const commissionPercent = partner.baseCommissionPercent;
-    const commissionBaseBRL = saleValueBRL;
-    const commissionAmountBRL = (commissionBaseBRL * commissionPercent) / 100;
-
-    // --- LOGICA DE SPLIT (STAFF vs OWNER) ---
-    // Fallback se nada estiver configurado no Partner
-    const DEFAULT_STAFF_SHARE = 60;
-    const DEFAULT_OWNER_SHARE = 40;
-
-    let staffSharePercent: number | undefined;
-    let ownerSharePercent: number | undefined;
-    let staffCommissionAmountBRL: number | undefined;
-    let ownerCommissionAmountBRL: number | undefined;
-
-    // Caso 1: indicação feita pelo DONO (partnerType OWNER)
-    if (partner.partnerType === 'OWNER') {
-      // Dono recebe 100% da comissão gerada (ou o que estiver configurado no partner, geralmente 100/0)
-      ownerSharePercent = partner.ownerSharePercent ?? 100;
-      staffSharePercent = partner.staffSharePercent ?? 0;
-      
-      ownerCommissionAmountBRL = commissionAmountBRL;
-      staffCommissionAmountBRL = 0;
-    }
-    // Caso 2: indicação feita pelo STAFF
-    else if (partner.partnerType === 'STAFF') {
-      // Usa a configuração gravada no Partner (que veio do referralConfig da barbearia na criação)
-      const staffPct = partner.staffSharePercent ?? DEFAULT_STAFF_SHARE;
-      const ownerPct = partner.ownerSharePercent ?? DEFAULT_OWNER_SHARE;
-
-      staffSharePercent = staffPct;
-      ownerSharePercent = ownerPct;
-
-      staffCommissionAmountBRL = (commissionAmountBRL * staffPct) / 100;
-      ownerCommissionAmountBRL = (commissionAmountBRL * ownerPct) / 100;
-    }
-    // Outros tipos (INFLUENCER, AGENCY)
-    else {
-      // Influencer fica com tudo (que é definido no baseCommissionPercent), não há split interno de barbearia
-      ownerSharePercent = partner.ownerSharePercent ?? 0;
-      staffSharePercent = partner.staffSharePercent ?? 0;
-      staffCommissionAmountBRL = 0;
-      ownerCommissionAmountBRL = 0;
     }
 
     const sale: ReferralSale = {
       id: `refs_${Math.random().toString(36).substr(2, 9)}`,
-      referralCode,
+      referralCode: normalizedCode,
       partnerId: partner.id,
-      referredTenantId,
-      planId: plan.id,
-      billingPeriod,
-      saleValueBRL,
-      commissionBaseBRL,
-      commissionPercent,
-      commissionAmountBRL,
-      eligibleForBonus: partner.eligibleForBonus,
-      status: 'PENDING', // D+30 to approve usually
+      referredTenantId: params.referredTenantId,
+      planId: params.planId as any,
+      billingPeriod: params.billingPeriod,
+      saleValueBRL: params.annualValueBRL,
+      commissionBaseBRL: computed.commissionBaseBRL,
+      commissionPercent: computed.commissionPercent,
+      commissionAmountBRL: computed.commissionAmountBRL,
+      eligibleForBonus: partner.partnerType === 'PARTNER_PRO',
+      status: computed.status,
       createdAt: new Date(),
-      
-      // Campos de split
-      staffSharePercent,
-      ownerSharePercent,
-      staffCommissionAmountBRL,
-      ownerCommissionAmountBRL,
+      paidAt: params.paidAt,
+      availableAt: computed.availableAt,
+      cancelledAt: params.cancelledAt,
+      chargebackAt: params.chargebackAt,
+      staffSharePercent: partner.partnerType === 'STAFF' ? 70 : undefined,
+      ownerSharePercent: partner.partnerType === 'STAFF' ? 30 : (partner.partnerType === 'OWNER' ? 100 : undefined),
+      staffCommissionAmountBRL: partner.partnerType === 'STAFF' ? computed.staffCommissionAmountBRL : undefined,
+      ownerCommissionAmountBRL: partner.partnerType === 'OWNER' || partner.partnerType === 'STAFF' ? computed.ownerCommissionAmountBRL : undefined,
     };
 
-    setSales(prev => [sale, ...prev]);
+    setSales((prev) => [sale, ...prev]);
     return sale;
   };
 

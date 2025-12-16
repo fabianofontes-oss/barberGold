@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
+import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { AlertTriangle, Lock, LogOut, ShieldAlert } from 'lucide-react';
 
 interface SubscriptionGuardProps {
@@ -9,7 +10,8 @@ interface SubscriptionGuardProps {
 }
 
 export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({ children }) => {
-  const { currentTenantStatus, shopProfile, isImpersonating, exitImpersonation } = useBarber();
+  const { currentTenantStatus, shopProfile, isImpersonating, exitImpersonation, currentView, setView } = useBarber();
+  const { canUseFeature } = useFeatureGate();
 
   // 1. Se não houver tenant selecionado ou estiver em modo standalone: libera
   if (!currentTenantStatus) {
@@ -18,6 +20,30 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({ children }
 
   // 2. Se estiver ativo ou em trial: libera
   if (currentTenantStatus === 'ACTIVE' || currentTenantStatus === 'TRIAL') {
+    // Gating incremental por módulo/feature (sem reescrever navegação)
+    if (currentView === 'WEBSITE_EDITOR' && !canUseFeature('WEBSITE_PREMIUM')) {
+      return (
+        <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-6">
+          <div className="max-w-md w-full bg-zinc-900 border border-zinc-800 p-8 rounded-3xl text-center shadow-2xl">
+            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-black/40 border border-zinc-800">
+              <Lock className="w-9 h-9 text-amber-500" />
+            </div>
+            <h1 className="text-2xl font-bold text-white mb-3">Recurso bloqueado</h1>
+            <p className="text-zinc-400 text-sm mb-8 leading-relaxed">
+              O módulo <strong className="text-zinc-200">Website Premium</strong> está disponível apenas no plano Studio.
+            </p>
+            <button
+              type="button"
+              onClick={() => setView('MY_PLAN')}
+              className="w-full py-3.5 rounded-xl font-bold bg-amber-600 hover:bg-amber-500 text-white transition-colors"
+            >
+              Ver planos e liberar
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return <>{children}</>;
   }
 

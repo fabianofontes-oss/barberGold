@@ -3,11 +3,14 @@
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
+import { useReferral } from '@/context/ReferralContext';
 import { Trophy, Copy, Users, Check, Lock, Percent, Plus, Banknote, Sparkles, TrendingUp, ArrowRight, AlertCircle, Info, Rocket, Zap, Unlock, AlertTriangle } from 'lucide-react';
 import { OwnerReferralModal } from '@/modules/settings/modals/OwnerReferralModal';
+import { buildReferralUrl, normalizeReferralCode } from '@/domain/referrals/link';
 
 export const ReferralDashboard: React.FC = () => {
   const { shopSettings, updateShopSettings, currentUser } = useBarber();
+  const { sales, partners } = useReferral();
   const [isOwnerModalOpen, setIsOwnerModalOpen] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
 
@@ -31,12 +34,17 @@ export const ReferralDashboard: React.FC = () => {
   };
 
   const ownerLink = `https://barberflow.app/r/${config.ownerReferralCode || 'CODE'}`;
+  const ownerCode = normalizeReferralCode(config.ownerReferralCode || 'CODE');
+  const ownerUrl = buildReferralUrl({ kind: 'OWNER', code: ownerCode });
 
   const handleCopy = () => {
-     navigator.clipboard.writeText(ownerLink);
+     navigator.clipboard.writeText(ownerUrl);
      setCopied(true);
      setTimeout(() => setCopied(false), 2000);
   };
+
+  const ownerPartner = partners.find((p) => p.partnerType === 'OWNER');
+  const ownerSales = sales.filter((s) => s.partnerId === ownerPartner?.id);
 
   // Only Owner sees this dashboard content
   if (currentUser.role !== 'OWNER') {
@@ -113,7 +121,7 @@ export const ReferralDashboard: React.FC = () => {
                   
                   <div className="bg-black/50 border border-zinc-700/50 rounded-xl p-4 mb-4 flex items-center justify-center relative group-hover:border-emerald-500/30 transition-colors">
                      <p className="text-emerald-400 font-mono font-bold text-lg truncate tracking-tight">
-                        barberflow.app/r/<span className="text-white">{config.ownerReferralCode}</span>
+                        barberflow.app/r/<span className="text-white">{ownerCode}</span>
                      </p>
                   </div>
 
@@ -273,10 +281,53 @@ export const ReferralDashboard: React.FC = () => {
          </ul>
       </div>
 
+      {/* LISTA DE COMISSÕES (OWNER) */}
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+         <h3 className="text-white font-bold mb-4 flex items-center gap-2 text-lg">
+            <TrendingUp className="w-5 h-5 text-emerald-500" /> Suas comissões (Owner)
+         </h3>
+         {ownerSales.length === 0 ? (
+            <p className="text-sm text-zinc-500">Nenhuma comissão registrada ainda.</p>
+         ) : (
+            <div className="overflow-x-auto">
+               <table className="w-full text-sm">
+                  <thead>
+                     <tr className="text-zinc-500 border-b border-zinc-800">
+                        <th className="py-2 text-left">Código</th>
+                        <th className="py-2 text-left">Status</th>
+                        <th className="py-2 text-left">Libera em</th>
+                        <th className="py-2 text-right">Valor</th>
+                     </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800/50">
+                     {ownerSales.map((s) => (
+                        <tr key={s.id} className="text-zinc-300">
+                           <td className="py-2 font-mono text-xs">{s.referralCode}</td>
+                           <td className="py-2">
+                              <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${
+                                 s.status === 'AVAILABLE' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                                 s.status === 'PENDING' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                                 'bg-red-500/10 text-red-400 border-red-500/20'
+                              }`}>{s.status}</span>
+                           </td>
+                           <td className="py-2 text-xs text-zinc-400">
+                              {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : '—'}
+                           </td>
+                           <td className="py-2 text-right font-bold text-emerald-400">
+                              R$ {(s.ownerCommissionAmountBRL ?? s.commissionAmountBRL).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                           </td>
+                        </tr>
+                     ))}
+                  </tbody>
+               </table>
+            </div>
+         )}
+      </div>
+
       <OwnerReferralModal 
          isOpen={isOwnerModalOpen} 
          onClose={() => setIsOwnerModalOpen(false)} 
-         ownerReferralLink={ownerLink} 
+         ownerReferralLink={ownerUrl} 
       />
     </div>
   );

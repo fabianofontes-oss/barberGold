@@ -7,11 +7,11 @@ import { BarberProvider } from '@/context/BarberContext';
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <SaasV2Provider>
-      <ReferralProvider>
-        <BarberProvider>
+      <BarberProvider>
+        <ReferralProvider>
           {children}
-        </BarberProvider>
-      </ReferralProvider>
+        </ReferralProvider>
+      </BarberProvider>
     </SaasV2Provider>
   );
 }

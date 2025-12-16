@@ -3,43 +3,30 @@
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { Check, Crown, Users, Calendar, DollarSign, ShieldCheck, ArrowRight } from 'lucide-react';
+import { PLANS_BR } from '@/domain/plans/plans';
+import { FEATURE_LABELS, FEATURE_ORDER, PLAN_FEATURES } from '@/domain/plans/features';
+import type { BillingInterval, PlanId } from '@/domain/plans/types';
 
 export const MyPlan = () => {
-  const { currentUser } = useBarber();
-  const [billingInterval, setBillingInterval] = useState<'MONTHLY' | 'YEARLY'>('YEARLY');
+  const { currentTenantPlanId } = useBarber();
+  const [billingInterval, setBillingInterval] = useState<BillingInterval>('ANNUAL');
 
-  const plans = [
-    {
-      id: 'SOLO',
-      name: 'Start',
-      subtitle: 'Organização c/ Agendamento',
-      price: billingInterval === 'YEARLY' ? 49 : 59,
-      level: 'basic',
-      features: ['Agenda & Clientes', 'PDV & Serviços', 'Link de Agendamento', 'Gestão de Horários'],
-      color: 'zinc'
-    },
-    {
-      id: 'SOLO_PRO',
-      name: 'Pro',
-      subtitle: 'Gestão Completa',
-      price: billingInterval === 'YEARLY' ? 99 : 119,
-      level: 'pro',
-      highlight: true,
-      features: ['Tudo do Start', 'Contas a Pagar', 'Comissões & DRE', 'Programa de Pontos', 'Campanhas Win-back'],
-      color: 'amber'
-    },
-    {
-      id: 'STUDIO',
-      name: 'Elite',
-      subtitle: 'Marca Forte',
-      price: billingInterval === 'YEARLY' ? 199 : 239,
-      level: 'elite',
-      features: ['Tudo do Pro', 'Site Personalizado', 'Domínio Próprio', 'Suporte Prioritário', 'Multi-unidades'],
-      color: 'purple'
+  const currentPlan = (currentTenantPlanId || 'FREE') as PlanId;
+  const plans = PLANS_BR.filter((p) => p.id !== 'ENTERPRISE');
+
+  const getDisplayPrice = (planId: PlanId) => {
+    const plan = plans.find((p) => p.id === planId);
+    if (!plan) return { label: '—', sub: '' };
+    if (plan.monthlyPriceBRL === 0) return { label: 'Grátis', sub: '' };
+
+    if (billingInterval === 'MONTHLY') {
+      return { label: `R$ ${plan.monthlyPriceBRL}`, sub: '/mês' };
     }
-  ];
 
-  const currentPlan = 'SOLO_PRO';
+    const monthlyEquivalent = (plan.annualPriceBRL / 12).toFixed(2).replace('.', ',');
+    const annualTotal = plan.annualPriceBRL.toFixed(0);
+    return { label: `12x R$ ${monthlyEquivalent}`, sub: `Total R$ ${annualTotal}/ano` };
+  };
 
   return (
     <div className="space-y-8 animate-fade-in pb-20 max-w-6xl mx-auto">
@@ -61,8 +48,8 @@ export const MyPlan = () => {
                Mensal
             </button>
             <button 
-               onClick={() => setBillingInterval('YEARLY')}
-               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${billingInterval === 'YEARLY' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-zinc-300'}`}
+               onClick={() => setBillingInterval('ANNUAL')}
+               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${billingInterval === 'ANNUAL' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-zinc-300'}`}
             >
                Anual <span className="text-[10px] bg-emerald-500 text-white px-1.5 py-0.5 rounded">-17%</span>
             </button>
@@ -75,7 +62,7 @@ export const MyPlan = () => {
                <ShieldCheck className="w-8 h-8 text-amber-500" />
             </div>
             <div>
-               <h2 className="text-xl font-bold text-white">Plano Atual: {plans.find(p => p.id === currentPlan)?.name || 'Pro'}</h2>
+               <h2 className="text-xl font-bold text-white">Plano Atual: {plans.find(p => p.id === currentPlan)?.name || currentPlan}</h2>
                <p className="text-zinc-400 text-sm">Sua assinatura está ativa e funcionando normalmente.</p>
             </div>
          </div>
@@ -88,16 +75,19 @@ export const MyPlan = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
          {plans.map((plan) => {
             const isCurrent = plan.id === currentPlan;
+            const isHighlight = plan.id === 'EQUIPE';
+            const price = getDisplayPrice(plan.id);
+            const featureKeys = PLAN_FEATURES[plan.id] || [];
             return (
                <div 
                   key={plan.id} 
                   className={`relative rounded-2xl p-6 transition-all ${
-                     plan.highlight 
+                     isHighlight 
                         ? 'bg-gradient-to-b from-amber-950/50 to-zinc-900 border-2 border-amber-500/50 shadow-xl shadow-amber-500/10' 
                         : 'bg-zinc-900 border border-zinc-800 hover:border-zinc-700'
                   }`}
                >
-                  {plan.highlight && (
+                  {isHighlight && (
                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-zinc-900 text-[10px] font-bold uppercase px-3 py-1 rounded-full">
                         Recomendado
                      </div>
@@ -105,19 +95,19 @@ export const MyPlan = () => {
                   
                   <div className="mb-6">
                      <h3 className="text-2xl font-bold text-white mb-1">{plan.name}</h3>
-                     <p className="text-zinc-500 text-sm">{plan.subtitle}</p>
+                     <p className="text-zinc-500 text-sm">Plano {plan.id}</p>
                   </div>
                   
                   <div className="mb-6">
-                     <span className="text-4xl font-bold text-white">R${plan.price}</span>
-                     <span className="text-zinc-500 text-sm">/mês</span>
+                     <span className="text-3xl font-bold text-white">{price.label}</span>
+                     {price.sub && <span className="text-zinc-500 text-xs block mt-1">{price.sub}</span>}
                   </div>
                   
                   <ul className="space-y-3 mb-6">
-                     {plan.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm text-zinc-300">
-                           <Check className={`w-4 h-4 ${plan.highlight ? 'text-amber-500' : 'text-emerald-500'}`} />
-                           {feature}
+                     {FEATURE_ORDER.filter((k) => featureKeys.includes(k)).map((k) => (
+                        <li key={k} className="flex items-center gap-2 text-sm text-zinc-300">
+                           <Check className={`w-4 h-4 ${isHighlight ? 'text-amber-500' : 'text-emerald-500'}`} />
+                           {FEATURE_LABELS[k]}
                         </li>
                      ))}
                   </ul>
@@ -127,7 +117,7 @@ export const MyPlan = () => {
                      className={`w-full py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
                         isCurrent 
                            ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed' 
-                           : plan.highlight 
+                           : isHighlight 
                               ? 'bg-amber-500 hover:bg-amber-400 text-zinc-900' 
                               : 'bg-zinc-800 hover:bg-zinc-700 text-white'
                      }`}

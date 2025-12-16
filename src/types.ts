@@ -313,6 +313,7 @@ export interface ShopSettings {
     enabled: boolean;
     ownerReferralCode?: string;
     allowStaffToParticipate: boolean;
+    programCommissionPercent?: number;
     staffSharePercent: number;
     ownerSharePercent: number;
   };
@@ -476,7 +477,7 @@ export interface GlobalSettings {
 }
 
 // REFERRAL SYSTEM TYPES
-export type ReferralPartnerType = 'OWNER' | 'STAFF' | 'INFLUENCER' | 'AGENCY';
+export type ReferralPartnerType = 'OWNER' | 'STAFF' | 'PARTNER_GENERAL' | 'PARTNER_PRO';
 
 export interface ReferralPartner {
   id: string;
@@ -500,7 +501,7 @@ export interface ReferralLink {
   isActive: boolean;
 }
 
-export type ReferralSaleStatus = 'PENDING' | 'APPROVED' | 'CANCELLED';
+export type ReferralSaleStatus = 'PENDING' | 'AVAILABLE' | 'CANCELLED' | 'ADJUSTED';
 export type BillingPeriod = 'MONTHLY' | 'ANNUAL';
 
 export interface ReferralSale {
@@ -517,6 +518,10 @@ export interface ReferralSale {
   eligibleForBonus: boolean;
   status: ReferralSaleStatus;
   createdAt: Date;
+  paidAt?: Date;
+  availableAt?: Date;
+  cancelledAt?: Date;
+  chargebackAt?: Date;
   staffSharePercent?: number;
   ownerSharePercent?: number;
   staffCommissionAmountBRL?: number;

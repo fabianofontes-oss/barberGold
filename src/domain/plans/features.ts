@@ -1,0 +1,72 @@
+import { PlanFeatureKey, PlanId } from './types';
+
+export const FEATURE_LABELS: Record<PlanFeatureKey, string> = {
+  AGENDA: 'Agenda',
+  PDV: 'PDV',
+  CLIENTS: 'Clientes',
+  FINANCE_BASIC: 'Financeiro Básico',
+  ONLINE_BOOKING: 'Agendamento Online',
+  LOYALTY: 'Fidelidade',
+  ADVANCED_REPORTS: 'Relatórios Avançados',
+  COMMISSIONS: 'Comissões',
+  BLIND_CASH_CLOSURE: 'Fechamento de Caixa Cego',
+  WEBSITE_PREMIUM: 'Website Premium',
+  MULTI_SHOP: 'Multi-unidade',
+};
+
+export const FEATURE_ORDER: readonly PlanFeatureKey[] = [
+  'AGENDA',
+  'PDV',
+  'CLIENTS',
+  'FINANCE_BASIC',
+  'ONLINE_BOOKING',
+  'LOYALTY',
+  'ADVANCED_REPORTS',
+  'COMMISSIONS',
+  'BLIND_CASH_CLOSURE',
+  'WEBSITE_PREMIUM',
+  'MULTI_SHOP',
+];
+
+export const PLAN_FEATURES: Record<PlanId, readonly PlanFeatureKey[]> = {
+  FREE: ['AGENDA', 'PDV', 'CLIENTS', 'FINANCE_BASIC'],
+  SOLO: ['AGENDA', 'PDV', 'CLIENTS', 'FINANCE_BASIC'],
+  SOLO_PRO: ['AGENDA', 'PDV', 'CLIENTS', 'FINANCE_BASIC', 'ONLINE_BOOKING'],
+  EQUIPE: [
+    'AGENDA',
+    'PDV',
+    'CLIENTS',
+    'FINANCE_BASIC',
+    'ONLINE_BOOKING',
+    'LOYALTY',
+    'ADVANCED_REPORTS',
+    'COMMISSIONS',
+    'BLIND_CASH_CLOSURE',
+  ],
+  STUDIO: [
+    'AGENDA',
+    'PDV',
+    'CLIENTS',
+    'FINANCE_BASIC',
+    'ONLINE_BOOKING',
+    'LOYALTY',
+    'ADVANCED_REPORTS',
+    'COMMISSIONS',
+    'BLIND_CASH_CLOSURE',
+    'WEBSITE_PREMIUM',
+    'MULTI_SHOP',
+  ],
+  ENTERPRISE: [
+    'AGENDA',
+    'PDV',
+    'CLIENTS',
+    'FINANCE_BASIC',
+    'ONLINE_BOOKING',
+    'LOYALTY',
+    'ADVANCED_REPORTS',
+    'COMMISSIONS',
+    'BLIND_CASH_CLOSURE',
+    'WEBSITE_PREMIUM',
+    'MULTI_SHOP',
+  ],
+};

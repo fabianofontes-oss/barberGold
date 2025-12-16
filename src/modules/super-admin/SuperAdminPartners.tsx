@@ -9,7 +9,7 @@ export const SuperAdminPartners: React.FC = () => {
 
   // const totalSalesCount = sales.length;
   const totalApprovedCommission = sales
-    .filter(s => s.status === 'APPROVED')
+    .filter(s => s.status === 'AVAILABLE')
     .reduce((sum, s) => sum + s.commissionAmountBRL, 0);
 
   const copyToClipboard = (text: string) => {
@@ -82,9 +82,10 @@ export const SuperAdminPartners: React.FC = () => {
                       </td>
                       <td className="py-3 px-2">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${
-                           p.partnerType === 'INFLUENCER' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                           p.partnerType === 'PARTNER_PRO' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
                            p.partnerType === 'OWNER' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                           'bg-zinc-800 text-zinc-400 border-zinc-700'
+                           p.partnerType === 'STAFF' ? 'bg-zinc-800 text-zinc-200 border-zinc-700' :
+                           'bg-zinc-900 text-zinc-400 border-zinc-800'
                         }`}>
                            {p.partnerType}
                         </span>

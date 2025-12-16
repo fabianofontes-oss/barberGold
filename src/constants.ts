@@ -22,7 +22,7 @@ export const MOCK_REFERRAL_PARTNERS: ReferralPartner[] = [
     tenantId: 't1',
     displayName: 'Alex Owner (Premium Gold)',
     partnerType: 'OWNER',
-    baseCommissionPercent: 100,
+    baseCommissionPercent: 20,
     eligibleForBonus: false,
     isActive: true,
     ownerSharePercent: 100,
@@ -35,15 +35,15 @@ export const MOCK_REFERRAL_PARTNERS: ReferralPartner[] = [
     displayName: 'Mike The Barber',
     partnerType: 'STAFF',
     baseCommissionPercent: 20,
-    eligibleForBonus: true,
+    eligibleForBonus: false,
     isActive: true,
-    ownerSharePercent: 50,
-    staffSharePercent: 50
+    ownerSharePercent: 30,
+    staffSharePercent: 70
   },
   {
     id: 'refp_influencer_001',
     displayName: 'Barber School Brasil',
-    partnerType: 'INFLUENCER',
+    partnerType: 'PARTNER_PRO',
     baseCommissionPercent: 18,
     eligibleForBonus: true,
     isActive: true,
@@ -308,7 +308,7 @@ export const SAAS_PLANS_BR: SaasPlan[] = [
     yearlyPriceBRL: 490,
     maxStaff: 1,
     maxLocations: 1,
-    featureFlags: { ONLINE_BOOKING: true, LOYALTY: false, ADVANCED_REPORTS: false, MULTI_SHOP: false, WEBSITE_PREMIUM: false },
+    featureFlags: { ONLINE_BOOKING: false, LOYALTY: false, ADVANCED_REPORTS: false, MULTI_SHOP: false, WEBSITE_PREMIUM: false },
     order: 2,
     isActive: true
   },
@@ -320,7 +320,7 @@ export const SAAS_PLANS_BR: SaasPlan[] = [
     yearlyPriceBRL: 590,
     maxStaff: 1,
     maxLocations: 1,
-    featureFlags: { ONLINE_BOOKING: true, LOYALTY: true, ADVANCED_REPORTS: true, MULTI_SHOP: false, WEBSITE_PREMIUM: false },
+    featureFlags: { ONLINE_BOOKING: true, LOYALTY: false, ADVANCED_REPORTS: false, MULTI_SHOP: false, WEBSITE_PREMIUM: false },
     order: 3,
     isActive: true
   },
@@ -328,8 +328,8 @@ export const SAAS_PLANS_BR: SaasPlan[] = [
     id: 'EQUIPE',
     name: 'Equipe',
     description: 'Para barbearias com time',
-    monthlyPriceBRL: 249,
-    yearlyPriceBRL: 2490,
+    monthlyPriceBRL: 79,
+    yearlyPriceBRL: 790,
     maxStaff: 3,
     maxLocations: 1,
     featureFlags: { ONLINE_BOOKING: true, LOYALTY: true, ADVANCED_REPORTS: true, MULTI_SHOP: false, WEBSITE_PREMIUM: false },
@@ -400,8 +400,8 @@ export const EXPENSE_TEMPLATES: ExpenseTemplate[] = [
 ].map(t => ({...t, id: Math.random().toString()})) as ExpenseTemplate[];
 
 export const SAAS_V2_BR_PRICING: Record<SaasV2SizeTier, Record<SaasV2PlanId, number>> = {
-  SOLO: { FREE: 0, SOLO: 49, SOLO_PRO: 59, EQUIPE: 0, STUDIO: 119, ENTERPRISE: 899 },
-  UP_TO_3: { FREE: 0, SOLO: 129, SOLO_PRO: 199, EQUIPE: 299, STUDIO: 499, ENTERPRISE: 1299 },
-  UP_TO_6: { FREE: 0, SOLO: 199, SOLO_PRO: 299, EQUIPE: 399, STUDIO: 699, ENTERPRISE: 1899 },
-  PLUS_6: { FREE: 0, SOLO: 299, SOLO_PRO: 499, EQUIPE: 699, STUDIO: 999, ENTERPRISE: 2499 },
+  SOLO: { FREE: 0, SOLO: 49, SOLO_PRO: 59, EQUIPE: 79, STUDIO: 119, ENTERPRISE: 0 },
+  UP_TO_3: { FREE: 0, SOLO: 49, SOLO_PRO: 59, EQUIPE: 79, STUDIO: 119, ENTERPRISE: 0 },
+  UP_TO_6: { FREE: 0, SOLO: 49, SOLO_PRO: 59, EQUIPE: 79, STUDIO: 119, ENTERPRISE: 0 },
+  PLUS_6: { FREE: 0, SOLO: 49, SOLO_PRO: 59, EQUIPE: 79, STUDIO: 119, ENTERPRISE: 0 },
 };
