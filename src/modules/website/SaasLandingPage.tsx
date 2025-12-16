@@ -144,7 +144,7 @@ export const SaasLandingPage = () => {
                   Pare de perder clientes no WhatsApp.
                </h2>
                <p className="text-zinc-400 text-base md:text-lg mb-8 leading-relaxed">
-                  Sem um link de agendamento rápido, você perde 30% dos clientes que desistem de esperar você responder "tem horário?".
+                  Sem um link de agendamento rápido, você perde 30% dos clientes que desistem de esperar você responder &quot;tem horário?&quot;.
                </p>
                
                <ul className="space-y-4">
@@ -191,7 +191,7 @@ export const SaasLandingPage = () => {
                   <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
                      <div className="h-full bg-emerald-500 w-[5%]"></div>
                   </div>
-                  <p className="text-[10px] text-zinc-500 mt-2 text-center">O sistema se paga no primeiro "No-Show" evitado.</p>
+                  <p className="text-[10px] text-zinc-500 mt-2 text-center">O sistema se paga no primeiro &quot;No-Show&quot; evitado.</p>
                </div>
             </div>
          </div>

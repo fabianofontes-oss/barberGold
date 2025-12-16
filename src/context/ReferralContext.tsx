@@ -35,7 +35,7 @@ interface ReferralContextType {
 
 const ReferralContext = createContext<ReferralContextType | undefined>(undefined);
 
-export const ReferralProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { shopSettings, currentUser, staff, shopProfile } = useBarber();
   const { currentTenantId } = useSaasV2();
 

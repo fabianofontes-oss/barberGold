@@ -27,7 +27,7 @@ interface SaasV2ContextType {
 
 const SaasV2Context = createContext<SaasV2ContextType | undefined>(undefined);
 
-export const SaasV2Provider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+export const SaasV2Provider: React.FC<PropsWithChildren> = ({ children }) => {
   const [tenants, setTenants] = useState<SaasV2Tenant[]>(SAAS_V2_MOCK_TENANTS);
   const [currentTenantId, setCurrentTenantId] = useState<string | null>(null);
   // Source of truth: SAAS_PLANS_BR
@@ -47,14 +47,14 @@ export const SaasV2Provider: React.FC<PropsWithChildren<{}>> = ({ children }) =>
       prev.map((t) => {
         if (t.id !== tenantId) return t;
         
-        let updatedTenant = { ...t, ...partial };
+        const updatedTenant = { ...t, ...partial };
         
         // Auto-update MRR if plan changes and MRR wasn't manually overridden in this update
         if (partial.planId && !partial.mrr) {
            const newPlan = plans.find(p => p.id === partial.planId);
            if (newPlan) {
               // Default to monthly price BRL if country is BR (simplified logic)
-              updatedTenant.mrr = newPlan.monthlyPriceBRL;
+              return { ...updatedTenant, mrr: newPlan.monthlyPriceBRL };
            }
         }
         

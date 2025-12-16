@@ -663,7 +663,7 @@ export const WebsiteBuilder = () => {
                 
                 <div className="mt-6 text-center">
                    <p className="text-xs text-zinc-500 font-bold uppercase tracking-wider mb-2">Instant Preview</p>
-                   <p className="text-[10px] text-zinc-600 max-w-[200px]">Changes appear here in real-time. Click "Live Preview" to see full desktop version.</p>
+                   <p className="text-[10px] text-zinc-600 max-w-[200px]">Changes appear here in real-time. Click &quot;Live Preview&quot; to see full desktop version.</p>
                 </div>
              </div>
           </div>

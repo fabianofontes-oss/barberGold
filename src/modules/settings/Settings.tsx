@@ -317,7 +317,7 @@ export const Settings = () => {
                       className="w-full max-w-xs"
                    />
                    <p className="text-[10px] text-zinc-500 mt-2">
-                      This logo will replace the "BarberFlow" text in the sidebar, mobile header, and website.
+                      This logo will replace the &quot;BarberFlow&quot; text in the sidebar, mobile header, and website.
                    </p>
                 </div>
 
@@ -663,7 +663,7 @@ export const Settings = () => {
                         </div>
                         <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800 mb-4">
                            <p className="text-xs text-zinc-400 mb-3">
-                              Define your automatic buffer preferences. We'll suggest breaks in the agenda.
+                              Define your automatic buffer preferences. We&apos;ll suggest breaks in the agenda.
                            </p>
                            <div className="grid grid-cols-2 gap-4">
                               <div>
@@ -733,7 +733,7 @@ export const Settings = () => {
                   <div className="mt-4 bg-zinc-950/50 rounded-lg p-4 text-xs text-zinc-400 border border-zinc-800 flex gap-4">
                      <div className="flex-1">
                         <span className="font-bold text-white block mb-1">Flow:</span>
-                        1. Service Completed {'>'} 2. "Send Link" button appears in Dashboard {'>'} 3. Client rates (Stars) {'>'} 4. If Good {'>'} 5. Ask for Tip.
+                        1. Service Completed {'>'} 2. &quot;Send Link&quot; button appears in Dashboard {'>'} 3. Client rates (Stars) {'>'} 4. If Good {'>'} 5. Ask for Tip.
                      </div>
                      <div className="flex-1 border-l border-zinc-800 pl-4">
                         <span className="font-bold text-white block mb-1">Impact:</span>
@@ -918,7 +918,7 @@ export const Settings = () => {
                           <Gift className="w-4 h-4 text-zinc-400" />
                           <h4 className="font-bold text-white">Birthday Special</h4>
                        </div>
-                       <p className="text-xs text-zinc-500">Auto 5% discount on client's birthday.</p>
+                       <p className="text-xs text-zinc-500">Auto 5% discount on client&apos;s birthday.</p>
                      </div>
                      <div className="flex items-center">
                         <input 

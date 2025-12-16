@@ -96,7 +96,7 @@ export const Dashboard = () => {
              <h2 className="text-3xl font-bold text-white mb-2">Dashboard</h2>
              {!isOwner && <span className="bg-zinc-800 text-zinc-400 text-xs px-2 py-1 rounded font-bold uppercase">Staff View</span>}
            </div>
-           <p className="text-zinc-400">Welcome back, <b>{currentUser.name}</b>. Here's what's happening today.</p>
+           <p className="text-zinc-400">Welcome back, <b>{currentUser.name}</b>. Here&apos;s what&apos;s happening today.</p>
         </div>
       </div>
 

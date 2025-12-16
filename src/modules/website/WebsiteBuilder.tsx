@@ -1,15 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { ImageUpload } from '@/components/shared/ImageUpload';
 import { 
-  Smartphone, Eye, Save, 
-  Layout, MapPin, Users, Scissors, Globe, ExternalLink, MousePointerClick, 
-  ArrowUp, ArrowDown, ShoppingBag, Star, Image, Type, Copy, Palette, Sparkles, PaintBucket, Check, Square, Plus, Moon, Sun, Cloud, Lock
+  Eye, Save, 
+  Layout, MapPin, Users, Scissors, Globe, 
+  ArrowUp, ArrowDown, ShoppingBag, Star, Copy, Palette, Sparkles, Moon, Sun, Cloud, Lock,
+  ImageIcon
 } from 'lucide-react';
-import { WebsiteSectionType, ThemeTemplate } from '@/types';
+import { WebsiteSectionType } from '@/types';
 
 export const WebsiteBuilder = () => {
   const { shopSettings, updateShopSettings, setView, shopProfile, updateShopProfile } = useBarber();
@@ -358,7 +359,7 @@ export const WebsiteBuilder = () => {
                                      onClick={() => setConfig({...config, gallery: [...config.gallery, { id: Date.now().toString(), url: '', caption: '' }]})}
                                      className="w-full py-4 border-2 border-dashed border-zinc-800 text-zinc-500 hover:text-amber-500 hover:border-amber-500/50 rounded-xl text-sm font-bold transition-all flex flex-col items-center justify-center gap-2"
                                   >
-                                     <Image className="w-6 h-6" />
+                                     <ImageIcon className="w-6 h-6" />
                                      <span>+ Adicionar Foto</span>
                                   </button>
                                </div>
@@ -556,7 +557,7 @@ export const WebsiteBuilder = () => {
                             if (section === 'ABOUT') { Icon = Users; label = 'Sobre Nós'; }
                             if (section === 'SERVICES') { Icon = Scissors; label = 'Serviços'; }
                             if (section === 'PRODUCTS') { Icon = ShoppingBag; label = 'Produtos'; }
-                            if (section === 'GALLERY') { Icon = Image; label = 'Galeria'; }
+                            if (section === 'GALLERY') { Icon = ImageIcon; label = 'Galeria'; }
                             if (section === 'REVIEWS') { Icon = Star; label = 'Avaliações'; }
                             if (section === 'LOCATION') { Icon = MapPin; label = 'Localização'; }
 
@@ -684,7 +685,11 @@ export const WebsiteBuilder = () => {
                    >
                       {/* Hero (Always Top) */}
                       <div className="relative h-1/2 w-full flex-shrink-0">
-                         <img src={config.heroImage} className="w-full h-full object-cover" />
+                         <img 
+                           src={config.heroImage} 
+                           alt="Imagem de fundo" 
+                           className="w-full h-full object-cover" 
+                         />
                          <div className="absolute inset-0 bg-black" style={{opacity: config.coverOpacity}}></div>
                          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center mt-4">
                             <h1 className="text-white font-bold text-xl leading-tight mb-2 drop-shadow-md">{config.heroTitle}</h1>
@@ -736,7 +741,7 @@ export const WebsiteBuilder = () => {
                 
                 <div className="mt-6 text-center">
                    <p className="text-xs text-zinc-500 font-bold uppercase tracking-wider mb-2">Instant Preview</p>
-                   <p className="text-[10px] text-zinc-600 max-w-[200px]">Changes appear here in real-time. Click "Live Preview" to see full desktop version.</p>
+                   <p className="text-[10px] text-zinc-600 max-w-[200px]">Changes appear here in real-time. Click &quot;Live Preview&quot; to see full desktop version.</p>
                 </div>
              </div>
           </div>

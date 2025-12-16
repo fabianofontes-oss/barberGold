@@ -52,7 +52,7 @@ export const SuperAdminSupport = () => {
                            </span>
                            <h3 className="font-bold text-white text-lg">{ticket.subject}</h3>
                         </div>
-                        <p className="text-sm text-zinc-400 mb-3 line-clamp-2">"{ticket.lastMessage}"</p>
+                        <p className="text-sm text-zinc-400 mb-3 line-clamp-2">&quot;{ticket.lastMessage}&quot;</p>
                         <div className="flex items-center gap-4 text-xs text-zinc-500">
                            <span className="flex items-center gap-1 font-bold text-zinc-300">
                               <span className="w-2 h-2 rounded-full bg-blue-500"></span> {ticket.tenantName}

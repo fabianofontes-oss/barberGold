@@ -85,7 +85,7 @@ export const RegisterClosureModal: React.FC<RegisterClosureModalProps> = ({ isOp
             </div>
             <div>
                <h3 className="text-xl font-bold text-white">Close Register</h3>
-               <p className="text-sm text-zinc-400">Reconcile today's sales with physical/digital balances.</p>
+               <p className="text-sm text-zinc-400">Reconcile today&apos;s sales with physical/digital balances.</p>
             </div>
          </div>
 

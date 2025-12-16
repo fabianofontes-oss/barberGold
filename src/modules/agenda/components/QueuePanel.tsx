@@ -304,7 +304,7 @@ export const QueuePanel = () => {
                   assignedStaffId = ''; 
                }
 
-               let waitTime = assignedStaffId ? getStaffFreeTime(assignedStaffId) : 0;
+               const waitTime = assignedStaffId ? getStaffFreeTime(assignedStaffId) : 0;
                const staffName = staff.find(s => s.id === assignedStaffId)?.name.split(' ')[0] || 'TBD';
 
                return (

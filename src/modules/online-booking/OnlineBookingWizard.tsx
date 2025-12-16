@@ -15,6 +15,8 @@ import {
 import { format, addDays, isSameDay, startOfToday, areIntervalsOverlapping, addMinutes, set, getDay } from 'date-fns';
 import { AppointmentStatus, Client, Dependent, PaymentMethod } from '@/types';
 
+type LucideIcon = React.ComponentType<{ className?: string }>;
+
 // Interfaces for local state
 interface BookingEntity {
    id: string; // 'MAIN' or 'GUEST_1', etc.
@@ -28,7 +30,7 @@ interface BookingEntity {
 const MIN_SPEND_FOR_LOYALTY = 20; // Threshold to earn a stamp
 
 // Icon Map for dynamic payments
-const PAYMENT_ICONS: Record<string, any> = {
+const PAYMENT_ICONS: Record<string, LucideIcon> = {
    [PaymentMethod.CASH]: Banknote,
    [PaymentMethod.CREDIT_CARD]: CreditCard,
    [PaymentMethod.DEBIT_CARD]: CreditCard,
@@ -76,19 +78,6 @@ export const OnlineBookingWizard = () => {
   const { canUseFeature } = useFeatureGate();
   const hasOnlineBooking = canUseFeature('ONLINE_BOOKING');
 
-  if (!hasOnlineBooking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-50 px-4">
-        <div className="max-w-md text-center">
-          <h1 className="text-xl font-semibold mb-2">Agendamento online indisponível</h1>
-          <p className="text-sm text-zinc-400">
-            Esta barbearia ainda não ativou o módulo de agendamento online do BarberFlow.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   // FLOW STEPS:
   // 0: Intro, 1: ID, 2: Reg, 3: Dash, 4: Service, 5: Product, 6: Staff, 7: Time, 8: Review, 9: Success
   const [step, setStep] = useState(0);
@@ -120,6 +109,19 @@ export const OnlineBookingWizard = () => {
   const [clientForm, setClientForm] = useState({ name: '', email: '', birthDate: '' });
   const [isExistingClient, setIsExistingClient] = useState(false);
   const [activeClientProfile, setActiveClientProfile] = useState<Partial<Client> | null>(null);
+
+  if (!hasOnlineBooking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-50 px-4">
+        <div className="max-w-md text-center">
+          <h1 className="text-xl font-semibold mb-2">Agendamento online indisponível</h1>
+          <p className="text-sm text-zinc-400">
+            Esta barbearia ainda não ativou o módulo de agendamento online do BarberFlow.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // --- COMPUTED VALUES ---
   
@@ -188,7 +190,7 @@ export const OnlineBookingWizard = () => {
      setBookingEntities(prev => prev.map(entity => {
         if (entity.id !== activeEntityId) return entity;
         const exists = entity.serviceIds.includes(serviceId);
-        let newIds = exists ? entity.serviceIds.filter(id => id !== serviceId) : [...entity.serviceIds, serviceId];
+        const newIds = exists ? entity.serviceIds.filter(id => id !== serviceId) : [...entity.serviceIds, serviceId];
         return { ...entity, serviceIds: newIds };
      }));
   };
@@ -345,7 +347,6 @@ export const OnlineBookingWizard = () => {
   const calculateGroupTiming = () => {
      const staffLoad: Record<string, number> = {};
      let sequentialTotal = 0; 
-     let maxParallel = 0;
 
      bookingEntities.forEach(entity => {
         const staffId = entity.assignedStaffId || 'unassigned';
@@ -528,7 +529,14 @@ export const OnlineBookingWizard = () => {
      showTotal = true, 
      secondaryLabel = "",
      onSecondaryClick
-  }: any) => {
+  }: {
+    label?: string;
+    onClick?: () => void;
+    disabled?: boolean;
+    showTotal?: boolean;
+    secondaryLabel?: string;
+    onSecondaryClick?: () => void;
+  }) => {
      if (totalPrice === 0 && !secondaryLabel && !label) return null;
 
      return (

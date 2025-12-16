@@ -188,7 +188,7 @@ interface BarberContextType {
 
 const BarberContext = createContext<BarberContextType | undefined>(undefined);
 
-export const BarberProvider = ({ children }: PropsWithChildren<{}>) => {
+export const BarberProvider = ({ children }: PropsWithChildren) => {
   const { currentTenantId, setCurrentTenantId, getTenantById } = useSaasV2();
   // ... (keep existing state setup) ...
   const [isAuthenticated, setIsAuthenticated] = useState(false);

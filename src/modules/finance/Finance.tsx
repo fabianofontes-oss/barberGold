@@ -116,7 +116,7 @@ export const Finance = () => {
        let serviceComm = 0;
        let productComm = 0;
        let tips = 0;
-       let houseRev = 0;
+       const houseRev = 0;
 
        salesList.forEach(sale => {
           tips += (sale.tip || 0);
@@ -446,7 +446,7 @@ export const Finance = () => {
                                <Landmark className="w-6 h-6 text-amber-500" />
                                <h3 className="text-xl font-bold text-white">Net Cash Flow ({dateFilter})</h3>
                             </div>
-                            <span className="text-xs text-zinc-500">What's actually in the drawer</span>
+                            <span className="text-xs text-zinc-500">What&apos;s actually in the drawer</span>
                          </div>
                          <div className="space-y-3">
                             <div className="flex justify-between items-center text-sm">

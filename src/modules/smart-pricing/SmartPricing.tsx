@@ -91,7 +91,7 @@ export const SmartPricing = () => {
 
                   <p className="text-zinc-400 mb-8 text-sm leading-relaxed max-w-md">
                      Transforme clientes avulsos em <b>Assinantes Recorrentes</b>.
-                     Garanta receita no dia 01 (MRR) e automatize o comissionamento por "Créditos de Serviço".
+                     Garanta receita no dia 01 (MRR) e automatize o comissionamento por &quot;Créditos de Serviço&quot;.
                   </p>
 
                   <div className="grid grid-cols-2 gap-4 mb-8 w-full max-w-lg">

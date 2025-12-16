@@ -604,7 +604,7 @@ export const Catalog = () => {
                  </h3>
                  <p className="text-zinc-400 text-sm mb-6">
                     Define standardized categories for your Services, Retail Products, Inventory Supplies, and Suppliers.
-                    <br />This prevents typos like "Shampoo" vs "shampoo" and keeps reports clean.
+                    <br />This prevents typos like &quot;Shampoo&quot; vs &quot;shampoo&quot; and keeps reports clean.
                  </p>
 
                  {/* Type Switcher */}
