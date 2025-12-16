@@ -1,9 +1,11 @@
 
 import React, { createContext, useContext, useState, ReactNode, PropsWithChildren, useEffect } from 'react';
 import { Appointment, Client, Product, Service, Sale, ViewState, AppointmentStatus, PaymentMethod, CartItem, RecurrenceType, StaffMember, CommissionPlan, Expense, ShopSettings, StaffPayment, ShopProfile, DaySchedule, InventoryItem, Supplier, SupplyTransaction, Category, CategoryType, RegisterClosure, QueueItem, Review, Tenant, SupportTicket, GlobalInvoice, Integration, ReferralSource, LandingPageConfig, MarketingCampaign, GlobalSettings, SaasV2TenantStatus, SaasV2PlanId, SaasPlan, SaasPlanId } from '@/types';
-import { MOCK_APPOINTMENTS, MOCK_CLIENTS, PRODUCTS, SERVICES, MOCK_STAFF, MOCK_PLANS, MOCK_INVENTORY, MOCK_SUPPLIERS, MOCK_SUPPLY_TRANSACTIONS, MOCK_CATEGORIES, MOCK_TENANTS, MOCK_TICKETS, MOCK_INVOICES, MOCK_INTEGRATIONS, MOCK_REFERRALS, SAAS_PLANS_BR } from '@/constants';
+import { MOCK_APPOINTMENTS, MOCK_CLIENTS, PRODUCTS, SERVICES, MOCK_STAFF, MOCK_PLANS, MOCK_INVENTORY, MOCK_SUPPLIERS, MOCK_SUPPLY_TRANSACTIONS, MOCK_CATEGORIES, MOCK_TENANTS, MOCK_TICKETS, MOCK_INVOICES, MOCK_INTEGRATIONS } from '@/constants';
 import { addDays, addWeeks, addMonths, isAfter, areIntervalsOverlapping, addMinutes, set, getDay, isSameDay } from 'date-fns';
 import { useSaasV2 } from './SaasV2Context';
+import { useTenantPlanSlice } from './slices/tenantPlanSlice';
+import { useReferralSlice } from './slices/referralSlice';
 
 // --- LOCALSTORAGE HELPERS ---
 const STORAGE_KEY = 'barberflow_data';
@@ -189,7 +191,6 @@ const BarberContext = createContext<BarberContextType | undefined>(undefined);
 export const BarberProvider = ({ children }: PropsWithChildren<{}>) => {
   const { currentTenantId, setCurrentTenantId, getTenantById } = useSaasV2();
   // ... (keep existing state setup) ...
-  const [isImpersonating, setIsImpersonating] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [staff, setStaff] = useState<StaffMember[]>(MOCK_STAFF);
   const [currentUser, setCurrentUser] = useState<StaffMember>(MOCK_STAFF[0]); 
@@ -228,7 +229,6 @@ export const BarberProvider = ({ children }: PropsWithChildren<{}>) => {
   const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
   const [registerClosures, setRegisterClosures] = useState<RegisterClosure[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [referrals, setReferrals] = useState<ReferralSource[]>(MOCK_REFERRALS);
 
   // SUPER ADMIN STATE
   const [tenants, setTenants] = useState<Tenant[]>(MOCK_TENANTS);
@@ -237,14 +237,21 @@ export const BarberProvider = ({ children }: PropsWithChildren<{}>) => {
   const [integrations, setIntegrations] = useState<Integration[]>(MOCK_INTEGRATIONS);
   
   // NEW: Office God State
-  const [saasPlans, setSaasPlans] = useState<SaasPlan[]>(SAAS_PLANS_BR);
   const [marketingCampaigns, setMarketingCampaigns] = useState<MarketingCampaign[]>(INITIAL_CAMPAIGNS);
   const [globalSettings, setGlobalSettings] = useState<GlobalSettings>(INITIAL_GLOBAL_SETTINGS);
 
-  // --- DERIVED SAAS V2 STATE ---
-  const activeTenant = currentTenantId ? getTenantById(currentTenantId) : undefined;
-  const currentTenantStatus = activeTenant?.status;
-  const currentTenantPlanId = activeTenant?.planId;
+  const referralSlice = useReferralSlice();
+  const referrals = referralSlice.referrals;
+
+  const tenantPlanSlice = useTenantPlanSlice({
+    currentTenantId,
+    setCurrentTenantId,
+    getTenantById,
+    tenants,
+    setTenants,
+    setView,
+    setShopProfile,
+  });
 
   // ... (keep Landing Page & Shop Settings State) ...
   const [landingPageConfig, setLandingPageConfig] = useState<LandingPageConfig>({
@@ -628,52 +635,28 @@ export const BarberProvider = ({ children }: PropsWithChildren<{}>) => {
   const updateTenantStatus = (id: string, status: any) => setTenants(prev => prev.map(t => t.id === id ? { ...t, status } : t));
   const deleteTenant = (id: string) => { if(confirm('Delete?')) setTenants(prev => prev.filter(t => t.id !== id)); };
   
-  // NEW: Update Tenant Plan Action
-  const updateTenantPlan = (tenantId: string, planId: SaasPlanId) => {
-     setTenants(prev => prev.map(t => {
-        if (t.id !== tenantId) return t;
-        const plan = saasPlans.find(p => p.id === planId);
-        // Automatically update MRR based on new plan price
-        const newMrr = plan ? plan.monthlyPriceBRL : t.monthlyFee;
-        return { ...t, planId, monthlyFee: newMrr };
-     }));
-  };
+  const updateTenantPlan = tenantPlanSlice.updateTenantPlan;
 
-  const impersonateTenant = (id: string) => {
-     const tenantV2 = getTenantById(id);
-     if (tenantV2) {
-        setCurrentTenantId(id);
-        setIsImpersonating(true);
-        setShopProfile(prev => ({ ...prev, name: tenantV2.shopName, slug: prev.slug || tenantV2.id }));
-        setView('DASHBOARD');
-        return;
-     }
-     const tenant = tenants.find(t => t.id === id);
-     if (tenant) {
-        setShopProfile(prev => ({ ...prev, name: tenant.name }));
-        setView('DASHBOARD');
-        alert(`Accessing ${tenant.name} as Admin...`);
-     }
-  };
-  const exitImpersonation = () => { setIsImpersonating(false); setCurrentTenantId(null); setView('SUPER_OFFICE_V2'); };
+  const impersonateTenant = tenantPlanSlice.impersonateTenant;
+  const exitImpersonation = tenantPlanSlice.exitImpersonation;
   
   // ... (rest of actions) ...
   const resolveTicket = (id: string) => setTickets(prev => prev.map(t => t.id === id ? { ...t, status: 'RESOLVED' } : t));
   const markInvoicePaid = (id: string) => setGlobalInvoices(prev => prev.map(i => i.id === id ? { ...i, status: 'PAID' } : i));
   const updateIntegration = (i: any) => setIntegrations(prev => prev.map(int => int.id === i.id ? i : int));
   const updateLandingPageConfig = (c: any) => setLandingPageConfig(prev => ({ ...prev, ...c }));
-  const addReferralSource = (s: any) => setReferrals(prev => [...prev, { ...s, id: Math.random().toString(36).substr(2, 9), stats: { clicks: 0, conversions: 0, revenueGenerated: 0 } }]);
-  const updateReferralSource = (s: any) => setReferrals(prev => prev.map(src => src.id === s.id ? s : src));
-  const deleteReferralSource = (id: string) => setReferrals(prev => prev.filter(s => s.id !== id));
-  const addSaasPlan = (p: any) => setSaasPlans(prev => [...prev, p]);
-  const updateSaasPlan = (p: any) => setSaasPlans(prev => prev.map(pl => pl.id === p.id ? p : pl));
+  const addReferralSource = referralSlice.addReferralSource;
+  const updateReferralSource = referralSlice.updateReferralSource;
+  const deleteReferralSource = referralSlice.deleteReferralSource;
+  const addSaasPlan = tenantPlanSlice.addSaasPlan;
+  const updateSaasPlan = tenantPlanSlice.updateSaasPlan;
   const addMarketingCampaign = (c: any) => setMarketingCampaigns(prev => [c, ...prev]);
   const deleteMarketingCampaign = (id: string) => setMarketingCampaigns(prev => prev.filter(c => c.id !== id));
   const updateGlobalSettings = (s: any) => setGlobalSettings(prev => ({ ...prev, ...s }));
 
   return (
     <BarberContext.Provider value={{
-      isAuthenticated, currentUser, shopProfile, currentView, appointments, queue, clients, products, services, sales, staff, commissionPlans, expenses, staffPayments, shopSettings, todayRevenue, inventory, suppliers, supplyTransactions, categories, registerClosures, reviews, tenants, tickets, globalInvoices, integrations, referrals, landingPageConfig, saasPlans, marketingCampaigns, globalSettings, currentTenantId, currentTenantStatus, currentTenantPlanId, isImpersonating, activeReviewAppointmentId,
+      isAuthenticated, currentUser, shopProfile, currentView, appointments, queue, clients, products, services, sales, staff, commissionPlans, expenses, staffPayments, shopSettings, todayRevenue, inventory, suppliers, supplyTransactions, categories, registerClosures, reviews, tenants, tickets, globalInvoices, integrations, referrals, landingPageConfig, saasPlans: tenantPlanSlice.saasPlans, marketingCampaigns, globalSettings, currentTenantId: tenantPlanSlice.currentTenantId, currentTenantStatus: tenantPlanSlice.currentTenantStatus, currentTenantPlanId: tenantPlanSlice.currentTenantPlanId, isImpersonating: tenantPlanSlice.isImpersonating, activeReviewAppointmentId,
       login, logout, switchUser, updateShopProfile, setView: handleSetView, addAppointment, updateAppointmentStatus, joinQueue, leaveQueue, processSale, submitReview, addLateTip, addClient, updateClient, updateService, addService, deleteService, updateProduct, addProduct, deleteProduct, addStaff, updateStaff, addCommissionPlan, deleteCommissionPlan, addExpense, removeExpense, addStaffPayment, closeRegister, updateShopSettings, addInventoryItem, updateInventoryItem, deleteInventoryItem, adjustInventoryStock, restockInventoryItem, restockProduct, addSupplier, updateSupplier, deleteSupplier, addCategory, deleteCategory, getAvailableSlots, addTenant, updateTenantStatus, 
       updateTenantPlan, // EXPOSED
       deleteTenant, impersonateTenant, exitImpersonation, resolveTicket, markInvoicePaid, updateIntegration, updateLandingPageConfig, addReferralSource, updateReferralSource, deleteReferralSource, addSaasPlan, updateSaasPlan, addMarketingCampaign, deleteMarketingCampaign, updateGlobalSettings

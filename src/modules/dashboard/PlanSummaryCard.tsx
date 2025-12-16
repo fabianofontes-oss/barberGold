@@ -5,9 +5,10 @@ import { Check, ArrowRight, Crown, Star } from 'lucide-react';
 import { getPlanDefinition } from '@/domain/plans/plans';
 import { PLAN_FEATURES, FEATURE_LABELS } from '@/domain/plans/features';
 import type { PlanId } from '@/domain/plans/types';
+import type { SaasV2PlanId } from '@/types';
 
 interface PlanSummaryCardProps {
-  currentPlanId: PlanId;
+  currentPlanId: PlanId | SaasV2PlanId;
 }
 
 // Highlights de marketing por plano (resumo visual)
@@ -47,8 +48,9 @@ const planHighlights: Record<PlanId, string[]> = {
 const planOrder: PlanId[] = ['FREE', 'SOLO', 'SOLO_PRO', 'EQUIPE', 'STUDIO', 'ENTERPRISE'];
 
 export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId }) => {
-  const currentPlan = getPlanDefinition(currentPlanId);
-  const currentIndex = planOrder.indexOf(currentPlanId);
+  const normalizedPlanId = currentPlanId as PlanId;
+  const currentPlan = getPlanDefinition(normalizedPlanId);
+  const currentIndex = planOrder.indexOf(normalizedPlanId);
   const nextPlanId = currentIndex >= 0 && currentIndex < planOrder.length - 1
     ? planOrder[currentIndex + 1]
     : undefined;
@@ -90,7 +92,7 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
             Seus recursos liberados:
           </p>
           <ul className="space-y-2">
-            {(planHighlights[currentPlanId] || []).map((item: string) => (
+            {(planHighlights[normalizedPlanId] || []).map((item: string) => (
               <li key={item} className="flex items-start gap-2 text-xs text-zinc-300">
                 <div className="mt-0.5 min-w-[16px]">
                    <Check className="w-3.5 h-3.5 text-emerald-500" />
