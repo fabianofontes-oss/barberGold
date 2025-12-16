@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
-import { Smartphone, Eye, Save, Layout, MapPin, Globe, ExternalLink, Copy, Palette, Lock, Image, Type, Check } from 'lucide-react';
+import { Smartphone, Eye, Save, Layout, MapPin, Globe, ExternalLink, Copy, Palette, Lock, ImageIcon, Type, Check } from 'lucide-react';
 
 export const WebsiteEditor = () => {
-  const { shopProfile, shopSettings, updateShopSettings } = useBarber();
+  const { shopProfile } = useBarber();
   const [activeTab, setActiveTab] = useState<'CONTENT' | 'LAYOUT' | 'THEME' | 'DOMAIN'>('CONTENT');
   const [copied, setCopied] = useState(false);
   
@@ -87,7 +87,7 @@ export const WebsiteEditor = () => {
                         <div>
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Imagem de Fundo</label>
                            <div className="border-2 border-dashed border-zinc-800 rounded-xl p-8 flex flex-col items-center justify-center text-zinc-500 hover:text-zinc-400 hover:border-zinc-700 transition-all cursor-pointer">
-                              <Image className="w-8 h-8 mb-2" />
+                              <ImageIcon className="w-8 h-8 mb-2" />
                               <span className="text-sm font-medium">Clique para enviar imagem</span>
                            </div>
                         </div>

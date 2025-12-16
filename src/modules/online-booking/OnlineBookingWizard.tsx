@@ -1,30 +1,29 @@
 'use client';
 
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { 
-  Scissors, User, Calendar, CheckCircle2, ChevronLeft, 
-  MapPin, Phone, Clock, Home, ArrowRight,
+  Scissors, User, CheckCircle2, ChevronLeft, 
+  MapPin, Clock, Home, ArrowRight,
   Gift, Lock, Unlock, Sparkles, Star, Copy, History, CalendarCheck,
-  ShoppingBag, Package, Plus, Minus, Check, Users, UserPlus, Trash2, X, Zap, ChevronDown, Timer, AlertCircle,
-  Baby, Heart, UserCheck, Smile, CreditCard, Banknote, Smartphone, QrCode, Wallet, XCircle, RefreshCw,
-  ArrowRightCircle, Calculator
+  ShoppingBag, Package, Plus, Minus, Check, Users, UserPlus, X, Zap, AlertCircle,
+  Baby, Heart, UserCheck, Smile, CreditCard, Banknote, Smartphone, Wallet, XCircle, RefreshCw,
+  Calculator
 } from 'lucide-react';
-import { format, addDays, isSameDay, startOfToday, areIntervalsOverlapping, addMinutes, set, getDay } from 'date-fns';
+import { format, addDays, isSameDay, startOfToday, addMinutes, set, getDay } from 'date-fns';
 import { AppointmentStatus, Client, Dependent, PaymentMethod } from '@/types';
 
 type LucideIcon = React.ComponentType<{ className?: string }>;
 
 // Interfaces for local state
 interface BookingEntity {
-   id: string; // 'MAIN' or 'GUEST_1', etc.
-   name: string;
-   isMain: boolean;
-   serviceIds: string[];
-   // New: Staff Assignment Per Entity
-   assignedStaffId: string | null; 
+  id: string; // 'MAIN' or 'GUEST_1', etc.
+  name: string;
+  isMain: boolean;
+  serviceIds: string[];
+  // New: Staff Assignment Per Entity
+  assignedStaffId: string | null; 
 }
 
 const MIN_SPEND_FOR_LOYALTY = 20; // Threshold to earn a stamp
@@ -204,8 +203,9 @@ export const OnlineBookingWizard = () => {
         const currentQty = prev[id] || 0;
         const newQty = Math.max(0, currentQty + delta);
         if (newQty === 0) {
-           const { [id]: _, ...rest } = prev;
-           return rest;
+           const next = { ...prev };
+           delete next[id];
+           return next;
         }
         return { ...prev, [id]: newQty };
      });
@@ -1004,7 +1004,6 @@ export const OnlineBookingWizard = () => {
 
            <div className="space-y-6">
               {entitiesWithServices.map((entity, idx) => {
-                 const currentStaff = staff.find(s => s.id === entity.assignedStaffId);
                  const entityDuration = getEntityDuration(entity);
                  
                  return (
@@ -1043,7 +1042,7 @@ export const OnlineBookingWizard = () => {
                                 >
                                    <div className={`w-12 h-12 rounded-full overflow-hidden border-2 ${isSelected ? 'border-amber-500' : 'border-zinc-700'}`}>
                                       {member.avatar ? (
-                                         <img src={member.avatar} className="w-full h-full object-cover" />
+                                         <img src={member.avatar} alt={member.name} className="w-full h-full object-cover" />
                                       ) : (
                                          <div className="w-full h-full bg-zinc-800 flex items-center justify-center"><User className="w-6 h-6 text-zinc-500" /></div>
                                       )}

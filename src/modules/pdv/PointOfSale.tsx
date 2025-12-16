@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { CartItem, PaymentMethod } from '@/types';
 import { differenceInDays } from 'date-fns';
+import { ClubCreditBadge } from '@/modules/barber-club/components/ClubCreditBadge';
 
 // Icon Map for dynamic payments
 const PAYMENT_ICONS: Record<string, any> = {
@@ -75,6 +76,9 @@ export const PointOfSale = () => {
 
   // Discount State
   const [activeDiscount, setActiveDiscount] = useState<{type: string, amount: number} | null>(null);
+
+  // Club Credit State
+  const [clubCreditApplied, setClubCreditApplied] = useState(false);
 
   const selectedClient = clients.find(c => c.id === selectedClientId);
 
@@ -334,11 +338,34 @@ export const PointOfSale = () => {
                    <div className="mt-2 bg-emerald-500/10 border border-emerald-500/20 p-2 rounded flex justify-between items-center">
                       <span className="text-xs font-bold text-emerald-400">
                          {activeDiscount.type === 'BIRTHDAY' ? '🎂 Birthday Deal' : 
-                          activeDiscount.type === 'WINBACK' ? '👋 Win-Back Promo' : '🏆 Reward Claimed'}
+                          activeDiscount.type === 'WINBACK' ? '👋 Win-Back Promo' : 
+                          activeDiscount.type === 'CLUB_CREDIT' ? '👑 Crédito do Clube' : '🏆 Reward Claimed'}
                       </span>
-                      <button onClick={() => setActiveDiscount(null)} className="text-zinc-500 hover:text-white">
+                      <button onClick={() => { setActiveDiscount(null); setClubCreditApplied(false); }} className="text-zinc-500 hover:text-white">
                          <Trash2 className="w-3 h-3" />
                       </button>
+                   </div>
+                 )}
+
+                 {/* Barber Club Credit */}
+                 {!clubCreditApplied && !activeDiscount && (
+                   <div className="mt-2">
+                     <ClubCreditBadge
+                       clientId={selectedClientId}
+                       serviceId={cart.find(c => c.type === 'SERVICE')?.id}
+                       serviceName={cart.find(c => c.type === 'SERVICE')?.name}
+                       servicePrice={cart.find(c => c.type === 'SERVICE')?.price}
+                       staffId={selectedStaffId}
+                       staffName={staff.find(s => s.id === selectedStaffId)?.name}
+                       disabled={cart.filter(c => c.type === 'SERVICE').length === 0}
+                       onRedeemCredit={() => {
+                         const serviceInCart = cart.find(c => c.type === 'SERVICE');
+                         if (serviceInCart) {
+                           setActiveDiscount({ type: 'CLUB_CREDIT', amount: serviceInCart.price / subtotal });
+                           setClubCreditApplied(true);
+                         }
+                       }}
+                     />
                    </div>
                  )}
               </div>

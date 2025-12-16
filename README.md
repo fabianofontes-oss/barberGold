@@ -2,6 +2,21 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Modo de execução (DEMO vs PILOT)
+
+- **DEMO** (default)
+  - Persiste dados em `localStorage`.
+  - Não requer Supabase.
+  - `.env.local`:
+    - `NEXT_PUBLIC_APP_MODE=demo`
+
+- **PILOT**
+  - Persiste dados no Supabase (sem Auth/RLS por enquanto).
+  - Requer `.env.local`:
+    - `NEXT_PUBLIC_APP_MODE=pilot`
+    - `NEXT_PUBLIC_SUPABASE_URL=...`
+    - `NEXT_PUBLIC_SUPABASE_ANON_KEY=...`
+
 First, run the development server:
 
 ```bash

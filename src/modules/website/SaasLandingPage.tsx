@@ -1,22 +1,16 @@
 'use client';
 
-
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { 
-  Scissors, CheckCircle2, TrendingUp, Shield, Smartphone, Globe, 
-  ArrowRight, Star, BarChart2, Calendar, Zap, MessageCircle, 
-  AlertTriangle, DollarSign, Lock, Play, ChevronDown, Rocket, LayoutDashboard,
-  Users, CreditCard, PieChart, Bell, Calculator, Clock, CalendarCheck, Gift, Link, Menu, X
+  Scissors, CheckCircle2, TrendingUp, Shield, Globe, Users,
+  Zap, AlertTriangle, DollarSign, Calculator, CalendarCheck, Link, Menu, X
 } from 'lucide-react';
 
 export const SaasLandingPage = () => {
-  const { setView, landingPageConfig } = useBarber();
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const { setView } = useBarber();
   const [slugInput, setSlugInput] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const config = landingPageConfig;
 
   // Calculadora de Perda (Simulação Visual)
   const lostMoney = 3200; // Valor fictício de perda mensal sem sistema

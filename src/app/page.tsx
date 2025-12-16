@@ -11,6 +11,7 @@ import { Settings } from '@/modules/settings/Settings';
 import { Catalog } from '@/modules/catalog/Catalog';
 import { GrowthCommand } from '@/modules/growth/GrowthCommand';
 import { SmartPricing } from '@/modules/smart-pricing/SmartPricing';
+import { ClubDashboard } from '@/modules/barber-club/components/ClubDashboard';
 import { ReferralDashboard } from '@/modules/referrals/ReferralDashboard';
 import { MyPlan } from '@/modules/plan/MyPlan';
 import { WebsiteEditor } from '@/modules/website/WebsiteEditor';
@@ -27,27 +28,7 @@ import { SuperAdminLandingEditor } from '@/modules/super-admin/SuperAdminLanding
 import { SuperOfficeV2 } from '@/modules/office-v2/SuperOfficeV2';
 import { OnlineBookingWizard } from '@/modules/online-booking/OnlineBookingWizard';
 import { TipsReviewWizard } from '@/modules/tips/TipsReviewWizard';
-import { Login } from '@/modules/auth/Login';
-import { SaasLandingPage } from '@/modules/website/SaasLandingPage';
-import { Website } from '@/modules/website/Website';
-import { ReferralManager } from '@/modules/growth/ReferralManager';
-import { PlansV2 } from '@/modules/office-v2/PlansV2';
-import { TenantsListV2 } from '@/modules/office-v2/TenantsListV2';
-import { TenantDetailsV2 } from '@/modules/office-v2/TenantDetailsV2';
-import { PlanOverview } from '@/modules/settings/PlanOverview';
-import { ReferralSettingsPanel } from '@/modules/settings/ReferralSettingsPanel';
-import { WebsiteBuilder } from '@/modules/settings/WebsiteBuilder';
 import { Scissors, ArrowRight } from 'lucide-react';
-
-// Placeholder components for views not yet migrated
-const PlaceholderView = ({ name }: { name: string }) => (
-  <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-    <div className="bg-zinc-800 p-8 rounded-2xl border border-zinc-700">
-      <h2 className="text-2xl font-bold text-white mb-2">{name}</h2>
-      <p className="text-zinc-400">Este módulo será migrado em breve.</p>
-    </div>
-  </div>
-);
 
 // Login Screen Component
 const LoginScreen = ({ onLogin }: { onLogin: () => void }) => (
@@ -107,6 +88,8 @@ export default function Home() {
         return <GrowthCommand />;
       case 'SMART_PRICING':
         return <SmartPricing />;
+      case 'BARBER_CLUB':
+        return <ClubDashboard />;
       case 'REFERRALS':
         return <ReferralDashboard />;
       case 'WEBSITE_EDITOR':

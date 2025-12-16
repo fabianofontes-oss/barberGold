@@ -1,27 +1,13 @@
 'use client';
 
-
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { 
   Scissors, MapPin, Phone, Instagram, Clock, 
   CalendarCheck, Star, ArrowRight, User, ShoppingBag, 
-  Image as ImageIcon, MessageSquare, CreditCard, Banknote, 
-  Smartphone, Wallet, Zap, Facebook, ExternalLink, Mail, ArrowUp, Menu, X, LayoutDashboard
+  MessageSquare, Facebook, Mail, ArrowUp, Menu, X, LayoutDashboard
 } from 'lucide-react';
-import { PaymentMethod, WebsiteSectionType, ThemeColors } from '@/types';
-
-// Icons for Payment Methods
-const PaymentIcons: Record<string, any> = {
-   [PaymentMethod.CASH]: Banknote,
-   [PaymentMethod.CREDIT_CARD]: CreditCard,
-   [PaymentMethod.DEBIT_CARD]: CreditCard,
-   [PaymentMethod.PIX]: Smartphone,
-   [PaymentMethod.GOOGLE_PAY]: Wallet,
-   [PaymentMethod.APPLE_PAY]: Wallet,
-   [PaymentMethod.MERCADO_PAGO]: ShoppingBag,
-   [PaymentMethod.PAGSEGURO]: Zap,
-};
+import { ThemeColors } from '@/types';
 
 // --- PREMIUM CLASSIC PALETTE (PIRULITO STRICT) ---
 const CLASSIC_PALETTE = {
@@ -33,7 +19,7 @@ const CLASSIC_PALETTE = {
 };
 
 export const Website = () => {
-  const { shopProfile, shopSettings, services, staff, products, setView, categories } = useBarber();
+  const { shopProfile, shopSettings, services, staff, products, setView } = useBarber();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const config = shopSettings.website;
 
@@ -214,7 +200,7 @@ export const Website = () => {
      );
   };
 
-  const CategoryFilter = ({ items, current, onChange, textColor, borderColor }: { items: any[], current: string, onChange: (c: string) => void, textColor: string, borderColor: string }) => {
+  const CategoryFilter = ({ items, current, onChange, textColor }: { items: any[], current: string, onChange: (c: string) => void, textColor: string }) => {
      const availableCats = Array.from(new Set(items.map((i: any) => i.category || 'Geral')));
      if (availableCats.length <= 1) return null;
 
@@ -269,7 +255,7 @@ export const Website = () => {
               <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-sm">Nossos Serviços</h2>
               <p className="opacity-80 max-w-xl mx-auto font-medium">Técnicas clássicas e modernas para garantir o seu melhor visual.</p>
            </div>
-           <CategoryFilter items={services} current={catFilter} onChange={setCatFilter} textColor={styles.text} borderColor={styles.borderColor || 'transparent'} />
+           <CategoryFilter items={services} current={catFilter} onChange={setCatFilter} textColor={styles.text} />
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredServices.map(service => (
                  <div key={service.id} className="group p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border" 
@@ -307,8 +293,8 @@ export const Website = () => {
      return (
         <SectionWrapper id="products" styles={styles}>
            <div className="text-center mb-10"><h2 className="text-3xl md:text-4xl font-bold mb-4">Produtos Premium</h2><p className="opacity-80 max-w-xl mx-auto font-medium">Leve o cuidado profissional para casa.</p></div>
-           <CategoryFilter items={products} current={catFilter} onChange={setCatFilter} textColor={styles.text} borderColor={styles.borderColor || 'transparent'} />
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">{filteredProducts.map(product => (<div key={product.id} className="overflow-hidden group border" style={{ borderRadius: radius, backgroundColor: cardBg, borderColor: styles.borderColor || 'transparent', boxShadow: styles.shadow }}><div className="aspect-square relative overflow-hidden bg-white">{product.image ? (<img src={product.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />) : (<div className="w-full h-full flex items-center justify-center opacity-50"><ShoppingBag className="w-8 h-8 text-zinc-400" /></div>)}<div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><button onClick={handleBookNow} className="text-xs font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform shadow-lg px-4 py-2 uppercase" style={{ backgroundColor: btnBg, color: btnText, borderRadius: isClassic ? '4px' : radius }}>Comprar</button></div></div><div className="p-4 text-center"><h4 className="font-bold mb-1 truncate group-hover:text-amber-500 transition-colors" style={{color: cardText}}>{product.name}</h4><span className="font-bold opacity-80" style={{color: cardText}}>${product.price}</span></div></div>))}</div>
+           <CategoryFilter items={products} current={catFilter} onChange={setCatFilter} textColor={styles.text} />
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">{filteredProducts.map(product => (<div key={product.id} className="overflow-hidden group border" style={{ borderRadius: radius, backgroundColor: cardBg, borderColor: styles.borderColor || 'transparent', boxShadow: styles.shadow }}><div className="aspect-square relative overflow-hidden bg-white">{product.image ? (<img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />) : (<div className="w-full h-full flex items-center justify-center opacity-50"><ShoppingBag className="w-8 h-8 text-zinc-400" /></div>)}<div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><button onClick={handleBookNow} className="text-xs font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform shadow-lg px-4 py-2 uppercase" style={{ backgroundColor: btnBg, color: btnText, borderRadius: isClassic ? '4px' : radius }}>Comprar</button></div></div><div className="p-4 text-center"><h4 className="font-bold mb-1 truncate group-hover:text-amber-500 transition-colors" style={{color: cardText}}>{product.name}</h4><span className="font-bold opacity-80" style={{color: cardText}}>${product.price}</span></div></div>))}</div>
         </SectionWrapper>
      );
   };
@@ -319,7 +305,7 @@ export const Website = () => {
      return (
         <SectionWrapper id="gallery" styles={styles}>
            <div className="text-center mb-12"><h2 className="text-3xl md:text-4xl font-bold mb-4">Nosso Trabalho</h2><p className="opacity-80 font-medium">Um pouco do nosso dia a dia e resultados.</p></div>
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">{config.gallery.map((item, idx) => (<div key={idx} className="relative group overflow-hidden aspect-square bg-gray-100 shadow-md border-4" style={{ borderRadius: radius, borderColor: styles.cardBg }}><img src={item.url} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" /><div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-6">{item.caption && (<p className="text-white font-bold text-sm md:text-base translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{item.caption}</p>)}<span className="text-xs flex items-center gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity delay-100 text-amber-500"><Instagram className="w-3 h-3" /> @{shopProfile.instagram?.replace('@','')}</span></div></div>))}</div>
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">{config.gallery.map((item, idx) => (<div key={idx} className="relative group overflow-hidden aspect-square bg-gray-100 shadow-md border-4" style={{ borderRadius: radius, borderColor: styles.cardBg }}><img src={item.url} alt={item.caption || `Foto ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" /><div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-6">{item.caption && (<p className="text-white font-bold text-sm md:text-base translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{item.caption}</p>)}<span className="text-xs flex items-center gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity delay-100 text-amber-500"><Instagram className="w-3 h-3" /> @{shopProfile.instagram?.replace('@','')}</span></div></div>))}</div>
         </SectionWrapper>
      );
   };

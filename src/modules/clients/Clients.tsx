@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
@@ -8,8 +7,6 @@ import {
   Search, 
   UserPlus, 
   Phone, 
-  Calendar,
-  DollarSign,
   Trophy,
   Star,
   X,
@@ -17,22 +14,14 @@ import {
   FileText,
   Save,
   Clock,
-  Cake,
   AlertCircle,
-  CalendarCheck,
   Gift,
-  Share2,
-  MessageSquare,
   Lock,
   Unlock,
-  Crown,
-  Medal,
   ShieldCheck,
-  Sparkles,
-  Scissors,
   Users,
   Trash2
-} from 'lucide-react';
+ } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
 import { AppointmentStatus, Client, Dependent } from '@/types';
 
@@ -155,19 +144,6 @@ export const Clients = () => {
     if (selectedClient) {
       updateClient({ ...selectedClient, notes: noteText });
     }
-  };
-
-  const sendWhatsAppMessage = (e: React.MouseEvent, client: Client, type: 'OVERDUE' | 'WINBACK') => {
-    e.stopPropagation();
-    if (!isOwner) return;
-    
-    const daysSince = client.lastVisit ? differenceInDays(new Date(), client.lastVisit) : 0;
-    let message = type === 'OVERDUE' ? shopSettings.messageTemplateOverdue : shopSettings.messageTemplateWinBack;
-    message = message.replace('{name}', client.name).replace('{days}', daysSince.toString());
-    
-    const cleanPhone = client.phone.replace(/\D/g, '');
-    const url = `https://wa.me/55${cleanPhone}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
   };
 
   // Get Client History

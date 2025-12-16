@@ -1,12 +1,11 @@
 'use client';
 
-
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useSaasV2 } from '@/context/SaasV2Context';
 import { SaasV2PlanId, SaasV2SizeTier, SaasV2BillingInterval } from '@/types';
 import { getPlanPriceBR } from '@/utils/pricing';
-import { Check, Star, Lock, Crown, Users, Calendar, DollarSign, Globe, Heart, Zap, Tag, ShieldCheck, Box } from 'lucide-react';
+import { Check, Users, Calendar } from 'lucide-react';
 import { PlanComparisonTable } from './components/PlanComparisonTable';
 
 type PlanModuleInfo = {

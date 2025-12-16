@@ -170,7 +170,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                {isOwner && (
                   <>
                      <NavItem view="GROWTH" icon={TrendingUp} label="Growth Command" className="text-amber-500 font-bold" />
-                     <NavItem view="SMART_PRICING" icon={LineChart} label="Smart Yield" className="text-emerald-500 font-bold" />
+                     <NavItem view="BARBER_CLUB" icon={Crown} label="Barber Club™" className="text-purple-500 font-bold" />
+                     <NavItem view="SMART_PRICING" icon={LineChart} label="Dynamic Pricing" className="text-emerald-500 font-bold" />
                   </>
                )}
 

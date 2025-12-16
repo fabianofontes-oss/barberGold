@@ -5,12 +5,12 @@ import { useBarber } from '@/context/BarberContext';
 import { SAAS_PLANS_BR } from '@/constants';
 import { SaasPlanId } from '@/types';
 import { 
-  Building2, Users, DollarSign, Activity, Search, 
-  Plus, Shield, Lock, ExternalLink, Trash2,
-  CheckCircle, Globe, Server, Zap, RefreshCw, Eye,
+  Users, DollarSign, Activity, Search, 
+  Plus, Shield,
+  CheckCircle, Globe, Server, Zap,
   Ghost, Skull, Gift, AlertOctagon, Terminal
 } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { format } from 'date-fns';
 
 // MOCK LIVE EVENTS (Unchanged)
@@ -80,7 +80,8 @@ export const SuperAdminDashboard = () => {
      }
   };
 
-  const handleBless = (id: string) => {
+  const handleBless = (_id: string) => {
+     void _id;
      alert('✨ Tenant Blessed! (Feature: Would apply 100% discount for next cycle)');
   };
 

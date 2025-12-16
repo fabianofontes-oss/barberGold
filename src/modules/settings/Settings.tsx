@@ -1,21 +1,19 @@
 'use client';
 
-
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { StaffModal } from './modals/StaffModal';
 import { CommissionPlanModal } from './modals/CommissionPlanModal';
-import { ReferralSettingsPanel } from './ReferralSettingsPanel'; // NEW IMPORT
+import { ReferralSettingsPanel } from './ReferralSettingsPanel'; 
 import { ImageUpload } from '@/components/shared/ImageUpload';
 import { 
   Users, User, Phone, 
   Briefcase, TrendingUp, Percent, Edit2, CalendarClock, 
   Gift, Share2, Star, MessageSquare, Target,
-  Store, MapPin, Instagram, Globe, Clock, Shield, EyeOff,
-  Scale, Plus, Wallet, Zap, BarChart3, Copy,
-  Save, Coffee, Timer, Calculator, Link, UserMinus, ExternalLink,
-  CreditCard, Smartphone, Banknote, ShoppingBag, Terminal, Wifi, ThumbsUp,
-  Layout, MousePointer2, Utensils, DoorOpen, Trash2, Handshake
+  Store, MapPin, Instagram, Clock,
+  Scale, Plus, Wallet, Zap, Copy,
+  Save, Coffee, Timer, Link, UserMinus, ThumbsUp,
+  Utensils, DoorOpen, Trash2, Handshake
 } from 'lucide-react';
 import { StaffMember, DaySchedule, AppointmentStatus, PaymentMethod, BreakTime } from '@/types';
 
@@ -23,7 +21,7 @@ export const Settings = () => {
   const { 
     staff, commissionPlans, shopSettings, shopProfile, currentUser,
     deleteCommissionPlan, updateShopSettings, updateShopProfile, updateStaff,
-    appointments, setView
+    appointments
   } = useBarber();
   
   const isOwner = currentUser.role === 'OWNER';
@@ -32,14 +30,12 @@ export const Settings = () => {
   const [activeTab, setActiveTab] = useState<'SHOP' | 'TEAM' | 'COMMISSIONS' | 'MY_PROFILE' | 'REFERRAL'>('SHOP');
   
   // Payment Config Sub-tab
-  const [paymentConfigTab, setPaymentConfigTab] = useState<'IN_STORE' | 'ONLINE'>('IN_STORE');
-
   // Set default tab based on role
   useEffect(() => {
      if (!isOwner && activeTab !== 'MY_PROFILE') {
         setActiveTab('MY_PROFILE');
      }
-  }, [isOwner]);
+  }, [isOwner, activeTab]);
 
   // Modals
   const [isStaffModalOpen, setIsStaffModalOpen] = useState(false);
@@ -146,26 +142,6 @@ export const Settings = () => {
            durationMinutes: 15,
            ...(myProfileForm.smartBreak || {}),
            [field]: value
-        }
-     });
-  };
-
-  // Payment Toggle Logic
-  const togglePaymentMethod = (scope: 'inStore' | 'online', method: PaymentMethod) => {
-     const currentMethods = shopSettings.paymentSettings?.[scope] || [];
-     let newMethods;
-     
-     if (currentMethods.includes(method)) {
-        newMethods = currentMethods.filter(m => m !== method);
-     } else {
-        newMethods = [...currentMethods, method];
-     }
-
-     updateShopSettings({
-        paymentSettings: {
-           inStore: shopSettings.paymentSettings?.inStore || [],
-           online: shopSettings.paymentSettings?.online || [],
-           [scope]: newMethods
         }
      });
   };
