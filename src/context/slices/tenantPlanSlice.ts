@@ -1,7 +1,31 @@
 import { useMemo, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import type { SaasPlan, SaasPlanId, SaasV2TenantStatus, ShopProfile, Tenant, ViewState } from '@/types';
-import { SAAS_PLANS_BR } from '@/constants';
+import { PLANS_BR, type PlanDefinition } from '@/domain/plans';
+
+// Adapter: converte PlanDefinition (domain) para SaasPlan (legacy type)
+function toSaasPlan(plan: PlanDefinition): SaasPlan {
+  return {
+    id: plan.id,
+    name: plan.name,
+    description: '',
+    monthlyPriceBRL: plan.monthlyPriceBRL,
+    yearlyPriceBRL: plan.annualPriceBRL,
+    maxStaff: plan.limits.maxStaff,
+    maxLocations: plan.limits.maxLocations,
+    featureFlags: {
+      ONLINE_BOOKING: ['SOLO_PRO', 'EQUIPE', 'STUDIO', 'ENTERPRISE'].includes(plan.id),
+      LOYALTY: ['EQUIPE', 'STUDIO', 'ENTERPRISE'].includes(plan.id),
+      ADVANCED_REPORTS: ['EQUIPE', 'STUDIO', 'ENTERPRISE'].includes(plan.id),
+      MULTI_SHOP: ['STUDIO', 'ENTERPRISE'].includes(plan.id),
+      WEBSITE_PREMIUM: ['STUDIO', 'ENTERPRISE'].includes(plan.id),
+    },
+    order: plan.order,
+    isActive: true,
+  };
+}
+
+const DOMAIN_SAAS_PLANS: SaasPlan[] = PLANS_BR.map(toSaasPlan);
 
 export type TenantPlanSliceParams = {
   currentTenantId: string | null;
@@ -42,7 +66,7 @@ export function useTenantPlanSlice(params: TenantPlanSliceParams): TenantPlanSli
   } = params;
 
   const [isImpersonating, setIsImpersonating] = useState(false);
-  const [saasPlans, setSaasPlans] = useState<SaasPlan[]>(SAAS_PLANS_BR);
+  const [saasPlans, setSaasPlans] = useState<SaasPlan[]>(DOMAIN_SAAS_PLANS);
 
   const activeTenant = useMemo(() => {
     return currentTenantId ? getTenantById(currentTenantId) : undefined;

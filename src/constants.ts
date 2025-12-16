@@ -287,6 +287,11 @@ export const MOCK_INTEGRATIONS: Integration[] = [
 
 export const MOCK_REFERRALS: ReferralSource[] = [];
 
+/**
+ * @deprecated Use PLANS_BR from '@/domain/plans' instead.
+ * Esta constante será removida em versões futuras.
+ * Fonte única de verdade: src/domain/plans/plans.ts
+ */
 export const SAAS_PLANS_BR: SaasPlan[] = [
   {
     id: 'FREE',
