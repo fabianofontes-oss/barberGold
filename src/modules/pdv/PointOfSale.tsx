@@ -1,0 +1,507 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useBarber } from '@/context/BarberContext';
+import { 
+  Search, 
+  Trash2, 
+  CreditCard, 
+  Banknote, 
+  Smartphone,
+  ShoppingBag,
+  User,
+  Scissors,
+  Package,
+  Gift,
+  Star,
+  Zap,
+  HandCoins,
+  Wallet,
+  Calculator,
+  UserPlus,
+  X,
+  Save,
+  ChevronDown,
+  ChevronUp
+} from 'lucide-react';
+import { CartItem, PaymentMethod } from '@/types';
+import { differenceInDays } from 'date-fns';
+
+// Icon Map for dynamic payments
+const PAYMENT_ICONS: Record<string, any> = {
+   [PaymentMethod.CASH]: Banknote,
+   [PaymentMethod.CREDIT_CARD]: CreditCard,
+   [PaymentMethod.DEBIT_CARD]: CreditCard,
+   [PaymentMethod.PIX]: Smartphone,
+   [PaymentMethod.GOOGLE_PAY]: Wallet,
+   [PaymentMethod.APPLE_PAY]: Wallet,
+   [PaymentMethod.MERCADO_PAGO]: ShoppingBag,
+   [PaymentMethod.PAGSEGURO]: Calculator,
+   [PaymentMethod.INFINITE_PAY]: Zap,
+   [PaymentMethod.STONE]: Calculator,
+   [PaymentMethod.OTHER]: Banknote
+};
+
+const PAYMENT_LABELS: Record<string, string> = {
+   [PaymentMethod.CASH]: 'Dinheiro',
+   [PaymentMethod.CREDIT_CARD]: 'Crédito',
+   [PaymentMethod.DEBIT_CARD]: 'Débito',
+   [PaymentMethod.PIX]: 'Pix',
+   [PaymentMethod.GOOGLE_PAY]: 'Google Pay',
+   [PaymentMethod.APPLE_PAY]: 'Apple Pay',
+   [PaymentMethod.MERCADO_PAGO]: 'Mercado Pago',
+   [PaymentMethod.PAGSEGURO]: 'PagSeguro',
+   [PaymentMethod.INFINITE_PAY]: 'InfinitePay',
+   [PaymentMethod.STONE]: 'Stone',
+   [PaymentMethod.OTHER]: 'Outro'
+};
+
+export const PointOfSale = () => {
+  const { services, products, processSale, clients, staff, shopSettings, addClient } = useBarber();
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedClientId, setSelectedClientId] = useState<string>('');
+  const [selectedStaffId, setSelectedStaffId] = useState<string>('');
+  const [checkoutStep, setCheckoutStep] = useState<'CART' | 'PAYMENT' | 'SUCCESS'>('CART');
+  const [tipAmount, setTipAmount] = useState<number>(0);
+  
+  // Mobile View State
+  const [mobileView, setMobileView] = useState<'CATALOG' | 'CART'>('CATALOG');
+  
+  // Quick Add Client State
+  const [isClientModalOpen, setIsClientModalOpen] = useState(false);
+  const [newClientName, setNewClientName] = useState('');
+  const [newClientPhone, setNewClientPhone] = useState('');
+
+  // Discount State
+  const [activeDiscount, setActiveDiscount] = useState<{type: string, amount: number} | null>(null);
+
+  const selectedClient = clients.find(c => c.id === selectedClientId);
+
+  // Auto-detect Discounts when client changes
+  useEffect(() => {
+    if (!selectedClient) {
+      setActiveDiscount(null);
+      return;
+    }
+
+    // 1. Birthday Check
+    if (shopSettings.enableBirthdayDiscount && selectedClient.birthDate) {
+      const today = new Date();
+      const birth = new Date(selectedClient.birthDate);
+      if (birth.getDate() === today.getDate() && birth.getMonth() === today.getMonth()) {
+        setActiveDiscount({ type: 'BIRTHDAY', amount: 0.05 }); // 5%
+        return;
+      }
+    }
+
+    // 2. Win-Back Check (> 60 days)
+    if (shopSettings.enableWinBackDiscount && selectedClient.lastVisit) {
+      const daysSince = differenceInDays(new Date(), selectedClient.lastVisit);
+      if (daysSince > 60) {
+        setActiveDiscount({ type: 'WINBACK', amount: 0.05 }); // 5%
+        return;
+      }
+    }
+    
+    setActiveDiscount(null);
+  }, [selectedClientId, shopSettings, clients]);
+
+  const addToCart = (item: CartItem) => {
+    setCart([...cart, item]);
+  };
+
+  const removeFromCart = (index: number) => {
+    setCart(cart.filter((_, i) => i !== index));
+    if (cart.length <= 1) setMobileView('CATALOG'); // Auto close if empty
+  };
+
+  // Calculations
+  const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+  let discountAmount = 0;
+  
+  if (activeDiscount) {
+    if (activeDiscount.type === 'REWARD_REDEMPTION') {
+       // Free Lowest Service logic
+       const servicesInCart = cart.filter(c => c.type === 'SERVICE').sort((a,b) => a.price - b.price);
+       if (servicesInCart.length > 0) {
+         discountAmount = servicesInCart[0].price;
+       }
+    } else {
+       // Percentage based
+       discountAmount = subtotal * activeDiscount.amount;
+    }
+  }
+
+  const total = subtotal - discountAmount;
+  const grandTotal = total + (tipAmount || 0);
+
+  // Use the item's category if available, otherwise fallback to generic Type
+  const filteredItems = [
+    ...services, 
+    ...products
+  ].filter(item => 
+    item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
+  const handleCheckout = (method: PaymentMethod) => {
+    if (!selectedClientId) return; // Enforce Client
+    
+    const staffId = selectedStaffId || staff[0]?.id;
+    processSale(cart, selectedClientId, staffId, method, activeDiscount?.type, tipAmount);
+    setCheckoutStep('SUCCESS');
+    setTimeout(() => {
+      setCart([]);
+      setSelectedClientId('');
+      setSelectedStaffId('');
+      setTipAmount(0);
+      setCheckoutStep('CART');
+      setMobileView('CATALOG');
+      setActiveDiscount(null);
+    }, 2000);
+  };
+
+  const handleQuickAddClient = (e: React.FormEvent) => {
+     e.preventDefault();
+     if (newClientName && newClientPhone) {
+        const newId = addClient({
+           name: newClientName,
+           phone: newClientPhone,
+           email: '',
+           birthDate: ''
+        });
+        
+        // Auto Select the new client
+        setSelectedClientId(newId);
+
+        // Reset and close
+        setNewClientName('');
+        setNewClientPhone('');
+        setIsClientModalOpen(false);
+     }
+  };
+
+  const redeemLoyalty = () => {
+    if (selectedClient && (selectedClient.loyaltyPoints || 0) >= 10) {
+      setActiveDiscount({ type: 'REWARD_REDEMPTION', amount: 0 }); // Amount calculated dynamically
+    }
+  };
+
+  if (checkoutStep === 'SUCCESS') {
+    return (
+      <div className="h-full flex flex-col items-center justify-center animate-fade-in">
+        <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/30">
+          <ShoppingBag className="w-10 h-10 text-zinc-950" />
+        </div>
+        <h2 className="text-3xl font-bold text-white mb-2">Sale Completed!</h2>
+        <p className="text-zinc-400">Transaction recorded successfully.</p>
+        {tipAmount > 0 && <p className="text-amber-500 font-bold mt-2">+ ${tipAmount.toFixed(2)} Tip for Barber</p>}
+      </div>
+    );
+  }
+
+  // Determine enabled methods (Use In-Store Config)
+  const enabledMethods = shopSettings.paymentSettings?.inStore || [PaymentMethod.CASH, PaymentMethod.CREDIT_CARD, PaymentMethod.PIX];
+
+  return (
+    <div className="h-[calc(100vh-80px)] md:h-[calc(100vh-100px)] relative">
+      <div className="h-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left: Item Selection (Hidden on Mobile if Cart Open) */}
+        <div className={`flex-col h-full ${mobileView === 'CART' ? 'hidden lg:flex' : 'flex'}`}>
+          <div className="mb-4">
+            <h2 className="text-3xl font-bold text-white mb-2">Point of Sale</h2>
+            <div className="relative">
+              <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
+              <input 
+                type="text"
+                placeholder="Search services or products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
+              />
+            </div>
+          </div>
+
+          <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 gap-3 pb-24 lg:pb-0 scrollbar-hide">
+            {filteredItems.map((item, idx) => (
+              <button 
+                key={`${item.id}-${idx}`}
+                onClick={() => addToCart(item)}
+                className="bg-zinc-900 border border-zinc-800 rounded-xl p-0 flex flex-col items-start hover:border-amber-500 transition-all text-left group overflow-hidden relative shadow-sm"
+              >
+                 {item.type === 'PRODUCT' && 'image' in item && item.image && (
+                   <div className="w-full h-24 sm:h-32 overflow-hidden">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                   </div>
+                 )}
+                 {(!('image' in item) || !item.image) && (
+                    <div className="w-full h-24 sm:h-32 bg-zinc-950 flex items-center justify-center">
+                      {item.type === 'SERVICE' ? <Scissors className="w-8 h-8 text-zinc-700" /> : <Package className="w-8 h-8 text-zinc-700" />}
+                    </div>
+                 )}
+
+                <div className="p-3 w-full">
+                  <div className="flex justify-between w-full mb-1">
+                    <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
+                      item.type === 'SERVICE' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'
+                    }`}>
+                      {item.category || item.type}
+                    </span>
+                    <span className="font-bold text-white text-sm">${item.price}</span>
+                  </div>
+                  <h4 className="font-medium text-zinc-300 text-sm group-hover:text-amber-500 transition-colors line-clamp-1">{item.name}</h4>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: Cart & Checkout (Full Screen on Mobile when active) */}
+        <div className={`lg:col-span-1 bg-zinc-900 border border-zinc-800 lg:rounded-2xl flex flex-col h-full shadow-2xl absolute inset-0 z-30 lg:relative lg:z-0 lg:block ${mobileView === 'CART' ? 'block' : 'hidden'}`}>
+          {/* Mobile Header for Cart */}
+          <div className="lg:hidden p-4 border-b border-zinc-800 flex justify-between items-center bg-zinc-950">
+             <h3 className="font-bold text-white text-lg">Carrinho ({cart.length})</h3>
+             <button onClick={() => setMobileView('CATALOG')} className="p-2 bg-zinc-800 rounded-full text-zinc-400">
+                <ChevronDown className="w-5 h-5" />
+             </button>
+          </div>
+
+          <div className="p-4 sm:p-6 border-b border-zinc-800 space-y-4 bg-zinc-900">
+            {/* Desktop Header */}
+            <h3 className="text-xl font-bold text-white hidden lg:block">Current Sale</h3>
+            
+            <div className="grid grid-cols-2 gap-3">
+               <div className="relative">
+                  <User className="absolute left-3 top-2.5 w-4 h-4 text-zinc-500" />
+                  <div className="flex gap-2">
+                     <select 
+                       value={selectedClientId}
+                       onChange={(e) => setSelectedClientId(e.target.value)}
+                       className={`flex-1 bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-amber-500 ${!selectedClientId ? 'text-zinc-500 border-red-500/30' : 'text-zinc-300'}`}
+                     >
+                       <option value="" disabled>Client (Required)</option>
+                       {clients.map(c => (
+                         <option key={c.id} value={c.id}>{c.name}</option>
+                       ))}
+                     </select>
+                     <button 
+                        onClick={() => setIsClientModalOpen(true)}
+                        className="bg-zinc-800 hover:bg-zinc-700 text-white p-2 rounded-lg transition-colors border border-zinc-700"
+                        title="Quick Add Client"
+                     >
+                        <UserPlus className="w-4 h-4" />
+                     </button>
+                  </div>
+               </div>
+
+               <div className="relative">
+                  <Scissors className="absolute left-3 top-2.5 w-4 h-4 text-zinc-500" />
+                  <select 
+                    value={selectedStaffId}
+                    onChange={(e) => setSelectedStaffId(e.target.value)}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm text-zinc-300 focus:outline-none focus:border-amber-500"
+                  >
+                    <option value="" disabled>Staff...</option>
+                    {staff.map(s => (
+                      <option key={s.id} value={s.id}>{s.name}</option>
+                    ))}
+                  </select>
+               </div>
+            </div>
+
+            {/* Loyalty & Discount Context */}
+            {selectedClient && (
+              <div className="bg-zinc-950 rounded-lg p-3 border border-zinc-800">
+                 <div className="flex justify-between items-center mb-1">
+                    <span className="text-xs text-zinc-400">Loyalty Status</span>
+                    <span className="text-xs font-bold text-amber-500">{selectedClient.loyaltyPoints || 0}/10 Stamps</span>
+                 </div>
+                 
+                 {/* Redeem Button */}
+                 {(selectedClient.loyaltyPoints || 0) >= 10 && shopSettings.enableLoyaltyCard && !activeDiscount && (
+                   <button 
+                     onClick={redeemLoyalty}
+                     className="w-full mt-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-900 text-xs font-bold py-1.5 rounded animate-pulse"
+                   >
+                      Redeem Free Cut Reward
+                   </button>
+                 )}
+
+                 {/* Active Discount Display */}
+                 {activeDiscount && (
+                   <div className="mt-2 bg-emerald-500/10 border border-emerald-500/20 p-2 rounded flex justify-between items-center">
+                      <span className="text-xs font-bold text-emerald-400">
+                         {activeDiscount.type === 'BIRTHDAY' ? '🎂 Birthday Deal' : 
+                          activeDiscount.type === 'WINBACK' ? '👋 Win-Back Promo' : '🏆 Reward Claimed'}
+                      </span>
+                      <button onClick={() => setActiveDiscount(null)} className="text-zinc-500 hover:text-white">
+                         <Trash2 className="w-3 h-3" />
+                      </button>
+                   </div>
+                 )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+            {cart.length === 0 ? (
+              <div className="text-center text-zinc-500 py-10">
+                <ShoppingBag className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                <p>Cart is empty</p>
+              </div>
+            ) : (
+              cart.map((item, idx) => (
+                <div key={idx} className="flex justify-between items-center bg-zinc-950/50 p-3 rounded-lg border border-zinc-800/50">
+                  <div className="flex items-center gap-3">
+                     {item.type === 'PRODUCT' && 'image' in item && item.image && (
+                        <img src={item.image} className="w-8 h-8 rounded object-cover" />
+                     )}
+                     <div>
+                      <p className="text-zinc-200 font-medium text-sm">{item.name}</p>
+                      <p className="text-xs text-zinc-500">{item.category || item.type}</p>
+                     </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-amber-500 font-medium">${item.price}</span>
+                    <button onClick={() => removeFromCart(idx)} className="text-zinc-600 hover:text-red-400">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="p-6 bg-zinc-950 rounded-b-2xl border-t border-zinc-800 pb-safe">
+            <div className="space-y-2 mb-6">
+               <div className="flex justify-between items-center text-sm text-zinc-500">
+                 <span>Subtotal</span>
+                 <span>${subtotal.toFixed(2)}</span>
+               </div>
+               {discountAmount > 0 && (
+                  <div className="flex justify-between items-center text-sm text-emerald-500 font-bold">
+                    <span className="flex items-center gap-1"><Zap className="w-3 h-3" /> Discount</span>
+                    <span>-${discountAmount.toFixed(2)}</span>
+                  </div>
+               )}
+               
+               {checkoutStep === 'PAYMENT' && (
+                  <div className="flex justify-between items-center text-sm text-amber-500 font-bold bg-amber-500/10 p-2 rounded-lg border border-amber-500/20">
+                    <span className="flex items-center gap-1"><HandCoins className="w-3 h-3" /> Tip (100% to Staff)</span>
+                    <div className="flex items-center gap-1">
+                       <span className="text-zinc-500 text-xs">$</span>
+                       <input 
+                          type="number" 
+                          min="0" 
+                          step="1"
+                          className="w-16 bg-transparent text-right outline-none focus:border-b border-amber-500"
+                          value={tipAmount}
+                          onChange={e => setTipAmount(Number(e.target.value))}
+                       />
+                    </div>
+                  </div>
+               )}
+
+               <div className="flex justify-between items-center pt-2 border-t border-zinc-800">
+                 <span className="text-zinc-300 font-bold">Total Due</span>
+                 <span className="text-3xl font-bold text-white">${grandTotal.toFixed(2)}</span>
+               </div>
+            </div>
+
+            {checkoutStep === 'CART' ? (
+              <button 
+                disabled={cart.length === 0 || !selectedStaffId || !selectedClientId}
+                onClick={() => setCheckoutStep('PAYMENT')}
+                className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-zinc-900 font-bold py-4 rounded-xl transition-all shadow-lg shadow-amber-500/20"
+              >
+                {!selectedClientId ? 'Select Client' : (selectedStaffId ? 'Proceed to Payment' : 'Select Staff')}
+              </button>
+            ) : (
+              <div className="grid grid-cols-3 gap-2">
+                {enabledMethods.map(method => {
+                   const Icon = PAYMENT_ICONS[method] || Banknote;
+                   return (
+                      <button 
+                         key={method} 
+                         onClick={() => handleCheckout(method)} 
+                         className="bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl flex flex-col items-center gap-2 transition-colors border border-transparent hover:border-zinc-600"
+                      >
+                         <Icon className="w-6 h-6 text-zinc-400" />
+                         <span className="text-[10px] font-medium text-white text-center leading-tight">
+                            {PAYMENT_LABELS[method] || method}
+                         </span>
+                      </button>
+                   );
+                })}
+                
+                <button 
+                  onClick={() => setCheckoutStep('CART')}
+                  className="col-span-3 mt-2 text-zinc-500 hover:text-white text-sm py-2"
+                >
+                  Back to Cart
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE FLOATING CART BAR */}
+      {cart.length > 0 && mobileView === 'CATALOG' && (
+         <div className="lg:hidden fixed bottom-0 left-0 w-full p-4 bg-zinc-950 border-t border-zinc-800 z-20 safe-area-bottom">
+            <button 
+               onClick={() => setMobileView('CART')}
+               className="w-full bg-amber-500 text-zinc-900 font-bold py-3 rounded-xl shadow-lg flex justify-between items-center px-6 animate-fade-in-up"
+            >
+               <span className="flex items-center gap-2"><ShoppingBag className="w-5 h-5" /> {cart.length} itens</span>
+               <div className="flex items-center gap-2">
+                  <span>Ver Carrinho</span>
+                  <span className="bg-black/20 px-2 py-0.5 rounded text-sm">${grandTotal.toFixed(2)}</span>
+                  <ChevronUp className="w-4 h-4" />
+               </div>
+            </button>
+         </div>
+      )}
+
+      {/* QUICK ADD CLIENT MODAL */}
+      {isClientModalOpen && (
+         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+            <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-sm p-6 shadow-2xl animate-fade-in md:rounded-2xl border-0 md:border md:border-zinc-800 flex flex-col justify-center">
+               <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xl font-bold text-white">Quick Add Client</h3>
+                  <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"><X className="w-5 h-5"/></button>
+               </div>
+               <form onSubmit={handleQuickAddClient} className="space-y-6">
+                  <div>
+                     <label className="block text-sm font-bold text-zinc-400 mb-2">Full Name</label>
+                     <input 
+                        type="text" 
+                        required 
+                        value={newClientName}
+                        onChange={e => setNewClientName(e.target.value)}
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-amber-500 outline-none text-lg"
+                     />
+                  </div>
+                  <div>
+                     <label className="block text-sm font-bold text-zinc-400 mb-2">Phone (Required)</label>
+                     <input 
+                        type="tel" 
+                        required 
+                        value={newClientPhone}
+                        onChange={e => setNewClientPhone(e.target.value)}
+                        placeholder="(00) 00000-0000"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-amber-500 outline-none text-lg"
+                     />
+                  </div>
+                  <button type="submit" className="w-full bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold py-4 rounded-xl flex items-center justify-center gap-2 mt-4 text-lg shadow-lg">
+                     <Save className="w-5 h-5" /> Save Client
+                  </button>
+               </form>
+            </div>
+         </div>
+      )}
+    </div>
+  );
+};
