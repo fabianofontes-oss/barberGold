@@ -8,6 +8,10 @@ import { DailyGoalWidget } from '@/components/widgets/DailyGoalWidget';
 import { PlanSummaryCard } from './PlanSummaryCard';
 import { MyReferralsPanel } from '@/modules/clients/MyReferralsPanel';
 import { NoShowApprovalPanel } from './components/NoShowApprovalPanel';
+import { BarberRanking } from './components/BarberRanking';
+import { BirthdayClients } from './components/BirthdayClients';
+import { InactiveClients } from './components/InactiveClients';
+import { DaySummary } from './components/DaySummary';
 import { 
   Users, 
   CalendarCheck, 
@@ -103,6 +107,12 @@ export const Dashboard = () => {
 
       {/* NO-SHOW APPROVAL PANEL (Owner Only) */}
       <NoShowApprovalPanel />
+
+      {/* BIRTHDAY CLIENTS */}
+      <BirthdayClients />
+
+      {/* DAY SUMMARY */}
+      <DaySummary />
 
       {/* GAMIFICATION WIDGET (Shows Shop Goal for Everyone to motivate team) */}
       <DailyGoalWidget currentRevenue={todayRevenue} goal={dailyGoal} />
@@ -262,6 +272,12 @@ export const Dashboard = () => {
 
         {/* Up Next & Quick Actions & REFERRALS */}
         <div className="space-y-6">
+
+          {/* BARBER RANKING */}
+          <BarberRanking />
+
+          {/* INACTIVE CLIENTS (Win-back) */}
+          {isOwner && <InactiveClients />}
           
           {/* MY REFERRALS PANEL (Visible for all) */}
           {shopSettings.referralConfig?.enabled && (
