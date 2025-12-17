@@ -177,48 +177,64 @@ export const MyReferralsPanel: React.FC = () => {
     );
   }
 
-  // --- 2. OWNER VIEW (Compacto - Horizontal) ---
+  // --- 2. OWNER VIEW (Elegante - Compacto com destaque) ---
   return (
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4 text-xs text-zinc-200 shadow-lg">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* Título + Total */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Link2 className="w-5 h-5 text-amber-500" />
-            <span className="font-bold text-white">Indicações</span>
+    <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/5 via-zinc-900 to-emerald-500/5 p-4 md:p-5 shadow-lg relative overflow-hidden">
+      {/* Glow effect */}
+      <div className="absolute -top-10 -left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* Left: Stats */}
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-amber-500/20 rounded-xl">
+              <Link2 className="w-5 h-5 text-amber-400" />
+            </div>
+            <div>
+              <p className="text-[10px] text-amber-400/70 uppercase font-bold tracking-wider">Programa de Indicações</p>
+              <p className="text-lg font-bold text-white">Seus Resultados</p>
+            </div>
           </div>
-          
-          <div className="flex items-center gap-6 text-sm">
-            <div className="flex items-center gap-2">
-              <span className="text-zinc-500">Direto:</span>
-              <span className="font-bold text-amber-400">{ownerTotals.directCount}</span>
+
+          <div className="hidden md:flex items-center gap-4">
+            <div className="text-center px-4 py-2 bg-zinc-950/50 rounded-xl border border-zinc-800">
+              <p className="text-xl font-bold text-amber-400">{ownerTotals.directCount}</p>
+              <p className="text-[9px] text-zinc-500 uppercase">Direto</p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-zinc-500">Rede:</span>
-              <span className="font-bold text-purple-400">{ownerTotals.networkCount}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-zinc-500">Total:</span>
-              <span className="font-bold text-emerald-400">R$ {ownerTotals.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+            <div className="text-center px-4 py-2 bg-zinc-950/50 rounded-xl border border-zinc-800">
+              <p className="text-xl font-bold text-purple-400">{ownerTotals.networkCount}</p>
+              <p className="text-[9px] text-zinc-500 uppercase">Rede</p>
             </div>
           </div>
         </div>
 
-        {/* Link Promocional */}
+        {/* Center: Total (destaque) */}
+        <div className="flex items-center gap-4 bg-emerald-500/10 border border-emerald-500/30 px-5 py-3 rounded-xl">
+          <DollarSign className="w-6 h-6 text-emerald-400" />
+          <div>
+            <p className="text-[9px] text-emerald-400/70 uppercase font-bold">Total Ganho</p>
+            <p className="text-2xl font-bold text-emerald-400">R$ {ownerTotals.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+          </div>
+        </div>
+
+        {/* Right: Link */}
         {ownerMyLinks.length > 0 && (
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-zinc-950 px-3 py-2 rounded-lg border border-zinc-800">
-              <span className="text-[10px] text-zinc-500 uppercase">Código:</span>
-              <span className="font-mono font-bold text-white">{ownerMyLinks[0].code}</span>
+          <div className="flex items-center gap-2 bg-zinc-950 px-3 py-2 rounded-xl border border-zinc-800">
+            <div className="text-right">
+              <p className="text-[9px] text-zinc-500 uppercase">Seu Código</p>
+              <p className="font-mono font-bold text-amber-400">{ownerMyLinks[0].code}</p>
             </div>
             <button 
               type="button" 
               onClick={() => handleCopy(ownerMyLinks[0].code, ownerMyLinks[0].id)}
-              className={`px-3 py-2 rounded-lg border text-[10px] font-bold flex items-center gap-2 transition-all ${
-                copiedId === ownerMyLinks[0].id ? 'bg-emerald-500 text-zinc-900 border-emerald-500' : 'border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-white'
+              className={`p-2 rounded-lg border transition-all ${
+                copiedId === ownerMyLinks[0].id 
+                  ? 'bg-emerald-500 text-zinc-900 border-emerald-500' 
+                  : 'border-amber-500/30 text-amber-400 hover:bg-amber-500/10'
               }`}
             >
-              {copiedId === ownerMyLinks[0].id ? (<>Copiado <Check className="w-3 h-3" /></>) : (<>Copiar <Copy className="w-3 h-3" /></>)}
+              {copiedId === ownerMyLinks[0].id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
         )}
