@@ -111,6 +111,11 @@ export const Dashboard = () => {
       {/* BIRTHDAY CLIENTS */}
       <BirthdayClients />
 
+      {/* MY REFERRALS PANEL - Horizontal at top */}
+      {shopSettings.referralConfig?.enabled && (
+        <MyReferralsPanel />
+      )}
+
       {/* DAY SUMMARY (Integrado com stats do dono) */}
       <DaySummary todayRevenue={todayRevenue} activeClientsCount={activeClientsCount} />
 
@@ -243,11 +248,6 @@ export const Dashboard = () => {
 
           {/* INACTIVE CLIENTS (Win-back) */}
           {isOwner && <InactiveClients />}
-          
-          {/* MY REFERRALS PANEL (Visible for all) */}
-          {shopSettings.referralConfig?.enabled && (
-             <MyReferralsPanel />
-          )}
 
           {/* COMPLETED APPOINTMENTS (Feedback Trigger) - CONDITIONAL RENDERING */}
           {shopSettings.enableTipsReview && (
