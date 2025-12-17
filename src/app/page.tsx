@@ -14,7 +14,7 @@ import { SmartPricing } from '@/modules/smart-pricing/SmartPricing';
 import { ClubDashboard } from '@/modules/barber-club/components/ClubDashboard';
 import { ReferralDashboard } from '@/modules/referrals/ReferralDashboard';
 import { MyPlan } from '@/modules/plan/MyPlan';
-import { WebsiteEditor } from '@/modules/website/WebsiteEditor';
+import { WebsiteBuilder } from '@/modules/website/WebsiteBuilder';
 import { Website } from '@/modules/website/Website';
 import { SaasLandingPage } from '@/modules/website/SaasLandingPage';
 import { SuperAdminDashboard } from '@/modules/super-admin/SuperAdminDashboard';
@@ -104,7 +104,7 @@ export default function Home() {
       case 'REFERRALS':
         return <ReferralDashboard />;
       case 'WEBSITE_EDITOR':
-        return <WebsiteEditor />;
+        return <WebsiteBuilder />;
       case 'SUPER_ADMIN_DASHBOARD':
         return <SuperAdminDashboard />;
       case 'SUPER_ADMIN_TENANTS':
