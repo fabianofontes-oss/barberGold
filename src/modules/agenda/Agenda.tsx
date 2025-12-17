@@ -341,21 +341,39 @@ export const Agenda = () => {
                               .sort((a, b) => a.date.getTime() - b.date.getTime())
                               .map(appt => {
                                  const isBlocked = appt.status === AppointmentStatus.BLOCKED;
+                                 const isCheckedIn = appt.status === AppointmentStatus.CHECKED_IN;
+                                 const isInProgress = appt.status === AppointmentStatus.IN_PROGRESS;
+                                 const isCompleted = appt.status === AppointmentStatus.COMPLETED;
+                                 
+                                 // Status-based styling
+                                 const getCardStyle = () => {
+                                    if (isBlocked) return 'bg-zinc-950/80 border-dashed border-zinc-700';
+                                    if (isCompleted) return 'bg-zinc-900/50 border-zinc-800 opacity-60';
+                                    if (isInProgress) return 'bg-amber-500/10 border-amber-500/50 ring-2 ring-amber-500/30';
+                                    if (isCheckedIn) return 'bg-blue-500/10 border-blue-500/50';
+                                    return 'bg-zinc-800 border-zinc-700 hover:border-amber-500';
+                                 };
+
+                                 // Status badge
+                                 const getStatusBadge = () => {
+                                    if (isInProgress) return <span className="text-[8px] bg-amber-500 text-zinc-900 px-1.5 py-0.5 rounded font-bold uppercase animate-pulse">Atendendo</span>;
+                                    if (isCheckedIn) return <span className="text-[8px] bg-blue-500 text-white px-1.5 py-0.5 rounded font-bold uppercase">Aguardando</span>;
+                                    if (isCompleted) return <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold uppercase">Concluído</span>;
+                                    return null;
+                                 };
+
                                  return (
                                     <div 
                                        key={appt.id} 
-                                       className={`p-3 rounded-xl border flex flex-col gap-1 shadow-lg transition-all ${
-                                          isBlocked 
-                                          ? 'bg-zinc-950/80 border-dashed border-zinc-700' 
-                                          : appt.status === AppointmentStatus.COMPLETED 
-                                             ? 'bg-zinc-900/50 border-zinc-800 opacity-60' 
-                                             : 'bg-zinc-800 border-zinc-700 hover:border-amber-500'
-                                       }`}
+                                       className={`p-3 rounded-xl border flex flex-col gap-1 shadow-lg transition-all ${getCardStyle()}`}
                                     >
                                        <div className="flex justify-between items-start">
-                                          <span className={`text-sm font-bold ${isBlocked ? 'text-zinc-500' : 'text-white'}`}>
-                                             {format(appt.date, 'HH:mm')}
-                                          </span>
+                                          <div className="flex items-center gap-2">
+                                             <span className={`text-sm font-bold ${isBlocked ? 'text-zinc-500' : 'text-white'}`}>
+                                                {format(appt.date, 'HH:mm')}
+                                             </span>
+                                             {getStatusBadge()}
+                                          </div>
                                           {!isBlocked && (
                                              <span className="text-xs font-bold text-amber-500">${appt.price}</span>
                                           )}
@@ -375,13 +393,14 @@ export const Agenda = () => {
                                        )}
 
                                        <div className="mt-2 flex gap-2 border-t border-zinc-700/50 pt-2">
+                                          {/* SCHEDULED: Check-in */}
                                           {appt.status === AppointmentStatus.SCHEDULED && !isBlocked && (
                                              <>
                                                 <button 
-                                                   onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.COMPLETED)}
-                                                   className="flex-1 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 rounded text-[10px] font-bold text-center"
+                                                   onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.CHECKED_IN)}
+                                                   className="flex-1 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded text-[10px] font-bold text-center"
                                                 >
-                                                   Finish
+                                                   ✓ Chegou
                                                 </button>
                                                 <button 
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.CANCELLED)}
@@ -390,6 +409,33 @@ export const Agenda = () => {
                                                    <XCircle className="w-3 h-3" />
                                                 </button>
                                              </>
+                                          )}
+                                          {/* CHECKED_IN: Start */}
+                                          {appt.status === AppointmentStatus.CHECKED_IN && !isBlocked && (
+                                             <>
+                                                <button 
+                                                   onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.IN_PROGRESS)}
+                                                   className="flex-1 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded text-[10px] font-bold text-center animate-pulse"
+                                                >
+                                                   ▶ Iniciar
+                                                </button>
+                                                <button 
+                                                   onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.SCHEDULED)}
+                                                   className="px-2 py-1 bg-zinc-700 hover:bg-zinc-600 text-zinc-400 rounded text-[10px]"
+                                                   title="Voltar"
+                                                >
+                                                   ↩
+                                                </button>
+                                             </>
+                                          )}
+                                          {/* IN_PROGRESS: Finish */}
+                                          {appt.status === AppointmentStatus.IN_PROGRESS && !isBlocked && (
+                                             <button 
+                                                onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.COMPLETED)}
+                                                className="flex-1 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-900 rounded text-[10px] font-bold text-center"
+                                             >
+                                                ✓ Finalizar
+                                             </button>
                                           )}
                                           {isBlocked && (
                                              <button 

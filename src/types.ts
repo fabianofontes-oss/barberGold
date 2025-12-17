@@ -3,6 +3,8 @@ export type ViewState = 'DASHBOARD' | 'AGENDA' | 'PDV' | 'CLIENTS' | 'FINANCE' |
 
 export enum AppointmentStatus {
   SCHEDULED = 'SCHEDULED',
+  CHECKED_IN = 'CHECKED_IN',      // Cliente chegou
+  IN_PROGRESS = 'IN_PROGRESS',    // Atendimento iniciado
   COMPLETED = 'COMPLETED',
   CANCELLED = 'CANCELLED',
   BLOCKED = 'BLOCKED'

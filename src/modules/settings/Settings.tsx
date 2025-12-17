@@ -364,6 +364,56 @@ export const Settings = () => {
                 </div>
              </div>
 
+             {/* Share Your Shop */}
+             <div className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/30 rounded-xl p-6">
+                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                   <Share2 className="w-5 h-5 text-purple-400" /> Compartilhar sua Barbearia
+                </h3>
+                <p className="text-zinc-400 text-sm mb-4">
+                   Divulgue sua barbearia nas redes sociais e atraia mais clientes!
+                </p>
+                <div className="flex flex-wrap gap-3">
+                   <button
+                      onClick={() => {
+                         const text = `Conheça a ${shopProfile.name}! Agende seu horário: ${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`;
+                         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+                      }}
+                      className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-xl transition-all"
+                   >
+                      <MessageSquare className="w-4 h-4" /> WhatsApp
+                   </button>
+                   <button
+                      onClick={() => {
+                         const text = `Conheça a ${shopProfile.name}! Agende seu horário online.`;
+                         const url = `${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`;
+                         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
+                      }}
+                      className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all"
+                   >
+                      <Share2 className="w-4 h-4" /> Facebook
+                   </button>
+                   <button
+                      onClick={() => {
+                         navigator.clipboard.writeText(`${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`);
+                         alert('Link copiado! Cole no seu Instagram.');
+                      }}
+                      className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold rounded-xl transition-all"
+                   >
+                      <Instagram className="w-4 h-4" /> Copiar para Instagram
+                   </button>
+                   <button
+                      onClick={() => {
+                         const link = `${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`;
+                         navigator.clipboard.writeText(link);
+                         alert('Link de agendamento copiado!');
+                      }}
+                      className="flex items-center gap-2 px-4 py-2.5 bg-zinc-700 hover:bg-zinc-600 text-white font-bold rounded-xl transition-all"
+                   >
+                      <Link className="w-4 h-4" /> Copiar Link
+                   </button>
+                </div>
+             </div>
+
              {/* Operating Hours */}
              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <div className="flex justify-between items-center mb-4">
