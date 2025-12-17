@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { QueuePanel } from './components/QueuePanel';
+import { AppointmentDetailModal } from './components/AppointmentDetailModal';
 import { 
   format, 
   addDays, 
@@ -37,7 +38,7 @@ import {
   UserPlus,
   Save
 } from 'lucide-react';
-import { AppointmentStatus, RecurrenceType } from '@/types';
+import { AppointmentStatus, RecurrenceType, Appointment } from '@/types';
 
 export const Agenda = () => {
   const { appointments, services, clients, staff, addAppointment, updateAppointmentStatus, currentUser, shopProfile, addClient } = useBarber();
@@ -45,6 +46,15 @@ export const Agenda = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookingType, setBookingType] = useState<'SERVICE' | 'BLOCK'>('SERVICE');
   const [showQueue, setShowQueue] = useState(true); // Toggle for Queue Sidebar
+
+  // Appointment Detail Modal State (Mobile)
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  const openAppointmentDetail = (appt: Appointment) => {
+    setSelectedAppointment(appt);
+    setIsDetailModalOpen(true);
+  };
 
   // Modal State
   const [newApptClientId, setNewApptClientId] = useState('');
@@ -372,7 +382,8 @@ export const Agenda = () => {
                                  return (
                                     <div 
                                        key={appt.id} 
-                                       className={`p-3 rounded-xl border flex flex-col gap-1 shadow-lg transition-all ${getCardStyle()}`}
+                                       onClick={() => openAppointmentDetail(appt)}
+                                       className={`p-3 rounded-xl border flex flex-col gap-1 shadow-lg transition-all cursor-pointer active:scale-95 ${getCardStyle()}`}
                                     >
                                        <div className="flex justify-between items-start">
                                           <div className="flex items-center gap-2">
@@ -741,6 +752,13 @@ export const Agenda = () => {
             </div>
          </div>
       )}
+
+      {/* Appointment Detail Modal (Mobile-First) */}
+      <AppointmentDetailModal
+        isOpen={isDetailModalOpen}
+        onClose={() => setIsDetailModalOpen(false)}
+        appointment={selectedAppointment}
+      />
     </div>
   );
 };
