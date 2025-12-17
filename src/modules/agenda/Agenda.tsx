@@ -4,10 +4,13 @@ import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { QueuePanel } from './components/QueuePanel';
 import { AppointmentDetailModal } from './components/AppointmentDetailModal';
+import { MonthlyCalendar } from './components/MonthlyCalendar';
 import { 
   format, 
   addDays, 
-  startOfToday, 
+  startOfToday,
+  addMonths as addMonthsFn,
+  subMonths, 
   isSameDay, 
   set,
   addMonths,
@@ -50,6 +53,10 @@ export const Agenda = () => {
   // Appointment Detail Modal State (Mobile)
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  // View Mode: WEEK (7 days) or MONTH (calendar)
+  const [viewMode, setViewMode] = useState<'WEEK' | 'MONTH'>('WEEK');
+  const [currentMonth, setCurrentMonth] = useState(startOfToday());
 
   const openAppointmentDetail = (appt: Appointment) => {
     setSelectedAppointment(appt);
@@ -289,7 +296,43 @@ export const Agenda = () => {
             </div>
          </div>
 
-         {/* Date Selector */}
+         {/* View Mode Toggle */}
+         <div className="flex items-center gap-2 mb-4 px-1 md:px-0">
+            <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
+               <button
+                  onClick={() => setViewMode('WEEK')}
+                  className={`px-3 py-1.5 text-xs font-bold rounded transition-all ${viewMode === 'WEEK' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-400 hover:text-white'}`}
+               >
+                  Semana
+               </button>
+               <button
+                  onClick={() => setViewMode('MONTH')}
+                  className={`px-3 py-1.5 text-xs font-bold rounded transition-all ${viewMode === 'MONTH' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-400 hover:text-white'}`}
+               >
+                  Mês
+               </button>
+            </div>
+         </div>
+
+         {/* Monthly Calendar View */}
+         {viewMode === 'MONTH' && (
+            <div className="mb-4">
+               <MonthlyCalendar
+                  currentMonth={currentMonth}
+                  appointments={appointments}
+                  selectedDate={selectedDate}
+                  onSelectDate={(date) => {
+                     setSelectedDate(date);
+                     setViewMode('WEEK'); // Auto-switch to week view after selecting
+                  }}
+                  onPrevMonth={() => setCurrentMonth(subMonths(currentMonth, 1))}
+                  onNextMonth={() => setCurrentMonth(addMonthsFn(currentMonth, 1))}
+               />
+            </div>
+         )}
+
+         {/* Date Selector (Week View) */}
+         {viewMode === 'WEEK' && (
          <div className="flex gap-4 overflow-x-auto pb-4 mb-4 scrollbar-hide px-1 md:px-0">
             {dates.map((date) => {
                const isSelected = isSameDay(date, selectedDate);
@@ -313,6 +356,7 @@ export const Agenda = () => {
                );
             })}
          </div>
+         )}
 
          {/* --- MULTI-COLUMN TIMELINE VIEW --- */}
          <div className="flex-1 overflow-hidden bg-zinc-900/30 rounded-2xl border border-zinc-800 md:mr-4 flex flex-col relative">
@@ -410,7 +454,13 @@ export const Agenda = () => {
                                           </div>
                                        )}
 
-                                       <div className="mt-2 flex gap-2 border-t border-zinc-700/50 pt-2">
+                                       {/* Mobile: Tap indicator */}
+                                       <div className="md:hidden mt-2 text-center border-t border-zinc-700/30 pt-2">
+                                          <span className="text-[9px] text-zinc-500">Toque para detalhes</span>
+                                       </div>
+
+                                       {/* Desktop: Action buttons */}
+                                       <div className="hidden md:flex mt-2 gap-2 border-t border-zinc-700/50 pt-2" onClick={e => e.stopPropagation()}>
                                           {/* SCHEDULED: Check-in or No-Show */}
                                           {appt.status === AppointmentStatus.SCHEDULED && !isBlocked && (
                                              <>
@@ -438,13 +488,13 @@ export const Agenda = () => {
                                           {/* NO_SHOW_PENDING: Aguardando confirmação do dono */}
                                           {appt.status === AppointmentStatus.NO_SHOW_PENDING && !isBlocked && (
                                              <div className="w-full text-center">
-                                                <span className="text-[9px] text-orange-400 font-bold">⏳ Aguardando confirmação do dono</span>
+                                                <span className="text-[9px] text-orange-400 font-bold">⏳ Aguardando confirmação</span>
                                              </div>
                                           )}
                                           {/* NO_SHOW: Confirmado */}
                                           {appt.status === AppointmentStatus.NO_SHOW && !isBlocked && (
                                              <div className="w-full text-center">
-                                                <span className="text-[9px] text-red-400 font-bold">❌ No-Show Confirmado</span>
+                                                <span className="text-[9px] text-red-400 font-bold">❌ No-Show</span>
                                              </div>
                                           )}
                                           {/* CHECKED_IN: Start */}
