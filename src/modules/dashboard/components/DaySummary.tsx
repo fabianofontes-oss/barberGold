@@ -5,7 +5,8 @@ import { useBarber } from '@/context/BarberContext';
 import { AppointmentStatus } from '@/types';
 import { 
   Play, Users, Clock, Coffee, CheckCircle, 
-  Calendar, AlertCircle, TrendingUp, DollarSign, Wallet
+  Calendar, AlertCircle, TrendingUp, DollarSign, Wallet,
+  UserCheck, Ban
 } from 'lucide-react';
 import { format, isSameDay } from 'date-fns';
 
@@ -15,7 +16,7 @@ interface DaySummaryProps {
 }
 
 export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, activeClientsCount = 0 }) => {
-  const { appointments, currentUser, sales, clients } = useBarber();
+  const { appointments, currentUser } = useBarber();
 
   const isOwner = currentUser.role === 'OWNER';
 
@@ -41,46 +42,23 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
   const myInProgress = inProgress.filter(a => a.staffId === currentUser.id);
   const myWaiting = waiting.filter(a => a.staffId === currentUser.id);
 
-  const stats = [
-    {
-      label: 'Atendendo',
-      value: isOwner ? inProgress.length : myInProgress.length,
-      icon: Play,
-      color: 'bg-amber-500',
-      textColor: 'text-amber-400',
-      pulse: (isOwner ? inProgress.length : myInProgress.length) > 0
-    },
-    {
-      label: 'Na Fila',
-      value: isOwner ? waiting.length : myWaiting.length,
-      icon: Users,
-      color: 'bg-blue-500',
-      textColor: 'text-blue-400',
-      pulse: false
-    },
-    {
-      label: 'Agendados',
-      value: scheduled.length,
-      icon: Calendar,
-      color: 'bg-purple-500',
-      textColor: 'text-purple-400',
-      pulse: false
-    },
-    {
-      label: 'Concluídos',
-      value: completed.length,
-      icon: CheckCircle,
-      color: 'bg-emerald-500',
-      textColor: 'text-emerald-400',
-      pulse: false
-    }
+  // 8 stats unificados (sem repetição)
+  const allStats = [
+    { label: 'Receita', value: `$${todayRevenue.toFixed(0)}`, color: 'text-emerald-400', icon: DollarSign },
+    { label: 'Agenda', value: todayAppointments.length, color: 'text-blue-400', icon: Calendar },
+    { label: 'Clientes', value: activeClientsCount, color: 'text-purple-400', icon: Users },
+    { label: 'Ticket', value: '$42', color: 'text-amber-400', icon: Wallet },
+    { label: 'Atendendo', value: isOwner ? inProgress.length : myInProgress.length, color: 'text-orange-400', icon: Play, pulse: inProgress.length > 0 },
+    { label: 'Na Fila', value: isOwner ? waiting.length : myWaiting.length, color: 'text-cyan-400', icon: UserCheck },
+    { label: 'Concluídos', value: completed.length, color: 'text-green-400', icon: CheckCircle },
+    { label: 'No-Show', value: noShows.length, color: 'text-red-400', icon: Ban },
   ];
 
   // Cliente sendo atendido agora
   const currentlyServing = isOwner ? inProgress[0] : myInProgress[0];
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 md:p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-amber-500" />
@@ -89,46 +67,18 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
         <span className="text-xs text-zinc-500">{format(today, 'dd/MM/yyyy')}</span>
       </div>
 
-      {/* Owner Financial Stats */}
-      {isOwner && (
-        <div className="grid grid-cols-4 gap-2 mb-4">
-          <div className="text-center p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-            <DollarSign className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
-            <p className="text-lg font-bold text-emerald-400">${todayRevenue.toFixed(0)}</p>
-            <p className="text-[10px] text-zinc-500 uppercase">Receita</p>
-          </div>
-          <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-            <Calendar className="w-5 h-5 text-blue-400 mx-auto mb-1" />
-            <p className="text-lg font-bold text-blue-400">{todayAppointments.length}</p>
-            <p className="text-[10px] text-zinc-500 uppercase">Agenda</p>
-          </div>
-          <div className="text-center p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-            <Users className="w-5 h-5 text-purple-400 mx-auto mb-1" />
-            <p className="text-lg font-bold text-purple-400">{activeClientsCount}</p>
-            <p className="text-[10px] text-zinc-500 uppercase">Clientes</p>
-          </div>
-          <div className="text-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-            <Wallet className="w-5 h-5 text-amber-400 mx-auto mb-1" />
-            <p className="text-lg font-bold text-amber-400">$42</p>
-            <p className="text-[10px] text-zinc-500 uppercase">Ticket</p>
-          </div>
-        </div>
-      )}
-
-      {/* Appointment Status Grid */}
-      <div className="grid grid-cols-4 gap-2 mb-4">
-        {stats.map((stat, idx) => {
+      {/* Unified Stats Grid - 8 cols desktop, 4 cols mobile */}
+      <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-3 mb-4">
+        {allStats.map((stat, idx) => {
           const Icon = stat.icon;
           return (
             <div 
               key={idx} 
-              className={`text-center p-2 rounded-xl bg-zinc-950 border border-zinc-800 ${stat.pulse ? 'ring-2 ring-amber-500/30' : ''}`}
+              className={`text-center py-2 px-1 rounded-lg bg-zinc-950/50 border border-zinc-800/50 ${stat.pulse ? 'ring-1 ring-orange-500/50' : ''}`}
             >
-              <div className={`w-6 h-6 mx-auto rounded-full ${stat.color}/20 flex items-center justify-center mb-1`}>
-                <Icon className={`w-3 h-3 ${stat.textColor} ${stat.pulse ? 'animate-pulse' : ''}`} />
-              </div>
-              <p className={`text-lg font-bold ${stat.textColor}`}>{stat.value}</p>
-              <p className="text-[9px] text-zinc-500 uppercase">{stat.label}</p>
+              <Icon className={`w-4 h-4 ${stat.color} mx-auto mb-1 opacity-70`} />
+              <p className={`text-sm md:text-base font-bold ${stat.color}`}>{stat.value}</p>
+              <p className="text-[8px] md:text-[9px] text-zinc-500 uppercase">{stat.label}</p>
             </div>
           );
         })}
@@ -136,47 +86,33 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
 
       {/* Currently Serving */}
       {currentlyServing && (
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 animate-pulse">
-          <div className="flex items-center gap-2 mb-2">
-            <Play className="w-4 h-4 text-amber-400" />
-            <span className="text-xs text-amber-400 font-bold uppercase">Atendendo Agora</span>
-          </div>
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 mb-3">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white font-bold">{currentlyServing.clientName}</p>
-              <p className="text-xs text-zinc-400">{currentlyServing.serviceName}</p>
+            <div className="flex items-center gap-2">
+              <Play className="w-4 h-4 text-amber-400 animate-pulse" />
+              <div>
+                <p className="text-white font-bold text-sm">{currentlyServing.clientName}</p>
+                <p className="text-[10px] text-zinc-400">{currentlyServing.serviceName}</p>
+              </div>
             </div>
             <div className="text-right">
               <p className="text-amber-400 font-bold">{format(currentlyServing.date, 'HH:mm')}</p>
-              <p className="text-xs text-zinc-500">${currentlyServing.price}</p>
+              <p className="text-[10px] text-zinc-500">${currentlyServing.price}</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Waiting List */}
+      {/* Waiting List - Compact */}
       {waiting.length > 0 && (
-        <div className="mt-3 space-y-2">
-          <p className="text-xs text-zinc-500 uppercase font-bold">Na Fila de Espera</p>
-          {(isOwner ? waiting : myWaiting).slice(0, 3).map((appt, idx) => (
-            <div key={appt.id} className="flex items-center justify-between bg-zinc-950 p-2 rounded-lg border border-zinc-800">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center text-[10px] font-bold">
-                  {idx + 1}
-                </span>
-                <span className="text-sm text-white">{appt.clientName}</span>
-              </div>
-              <span className="text-xs text-zinc-500">{format(appt.date, 'HH:mm')}</span>
-            </div>
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-[10px] text-zinc-500 uppercase font-bold">Fila:</span>
+          {(isOwner ? waiting : myWaiting).slice(0, 4).map((appt, idx) => (
+            <span key={appt.id} className="text-xs bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded">
+              {appt.clientName.split(' ')[0]}
+            </span>
           ))}
-        </div>
-      )}
-
-      {/* No-Shows Alert */}
-      {noShows.length > 0 && (
-        <div className="mt-3 flex items-center gap-2 text-xs text-orange-400 bg-orange-500/10 p-2 rounded-lg">
-          <AlertCircle className="w-4 h-4" />
-          <span>{noShows.length} no-show(s) hoje</span>
+          {waiting.length > 4 && <span className="text-xs text-zinc-500">+{waiting.length - 4}</span>}
         </div>
       )}
     </div>
