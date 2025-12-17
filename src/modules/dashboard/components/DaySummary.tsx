@@ -42,16 +42,16 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
   const myInProgress = inProgress.filter(a => a.staffId === currentUser.id);
   const myWaiting = waiting.filter(a => a.staffId === currentUser.id);
 
-  // 8 stats unificados (sem repetição)
+  // 8 stats unificados (sem repetição) - com fundos coloridos
   const allStats = [
-    { label: 'Receita', value: `$${todayRevenue.toFixed(0)}`, color: 'text-emerald-400', icon: DollarSign },
-    { label: 'Agenda', value: todayAppointments.length, color: 'text-blue-400', icon: Calendar },
-    { label: 'Clientes', value: activeClientsCount, color: 'text-purple-400', icon: Users },
-    { label: 'Ticket', value: '$42', color: 'text-amber-400', icon: Wallet },
-    { label: 'Atendendo', value: isOwner ? inProgress.length : myInProgress.length, color: 'text-orange-400', icon: Play, pulse: inProgress.length > 0 },
-    { label: 'Na Fila', value: isOwner ? waiting.length : myWaiting.length, color: 'text-cyan-400', icon: UserCheck },
-    { label: 'Concluídos', value: completed.length, color: 'text-green-400', icon: CheckCircle },
-    { label: 'No-Show', value: noShows.length, color: 'text-red-400', icon: Ban },
+    { label: 'Receita', value: `$${todayRevenue.toFixed(0)}`, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
+    { label: 'Agenda', value: todayAppointments.length, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
+    { label: 'Clientes', value: activeClientsCount, color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },
+    { label: 'Ticket', value: '$42', color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
+    { label: 'Atendendo', value: isOwner ? inProgress.length : myInProgress.length, color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20', pulse: inProgress.length > 0 },
+    { label: 'Na Fila', value: isOwner ? waiting.length : myWaiting.length, color: 'text-cyan-400', bg: 'bg-cyan-500/10 border-cyan-500/20' },
+    { label: 'Concluídos', value: completed.length, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
+    { label: 'No-Show', value: noShows.length, color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20' },
   ];
 
   // Cliente sendo atendido agora
@@ -69,24 +69,15 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
 
       {/* Unified Stats Grid - 8 cols desktop, 4 cols mobile */}
       <div className="grid grid-cols-4 md:grid-cols-8 gap-3 md:gap-4 mb-4">
-        {allStats.map((stat, idx) => {
-          const Icon = stat.icon;
-          return (
-            <div 
-              key={idx} 
-              className={`relative text-center py-4 px-2 rounded-xl bg-zinc-950 border border-zinc-800 overflow-hidden ${stat.pulse ? 'ring-1 ring-orange-500/50' : ''}`}
-            >
-              {/* Background Icon - Large like Daily Team */}
-              <Icon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 text-white opacity-5" />
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <p className={`text-xl md:text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-                <p className="text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-wide mt-1">{stat.label}</p>
-              </div>
-            </div>
-          );
-        })}
+        {allStats.map((stat, idx) => (
+          <div 
+            key={idx} 
+            className={`text-center py-4 px-2 rounded-xl border ${stat.bg} ${stat.pulse ? 'ring-1 ring-orange-500/50' : ''}`}
+          >
+            <p className={`text-xl md:text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+            <p className="text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-wide mt-1">{stat.label}</p>
+          </div>
+        ))}
       </div>
 
       {/* Currently Serving */}
