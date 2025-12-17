@@ -80,7 +80,44 @@ export const PointOfSale = () => {
   // Club Credit State
   const [clubCreditApplied, setClubCreditApplied] = useState(false);
 
+  // Promo Code State
+  const [promoCode, setPromoCode] = useState('');
+  const [promoError, setPromoError] = useState('');
+  const [promoApplied, setPromoApplied] = useState<{code: string, discount: number} | null>(null);
+
+  // Split Payment State
+  const [isSplitPayment, setIsSplitPayment] = useState(false);
+  const [splitPayments, setSplitPayments] = useState<{method: PaymentMethod, amount: number}[]>([]);
+
   const selectedClient = clients.find(c => c.id === selectedClientId);
+
+  // Mock promo codes (could come from backend later)
+  const PROMO_CODES: Record<string, number> = {
+    'BEMVINDO10': 0.10,
+    'VOLTA15': 0.15,
+    'AMIGO20': 0.20,
+  };
+
+  const handleApplyPromo = () => {
+    const code = promoCode.toUpperCase().trim();
+    if (PROMO_CODES[code]) {
+      setPromoApplied({ code, discount: PROMO_CODES[code] });
+      setPromoError('');
+    } else {
+      setPromoError('Cupom inválido');
+      setPromoApplied(null);
+    }
+  };
+
+  const handleAddSplitPayment = (method: PaymentMethod, amount: number) => {
+    setSplitPayments(prev => [...prev, { method, amount }]);
+  };
+
+  const handleRemoveSplitPayment = (index: number) => {
+    setSplitPayments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const splitTotal = splitPayments.reduce((sum, p) => sum + p.amount, 0);
 
   // Auto-detect Discounts when client changes
   useEffect(() => {
@@ -137,8 +174,12 @@ export const PointOfSale = () => {
     }
   }
 
-  const total = subtotal - discountAmount;
+  // Promo code discount
+  const promoDiscount = promoApplied ? subtotal * promoApplied.discount : 0;
+
+  const total = subtotal - discountAmount - promoDiscount;
   const grandTotal = total + (tipAmount || 0);
+  const splitRemaining = grandTotal - splitTotal;
 
   // Use the item's category if available, otherwise fallback to generic Type
   const filteredItems = [
@@ -226,6 +267,21 @@ export const PointOfSale = () => {
                 className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
               />
             </div>
+
+            {/* Quick Access - Top Services */}
+            {!searchQuery && services.length > 0 && (
+              <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide pb-1">
+                {services.slice(0, 4).map(service => (
+                  <button
+                    key={service.id}
+                    onClick={() => addToCart(service)}
+                    className="flex-shrink-0 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-blue-500/20 transition-all flex items-center gap-1"
+                  >
+                    <Zap className="w-3 h-3" /> {service.name.split(' ')[0]}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 gap-3 pb-24 lg:pb-0 scrollbar-hide">
@@ -413,6 +469,35 @@ export const PointOfSale = () => {
                     <span>-${discountAmount.toFixed(2)}</span>
                   </div>
                )}
+
+               {/* Promo Code Discount */}
+               {promoDiscount > 0 && (
+                  <div className="flex justify-between items-center text-sm text-purple-400 font-bold">
+                    <span className="flex items-center gap-1"><Gift className="w-3 h-3" /> Cupom {promoApplied?.code}</span>
+                    <span>-${promoDiscount.toFixed(2)}</span>
+                  </div>
+               )}
+
+               {/* Promo Code Input */}
+               {checkoutStep === 'CART' && !promoApplied && cart.length > 0 && (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Cupom promocional"
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                      className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-1.5 text-sm text-white uppercase focus:border-purple-500 outline-none"
+                    />
+                    <button
+                      onClick={handleApplyPromo}
+                      disabled={!promoCode}
+                      className="bg-purple-500 hover:bg-purple-400 disabled:bg-zinc-700 text-white text-xs font-bold px-3 rounded-lg"
+                    >
+                      Aplicar
+                    </button>
+                  </div>
+               )}
+               {promoError && <p className="text-red-400 text-xs">{promoError}</p>}
                
                {checkoutStep === 'PAYMENT' && (
                   <div className="flex justify-between items-center text-sm text-amber-500 font-bold bg-amber-500/10 p-2 rounded-lg border border-amber-500/20">
