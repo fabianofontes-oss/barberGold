@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Service, Product, InventoryItem, Supplier, CategoryType } from '@/types';
 import { format } from 'date-fns';
+import { AutoReorderFeature } from './components/AutoReorderFeature';
 
 export const Catalog = () => {
   const { 
@@ -144,6 +145,11 @@ export const Catalog = () => {
         <p className="text-zinc-400">
            Manage what you sell, what you offer, and what you use.
         </p>
+      </div>
+
+      {/* Auto Reorder Alert (Premium) */}
+      <div className="mb-6">
+        <AutoReorderFeature />
       </div>
 
       {/* Tabs */}
