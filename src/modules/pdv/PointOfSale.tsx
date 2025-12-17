@@ -25,11 +25,13 @@ import {
   ChevronUp,
   LayoutGrid,
   List,
-  Grid3X3
+  Grid3X3,
+  DollarSign
 } from 'lucide-react';
 import { CartItem, PaymentMethod } from '@/types';
 import { differenceInDays } from 'date-fns';
 import { ClubCreditBadge } from '@/modules/barber-club/components/ClubCreditBadge';
+import { CashRegister } from './components/CashRegister';
 
 // Icon Map for dynamic payments
 const PAYMENT_ICONS: Record<string, any> = {
@@ -94,6 +96,9 @@ export const PointOfSale = () => {
   // Split Payment State
   const [isSplitPayment, setIsSplitPayment] = useState(false);
   const [splitPayments, setSplitPayments] = useState<{method: PaymentMethod, amount: number}[]>([]);
+
+  // Cash Register State
+  const [isCashRegisterOpen, setIsCashRegisterOpen] = useState(false);
 
   const selectedClient = clients.find(c => c.id === selectedClientId);
 
@@ -262,7 +267,15 @@ export const PointOfSale = () => {
         {/* Left: Item Selection (Hidden on Mobile if Cart Open) */}
         <div className={`flex-col h-full ${mobileView === 'CART' ? 'hidden lg:flex' : 'flex'}`}>
           <div className="mb-4">
-            <h2 className="text-3xl font-bold text-white mb-2">Point of Sale</h2>
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-3xl font-bold text-white">Point of Sale</h2>
+              <button
+                onClick={() => setIsCashRegisterOpen(true)}
+                className="flex items-center gap-2 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-300 text-sm font-bold transition-all"
+              >
+                <DollarSign className="w-4 h-4" /> Caixa
+              </button>
+            </div>
             <div className="relative">
               <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
               <input 
@@ -611,26 +624,104 @@ export const PointOfSale = () => {
                 {!selectedClientId ? 'Select Client' : (selectedStaffId ? 'Proceed to Payment' : 'Select Staff')}
               </button>
             ) : (
-              <div className="grid grid-cols-3 gap-2">
-                {enabledMethods.map(method => {
-                   const Icon = PAYMENT_ICONS[method] || Banknote;
-                   return (
-                      <button 
-                         key={method} 
-                         onClick={() => handleCheckout(method)} 
-                         className="bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl flex flex-col items-center gap-2 transition-colors border border-transparent hover:border-zinc-600"
+              <div className="space-y-3">
+                {/* Split Payment Toggle */}
+                <div className="flex items-center justify-between bg-zinc-900 p-2 rounded-lg border border-zinc-800">
+                  <span className="text-xs text-zinc-400 font-bold">Dividir pagamento?</span>
+                  <button
+                    onClick={() => {
+                      setIsSplitPayment(!isSplitPayment);
+                      setSplitPayments([]);
+                    }}
+                    className={`px-3 py-1 rounded text-xs font-bold transition-all ${isSplitPayment ? 'bg-purple-500 text-white' : 'bg-zinc-800 text-zinc-400'}`}
+                  >
+                    {isSplitPayment ? 'Sim' : 'Não'}
+                  </button>
+                </div>
+
+                {/* Split Payment UI */}
+                {isSplitPayment && (
+                  <div className="bg-zinc-900 p-3 rounded-lg border border-purple-500/30 space-y-3">
+                    <div className="flex justify-between text-xs text-zinc-400">
+                      <span>Falta pagar:</span>
+                      <span className={`font-bold ${splitRemaining > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                        ${splitRemaining.toFixed(2)}
+                      </span>
+                    </div>
+
+                    {/* Added Payments */}
+                    {splitPayments.map((sp, idx) => (
+                      <div key={idx} className="flex items-center justify-between bg-zinc-950 p-2 rounded">
+                        <span className="text-xs text-zinc-300">{PAYMENT_LABELS[sp.method]}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-white font-bold">${sp.amount.toFixed(2)}</span>
+                          <button onClick={() => handleRemoveSplitPayment(idx)} className="text-red-400 hover:text-red-300">
+                            <Trash2 className="w-3 h-3" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Add Payment */}
+                    {splitRemaining > 0 && (
+                      <div className="grid grid-cols-4 gap-1">
+                        {enabledMethods.slice(0, 4).map(method => {
+                          const Icon = PAYMENT_ICONS[method] || Banknote;
+                          return (
+                            <button
+                              key={method}
+                              onClick={() => {
+                                const amount = parseFloat(prompt(`Valor em ${PAYMENT_LABELS[method]}:`) || '0');
+                                if (amount > 0 && amount <= splitRemaining) {
+                                  handleAddSplitPayment(method, amount);
+                                }
+                              }}
+                              className="bg-zinc-800 hover:bg-zinc-700 p-2 rounded flex flex-col items-center gap-1"
+                            >
+                              <Icon className="w-4 h-4 text-zinc-400" />
+                              <span className="text-[8px] text-zinc-400">{PAYMENT_LABELS[method]?.slice(0, 6)}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Finalize Split Payment */}
+                    {splitRemaining <= 0.01 && splitPayments.length > 0 && (
+                      <button
+                        onClick={() => handleCheckout(splitPayments[0].method)}
+                        className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-lg"
                       >
-                         <Icon className="w-6 h-6 text-zinc-400" />
-                         <span className="text-[10px] font-medium text-white text-center leading-tight">
-                            {PAYMENT_LABELS[method] || method}
-                         </span>
+                        ✓ Finalizar Pagamento
                       </button>
-                   );
-                })}
+                    )}
+                  </div>
+                )}
+
+                {/* Normal Payment Grid */}
+                {!isSplitPayment && (
+                  <div className="grid grid-cols-3 gap-2">
+                    {enabledMethods.map(method => {
+                       const Icon = PAYMENT_ICONS[method] || Banknote;
+                       return (
+                          <button 
+                             key={method} 
+                             onClick={() => handleCheckout(method)} 
+                             className="bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl flex flex-col items-center gap-2 transition-colors border border-transparent hover:border-zinc-600"
+                          >
+                             <Icon className="w-6 h-6 text-zinc-400" />
+                             <span className="text-[10px] font-medium text-white text-center leading-tight">
+                                {PAYMENT_LABELS[method] || method}
+                             </span>
+                          </button>
+                       );
+                    })}
+                  </div>
+                )}
                 
                 <button 
-                  onClick={() => setCheckoutStep('CART')}
-                  className="col-span-3 mt-2 text-zinc-500 hover:text-white text-sm py-2"
+                  onClick={() => { setCheckoutStep('CART'); setIsSplitPayment(false); setSplitPayments([]); }}
+                  className="w-full mt-2 text-zinc-500 hover:text-white text-sm py-2"
                 >
                   Back to Cart
                 </button>
@@ -694,6 +785,12 @@ export const PointOfSale = () => {
             </div>
          </div>
       )}
+
+      {/* Cash Register Modal */}
+      <CashRegister 
+        isOpen={isCashRegisterOpen} 
+        onClose={() => setIsCashRegisterOpen(false)} 
+      />
     </div>
   );
 };
