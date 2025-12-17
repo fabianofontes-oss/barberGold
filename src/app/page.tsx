@@ -62,19 +62,22 @@ export default function Home() {
     login('admin@barberflow.com', 'admin');
   };
 
-  // PUBLIC PAGES (No Auth Required)
-  if (currentView === 'SAAS_LANDING') {
-    return <SaasLandingPage />;
-  }
+  // AUTH GUARD (igual ao Vite) - Páginas públicas não precisam de login
+  const isPublicPage = currentView === 'ONLINE_BOOKING' || currentView === 'PUBLIC_WEBSITE' || currentView === 'TIPS_REVIEW' || currentView === 'SAAS_LANDING';
   
-  if (currentView === 'PUBLIC_WEBSITE') {
-    return <Website />;
+  if (!isAuthenticated && !isPublicPage) {
+    return <LoginScreen onLogin={handleLogin} />;
   }
 
-  // Landing / Login
-  if (!isAuthenticated || currentView === 'AUTH') {
-    return <SaasLandingPage />;
-  }
+  // --- PUBLIC & STANDALONE VIEWS (NO GUARD) ---
+  if (currentView === 'SAAS_LANDING') return <SaasLandingPage />;
+  if (currentView === 'AUTH') return <LoginScreen onLogin={handleLogin} />;
+  if (currentView === 'ONLINE_BOOKING') return <OnlineBookingWizard />;
+  if (currentView === 'TIPS_REVIEW') return <TipsReviewWizard />;
+  if (currentView === 'PUBLIC_WEBSITE') return <Website />;
+  
+  // --- OFFICE VIEWS (NO GUARD) ---
+  if (currentView === 'SUPER_OFFICE_V2') return <SuperOfficeV2 />;
 
   // Main App with Layout
   const renderView = () => {
@@ -127,12 +130,6 @@ export default function Home() {
         return <SuperAdminSystem />;
       case 'SUPER_ADMIN_SETTINGS':
         return <SuperAdminSettings />;
-      case 'SUPER_OFFICE_V2':
-        return <SuperOfficeV2 />;
-      case 'ONLINE_BOOKING':
-        return <OnlineBookingWizard />;
-      case 'TIPS_REVIEW':
-        return <TipsReviewWizard />;
       default:
         return <Dashboard />;
     }
