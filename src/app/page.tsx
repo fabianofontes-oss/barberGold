@@ -15,6 +15,8 @@ import { ClubDashboard } from '@/modules/barber-club/components/ClubDashboard';
 import { ReferralDashboard } from '@/modules/referrals/ReferralDashboard';
 import { MyPlan } from '@/modules/plan/MyPlan';
 import { WebsiteEditor } from '@/modules/website/WebsiteEditor';
+import { Website } from '@/modules/website/Website';
+import { SaasLandingPage } from '@/modules/website/SaasLandingPage';
 import { SuperAdminDashboard } from '@/modules/super-admin/SuperAdminDashboard';
 import { SuperAdminPlans } from '@/modules/super-admin/SuperAdminPlans';
 import { SuperAdminSupport } from '@/modules/super-admin/SuperAdminSupport';
@@ -60,9 +62,18 @@ export default function Home() {
     login('admin@barberflow.com', 'admin');
   };
 
+  // PUBLIC PAGES (No Auth Required)
+  if (currentView === 'SAAS_LANDING') {
+    return <SaasLandingPage />;
+  }
+  
+  if (currentView === 'PUBLIC_WEBSITE') {
+    return <Website />;
+  }
+
   // Landing / Login
-  if (!isAuthenticated || currentView === 'SAAS_LANDING' || currentView === 'AUTH') {
-    return <LoginScreen onLogin={handleLogin} />;
+  if (!isAuthenticated || currentView === 'AUTH') {
+    return <SaasLandingPage />;
   }
 
   // Main App with Layout
