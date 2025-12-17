@@ -5,12 +5,17 @@ import { useBarber } from '@/context/BarberContext';
 import { AppointmentStatus } from '@/types';
 import { 
   Play, Users, Clock, Coffee, CheckCircle, 
-  Calendar, AlertCircle, TrendingUp
+  Calendar, AlertCircle, TrendingUp, DollarSign, Wallet
 } from 'lucide-react';
 import { format, isSameDay } from 'date-fns';
 
-export const DaySummary: React.FC = () => {
-  const { appointments, currentUser } = useBarber();
+interface DaySummaryProps {
+  todayRevenue?: number;
+  activeClientsCount?: number;
+}
+
+export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, activeClientsCount = 0 }) => {
+  const { appointments, currentUser, sales, clients } = useBarber();
 
   const isOwner = currentUser.role === 'OWNER';
 
@@ -84,20 +89,46 @@ export const DaySummary: React.FC = () => {
         <span className="text-xs text-zinc-500">{format(today, 'dd/MM/yyyy')}</span>
       </div>
 
-      {/* Stats Grid */}
+      {/* Owner Financial Stats */}
+      {isOwner && (
+        <div className="grid grid-cols-4 gap-2 mb-4">
+          <div className="text-center p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <DollarSign className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
+            <p className="text-lg font-bold text-emerald-400">${todayRevenue.toFixed(0)}</p>
+            <p className="text-[10px] text-zinc-500 uppercase">Receita</p>
+          </div>
+          <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <Calendar className="w-5 h-5 text-blue-400 mx-auto mb-1" />
+            <p className="text-lg font-bold text-blue-400">{todayAppointments.length}</p>
+            <p className="text-[10px] text-zinc-500 uppercase">Agenda</p>
+          </div>
+          <div className="text-center p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+            <Users className="w-5 h-5 text-purple-400 mx-auto mb-1" />
+            <p className="text-lg font-bold text-purple-400">{activeClientsCount}</p>
+            <p className="text-[10px] text-zinc-500 uppercase">Clientes</p>
+          </div>
+          <div className="text-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+            <Wallet className="w-5 h-5 text-amber-400 mx-auto mb-1" />
+            <p className="text-lg font-bold text-amber-400">$42</p>
+            <p className="text-[10px] text-zinc-500 uppercase">Ticket</p>
+          </div>
+        </div>
+      )}
+
+      {/* Appointment Status Grid */}
       <div className="grid grid-cols-4 gap-2 mb-4">
         {stats.map((stat, idx) => {
           const Icon = stat.icon;
           return (
             <div 
               key={idx} 
-              className={`text-center p-3 rounded-xl bg-zinc-950 border border-zinc-800 ${stat.pulse ? 'ring-2 ring-amber-500/30' : ''}`}
+              className={`text-center p-2 rounded-xl bg-zinc-950 border border-zinc-800 ${stat.pulse ? 'ring-2 ring-amber-500/30' : ''}`}
             >
-              <div className={`w-8 h-8 mx-auto rounded-full ${stat.color}/20 flex items-center justify-center mb-1`}>
-                <Icon className={`w-4 h-4 ${stat.textColor} ${stat.pulse ? 'animate-pulse' : ''}`} />
+              <div className={`w-6 h-6 mx-auto rounded-full ${stat.color}/20 flex items-center justify-center mb-1`}>
+                <Icon className={`w-3 h-3 ${stat.textColor} ${stat.pulse ? 'animate-pulse' : ''}`} />
               </div>
-              <p className={`text-xl font-bold ${stat.textColor}`}>{stat.value}</p>
-              <p className="text-[10px] text-zinc-500 uppercase">{stat.label}</p>
+              <p className={`text-lg font-bold ${stat.textColor}`}>{stat.value}</p>
+              <p className="text-[9px] text-zinc-500 uppercase">{stat.label}</p>
             </div>
           );
         })}

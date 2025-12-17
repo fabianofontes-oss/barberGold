@@ -111,80 +111,45 @@ export const Dashboard = () => {
       {/* BIRTHDAY CLIENTS */}
       <BirthdayClients />
 
-      {/* DAY SUMMARY */}
-      <DaySummary />
+      {/* DAY SUMMARY (Integrado com stats do dono) */}
+      <DaySummary todayRevenue={todayRevenue} activeClientsCount={activeClientsCount} />
 
       {/* GAMIFICATION WIDGET (Shows Shop Goal for Everyone to motivate team) */}
       <DailyGoalWidget currentRevenue={todayRevenue} goal={dailyGoal} />
 
-      {/* Stats Grid - ADAPTS TO ROLE */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {isOwner ? (
-          // OWNER STATS
-          <>
-            <StatCard 
-              title="Today's Revenue" 
-              value={`$${todayRevenue.toFixed(2)}`} 
-              sub="+12% from yesterday"
-              icon={DollarSign}
-              color="bg-emerald-500"
-            />
-            <StatCard 
-              title="Appointments" 
-              value={todaysAppointments.length} 
-              sub={`${completedCount} completed`}
-              icon={CalendarCheck}
-              color="bg-blue-500"
-            />
-            <StatCard 
-              title="Active Clients" 
-              value={activeClientsCount} 
-              sub="3 new this week"
-              icon={Users}
-              color="bg-purple-500"
-            />
-            <StatCard 
-              title="Avg. Ticket" 
-              value="$42.50" 
-              sub="Based on last 30 sales"
-              icon={TrendingUp}
-              color="bg-amber-500"
-            />
-          </>
-        ) : (
-          // STAFF STATS
-          <>
-             <StatCard 
-              title="My Est. Earnings" 
-              value={`$${estimatedCommission.toFixed(2)}`} 
-              sub="Today's Commission"
-              icon={Wallet}
-              color="bg-emerald-500"
-            />
-            <StatCard 
-              title="My Appointments" 
-              value={myAppointmentsToday.length} 
-              sub={`${myCompletedCount} completed`}
-              icon={CalendarCheck}
-              color="bg-blue-500"
-            />
-             <StatCard 
-              title="Loyal Portfolio" 
-              value={myLoyalCount} 
-              sub={myLoyalCount > 5 ? "You're a Pro!" : "Keep building!"}
-              icon={ShieldCheck}
-              color="bg-purple-500"
-            />
-            <StatCard 
-              title="Next Client" 
-              value={myNextAppointment ? format(myNextAppointment.date, 'HH:mm') : '-'} 
-              sub={myNextAppointment?.clientName || 'Free'}
-              icon={Users}
-              color="bg-amber-500"
-            />
-          </>
-        )}
-      </div>
+      {/* Stats Grid - ONLY FOR STAFF (Owner stats are in DaySummary now) */}
+      {!isOwner && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard 
+            title="My Est. Earnings" 
+            value={`$${estimatedCommission.toFixed(2)}`} 
+            sub="Today's Commission"
+            icon={Wallet}
+            color="bg-emerald-500"
+          />
+          <StatCard 
+            title="My Appointments" 
+            value={myAppointmentsToday.length} 
+            sub={`${myCompletedCount} completed`}
+            icon={CalendarCheck}
+            color="bg-blue-500"
+          />
+          <StatCard 
+            title="Loyal Portfolio" 
+            value={myLoyalCount} 
+            sub={myLoyalCount > 5 ? "You're a Pro!" : "Keep building!"}
+            icon={ShieldCheck}
+            color="bg-purple-500"
+          />
+          <StatCard 
+            title="Next Client" 
+            value={myNextAppointment ? format(myNextAppointment.date, 'HH:mm') : '-'} 
+            sub={myNextAppointment?.clientName || 'Free'}
+            icon={Users}
+            color="bg-amber-500"
+          />
+        </div>
+      )}
 
       {/* Main Content Split */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
