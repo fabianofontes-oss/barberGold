@@ -240,8 +240,8 @@ export const MOCK_TENANTS: Tenant[] = [
     email: 'alex@gold.com',
     phone: '5511999999999',
     status: 'ACTIVE',
-    planId: 'SOLO_PRO',
-    monthlyFee: 149,
+    planId: 'STUDIO',
+    monthlyFee: 299,
     joinedDate: subDays(new Date(), 100)
   }
 ];
