@@ -345,10 +345,15 @@ export const Agenda = () => {
                                  const isInProgress = appt.status === AppointmentStatus.IN_PROGRESS;
                                  const isCompleted = appt.status === AppointmentStatus.COMPLETED;
                                  
+                                 const isNoShowPending = appt.status === AppointmentStatus.NO_SHOW_PENDING;
+                                 const isNoShow = appt.status === AppointmentStatus.NO_SHOW;
+
                                  // Status-based styling
                                  const getCardStyle = () => {
                                     if (isBlocked) return 'bg-zinc-950/80 border-dashed border-zinc-700';
                                     if (isCompleted) return 'bg-zinc-900/50 border-zinc-800 opacity-60';
+                                    if (isNoShow) return 'bg-red-500/10 border-red-500/30 opacity-70';
+                                    if (isNoShowPending) return 'bg-orange-500/10 border-orange-500/30 ring-2 ring-orange-500/20';
                                     if (isInProgress) return 'bg-amber-500/10 border-amber-500/50 ring-2 ring-amber-500/30';
                                     if (isCheckedIn) return 'bg-blue-500/10 border-blue-500/50';
                                     return 'bg-zinc-800 border-zinc-700 hover:border-amber-500';
@@ -356,6 +361,8 @@ export const Agenda = () => {
 
                                  // Status badge
                                  const getStatusBadge = () => {
+                                    if (isNoShow) return <span className="text-[8px] bg-red-500 text-white px-1.5 py-0.5 rounded font-bold uppercase">No-Show</span>;
+                                    if (isNoShowPending) return <span className="text-[8px] bg-orange-500 text-zinc-900 px-1.5 py-0.5 rounded font-bold uppercase animate-pulse">Faltou?</span>;
                                     if (isInProgress) return <span className="text-[8px] bg-amber-500 text-zinc-900 px-1.5 py-0.5 rounded font-bold uppercase animate-pulse">Atendendo</span>;
                                     if (isCheckedIn) return <span className="text-[8px] bg-blue-500 text-white px-1.5 py-0.5 rounded font-bold uppercase">Aguardando</span>;
                                     if (isCompleted) return <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold uppercase">Concluído</span>;
@@ -393,7 +400,7 @@ export const Agenda = () => {
                                        )}
 
                                        <div className="mt-2 flex gap-2 border-t border-zinc-700/50 pt-2">
-                                          {/* SCHEDULED: Check-in */}
+                                          {/* SCHEDULED: Check-in or No-Show */}
                                           {appt.status === AppointmentStatus.SCHEDULED && !isBlocked && (
                                              <>
                                                 <button 
@@ -403,12 +410,31 @@ export const Agenda = () => {
                                                    ✓ Chegou
                                                 </button>
                                                 <button 
+                                                   onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.NO_SHOW_PENDING)}
+                                                   className="px-2 py-1 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 rounded text-[10px]"
+                                                   title="Marcar como faltou (No-Show)"
+                                                >
+                                                   ⊘
+                                                </button>
+                                                <button 
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.CANCELLED)}
                                                    className="px-2 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded text-[10px]"
                                                 >
                                                    <XCircle className="w-3 h-3" />
                                                 </button>
                                              </>
+                                          )}
+                                          {/* NO_SHOW_PENDING: Aguardando confirmação do dono */}
+                                          {appt.status === AppointmentStatus.NO_SHOW_PENDING && !isBlocked && (
+                                             <div className="w-full text-center">
+                                                <span className="text-[9px] text-orange-400 font-bold">⏳ Aguardando confirmação do dono</span>
+                                             </div>
+                                          )}
+                                          {/* NO_SHOW: Confirmado */}
+                                          {appt.status === AppointmentStatus.NO_SHOW && !isBlocked && (
+                                             <div className="w-full text-center">
+                                                <span className="text-[9px] text-red-400 font-bold">❌ No-Show Confirmado</span>
+                                             </div>
                                           )}
                                           {/* CHECKED_IN: Start */}
                                           {appt.status === AppointmentStatus.CHECKED_IN && !isBlocked && (

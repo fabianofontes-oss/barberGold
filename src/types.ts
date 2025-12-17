@@ -7,7 +7,9 @@ export enum AppointmentStatus {
   IN_PROGRESS = 'IN_PROGRESS',    // Atendimento iniciado
   COMPLETED = 'COMPLETED',
   CANCELLED = 'CANCELLED',
-  BLOCKED = 'BLOCKED'
+  BLOCKED = 'BLOCKED',
+  NO_SHOW_PENDING = 'NO_SHOW_PENDING',  // Barbeiro marcou como no-show, aguardando aprovação do dono
+  NO_SHOW = 'NO_SHOW'                    // Confirmado pelo dono
 }
 
 export enum RecurrenceType {

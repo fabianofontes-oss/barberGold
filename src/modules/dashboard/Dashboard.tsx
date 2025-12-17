@@ -6,7 +6,8 @@ import { useBarber } from '@/context/BarberContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { DailyGoalWidget } from '@/components/widgets/DailyGoalWidget';
 import { PlanSummaryCard } from './PlanSummaryCard';
-import { MyReferralsPanel } from '@/modules/clients/MyReferralsPanel'; // NEW IMPORT
+import { MyReferralsPanel } from '@/modules/clients/MyReferralsPanel';
+import { NoShowApprovalPanel } from './components/NoShowApprovalPanel';
 import { 
   Users, 
   CalendarCheck, 
@@ -99,6 +100,9 @@ export const Dashboard = () => {
            <p className="text-zinc-400">Welcome back, <b>{currentUser.name}</b>. Here&apos;s what&apos;s happening today.</p>
         </div>
       </div>
+
+      {/* NO-SHOW APPROVAL PANEL (Owner Only) */}
+      <NoShowApprovalPanel />
 
       {/* GAMIFICATION WIDGET (Shows Shop Goal for Everyone to motivate team) */}
       <DailyGoalWidget currentRevenue={todayRevenue} goal={dailyGoal} />
