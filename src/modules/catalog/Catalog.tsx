@@ -15,13 +15,19 @@ import {
 import { Service, Product, InventoryItem, Supplier, CategoryType } from '@/types';
 import { format } from 'date-fns';
 import { AutoReorderFeature } from './components/AutoReorderFeature';
+import { QuickAddFromCatalog } from './components/QuickAddFromCatalog';
+import { useFeatureGate } from '@/hooks/useFeatureGate';
 
 export const Catalog = () => {
   const { 
     services, products, deleteService, deleteProduct,
     inventory, suppliers, deleteInventoryItem, adjustInventoryStock, deleteSupplier,
-    categories, addCategory, deleteCategory, supplyTransactions, restockProduct
+    categories, addCategory, deleteCategory, supplyTransactions, restockProduct,
+    addProduct, addInventoryItem
   } = useBarber();
+
+  const { canUseFeature } = useFeatureGate();
+  const hasPremiumCatalog = canUseFeature('ADVANCED_REPORTS'); // Premium feature
   
   // Tab State
   const [activeTab, setActiveTab] = useState<'SERVICES' | 'PRODUCTS' | 'INVENTORY' | 'CATEGORIES'>('SERVICES');
@@ -40,6 +46,7 @@ export const Catalog = () => {
   const [isInventoryModalOpen, setIsInventoryModalOpen] = useState(false);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
   const [isSupplierDetailsOpen, setIsSupplierDetailsOpen] = useState(false);
+  const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
   
   // Edit State
   const [editingService, setEditingService] = useState<Service | null>(null);
@@ -197,20 +204,31 @@ export const Catalog = () => {
             </button>
         </div>
         
-        <button 
-          onClick={() => {
-            if (activeTab === 'SERVICES') openNewService();
-            else if (activeTab === 'PRODUCTS') openNewProduct();
-            else if (activeTab === 'INVENTORY') {
-                if (inventorySubTab === 'ITEMS') openNewInventoryItem();
-                else setIsSupplierModalOpen(true);
-            }
-          }}
-          disabled={activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY')}
-          className={`mb-2 flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold rounded-lg transition-all ${activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY') ? 'opacity-0 pointer-events-none' : ''}`}
-        >
-          <Plus className="w-4 h-4" /> New Item
-        </button>
+        <div className="flex items-center gap-2 mb-2">
+          {/* Premium: Quick Add from Catalog */}
+          {hasPremiumCatalog && (activeTab === 'PRODUCTS' || activeTab === 'INVENTORY') && (
+            <button
+              onClick={() => setIsQuickAddOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white text-sm font-bold rounded-lg transition-all"
+            >
+              <ShoppingCart className="w-4 h-4" /> Catálogo Rápido
+            </button>
+          )}
+          <button 
+            onClick={() => {
+              if (activeTab === 'SERVICES') openNewService();
+              else if (activeTab === 'PRODUCTS') openNewProduct();
+              else if (activeTab === 'INVENTORY') {
+                  if (inventorySubTab === 'ITEMS') openNewInventoryItem();
+                  else setIsSupplierModalOpen(true);
+              }
+            }}
+            disabled={activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY')}
+            className={`flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold rounded-lg transition-all ${activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY') ? 'opacity-0 pointer-events-none' : ''}`}
+          >
+            <Plus className="w-4 h-4" /> New Item
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto pb-20">
@@ -725,6 +743,37 @@ export const Catalog = () => {
       <InventoryModal isOpen={isInventoryModalOpen} onClose={() => setIsInventoryModalOpen(false)} itemToEdit={editingInventoryItem} />
       <SupplierModal isOpen={isSupplierModalOpen} onClose={() => setIsSupplierModalOpen(false)} />
       <SupplierDetailsModal isOpen={isSupplierDetailsOpen} onClose={() => setIsSupplierDetailsOpen(false)} supplier={selectedSupplier} />
+      
+      {/* Premium: Quick Add from Catalog Modal */}
+      <QuickAddFromCatalog
+        isOpen={isQuickAddOpen}
+        onClose={() => setIsQuickAddOpen(false)}
+        onAddProduct={(data) => {
+          addProduct({
+            name: data.name,
+            price: data.price,
+            costPrice: data.costPrice,
+            stock: 0,
+            category: data.category
+          });
+        }}
+        onAddSupply={(data) => {
+          const unitMap: Record<string, 'UNIT' | 'LITRE' | 'BOX' | 'PACK'> = {
+            'unidade': 'UNIT', 'frasco': 'UNIT', 'pote': 'UNIT', 'lata': 'UNIT', 'bisnaga': 'UNIT',
+            'litro': 'LITRE', 'galão': 'LITRE',
+            'caixa': 'BOX',
+            'pacote': 'PACK', 'cartela': 'PACK', 'rolo': 'PACK'
+          };
+          addInventoryItem({
+            name: data.name,
+            quantity: 0,
+            costPerUnit: data.costPerUnit,
+            minStock: data.minStock,
+            unit: unitMap[data.unit.toLowerCase()] || 'UNIT',
+            category: 'Geral'
+          });
+        }}
+      />
 
     </div>
   );
