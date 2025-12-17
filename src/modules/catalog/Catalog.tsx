@@ -147,11 +147,38 @@ export const Catalog = () => {
 
   return (
     <div className="h-full flex flex-col animate-fade-in">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-white mb-2">Catalog & Inventory</h2>
-        <p className="text-zinc-400">
-           Manage what you sell, what you offer, and what you use.
-        </p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <div>
+          <h2 className="text-3xl font-bold text-white mb-2">Catalog & Inventory</h2>
+          <p className="text-zinc-400">
+             Manage what you sell, what you offer, and what you use.
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          {/* Premium: Quick Add from Catalog */}
+          {hasPremiumCatalog && (activeTab === 'PRODUCTS' || activeTab === 'INVENTORY') && (
+            <button
+              onClick={() => setIsQuickAddOpen(true)}
+              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-purple-500/20"
+            >
+              <ShoppingCart className="w-4 h-4" /> Catálogo Rápido
+            </button>
+          )}
+          <button 
+            onClick={() => {
+              if (activeTab === 'SERVICES') openNewService();
+              else if (activeTab === 'PRODUCTS') openNewProduct();
+              else if (activeTab === 'INVENTORY') {
+                  if (inventorySubTab === 'ITEMS') openNewInventoryItem();
+                  else setIsSupplierModalOpen(true);
+              }
+            }}
+            disabled={activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY')}
+            className={`flex items-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20 ${activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY') ? 'opacity-0 pointer-events-none' : ''}`}
+          >
+            <Plus className="w-4 h-4" /> New Item
+          </button>
+        </div>
       </div>
 
       {/* Auto Reorder Alert (Premium) */}
@@ -160,7 +187,7 @@ export const Catalog = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex justify-between items-center mb-6 border-b border-zinc-800 overflow-x-auto">
+      <div className="mb-6 border-b border-zinc-800 overflow-x-auto">
         <div className="flex gap-2 min-w-max">
              <button
               onClick={() => setActiveTab('SERVICES')}
@@ -202,32 +229,6 @@ export const Catalog = () => {
             >
               <Tag className="w-4 h-4" /> Categories
             </button>
-        </div>
-        
-        <div className="flex items-center gap-2 mb-2">
-          {/* Premium: Quick Add from Catalog */}
-          {hasPremiumCatalog && (activeTab === 'PRODUCTS' || activeTab === 'INVENTORY') && (
-            <button
-              onClick={() => setIsQuickAddOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white text-sm font-bold rounded-lg transition-all"
-            >
-              <ShoppingCart className="w-4 h-4" /> Catálogo Rápido
-            </button>
-          )}
-          <button 
-            onClick={() => {
-              if (activeTab === 'SERVICES') openNewService();
-              else if (activeTab === 'PRODUCTS') openNewProduct();
-              else if (activeTab === 'INVENTORY') {
-                  if (inventorySubTab === 'ITEMS') openNewInventoryItem();
-                  else setIsSupplierModalOpen(true);
-              }
-            }}
-            disabled={activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY')}
-            className={`flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold rounded-lg transition-all ${activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY') ? 'opacity-0 pointer-events-none' : ''}`}
-          >
-            <Plus className="w-4 h-4" /> New Item
-          </button>
         </div>
       </div>
 
