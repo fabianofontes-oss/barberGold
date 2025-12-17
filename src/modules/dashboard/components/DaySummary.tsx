@@ -74,11 +74,16 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
           return (
             <div 
               key={idx} 
-              className={`text-center py-3 px-2 rounded-xl bg-zinc-950 border border-zinc-800 ${stat.pulse ? 'ring-1 ring-orange-500/50' : ''}`}
+              className={`relative text-center py-4 px-2 rounded-xl bg-zinc-950 border border-zinc-800 overflow-hidden ${stat.pulse ? 'ring-1 ring-orange-500/50' : ''}`}
             >
-              <Icon className={`w-4 h-4 text-zinc-500 mx-auto mb-1`} />
-              <p className={`text-lg md:text-xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-wide">{stat.label}</p>
+              {/* Background Icon - Large like Daily Team */}
+              <Icon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 text-white opacity-5" />
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <p className={`text-xl md:text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                <p className="text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-wide mt-1">{stat.label}</p>
+              </div>
             </div>
           );
         })}
