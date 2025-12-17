@@ -142,6 +142,17 @@ export interface Dependent {
   preferredStaffId?: string;
 }
 
+export type ClientTag = 'VIP' | 'PONTUAL' | 'ATRASA' | 'EXIGENTE' | 'FACIL' | 'NOVO' | 'FIEL';
+
+export interface ClientPreferences {
+  preferredService?: string;
+  preferredProduct?: string;
+  preferredDay?: string;
+  preferredTime?: string;
+  allergies?: string;
+  observations?: string;
+}
+
 export interface Client {
   id: string;
   name: string;
@@ -157,6 +168,9 @@ export interface Client {
   preferredStaffId?: string;
   notes?: string;
   dependents?: Dependent[];
+  tags?: ClientTag[];
+  preferences?: ClientPreferences;
+  photo?: string;
 }
 
 export interface Appointment {

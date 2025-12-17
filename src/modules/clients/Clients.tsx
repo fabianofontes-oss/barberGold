@@ -296,6 +296,24 @@ export const Clients = () => {
               <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Full Name *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Phone Number *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
+              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              
+              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label><input type="date" value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              
+              <div className="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-4">
+                <label className="block text-sm md:text-xs font-bold text-emerald-400 uppercase mb-2 flex items-center gap-2">
+                  <Gift className="w-4 h-4" /> Código de Indicação
+                </label>
+                <input 
+                  type="text" 
+                  value={formData.referrerCode} 
+                  onChange={(e) => setFormData({...formData, referrerCode: e.target.value.toUpperCase()})} 
+                  placeholder="Ex: JOAO123"
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500 text-lg md:text-base uppercase"
+                />
+                <p className="text-[10px] text-zinc-500 mt-2">Se o cliente foi indicado por alguém, insira o código aqui.</p>
+              </div>
+              
               {/* Dependents Section */}
               <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800">
                  <label className="block text-xs font-bold text-white mb-2 uppercase flex items-center gap-2"><Users className="w-3 h-3 text-amber-500" /> Dependents (Family)</label>
