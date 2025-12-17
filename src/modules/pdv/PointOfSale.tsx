@@ -22,7 +22,10 @@ import {
   X,
   Save,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  LayoutGrid,
+  List,
+  Grid3X3
 } from 'lucide-react';
 import { CartItem, PaymentMethod } from '@/types';
 import { differenceInDays } from 'date-fns';
@@ -68,6 +71,9 @@ export const PointOfSale = () => {
   
   // Mobile View State
   const [mobileView, setMobileView] = useState<'CATALOG' | 'CART'>('CATALOG');
+  
+  // Display Mode: GRID (cards com imagem), LIST (linhas), COMPACT (grid pequeno)
+  const [displayMode, setDisplayMode] = useState<'GRID' | 'LIST' | 'COMPACT'>('GRID');
   
   // Quick Add Client State
   const [isClientModalOpen, setIsClientModalOpen] = useState(false);
@@ -268,22 +274,52 @@ export const PointOfSale = () => {
               />
             </div>
 
-            {/* Quick Access - Top Services */}
-            {!searchQuery && services.length > 0 && (
-              <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide pb-1">
-                {services.slice(0, 4).map(service => (
-                  <button
-                    key={service.id}
-                    onClick={() => addToCart(service)}
-                    className="flex-shrink-0 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-blue-500/20 transition-all flex items-center gap-1"
-                  >
-                    <Zap className="w-3 h-3" /> {service.name.split(' ')[0]}
-                  </button>
-                ))}
+            {/* Quick Access & View Toggle */}
+            <div className="flex justify-between items-center mt-3">
+              {/* Quick Access - Top Services */}
+              {!searchQuery && services.length > 0 && (
+                <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 flex-1">
+                  {services.slice(0, 4).map(service => (
+                    <button
+                      key={service.id}
+                      onClick={() => addToCart(service)}
+                      className="flex-shrink-0 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-blue-500/20 transition-all flex items-center gap-1"
+                    >
+                      <Zap className="w-3 h-3" /> {service.name.split(' ')[0]}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* View Mode Toggle */}
+              <div className="flex gap-1 bg-zinc-900 p-1 rounded-lg border border-zinc-800 ml-2 flex-shrink-0">
+                <button
+                  onClick={() => setDisplayMode('GRID')}
+                  className={`p-1.5 rounded transition-all ${displayMode === 'GRID' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
+                  title="Grade Grande"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setDisplayMode('COMPACT')}
+                  className={`p-1.5 rounded transition-all ${displayMode === 'COMPACT' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
+                  title="Grade Compacta"
+                >
+                  <Grid3X3 className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setDisplayMode('LIST')}
+                  className={`p-1.5 rounded transition-all ${displayMode === 'LIST' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
+                  title="Lista"
+                >
+                  <List className="w-4 h-4" />
+                </button>
               </div>
-            )}
+            </div>
           </div>
 
+          {/* GRID VIEW (Default) */}
+          {displayMode === 'GRID' && (
           <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 gap-3 pb-24 lg:pb-0 scrollbar-hide">
             {filteredItems.map((item, idx) => (
               <button 
@@ -316,6 +352,50 @@ export const PointOfSale = () => {
               </button>
             ))}
           </div>
+          )}
+
+          {/* COMPACT VIEW */}
+          {displayMode === 'COMPACT' && (
+          <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-3 md:grid-cols-4 gap-2 pb-24 lg:pb-0 scrollbar-hide">
+            {filteredItems.map((item, idx) => (
+              <button 
+                key={`${item.id}-${idx}`}
+                onClick={() => addToCart(item)}
+                className="bg-zinc-900 border border-zinc-800 rounded-lg p-2 flex flex-col items-center justify-center hover:border-amber-500 transition-all text-center group"
+              >
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${item.type === 'SERVICE' ? 'bg-blue-500/20' : 'bg-purple-500/20'}`}>
+                  {item.type === 'SERVICE' ? <Scissors className="w-4 h-4 text-blue-400" /> : <Package className="w-4 h-4 text-purple-400" />}
+                </div>
+                <p className="text-[10px] text-zinc-400 font-medium line-clamp-1 w-full">{item.name}</p>
+                <p className="text-xs text-amber-500 font-bold">${item.price}</p>
+              </button>
+            ))}
+          </div>
+          )}
+
+          {/* LIST VIEW */}
+          {displayMode === 'LIST' && (
+          <div className="flex-1 overflow-y-auto pr-2 space-y-2 pb-24 lg:pb-0 scrollbar-hide">
+            {filteredItems.map((item, idx) => (
+              <button 
+                key={`${item.id}-${idx}`}
+                onClick={() => addToCart(item)}
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-3 flex items-center justify-between hover:border-amber-500 transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${item.type === 'SERVICE' ? 'bg-blue-500/20' : 'bg-purple-500/20'}`}>
+                    {item.type === 'SERVICE' ? <Scissors className="w-5 h-5 text-blue-400" /> : <Package className="w-5 h-5 text-purple-400" />}
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm text-white font-medium group-hover:text-amber-500 transition-colors">{item.name}</p>
+                    <p className="text-[10px] text-zinc-500">{item.category || item.type}</p>
+                  </div>
+                </div>
+                <span className="text-amber-500 font-bold">${item.price}</span>
+              </button>
+            ))}
+          </div>
+          )}
         </div>
 
         {/* Right: Cart & Checkout (Full Screen on Mobile when active) */}
