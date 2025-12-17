@@ -1,9 +1,9 @@
 ﻿'use client';
 
 import React, { useState, useEffect } from 'react';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, Plus, Trash2, Layers } from 'lucide-react';
 import { useBarber } from '@/context/BarberContext';
-import { Product } from '@/types';
+import { Product, ProductVariant } from '@/types';
 import { ImageUpload } from '@/components/shared/ImageUpload';
 
 interface ProductModalProps {
@@ -15,6 +15,9 @@ interface ProductModalProps {
 export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, productToEdit }) => {
   const { addProduct, updateProduct, categories } = useBarber();
   const [newProduct, setNewProduct] = useState({ name: '', price: '', costPrice: '', stock: '', image: '', category: '' });
+  const [hasVariants, setHasVariants] = useState(false);
+  const [variants, setVariants] = useState<ProductVariant[]>([]);
+  const [newVariant, setNewVariant] = useState({ name: '', price: '', costPrice: '', stock: '' });
 
   // Filter categories for PRODUCT type
   const productCategories = categories.filter(c => c.type === 'PRODUCT');
@@ -30,8 +33,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
           image: productToEdit.image || '',
           category: productToEdit.category || ''
         });
+        setHasVariants(productToEdit.hasVariants || false);
+        setVariants(productToEdit.variants || []);
       } else {
         setNewProduct({ name: '', price: '', costPrice: '', stock: '', image: '', category: productCategories[0]?.name || '' });
+        setHasVariants(false);
+        setVariants([]);
       }
     }
   }, [isOpen, productToEdit, categories]);
@@ -40,25 +47,33 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const totalStock = hasVariants ? variants.reduce((sum, v) => sum + v.stock, 0) : Number(newProduct.stock);
+    const basePrice = hasVariants && variants.length > 0 ? Math.min(...variants.map(v => v.price)) : Number(newProduct.price);
+    const baseCost = hasVariants && variants.length > 0 ? variants[0].costPrice : Number(newProduct.costPrice);
+
     if (productToEdit) {
       updateProduct({
         id: productToEdit.id,
         name: newProduct.name,
-        price: Number(newProduct.price),
-        costPrice: Number(newProduct.costPrice),
-        stock: Number(newProduct.stock),
+        price: basePrice,
+        costPrice: baseCost,
+        stock: totalStock,
         image: newProduct.image,
         category: newProduct.category,
-        type: 'PRODUCT'
+        type: 'PRODUCT',
+        hasVariants,
+        variants: hasVariants ? variants : undefined
       });
     } else {
       addProduct({
         name: newProduct.name,
-        price: Number(newProduct.price),
-        costPrice: Number(newProduct.costPrice),
-        stock: Number(newProduct.stock),
+        price: basePrice,
+        costPrice: baseCost,
+        stock: totalStock,
         image: newProduct.image,
-        category: newProduct.category
+        category: newProduct.category,
+        hasVariants,
+        variants: hasVariants ? variants : undefined
       });
     }
     onClose();
@@ -103,6 +118,104 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
               )}
            </div>
 
+           {/* Variações Toggle */}
+           <div className="flex items-center justify-between p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
+              <div className="flex items-center gap-2">
+                 <Layers className="w-4 h-4 text-purple-500" />
+                 <span className="text-sm text-white font-medium">Variações</span>
+                 <span className="text-[10px] text-zinc-500">(tamanhos, volumes)</span>
+              </div>
+              <button
+                 type="button"
+                 onClick={() => setHasVariants(!hasVariants)}
+                 className={`w-10 h-5 rounded-full transition-all ${hasVariants ? 'bg-purple-500' : 'bg-zinc-700'}`}
+              >
+                 <div className={`w-4 h-4 bg-white rounded-full transition-all ${hasVariants ? 'ml-5' : 'ml-0.5'}`} />
+              </button>
+           </div>
+
+           {/* Variações Section */}
+           {hasVariants && (
+              <div className="space-y-3 p-3 bg-zinc-950 border border-purple-500/30 rounded-lg">
+                 <p className="text-xs text-purple-400 font-bold">Variações do Produto</p>
+                 
+                 {/* Lista de variações */}
+                 {variants.length > 0 && (
+                    <div className="space-y-2">
+                       {variants.map((v, i) => (
+                          <div key={v.id} className="flex items-center gap-2 p-2 bg-zinc-900 rounded-lg">
+                             <span className="flex-1 text-sm text-white font-medium">{v.name}</span>
+                             <span className="text-xs text-zinc-400">R$ {v.price}</span>
+                             <span className="text-xs text-zinc-500">Est: {v.stock}</span>
+                             <button
+                                type="button"
+                                onClick={() => setVariants(variants.filter((_, idx) => idx !== i))}
+                                className="p-1 text-zinc-500 hover:text-red-500"
+                             >
+                                <Trash2 className="w-3 h-3" />
+                             </button>
+                          </div>
+                       ))}
+                    </div>
+                 )}
+
+                 {/* Adicionar variação */}
+                 <div className="flex gap-2">
+                    <input
+                       type="text"
+                       placeholder="Nome (ex: 100ml)"
+                       value={newVariant.name}
+                       onChange={(e) => setNewVariant({ ...newVariant, name: e.target.value })}
+                       className="flex-1 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
+                    />
+                    <input
+                       type="number"
+                       placeholder="Preço"
+                       value={newVariant.price}
+                       onChange={(e) => setNewVariant({ ...newVariant, price: e.target.value })}
+                       className="w-20 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
+                    />
+                    <input
+                       type="number"
+                       placeholder="Custo"
+                       value={newVariant.costPrice}
+                       onChange={(e) => setNewVariant({ ...newVariant, costPrice: e.target.value })}
+                       className="w-20 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
+                    />
+                    <input
+                       type="number"
+                       placeholder="Est."
+                       value={newVariant.stock}
+                       onChange={(e) => setNewVariant({ ...newVariant, stock: e.target.value })}
+                       className="w-16 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
+                    />
+                    <button
+                       type="button"
+                       onClick={() => {
+                          if (newVariant.name && newVariant.price) {
+                             setVariants([...variants, {
+                                id: crypto.randomUUID(),
+                                name: newVariant.name,
+                                price: Number(newVariant.price),
+                                costPrice: Number(newVariant.costPrice) || 0,
+                                stock: Number(newVariant.stock) || 0
+                             }]);
+                             setNewVariant({ name: '', price: '', costPrice: '', stock: '' });
+                          }
+                       }}
+                       className="p-1.5 bg-purple-500 hover:bg-purple-400 text-white rounded"
+                    >
+                       <Plus className="w-4 h-4" />
+                    </button>
+                 </div>
+                 <p className="text-[10px] text-zinc-500">
+                    Estoque total: {variants.reduce((sum, v) => sum + v.stock, 0)} | Preço base: R$ {variants.length > 0 ? Math.min(...variants.map(v => v.price)) : 0}
+                 </p>
+              </div>
+           )}
+
+           {!hasVariants && (
+           <>
            <div className="flex gap-3">
               <div className="flex-1">
                  <label className="block text-xs font-medium text-zinc-400 mb-1.5">Price</label>
@@ -135,6 +248,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
               <label className="block text-xs font-medium text-zinc-400 mb-1.5">Stock</label>
               <input required type="number" value={newProduct.stock} onChange={e => setNewProduct({...newProduct, stock: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
            </div>
+           </>
+           )}
            
            <ImageUpload 
               label="Product Image" 

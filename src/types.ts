@@ -92,6 +92,15 @@ export interface Service {
   type: 'SERVICE';
 }
 
+export interface ProductVariant {
+  id: string;
+  name: string; // Ex: "100ml", "250ml", "500ml"
+  price: number;
+  costPrice: number;
+  stock: number;
+  sku?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -101,6 +110,8 @@ export interface Product {
   image?: string;
   category?: string;
   type: 'PRODUCT';
+  variants?: ProductVariant[];
+  hasVariants?: boolean;
 }
 
 export interface CartItem {

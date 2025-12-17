@@ -6,6 +6,7 @@ import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { ExpenseQuickAdd } from './components/ExpenseQuickAdd';
 import { RegisterClosureModal } from './components/RegisterClosureModal';
+import { PremiumFeatures } from './components/PremiumFeatures';
 import { 
   TrendingDown,
   Trash2,
@@ -594,6 +595,24 @@ export const Finance = () => {
                  </div>
               </div>
             )}
+
+            {/* Premium Features Section */}
+            <PremiumFeatures
+              sales={sales}
+              expenses={expenses}
+              staffPayments={staffPayments}
+              filteredSales={filteredSales}
+              filteredExpenses={filteredExpenses}
+              filteredPayouts={filteredPayoutsHistory}
+              totalRevenue={totalRevenue}
+              totalTips={totalTips}
+              staffPayoutsTotal={totalPayoutsMadePeriod}
+              fixedExpenses={fixedBizExpenses}
+              variableExpenses={variableBizExpenses}
+              currentMonthRevenue={sales.filter(s => isSameMonth(new Date(s.date), new Date())).reduce((sum, s) => sum + s.total, 0)}
+              currentWeekRevenue={sales.filter(s => isSameWeek(new Date(s.date), new Date())).reduce((sum, s) => sum + s.total, 0)}
+              period={dateFilter}
+            />
         </div>
       )}
 
