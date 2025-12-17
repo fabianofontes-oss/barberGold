@@ -23,10 +23,13 @@ import {
   Trash2
  } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
-import { AppointmentStatus, Client, Dependent } from '@/types';
+import { AppointmentStatus, Client, Dependent, ClientTag } from '@/types';
+import { ClientTagsBadges, ClientTagsManager } from './components/ClientTagsManager';
+import { ClientPreferencesEditor } from './components/ClientPreferencesEditor';
+import { ExportClients } from './components/ExportClients';
 
 export const Clients = () => {
-  const { clients, addClient, appointments, updateClient, shopSettings, currentUser, staff } = useBarber();
+  const { clients, addClient, appointments, updateClient, shopSettings, currentUser, staff, services, products, shopProfile } = useBarber();
   const { canUseFeature } = useFeatureGate();
   
   const hasLoyalty = canUseFeature('LOYALTY');
@@ -179,12 +182,15 @@ export const Clients = () => {
              {isOwner ? 'Manage your customer base & loyalty.' : 'Manage your portfolio and relationships.'}
           </p>
         </div>
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
-        >
-          <UserPlus className="w-5 h-5" /> Add Client
-        </button>
+        <div className="flex items-center gap-3">
+          {isOwner && <ExportClients clients={clients} shopName={shopProfile.name || 'Barbearia'} />}
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
+          >
+            <UserPlus className="w-5 h-5" /> Add Client
+          </button>
+        </div>
       </div>
 
       {/* TABS (STAFF VIEW) */}
@@ -266,6 +272,9 @@ export const Clients = () => {
                          <Users className={`w-4 h-4 ${iconColor}`} />
                          <span>{client.dependents!.length} Dependents</span>
                       </div>
+                   )}
+                   {client.tags && client.tags.length > 0 && (
+                      <ClientTagsBadges tags={client.tags} />
                    )}
                  </div>
 
@@ -370,10 +379,10 @@ export const Clients = () => {
               </div>
 
               {/* Tabs */}
-              <div className="flex border-b border-zinc-800 bg-zinc-900">
-                 <button onClick={() => setActiveDetailTab('HISTORY')} className={`flex-1 py-4 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 ${activeDetailTab === 'HISTORY' ? 'border-amber-500 text-white bg-zinc-800/50' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><History className="w-4 h-4" /> History</button>
-                 <button onClick={() => setActiveDetailTab('DEPENDENTS')} className={`flex-1 py-4 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 ${activeDetailTab === 'DEPENDENTS' ? 'border-amber-500 text-white bg-zinc-800/50' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Users className="w-4 h-4" /> Dependents</button>
-                 <button onClick={() => setActiveDetailTab('NOTES')} className={`flex-1 py-4 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 ${activeDetailTab === 'NOTES' ? 'border-amber-500 text-white bg-zinc-800/50' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><FileText className="w-4 h-4" /> Notes</button>
+              <div className="flex border-b border-zinc-800 bg-zinc-900 overflow-x-auto">
+                 <button onClick={() => setActiveDetailTab('HISTORY')} className={`flex-1 py-4 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 whitespace-nowrap ${activeDetailTab === 'HISTORY' ? 'border-amber-500 text-white bg-zinc-800/50' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><History className="w-4 h-4" /> History</button>
+                 <button onClick={() => setActiveDetailTab('DEPENDENTS')} className={`flex-1 py-4 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 whitespace-nowrap ${activeDetailTab === 'DEPENDENTS' ? 'border-amber-500 text-white bg-zinc-800/50' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Users className="w-4 h-4" /> Dependents</button>
+                 <button onClick={() => setActiveDetailTab('NOTES')} className={`flex-1 py-4 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 whitespace-nowrap ${activeDetailTab === 'NOTES' ? 'border-amber-500 text-white bg-zinc-800/50' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><FileText className="w-4 h-4" /> Notes</button>
               </div>
 
               {/* Content */}
@@ -437,10 +446,41 @@ export const Clients = () => {
                     </div>
                  )}
                  {activeDetailTab === 'NOTES' && (
-                    <div className="h-full flex flex-col">
-                       <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Private Barber Notes</label>
-                       <textarea className="flex-1 w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-300 focus:border-amber-500 outline-none resize-none leading-relaxed" placeholder="E.g. Likes skin fade..." value={noteText} onChange={(e) => setNoteText(e.target.value)}></textarea>
-                       <div className="mt-4 flex justify-end"><button onClick={saveNotes} className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 md:py-2.5 px-6 rounded-xl shadow-lg shadow-amber-500/20 transition-all"><Save className="w-4 h-4" /> Save Notes</button></div>
+                    <div className="h-full flex flex-col space-y-6">
+                       {/* Tags Section */}
+                       <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
+                          <ClientTagsManager
+                             tags={selectedClient.tags || []}
+                             onToggleTag={(tag: ClientTag) => {
+                                const currentTags = selectedClient.tags || [];
+                                const newTags = currentTags.includes(tag)
+                                   ? currentTags.filter(t => t !== tag)
+                                   : [...currentTags, tag];
+                                updateClient({ ...selectedClient, tags: newTags });
+                                setSelectedClient({ ...selectedClient, tags: newTags });
+                             }}
+                          />
+                       </div>
+
+                       {/* Preferences Section */}
+                       <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
+                          <ClientPreferencesEditor
+                             preferences={selectedClient.preferences || {}}
+                             services={services}
+                             products={products}
+                             onSave={(prefs) => {
+                                updateClient({ ...selectedClient, preferences: prefs });
+                                setSelectedClient({ ...selectedClient, preferences: prefs });
+                             }}
+                          />
+                       </div>
+
+                       {/* Notes Section */}
+                       <div className="flex-1 flex flex-col">
+                          <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Private Barber Notes</label>
+                          <textarea className="flex-1 w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-300 focus:border-amber-500 outline-none resize-none leading-relaxed min-h-[100px]" placeholder="E.g. Likes skin fade..." value={noteText} onChange={(e) => setNoteText(e.target.value)}></textarea>
+                          <div className="mt-4 flex justify-end"><button onClick={saveNotes} className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 md:py-2.5 px-6 rounded-xl shadow-lg shadow-amber-500/20 transition-all"><Save className="w-4 h-4" /> Save Notes</button></div>
+                       </div>
                     </div>
                  )}
               </div>

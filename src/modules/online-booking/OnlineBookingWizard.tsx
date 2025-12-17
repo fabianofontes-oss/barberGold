@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import { format, addDays, isSameDay, startOfToday, addMinutes, set, getDay } from 'date-fns';
 import { AppointmentStatus, Client, Dependent, PaymentMethod } from '@/types';
+import { ClubPromo } from '@/modules/barber-club/components/ClubPromo';
+import { useBarberClub } from '@/modules/barber-club/hooks/useBarberClub';
 
 type LucideIcon = React.ComponentType<{ className?: string }>;
 
@@ -76,6 +78,10 @@ export const OnlineBookingWizard = () => {
 
   const { canUseFeature } = useFeatureGate();
   const hasOnlineBooking = canUseFeature('ONLINE_BOOKING');
+
+  // Barber Club
+  const { plans: clubPlans } = useBarberClub();
+  const activePlans = clubPlans.filter(p => p.isActive);
 
   // FLOW STEPS:
   // 0: Intro, 1: ID, 2: Reg, 3: Dash, 4: Service, 5: Product, 6: Staff, 7: Time, 8: Review, 9: Success
@@ -757,6 +763,27 @@ export const OnlineBookingWizard = () => {
                     <button onClick={() => { navigator.clipboard.writeText(activeClientProfile.referralCode || ''); alert('Código copiado!'); }} className="bg-zinc-800 hover:bg-zinc-700 text-white p-3 rounded-lg transition-colors"><Copy className="w-5 h-5" /></button>
                  </div>
               </div>
+
+              {/* BARBER CLUB PROMO */}
+              {activePlans.length > 0 && (
+                 <ClubPromo
+                    plans={activePlans.map(p => ({
+                       id: p.id,
+                       name: p.name,
+                       price: p.monthlyPriceBRL,
+                       billingCycle: 'MONTHLY' as const,
+                       credits: p.monthlyCredits,
+                       benefits: p.description ? [p.description] : ['Desconto em serviços', 'Créditos mensais']
+                    }))}
+                    shopName={shopProfile.name}
+                    compact={true}
+                    onSelectPlan={() => {
+                       // Futuramente: abrir modal de assinatura
+                       alert('Em breve você poderá assinar direto pelo app!');
+                    }}
+                 />
+              )}
+
               <div>
                  <h3 className="text-zinc-500 text-xs font-bold uppercase mb-3 flex items-center gap-2"><History className="w-4 h-4" /> Histórico Recente</h3>
                  <div className="space-y-3">
