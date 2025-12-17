@@ -68,17 +68,17 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
       </div>
 
       {/* Unified Stats Grid - 8 cols desktop, 4 cols mobile */}
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-3 mb-4">
+      <div className="grid grid-cols-4 md:grid-cols-8 gap-3 md:gap-4 mb-4">
         {allStats.map((stat, idx) => {
           const Icon = stat.icon;
           return (
             <div 
               key={idx} 
-              className={`text-center py-2 px-1 rounded-lg bg-zinc-950/50 border border-zinc-800/50 ${stat.pulse ? 'ring-1 ring-orange-500/50' : ''}`}
+              className={`text-center py-3 px-2 rounded-xl bg-zinc-950 border border-zinc-800 ${stat.pulse ? 'ring-1 ring-orange-500/50' : ''}`}
             >
-              <Icon className={`w-4 h-4 ${stat.color} mx-auto mb-1 opacity-70`} />
-              <p className={`text-sm md:text-base font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-[8px] md:text-[9px] text-zinc-500 uppercase">{stat.label}</p>
+              <Icon className={`w-4 h-4 text-zinc-500 mx-auto mb-1`} />
+              <p className={`text-lg md:text-xl font-bold ${stat.color}`}>{stat.value}</p>
+              <p className="text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-wide">{stat.label}</p>
             </div>
           );
         })}
