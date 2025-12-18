@@ -1,12 +1,10 @@
-export type AppMode = 'DEMO' | 'PILOT' | 'PROD';
-
-export function getAppMode(): AppMode {
-  const raw = process.env.NEXT_PUBLIC_APP_MODE;
-  if (raw === 'PROD' || raw === 'PILOT' || raw === 'DEMO') return raw;
-  if (raw === 'prod' || raw === 'pilot' || raw === 'demo') return raw.toUpperCase() as AppMode;
-  return 'DEMO';
-}
-
-export function isProdMode(): boolean {
-  return getAppMode() === 'PROD';
-}
+// Re-export do novo env.ts centralizado
+// Mantido para retrocompatibilidade
+export { 
+  getAppMode, 
+  isDemoMode, 
+  isPilotMode, 
+  isProdMode, 
+  shouldUseSupabase,
+  type AppMode 
+} from './env';

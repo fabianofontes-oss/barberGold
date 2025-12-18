@@ -10,12 +10,12 @@ import type { ReferralsRepository } from './referrals/types';
 
 export function getTenantPlanRepository(): TenantPlanRepository {
   const mode = getAppMode();
-  if (mode === 'PILOT') return createTenantPlanSupabaseRepository();
+  if (mode === 'pilot' || mode === 'prod') return createTenantPlanSupabaseRepository();
   return createTenantPlanLocalStorageRepository();
 }
 
 export function getReferralsRepository(): ReferralsRepository {
   const mode = getAppMode();
-  if (mode === 'PILOT') return createReferralsSupabaseRepository();
+  if (mode === 'pilot' || mode === 'prod') return createReferralsSupabaseRepository();
   return createReferralsLocalStorageRepository();
 }

@@ -67,7 +67,7 @@ export interface StaffMember {
   name: string;
   role: 'OWNER' | 'ADMIN' | 'BARBER' | 'ASSISTANT' | 'STAFF' | 'SUPER_ADMIN';
   email?: string;
-  password?: string;
+  // password removido - auth via Supabase
   avatar?: string;
   phone?: string;
   cpf?: string;

@@ -7,7 +7,7 @@ export function runReferralsRulesSelfcheck(): { ok: boolean; errors: string[] } 
     if (!condition) errors.push(message);
   };
 
-  const cfg = { ...DEFAULT_REFERRAL_PROGRAM_CONFIG, staffEnabled: true, appMode: 'DEMO' as const };
+  const cfg = { ...DEFAULT_REFERRAL_PROGRAM_CONFIG, staffEnabled: true, appMode: 'demo' as const };
 
   const baseInput = {
     referralCode: 'CODE',

@@ -19,7 +19,7 @@ export const DEFAULT_REFERRAL_PROGRAM_CONFIG: ReferralProgramConfig = {
     windowDays: 365,
     bonusAmountBRL: 5000,
   },
-  appMode: 'DEMO',
+  appMode: 'demo',
 };
 
 export function addDaysSafe(date: Date, days: number): Date {
@@ -93,7 +93,7 @@ export function computeReferralSale(config: ReferralProgramConfig, input: Referr
   }
 
   const self = isSelfReferral(input.referrerCpfCnpj, input.referredCpfCnpj);
-  const shouldBlock = self && (config.appMode === 'PROD' || isProdMode());
+  const shouldBlock = self && (config.appMode === 'prod' || isProdMode());
   if (self) warnings.push('Auto-indicação detectada (placeholder).');
 
   const percent = getCommissionPercentForPartnerType(config, input.partnerType);
