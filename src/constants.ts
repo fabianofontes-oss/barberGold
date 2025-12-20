@@ -155,7 +155,7 @@ export const MOCK_STAFF: StaffMember[] = [
     name: 'Super Admin',
     role: 'SUPER_ADMIN',
     email: 'super@barberflow.com',
-    password: 'super',
+    // password removido - usar Supabase Auth
     commissionModel: CompensationModel.OWNER,
     serviceCommissionRate: 0,
     productCommissionRate: 0,
@@ -168,7 +168,7 @@ export const MOCK_STAFF: StaffMember[] = [
     name: 'Alex Owner',
     role: 'OWNER',
     email: 'admin@barberflow.com',
-    password: 'admin',
+    // password removido - usar Supabase Auth
     commissionModel: CompensationModel.OWNER,
     serviceCommissionRate: 100,
     productCommissionRate: 100,
@@ -181,7 +181,7 @@ export const MOCK_STAFF: StaffMember[] = [
     name: 'Mike Barber',
     role: 'BARBER',
     email: 'mike@barberflow.com',
-    password: 'mike',
+    // password removido - usar Supabase Auth
     commissionModel: CompensationModel.PERCENTAGE,
     serviceCommissionRate: 50,
     productCommissionRate: 20,

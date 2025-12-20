@@ -2,48 +2,59 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+  try {
+    let supabaseResponse = NextResponse.next({
+      request,
+    })
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          )
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
+    // Acessa env vars diretamente aqui pois env.ts pode não funcionar em middleware
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.warn('⚠️ Supabase env vars não configuradas, pulando middleware')
+      return supabaseResponse
     }
-  )
 
-  // IMPORTANTE: Evite escrever qualquer lógica entre createServerClient e
-  // supabase.auth.getUser(). Um simples erro pode tornar muito difícil
-  // debugar problemas com usuários sendo deslogados aleatoriamente.
+    const supabase = createServerClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            supabaseResponse = NextResponse.next({
+              request,
+            })
+            cookiesToSet.forEach(({ name, value, options }) =>
+              supabaseResponse.cookies.set(name, value, options)
+            )
+          },
+        },
+      }
+    )
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    // IMPORTANTE: Evite escrever qualquer lógica entre createServerClient e
+    // supabase.auth.getUser(). Um simples erro pode tornar muito difícil
+    // debugar problemas com usuários sendo deslogados aleatoriamente.
 
-  // Se não tiver usuário e não estiver em rota pública, redireciona para login
-  // Descomente quando implementar autenticação real
-  // if (!user && !request.nextUrl.pathname.startsWith('/login') && !request.nextUrl.pathname.startsWith('/auth')) {
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/login'
-  //   return NextResponse.redirect(url)
-  // }
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
-  return supabaseResponse
+    // Se não tiver usuário e não estiver em rota pública, redireciona para login
+    // Descomente quando implementar autenticação real
+    // if (!user && !request.nextUrl.pathname.startsWith('/login') && !request.nextUrl.pathname.startsWith('/auth')) {
+    //   const url = request.nextUrl.clone()
+    //   url.pathname = '/login'
+    //   return NextResponse.redirect(url)
+    // }
+
+    return supabaseResponse
+  } catch (error) {
+    console.error('Erro no middleware de sessão do Supabase:', error)
+    return NextResponse.next({ request })
+  }
 }

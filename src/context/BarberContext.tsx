@@ -367,18 +367,19 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
     });
   }, [isHydrated, appointments, clients, products, services, sales, staff, expenses, staffPayments, inventory, suppliers, categories, reviews, shopProfile, shopSettings]);
 
-  // ... (keep auth/user methods login, logout, switchUser, etc) ...
-  const login = (email: string, pass: string) => {
-     const user = staff.find(s => s.email === email && s.password === pass);
-     if (user) {
-        setIsAuthenticated(true);
-        setCurrentUser(user);
-        if (user.role === 'SUPER_ADMIN') {
-           setView('SUPER_ADMIN_DASHBOARD');
-        } else {
+  // DEPRECATED: login fake removido - usar Supabase Auth via /login
+  // Esta função agora só é usada para modo demo/fallback
+  const login = (_email: string, _pass: string) => {
+     console.warn('⚠️ login() está deprecated. Use Supabase Auth via /login');
+     // Em modo demo, permite login fake para desenvolvimento
+     if (process.env.NEXT_PUBLIC_APP_MODE === 'demo') {
+        const demoUser = staff[1]; // Alex Owner
+        if (demoUser) {
+           setIsAuthenticated(true);
+           setCurrentUser(demoUser);
            setView('DASHBOARD');
+           return true;
         }
-        return true;
      }
      return false;
   };
