@@ -1,6 +1,7 @@
 'use client';
 
 import { useBarber } from '@/context/BarberContext';
+import { useRouter } from 'next/navigation';
 import { Layout } from '@/components/Layout';
 import { Dashboard } from '@/modules/dashboard/Dashboard';
 import { PointOfSale } from '@/modules/pdv/PointOfSale';
@@ -56,9 +57,16 @@ const LoginScreen = ({ onLogin }: { onLogin: () => void }) => (
 );
 
 export default function Home() {
+  const router = useRouter();
   const { login, isAuthenticated, currentView } = useBarber();
 
   const handleLogin = () => {
+    const appMode = (process.env.NEXT_PUBLIC_APP_MODE || 'demo').toLowerCase();
+    if (appMode !== 'demo') {
+      router.push('/login');
+      return;
+    }
+
     login('admin@barberflow.com', 'admin');
   };
 
