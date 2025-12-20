@@ -37,8 +37,7 @@ BEGIN
     slug,
     plan_id,
     status,
-    created_at,
-    updated_at
+    created_at
   ) VALUES (
     v_tenant_id,
     v_user_id,
@@ -46,7 +45,6 @@ BEGIN
     LOWER(REPLACE(v_shop_name, ' ', '-')),
     'SOLO',  -- Plano inicial
     'TRIAL', -- Status trial
-    NOW(),
     NOW()
   );
 
@@ -56,12 +54,11 @@ BEGIN
     user_id,
     tenant_id,
     role,
-    display_name,
+    name,
     email,
     phone,
     is_active,
-    created_at,
-    updated_at
+    created_at
   ) VALUES (
     v_profile_id,
     v_user_id,
@@ -71,7 +68,6 @@ BEGIN
     v_owner_email,
     v_owner_phone,
     TRUE,
-    NOW(),
     NOW()
   );
 
