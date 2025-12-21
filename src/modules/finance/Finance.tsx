@@ -2,7 +2,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { useBarber } from '@/context/BarberContext';
+import { useFinanceData } from './hooks/useFinanceData';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { ExpenseQuickAdd } from './components/ExpenseQuickAdd';
 import { RegisterClosureModal } from './components/RegisterClosureModal';
@@ -37,7 +37,7 @@ import { format, isSameDay, isSameWeek, isSameMonth, startOfDay } from 'date-fns
 import { CompensationModel, Expense, PaymentMethod, StaffMember, Sale } from '@/types';
 
 export const Finance = () => {
-  const { sales, staff, expenses, staffPayments, addExpense, removeExpense, addStaffPayment, currentUser, shopSettings, currentTenantPlanId } = useBarber();
+  const { sales, staff, expenses, staffPayments, createExpense, deleteExpense, currentUser, shopSettings, currentTenantPlanId, loading: dataLoading } = useFinanceData();
   const { canUseFeature } = useFeatureGate();
   
   const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'EXPENSES' | 'PAYOUTS'>('OVERVIEW');
@@ -86,32 +86,32 @@ export const Finance = () => {
      return true;
   };
 
-  const filteredSales = sales.filter(s => filterByDate(s.date));
-  const filteredExpenses = expenses.filter(e => filterByDate(e.date));
+  const filteredSales = sales.filter((s: any) => filterByDate(new Date(s.createdAt)));
+  const filteredExpenses = expenses.filter((e: any) => filterByDate(new Date(e.expenseDate)));
   // Note: Payouts/Staff Payments usually filter by date for history, but balances are lifetime.
-  const filteredPayoutsHistory = staffPayments.filter(p => filterByDate(p.date));
+  const filteredPayoutsHistory = staffPayments.filter((p: any) => filterByDate(new Date(p.date)));
 
   // --- FINANCIAL CALCULATIONS (FILTERED) ---
   
   // 1. Sales Breakdown by Method
-  const salesByMethod = filteredSales.reduce((acc, sale) => {
-    acc[sale.method] = (acc[sale.method] || 0) + sale.total;
+  const salesByMethod = filteredSales.reduce((acc: any, sale: any) => {
+    acc[sale.paymentMethod] = (acc[sale.paymentMethod] || 0) + sale.total;
     return acc;
   }, {} as Record<string, number>);
 
-  const totalRevenue = filteredSales.reduce((acc, sale) => acc + sale.total, 0);
-  const totalTips = filteredSales.reduce((acc, sale) => acc + (sale.tip || 0), 0); // NEW: Tips
+  const totalRevenue = filteredSales.reduce((acc: number, sale: any) => acc + sale.total, 0);
+  const totalTips = filteredSales.reduce((acc: number, sale: any) => acc + (sale.tip || 0), 0);
 
   // 2. Staff Payouts Calculation & Logic
   // Filter: If Owner, show all. If Staff, show ONLY self.
-  const relevantStaff = isOwner ? staff : staff.filter(s => s.id === currentUser.id);
+  const relevantStaff = isOwner ? staff : staff.filter((s: any) => s.id === currentUser?.id);
 
-  const staffBreakdown = relevantStaff.map(member => {
+  const staffBreakdown = relevantStaff.map((member: any) => {
     // For LIFETIME Balance, we need ALL sales/payments. For PERIOD stats, we use filtered.
     // Let's calculate LIFETIME for NetPayable, but also calculate PERIOD Earnings for display.
     
-    const allMemberSales = sales.filter(s => s.staffId === member.id);
-    const allMemberPayments = staffPayments.filter(p => p.staffId === member.id);
+    const allMemberSales = sales.filter((s: any) => s.staffId === member.id);
+    const allMemberPayments = staffPayments.filter((p: any) => p.staffId === member.id);
     
     const calculateEarnings = (salesList: Sale[]) => {
        let serviceComm = 0;
@@ -122,11 +122,11 @@ export const Finance = () => {
        salesList.forEach(sale => {
           tips += (sale.tip || 0);
           
-          const serviceItems = sale.items.filter(i => i.type === 'SERVICE');
-          const productItems = sale.items.filter(i => i.type === 'PRODUCT');
+          const serviceItems = sale.items.filter((i: any) => i.type === 'SERVICE');
+          const productItems = sale.items.filter((i: any) => i.type === 'PRODUCT');
           
-          const listPriceService = serviceItems.reduce((sum, i) => sum + i.price, 0);
-          const listPriceProduct = productItems.reduce((sum, i) => sum + i.price, 0);
+          const listPriceService = serviceItems.reduce((sum: number, i: any) => sum + i.price, 0);
+          const listPriceProduct = productItems.reduce((sum: number, i: any) => sum + i.price, 0);
           const listPriceTotal = listPriceService + listPriceProduct;
           const netPaid = sale.total; // Excludes tip
 
@@ -154,7 +154,7 @@ export const Finance = () => {
 
        if (member.commissionModel === CompensationModel.PERCENTAGE || member.commissionModel === CompensationModel.OWNER) {
           gross = serviceComm + productComm + tips; // Tips go 100% to staff
-          const revenueNoTips = salesList.reduce((acc, s) => acc + s.total, 0);
+          const revenueNoTips = salesList.reduce((acc: number, s: any) => acc + s.total, 0);
           house = revenueNoTips - (serviceComm + productComm); // House doesn't keep tips
        } else if (member.commissionModel === CompensationModel.CHAIR_RENTAL) {
           // Chair Rental Logic
@@ -162,7 +162,7 @@ export const Finance = () => {
           // Simplified for aggregate: Just sum commissions (assuming Rent is deducted monthly elsewhere or handled manually in Payouts? 
           // Usually Rent is a deduction. Let's subtract rent only if filtering by Month? Too complex.
           // Let's stick to standard accumulation:
-          const serviceRev = salesList.reduce((acc, s) => acc + s.items.filter(i => i.type === 'SERVICE').reduce((sum, i) => sum + i.price, 0), 0); // Approx
+          const serviceRev = salesList.reduce((acc: number, s: any) => acc + s.items.filter((i: any) => i.type === 'SERVICE').reduce((sum: number, i: any) => sum + i.price, 0), 0);
           gross = serviceComm + productComm + tips; // Note: In rental, serviceComm is usually 100%. 
        }
 
@@ -170,7 +170,7 @@ export const Finance = () => {
     };
 
     const lifetimeStats = calculateEarnings(allMemberSales);
-    const periodStats = calculateEarnings(allMemberSales.filter(s => filterByDate(s.date))); // Sales in selected period
+    const periodStats = calculateEarnings(allMemberSales.filter((s: any) => filterByDate(new Date(s.createdAt))));
 
     // Deduct Rent? 
     // If calculating Net Payable, we should technically deduct Rent. 
@@ -178,7 +178,7 @@ export const Finance = () => {
     // Or simpler: Staff owes rent. 
     // Let's keep it simple: NetPayable = Earnings - Payments.
 
-    const totalPaidOut = allMemberPayments.reduce((acc, p) => acc + p.amount, 0);
+    const totalPaidOut = allMemberPayments.reduce((acc: number, p: any) => acc + p.amount, 0);
     const netPayable = lifetimeStats.gross - totalPaidOut;
 
     return {
@@ -194,19 +194,19 @@ export const Finance = () => {
   });
 
   // 3. Expenses Classification (Filtered)
-  const businessExpensesList = filteredExpenses.filter(e => e.context !== 'PERSONAL');
-  const personalExpensesList = filteredExpenses.filter(e => e.context === 'PERSONAL');
+  const businessExpensesList = filteredExpenses.filter((e: any) => e.context !== 'PERSONAL');
+  const personalExpensesList = filteredExpenses.filter((e: any) => e.context === 'PERSONAL');
 
   const isFixedCost = (category: string) => ['RENT', 'UTILITIES', 'SYSTEM'].includes(category);
   
-  const fixedBizExpenses = businessExpensesList.filter(e => isFixedCost(e.category)).reduce((sum, e) => sum + e.amount, 0);
-  const variableBizExpenses = businessExpensesList.filter(e => !isFixedCost(e.category)).reduce((sum, e) => sum + e.amount, 0);
-  const systemExpenses = businessExpensesList.filter(e => e.category === 'SYSTEM').reduce((sum, e) => sum + e.amount, 0);
+  const fixedBizExpenses = businessExpensesList.filter((e: any) => isFixedCost(e.category)).reduce((sum: number, e: any) => sum + e.amount, 0);
+  const variableBizExpenses = businessExpensesList.filter((e: any) => !isFixedCost(e.category)).reduce((sum: number, e: any) => sum + e.amount, 0);
+  const systemExpenses = businessExpensesList.filter((e: any) => e.category === 'SYSTEM').reduce((sum: number, e: any) => sum + e.amount, 0);
   
   const totalBizExpenses = fixedBizExpenses + variableBizExpenses;
   
   // 4. CASH FLOW ANALYSIS (Filtered)
-  const totalPayoutsMadePeriod = filteredPayoutsHistory.reduce((acc, p) => acc + p.amount, 0);
+  const totalPayoutsMadePeriod = filteredPayoutsHistory.reduce((acc: number, p: any) => acc + p.amount, 0);
   
   // Net Cash Flow for Period = Revenue (Period) - Expenses (Period) - Payouts (Period)
   // Revenue includes Tips in the till? Yes, technically it's cash in drawer until paid out.
@@ -216,26 +216,25 @@ export const Finance = () => {
   const netCashFlow = totalCashIn - totalBizExpenses - totalPayoutsMadePeriod;
 
   // 4. Personal Context (CPF)
-  const totalPersonalExpenses = personalExpensesList.reduce((sum, e) => sum + e.amount, 0);
+  const totalPersonalExpenses = personalExpensesList.reduce((sum: number, e: any) => sum + e.amount, 0);
   const personalBalance = netCashFlow - totalPersonalExpenses;
 
   // Break-even (Period)
-  const totalHouseSharePeriod = staffBreakdown.reduce((acc, s) => acc + s.houseSharePeriod, 0);
+  const totalHouseSharePeriod = staffBreakdown.reduce((acc: number, s: any) => acc + s.houseSharePeriod, 0);
   const remainingToBreakEven = Math.max(0, totalBizExpenses - totalHouseSharePeriod);
   const breakEvenPercent = totalBizExpenses > 0 ? (totalHouseSharePeriod / totalBizExpenses) * 100 : 100;
   const systemCostRatio = totalHouseSharePeriod > 0 ? (systemExpenses / totalHouseSharePeriod) * 100 : 0;
 
   // --- ACTIONS ---
 
-  const handleCreateExpense = (e: React.FormEvent) => {
+  const handleCreateExpense = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newExpense.title && newExpense.amount) {
-      addExpense({
+      await createExpense({
         title: newExpense.title,
         amount: Number(newExpense.amount),
         category: newExpense.category as any,
-        context: newExpense.context as any,
-        date: new Date(newExpense.date || new Date())
+        expenseDate: format(new Date(newExpense.date || new Date()), 'yyyy-MM-dd'),
       });
       setIsExpenseModalOpen(false);
       setNewExpense({ title: '', amount: 0, category: 'UTILITIES', context: activeContext, date: new Date() });
@@ -244,18 +243,11 @@ export const Finance = () => {
 
   const handleCreatePayout = (e: React.FormEvent) => {
      e.preventDefault();
-     if (selectedStaffForPayout && payoutForm.amount > 0) {
-        addStaffPayment({
-           staffId: selectedStaffForPayout.id,
-           amount: Number(payoutForm.amount),
-           type: payoutForm.type,
-           date: new Date(),
-           notes: payoutForm.notes
-        });
-        setIsPayoutModalOpen(false);
-        setPayoutForm({ amount: 0, type: 'PAYOUT', notes: '' });
-        setSelectedStaffForPayout(null);
-     }
+     // TODO: Implementar addStaffPayment no Supabase
+     console.log('Payout criado:', payoutForm);
+     setIsPayoutModalOpen(false);
+     setPayoutForm({ amount: 0, type: 'PAYOUT', notes: '' });
+     setSelectedStaffForPayout(null);
   }
 
   const openPayoutModal = (staffMember: any) => {
@@ -609,8 +601,8 @@ export const Finance = () => {
               staffPayoutsTotal={totalPayoutsMadePeriod}
               fixedExpenses={fixedBizExpenses}
               variableExpenses={variableBizExpenses}
-              currentMonthRevenue={sales.filter(s => isSameMonth(new Date(s.date), new Date())).reduce((sum, s) => sum + s.total, 0)}
-              currentWeekRevenue={sales.filter(s => isSameWeek(new Date(s.date), new Date())).reduce((sum, s) => sum + s.total, 0)}
+              currentMonthRevenue={sales.filter((s: any) => isSameMonth(new Date(s.createdAt), new Date())).reduce((sum: number, s: any) => sum + s.total, 0)}
+              currentWeekRevenue={sales.filter((s: any) => isSameWeek(new Date(s.createdAt), new Date())).reduce((sum: number, s: any) => sum + s.total, 0)}
               period={dateFilter}
             />
         </div>
@@ -637,7 +629,7 @@ export const Finance = () => {
                     <p className="text-sm">No expenses recorded for this period.</p>
                   </div>
                ) : (
-                  (activeContext === 'BUSINESS' ? businessExpensesList : personalExpensesList).map(exp => (
+                  (activeContext === 'BUSINESS' ? businessExpensesList : personalExpensesList).map((exp: any) => (
                     <div key={exp.id} className="flex justify-between items-center bg-zinc-900 p-4 rounded-xl border border-zinc-800 group hover:border-zinc-700 transition-all">
                        <div className="flex items-center gap-4">
                           <div className={`p-3 rounded-lg ${isFixedCost(exp.category) ? 'bg-blue-500/10' : 'bg-orange-500/10'}`}>
@@ -654,7 +646,7 @@ export const Finance = () => {
                        </div>
                        <div className="flex items-center gap-4">
                           <span className="text-red-400 font-bold text-lg">-${exp.amount.toFixed(2)}</span>
-                          <button onClick={() => removeExpense(exp.id)} className="text-zinc-600 hover:text-red-500 p-2 rounded-lg hover:bg-zinc-950 transition-all">
+                          <button onClick={() => deleteExpense(exp.id)} className="text-zinc-600 hover:text-red-500 p-2 rounded-lg hover:bg-zinc-950 transition-all">
                             <Trash2 className="w-4 h-4" />
                           </button>
                        </div>
@@ -680,7 +672,7 @@ export const Finance = () => {
             </div>
             
             <div className="grid grid-cols-1 gap-6">
-               {staffBreakdown.map((stat, idx) => (
+               {staffBreakdown.map((stat: any, idx: number) => (
                   <div key={idx} className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl relative overflow-hidden group hover:border-amber-500/30 transition-all">
                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
                         
