@@ -1,7 +1,8 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { getAuthContext, AuthError } from '@/lib/auth/getTenantId';
+import { getAuthContext } from '@/lib/auth/getTenantId';
+import { AuthError } from '@/lib/auth/types';
 import { createAgendaRepository } from './repository';
 import { AppointmentStatus, CompensationModel } from '@/types';
 import {
