@@ -45,13 +45,33 @@ export async function updateSession(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser()
 
-    // Se não tiver usuário e não estiver em rota pública, redireciona para login
-    // Descomente quando implementar autenticação real
-    // if (!user && !request.nextUrl.pathname.startsWith('/login') && !request.nextUrl.pathname.startsWith('/auth')) {
-    //   const url = request.nextUrl.clone()
-    //   url.pathname = '/login'
-    //   return NextResponse.redirect(url)
-    // }
+    // Rotas públicas que não precisam de auth
+    const publicRoutes = [
+      '/login',
+      '/landing',
+      '/book',
+      '/site',
+      '/',
+    ];
+
+    // Se não tem usuário e não é rota pública, redirecionar
+    const isPublicRoute = publicRoutes.some(route =>
+      request.nextUrl.pathname === route ||
+      request.nextUrl.pathname.startsWith('/api/')
+    );
+
+    if (!user && !isPublicRoute) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+    }
+
+    // Se está logado e tenta acessar login, redireciona para dashboard
+    if (user && request.nextUrl.pathname === '/login') {
+      const url = request.nextUrl.clone();
+      url.pathname = '/app/dashboard';
+      return NextResponse.redirect(url);
+    }
 
     return supabaseResponse
   } catch (error) {

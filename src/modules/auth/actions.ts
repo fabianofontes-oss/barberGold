@@ -18,7 +18,7 @@ export async function signInWithPasswordAction(
 ): Promise<AuthActionResult> {
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data: authData, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -31,8 +31,23 @@ export async function signInWithPasswordAction(
     };
   }
 
+  // Buscar profile do usuário
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('tenant_id, role')
+    .eq('user_id', authData.user.id)
+    .maybeSingle();
+
   revalidatePath('/', 'layout');
-  return { success: true };
+
+  // Redirecionar baseado no tenant
+  if (!profile?.tenant_id) {
+    // Sem tenant = redireciona para setup
+    redirect('/app/setup');
+  } else {
+    // Com tenant = dashboard
+    redirect('/app/dashboard');
+  }
 }
 
 /**
