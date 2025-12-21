@@ -20,7 +20,17 @@ export async function getAuthContext(): Promise<AuthContext> {
     throw new AuthError('Usuário não autenticado', 'NOT_AUTHENTICATED');
   }
 
-  // 2. Busca profile do usuário
+  // 2. Tentar pegar tenant do header (subdomínio) - prioridade
+  let tenantIdFromSubdomain: string | null = null;
+  try {
+    const { headers } = await import('next/headers');
+    const headersList = await headers();
+    tenantIdFromSubdomain = headersList.get('x-tenant-id');
+  } catch {
+    // Headers não disponíveis (client-side ou erro) - usar fallback
+  }
+
+  // 3. Busca profile do usuário
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('id, tenant_id, role, name, is_active')
@@ -39,10 +49,13 @@ export async function getAuthContext(): Promise<AuthContext> {
     throw new AuthError('Profile está inativo', 'INACTIVE_PROFILE');
   }
 
+  // 4. Usar tenant do subdomínio se disponível, senão usar do profile
+  const finalTenantId = tenantIdFromSubdomain || profile.tenant_id;
+
   return {
     userId: user.id,
     profileId: profile.id,
-    tenantId: profile.tenant_id,
+    tenantId: finalTenantId,
     role: profile.role as ProfileRole,
     displayName: profile.name,
   };
