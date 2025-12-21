@@ -316,6 +316,46 @@ CREATE INDEX idx_appointments_status ON public.appointments(tenant_id, status);
 -- MÓDULO 5: VENDAS & PDV
 -- =============================================
 
+-- TABELA: cash_closures (Fechamento de Caixa) - Criada primeiro para FK
+CREATE TABLE public.cash_closures (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
+  
+  -- Período
+  opened_at TIMESTAMPTZ NOT NULL,
+  closed_at TIMESTAMPTZ,
+  
+  -- Quem fechou
+  closed_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+  
+  -- Valores Esperados (calculado)
+  expected_cash NUMERIC(10,2) DEFAULT 0,
+  expected_card NUMERIC(10,2) DEFAULT 0,
+  expected_pix NUMERIC(10,2) DEFAULT 0,
+  expected_total NUMERIC(10,2) DEFAULT 0,
+  
+  -- Valores Reais (informado no fechamento)
+  actual_cash NUMERIC(10,2),
+  actual_card NUMERIC(10,2),
+  actual_pix NUMERIC(10,2),
+  actual_total NUMERIC(10,2),
+  
+  -- Diferença
+  difference NUMERIC(10,2),
+  
+  -- Status
+  status TEXT DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'CLOSED', 'REVIEWED')),
+  
+  -- Fechamento às cegas
+  is_blind BOOLEAN DEFAULT FALSE,
+  
+  notes TEXT
+);
+
+CREATE INDEX idx_cash_closures_tenant ON public.cash_closures(tenant_id);
+CREATE INDEX idx_cash_closures_date ON public.cash_closures(tenant_id, opened_at);
+
 -- TABELA: sales (Vendas)
 CREATE TABLE public.sales (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -379,46 +419,6 @@ CREATE INDEX idx_sale_items_sale ON public.sale_items(sale_id);
 -- =============================================
 -- MÓDULO 6: FINANCEIRO
 -- =============================================
-
--- TABELA: cash_closures (Fechamento de Caixa)
-CREATE TABLE public.cash_closures (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
-  
-  -- Período
-  opened_at TIMESTAMPTZ NOT NULL,
-  closed_at TIMESTAMPTZ,
-  
-  -- Quem fechou
-  closed_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
-  
-  -- Valores Esperados (calculado)
-  expected_cash NUMERIC(10,2) DEFAULT 0,
-  expected_card NUMERIC(10,2) DEFAULT 0,
-  expected_pix NUMERIC(10,2) DEFAULT 0,
-  expected_total NUMERIC(10,2) DEFAULT 0,
-  
-  -- Valores Informados (pelo operador)
-  actual_cash NUMERIC(10,2),
-  actual_card NUMERIC(10,2),
-  actual_pix NUMERIC(10,2),
-  actual_total NUMERIC(10,2),
-  
-  -- Diferença
-  difference NUMERIC(10,2),
-  
-  -- Status
-  status TEXT DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'CLOSED', 'REVIEWED')),
-  
-  -- Blind Close (fechamento cego)
-  is_blind BOOLEAN DEFAULT FALSE,
-  
-  notes TEXT
-);
-
-CREATE INDEX idx_cash_closures_tenant ON public.cash_closures(tenant_id);
-CREATE INDEX idx_cash_closures_date ON public.cash_closures(tenant_id, opened_at);
 
 -- TABELA: expenses (Despesas)
 CREATE TABLE public.expenses (
