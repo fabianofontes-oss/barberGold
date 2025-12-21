@@ -1,7 +1,7 @@
 'use client';
 
-import { Dashboard } from '@/modules/dashboard/Dashboard';
+import { DashboardSimple } from '@/modules/dashboard/DashboardSimple';
 
 export default function DashboardPage() {
-  return <Dashboard />;
+  return <DashboardSimple />;
 }
