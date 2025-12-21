@@ -80,3 +80,35 @@ export async function deleteClientAction(clientId: string) {
 
   return { success: true };
 }
+
+export async function listClientDependentsAction(clientId: string) {
+  const auth = await getAuthContext();
+  const supabase = await createClient();
+  const repo = createClientsRepository(supabase);
+
+  return await repo.listDependents({ clientId });
+}
+
+export async function createClientDependentAction(clientId: string, data: { name: string; relationship?: string; preferredStaffId?: string }) {
+  const auth = await getAuthContext();
+  const supabase = await createClient();
+  const repo = createClientsRepository(supabase);
+
+  return await repo.createDependent({
+    input: {
+      client_id: clientId,
+      name: data.name,
+      relationship: data.relationship || null,
+      preferred_staff_id: data.preferredStaffId || null,
+    },
+  });
+}
+
+export async function deleteClientDependentAction(dependentId: string) {
+  const auth = await getAuthContext();
+  const supabase = await createClient();
+  const repo = createClientsRepository(supabase);
+
+  await repo.deleteDependent({ dependentId });
+  return { success: true };
+}

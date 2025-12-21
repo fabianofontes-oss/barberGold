@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useBarber } from '@/context/BarberContext';
+import { useClientsData } from './hooks/useClientsData';
+import { useClientDependents } from './hooks/useClientDependents';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { 
   Search, 
@@ -29,7 +30,7 @@ import { ClientPreferencesEditor } from './components/ClientPreferencesEditor';
 import { ExportClients } from './components/ExportClients';
 
 export const Clients = () => {
-  const { clients, addClient, appointments, updateClient, shopSettings, currentUser, staff, services, products, shopProfile } = useBarber();
+  const { clients, addClient, updateClient, removeClient, appointments, staff, services, products, shopProfile, shopSettings, currentUser, loading: dataLoading } = useClientsData();
   const { canUseFeature } = useFeatureGate();
   
   const hasLoyalty = canUseFeature('LOYALTY');
@@ -45,27 +46,30 @@ export const Clients = () => {
   const [newDependentStaffId, setNewDependentStaffId] = useState('');
 
   // VIEW MODE
-  const isOwner = currentUser.role === 'OWNER';
+  const isOwner = currentUser?.role === 'OWNER';
   const [activeTab, setActiveTab] = useState<'PORTFOLIO' | 'HISTORY'>(isOwner ? 'PORTFOLIO' : 'PORTFOLIO');
   
   // Detail Modal State
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
+  
+  // Dependents hook
+  const { dependents, addDependent: addDependentToDb, deleteDependent: deleteDependentFromDb } = useClientDependents(selectedClient?.id || null);
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
+  const myLoyalClients = clients.filter((c: any) => c.preferredStaffId === currentUser?.id);
   const myServedClientIds = new Set(
      appointments
-        .filter(a => a.staffId === currentUser.id)
-        .map(a => a.clientId)
+        .filter((a: any) => a.staffId === currentUser?.id)
+        .map((a: any) => a.clientId)
   );
   
-  const myHistoryClients = clients.filter(c => {
-     if (c.preferredStaffId === currentUser.id) return false;
+  const myHistoryClients = clients.filter((c: any) => {
+     if (c.preferredStaffId === currentUser?.id) return false;
      return myServedClientIds.has(c.id);
   });
 
@@ -89,52 +93,34 @@ export const Clients = () => {
 
   // --- HANDLERS ---
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
     
-    addClient({
+    await addClient({
       name: formData.name,
       phone: formData.phone,
       email: formData.email, 
       birthDate: formData.birthDate,
-      referrerCode: formData.referrerCode,
-      dependents: formData.dependents
     });
     setFormData({ name: '', phone: '', email: '', birthDate: '', referrerCode: '', dependents: [] });
     setIsModalOpen(false);
   };
 
-  const handleAddDependent = () => {
-     if (newDependentName.trim()) {
-        const dep: Dependent = {
-           id: Math.random().toString(36).substr(2, 9),
+  const handleAddDependent = async () => {
+     if (newDependentName.trim() && selectedClient) {
+        await addDependentToDb({
            name: newDependentName,
-           preferredStaffId: newDependentStaffId || undefined
-        };
-        
-        if (selectedClient) {
-           // Editing existing client
-           const updatedDependents = [...(selectedClient.dependents || []), dep];
-           updateClient({ ...selectedClient, dependents: updatedDependents });
-           setSelectedClient({ ...selectedClient, dependents: updatedDependents });
-        } else {
-           // Creating new client
-           setFormData(prev => ({ ...prev, dependents: [...prev.dependents, dep] }));
-        }
+           relationship: undefined,
+           preferredStaffId: newDependentStaffId || undefined,
+        });
         setNewDependentName('');
         setNewDependentStaffId('');
      }
   };
 
-  const removeDependent = (id: string) => {
-     if (selectedClient) {
-        const updated = (selectedClient.dependents || []).filter(d => d.id !== id);
-        updateClient({ ...selectedClient, dependents: updated });
-        setSelectedClient({ ...selectedClient, dependents: updated });
-     } else {
-        setFormData(prev => ({ ...prev, dependents: prev.dependents.filter(d => d.id !== id) }));
-     }
+  const removeDependent = async (id: string) => {
+     await deleteDependentFromDb(id);
   };
 
   const handleClientClick = (client: Client) => {
@@ -143,16 +129,19 @@ export const Clients = () => {
     setActiveDetailTab('HISTORY');
   };
 
-  const saveNotes = () => {
+  const saveNotes = async () => {
     if (selectedClient) {
-      updateClient({ ...selectedClient, notes: noteText });
+      await updateClient({
+        clientId: selectedClient.id,
+        notes: noteText,
+      });
     }
   };
 
   // Get Client History
   const clientHistory = appointments
-    .filter(a => a.clientId === selectedClient?.id && a.status === AppointmentStatus.COMPLETED)
-    .sort((a, b) => b.date.getTime() - a.date.getTime());
+    .filter((a: any) => a.clientId === selectedClient?.id && a.status === AppointmentStatus.COMPLETED)
+    .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const getReturnStatus = (lastVisit?: Date) => {
     if (!lastVisit) return { status: 'NEW', days: 0 };
@@ -407,7 +396,7 @@ export const Clients = () => {
                  {activeDetailTab === 'HISTORY' && (
                     <div className="space-y-4">
                        <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Recent Appointments</h4>
-                       {clientHistory.length === 0 ? <div className="text-center py-10 text-zinc-500"><Clock className="w-10 h-10 mx-auto mb-3 opacity-30" /><p>No completed services yet.</p></div> : clientHistory.map(appt => (
+                       {clientHistory.length === 0 ? <div className="text-center py-10 text-zinc-500"><Clock className="w-10 h-10 mx-auto mb-3 opacity-30" /><p>No completed services yet.</p></div> : clientHistory.map((appt: any) => (
                           <div key={appt.id} className="flex gap-4 p-4 rounded-xl border border-zinc-800 bg-zinc-950/50">
                              <div className="flex flex-col items-center justify-center px-2 border-r border-zinc-800 text-zinc-400 min-w-[60px]"><span className="text-sm font-bold">{format(appt.date, 'MMM')}</span><span className="text-xl font-bold text-white">{format(appt.date, 'd')}</span></div>
                              <div><h4 className="font-bold text-white text-lg">{appt.serviceName}</h4><p className="text-sm text-zinc-500">Provided by <span className="text-amber-500">{appt.staffId}</span></p><p className="text-xs text-zinc-600 mt-2">{format(appt.date, 'HH:mm')} • ${appt.price}</p></div>
@@ -423,20 +412,20 @@ export const Clients = () => {
                              <input type="text" placeholder="Name (e.g. Son)" value={newDependentName} onChange={e => setNewDependentName(e.target.value)} className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-500 outline-none" />
                              <select value={newDependentStaffId} onChange={e => setNewDependentStaffId(e.target.value)} className="bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:border-amber-500 outline-none">
                                 <option value="">Preferred Staff (Optional)</option>
-                                {staff.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                                {staff.map((s: any) => <option key={s.id} value={s.id}>{s.name}</option>)}
                              </select>
                              <button onClick={handleAddDependent} className="bg-amber-500 text-zinc-900 font-bold px-4 rounded-lg">Add</button>
                           </div>
                        </div>
                        <div className="space-y-2">
                           <h4 className="text-xs font-bold text-zinc-500 uppercase">Registered Dependents</h4>
-                          {(selectedClient.dependents || []).length === 0 ? <p className="text-zinc-500 text-sm italic">No dependents listed.</p> : (selectedClient.dependents || []).map(dep => (
+                          {dependents.length === 0 ? <p className="text-zinc-500 text-sm italic">No dependents listed.</p> : dependents.map((dep: any) => (
                              <div key={dep.id} className="flex justify-between items-center bg-zinc-950 p-3 rounded-lg border border-zinc-800">
                                 <div className="flex items-center gap-3">
                                    <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center font-bold text-zinc-500">{dep.name.charAt(0)}</div>
                                    <div>
                                       <p className="font-bold text-white text-sm">{dep.name}</p>
-                                      <p className="text-xs text-zinc-500">{dep.preferredStaffId ? `Prefers: ${staff.find(s => s.id === dep.preferredStaffId)?.name}` : 'No preference'}</p>
+                                      <p className="text-xs text-zinc-500">{dep.preferredStaffId ? `Prefers: ${staff.find((s: any) => s.id === dep.preferredStaffId)?.name}` : 'No preference'}</p>
                                    </div>
                                 </div>
                                 <button onClick={() => removeDependent(dep.id)} className="text-zinc-600 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>

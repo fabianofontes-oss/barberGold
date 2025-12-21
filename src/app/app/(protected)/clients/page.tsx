@@ -1,7 +1,7 @@
 'use client';
 
-import { ClientsSimple } from '@/modules/clients/ClientsSimple';
+import { Clients } from '@/modules/clients/Clients';
 
 export default function ClientsPage() {
-  return <ClientsSimple />;
+  return <Clients />;
 }
