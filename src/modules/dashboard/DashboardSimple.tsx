@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { listClientsAction } from '@/modules/clients/actions';
 import { listServicesAction } from '@/modules/services/actions';
 import { getAgendaBootstrapAction } from '@/modules/agenda/actions';
+import { listSalesAction } from '@/modules/sales/actions';
+import { listExpensesAction } from '@/modules/expenses/actions';
 import { Users, CalendarCheck, DollarSign, Scissors, Loader2 } from 'lucide-react';
 import { format, isToday } from 'date-fns';
 
@@ -12,6 +14,8 @@ type DashboardStats = {
   servicesCount: number;
   appointmentsToday: number;
   revenue: number;
+  expenses: number;
+  profit: number;
 };
 
 export const DashboardSimple = () => {
@@ -20,6 +24,8 @@ export const DashboardSimple = () => {
     servicesCount: 0,
     appointmentsToday: 0,
     revenue: 0,
+    expenses: 0,
+    profit: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -30,21 +36,28 @@ export const DashboardSimple = () => {
         const start = new Date(today.setHours(0, 0, 0, 0));
         const end = new Date(today.setHours(23, 59, 59, 999));
 
-        const [clientsResult, servicesResult, agendaResult] = await Promise.all([
+        const [clientsResult, servicesResult, agendaResult, salesResult, expensesResult] = await Promise.all([
           listClientsAction({ isActive: true }),
           listServicesAction({ isActive: true }),
           getAgendaBootstrapAction({ start, end }),
+          listSalesAction({ startDate: start.toISOString(), endDate: end.toISOString() }),
+          listExpensesAction({ startDate: start.toISOString(), endDate: end.toISOString() }),
         ]);
 
         const appointmentsToday = agendaResult.appointments.filter(apt =>
           isToday(apt.date)
         );
 
+        const totalRevenue = salesResult.reduce((sum, s) => sum + s.total, 0);
+        const totalExpenses = expensesResult.reduce((sum, e) => sum + e.amount, 0);
+
         setStats({
           clientsCount: clientsResult.length,
           servicesCount: servicesResult.length,
           appointmentsToday: appointmentsToday.length,
-          revenue: 0,
+          revenue: totalRevenue,
+          expenses: totalExpenses,
+          profit: totalRevenue - totalExpenses,
         });
       } catch (error) {
         console.error('Erro ao carregar stats:', error);
@@ -109,6 +122,18 @@ export const DashboardSimple = () => {
         <StatCard 
           title="Receita do Mês" 
           value={`R$ ${stats.revenue.toFixed(2)}`} 
+          icon={DollarSign}
+          color="bg-emerald-500"
+        />
+        <StatCard 
+          title="Despesas" 
+          value={`R$ ${stats.expenses.toFixed(2)}`} 
+          icon={DollarSign}
+          color="bg-red-500"
+        />
+        <StatCard 
+          title="Lucro Líquido" 
+          value={`R$ ${stats.profit.toFixed(2)}`} 
           icon={DollarSign}
           color="bg-amber-500"
         />
