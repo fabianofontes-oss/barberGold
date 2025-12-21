@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useBarber } from '@/context/BarberContext';
+import { usePDVData } from '@/modules/sales/hooks/usePDVData';
+import { usePromoCodes } from '@/modules/sales/hooks/usePromoCodes';
+import { useLoyalty } from '@/modules/sales/hooks/useLoyalty';
 import { 
   Search, 
   Trash2, 
@@ -63,7 +65,9 @@ const PAYMENT_LABELS: Record<string, string> = {
 };
 
 export const PointOfSale = () => {
-  const { services, products, processSale, clients, staff, shopSettings, addClient } = useBarber();
+  const { services, products, clients, staff, shopSettings, addClient, createSale, loading: dataLoading } = usePDVData();
+  const { validateCode } = usePromoCodes();
+  const { getPoints, addPoints, redeemPoints } = useLoyalty();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClientId, setSelectedClientId] = useState<string>('');
@@ -100,7 +104,7 @@ export const PointOfSale = () => {
   // Cash Register State
   const [isCashRegisterOpen, setIsCashRegisterOpen] = useState(false);
 
-  const selectedClient = clients.find(c => c.id === selectedClientId);
+  const selectedClient = clients.find((c: any) => c.id === selectedClientId);
 
   // Mock promo codes (could come from backend later)
   const PROMO_CODES: Record<string, number> = {
@@ -109,13 +113,15 @@ export const PointOfSale = () => {
     'AMIGO20': 0.20,
   };
 
-  const handleApplyPromo = () => {
+  const handleApplyPromo = async () => {
     const code = promoCode.toUpperCase().trim();
-    if (PROMO_CODES[code]) {
-      setPromoApplied({ code, discount: PROMO_CODES[code] });
+    const result = await validateCode(code, subtotal);
+    
+    if (result && result.valid && result.code) {
+      setPromoApplied({ code: result.code, discount: result.discount });
       setPromoError('');
     } else {
-      setPromoError('Cupom inválido');
+      setPromoError(result?.error || 'Cupom inválido');
       setPromoApplied(null);
     }
   };
@@ -175,7 +181,7 @@ export const PointOfSale = () => {
   if (activeDiscount) {
     if (activeDiscount.type === 'REWARD_REDEMPTION') {
        // Free Lowest Service logic
-       const servicesInCart = cart.filter(c => c.type === 'SERVICE').sort((a,b) => a.price - b.price);
+       const servicesInCart = cart.filter((c: any) => c.type === 'SERVICE').sort((a: any, b: any) => a.price - b.price);
        if (servicesInCart.length > 0) {
          discountAmount = servicesInCart[0].price;
        }
@@ -201,11 +207,35 @@ export const PointOfSale = () => {
     (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const handleCheckout = (method: PaymentMethod) => {
-    if (!selectedClientId) return; // Enforce Client
+  const handleCheckout = async (method: PaymentMethod) => {
+    if (!selectedClientId) return;
     
     const staffId = selectedStaffId || staff[0]?.id;
-    processSale(cart, selectedClientId, staffId, method, activeDiscount?.type, tipAmount);
+    
+    if (isSplitPayment && splitPayments.length > 0) {
+      await createSale({
+        clientId: selectedClientId,
+        staffId,
+        items: cart,
+        paymentMethod: method,
+        subtotal,
+        discount: discountAmount + promoDiscount,
+        tip: tipAmount,
+        total: grandTotal,
+      });
+    } else {
+      await createSale({
+        clientId: selectedClientId,
+        staffId,
+        items: cart,
+        paymentMethod: method,
+        subtotal,
+        discount: discountAmount + promoDiscount,
+        tip: tipAmount,
+        total: grandTotal,
+      });
+    }
+    
     setCheckoutStep('SUCCESS');
     setTimeout(() => {
       setCart([]);
@@ -215,23 +245,23 @@ export const PointOfSale = () => {
       setCheckoutStep('CART');
       setMobileView('CATALOG');
       setActiveDiscount(null);
+      setPromoApplied(null);
+      setSplitPayments([]);
+      setIsSplitPayment(false);
     }, 2000);
   };
 
-  const handleQuickAddClient = (e: React.FormEvent) => {
+  const handleQuickAddClient = async (e: React.FormEvent) => {
      e.preventDefault();
      if (newClientName && newClientPhone) {
-        const newId = addClient({
+        const newId = await addClient({
            name: newClientName,
            phone: newClientPhone,
            email: '',
            birthDate: ''
         });
         
-        // Auto Select the new client
         setSelectedClientId(newId);
-
-        // Reset and close
         setNewClientName('');
         setNewClientPhone('');
         setIsClientModalOpen(false);
@@ -292,7 +322,7 @@ export const PointOfSale = () => {
               {/* Quick Access - Top Services */}
               {!searchQuery && services.length > 0 && (
                 <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 flex-1">
-                  {services.slice(0, 4).map(service => (
+                  {services.slice(0, 4).map((service: any) => (
                     <button
                       key={service.id}
                       onClick={() => addToCart(service)}
@@ -435,7 +465,7 @@ export const PointOfSale = () => {
                        className={`flex-1 bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-amber-500 ${!selectedClientId ? 'text-zinc-500 border-red-500/30' : 'text-zinc-300'}`}
                      >
                        <option value="" disabled>Client (Required)</option>
-                       {clients.map(c => (
+                       {clients.map((c: any) => (
                          <option key={c.id} value={c.id}>{c.name}</option>
                        ))}
                      </select>
@@ -457,7 +487,7 @@ export const PointOfSale = () => {
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm text-zinc-300 focus:outline-none focus:border-amber-500"
                   >
                     <option value="" disabled>Staff...</option>
-                    {staff.map(s => (
+                    {staff.map((s: any) => (
                       <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
                   </select>
@@ -501,14 +531,14 @@ export const PointOfSale = () => {
                    <div className="mt-2">
                      <ClubCreditBadge
                        clientId={selectedClientId}
-                       serviceId={cart.find(c => c.type === 'SERVICE')?.id}
-                       serviceName={cart.find(c => c.type === 'SERVICE')?.name}
-                       servicePrice={cart.find(c => c.type === 'SERVICE')?.price}
+                       serviceId={cart.find((c: any) => c.type === 'SERVICE')?.id}
+                       serviceName={cart.find((c: any) => c.type === 'SERVICE')?.name}
+                       servicePrice={cart.find((c: any) => c.type === 'SERVICE')?.price}
                        staffId={selectedStaffId}
-                       staffName={staff.find(s => s.id === selectedStaffId)?.name}
-                       disabled={cart.filter(c => c.type === 'SERVICE').length === 0}
+                       staffName={staff.find((s: any) => s.id === selectedStaffId)?.name}
+                       disabled={cart.filter((c: any) => c.type === 'SERVICE').length === 0}
                        onRedeemCredit={() => {
-                         const serviceInCart = cart.find(c => c.type === 'SERVICE');
+                         const serviceInCart = cart.find((c: any) => c.type === 'SERVICE');
                          if (serviceInCart) {
                            setActiveDiscount({ type: 'CLUB_CREDIT', amount: serviceInCart.price / subtotal });
                            setClubCreditApplied(true);
@@ -665,7 +695,7 @@ export const PointOfSale = () => {
                     {/* Add Payment */}
                     {splitRemaining > 0 && (
                       <div className="grid grid-cols-4 gap-1">
-                        {enabledMethods.slice(0, 4).map(method => {
+                        {enabledMethods.slice(0, 4).map((method: any) => {
                           const Icon = PAYMENT_ICONS[method] || Banknote;
                           return (
                             <button
@@ -701,7 +731,7 @@ export const PointOfSale = () => {
                 {/* Normal Payment Grid */}
                 {!isSplitPayment && (
                   <div className="grid grid-cols-3 gap-2">
-                    {enabledMethods.map(method => {
+                    {enabledMethods.map((method: any) => {
                        const Icon = PAYMENT_ICONS[method] || Banknote;
                        return (
                           <button 

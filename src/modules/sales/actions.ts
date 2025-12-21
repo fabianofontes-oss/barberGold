@@ -55,3 +55,38 @@ export async function createSaleAction(input: unknown) {
 
   return result;
 }
+
+export async function validatePromoCodeAction(code: string) {
+  const auth = await getAuthContext();
+  const supabase = await createClient();
+  const repo = createSalesRepository(supabase);
+
+  return await repo.validatePromoCode({ tenantId: auth.tenantId, code });
+}
+
+export async function createSaleWithSplitPaymentAction(saleData: any, payments: Array<{ method: string; amount: number }>) {
+  const auth = await getAuthContext();
+  const supabase = await createClient();
+  const repo = createSalesRepository(supabase);
+
+  const result = await repo.createSale({
+    input: {
+      tenant_id: auth.tenantId,
+      client_id: saleData.clientId || null,
+      staff_id: saleData.staffId,
+      payment_method: payments[0].method as any,
+      subtotal: saleData.subtotal,
+      discount: saleData.discount,
+      tip: saleData.tip,
+      total: saleData.total,
+      notes: saleData.notes || null,
+    },
+    items: saleData.items,
+  });
+
+  if (payments.length > 1) {
+    await repo.createSalePayments({ saleId: result.id, payments });
+  }
+
+  return result;
+}
