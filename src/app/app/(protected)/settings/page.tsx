@@ -2,6 +2,4 @@
 
 import { SettingsSimple } from '@/modules/settings/SettingsSimple';
 
-export default function SettingsPage() {
-  return <SettingsSimple />;
-}
+export default SettingsSimple;
