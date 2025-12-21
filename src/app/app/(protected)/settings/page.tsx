@@ -1,7 +1,7 @@
 'use client';
 
-import { Settings } from '@/modules/settings/Settings';
+import { SettingsSimple } from '@/modules/settings/SettingsSimple';
 
 export default function SettingsPage() {
-  return <Settings />;
+  return <SettingsSimple />;
 }
