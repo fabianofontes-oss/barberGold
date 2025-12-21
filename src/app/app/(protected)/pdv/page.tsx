@@ -1,7 +1,7 @@
 'use client';
 
-import { PointOfSale } from '@/modules/pdv/PointOfSale';
+import { PDVSimple } from '@/modules/pdv/PDVSimple';
 
 export default function PDVPage() {
-  return <PointOfSale />;
+  return <PDVSimple />;
 }

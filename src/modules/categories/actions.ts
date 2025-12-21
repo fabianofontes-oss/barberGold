@@ -29,8 +29,8 @@ export async function createCategoryAction(input: unknown) {
       tenant_id: auth.tenantId,
       name: parsed.name,
       type: parsed.type,
-      color: parsed.color || null,
-      icon: parsed.icon || null,
+      color: parsed.color || undefined,
+      icon: parsed.icon || undefined,
       is_active: true,
     },
   });

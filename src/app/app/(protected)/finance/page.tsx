@@ -1,7 +1,7 @@
 'use client';
 
-import { Finance } from '@/modules/finance/Finance';
+import { FinanceSimple } from '@/modules/finance/FinanceSimple';
 
 export default function FinancePage() {
-  return <Finance />;
+  return <FinanceSimple />;
 }

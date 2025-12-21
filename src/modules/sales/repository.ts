@@ -53,7 +53,7 @@ export function createSalesRepository(supabase: AppSupabaseClient) {
             id,
             item_type,
             item_id,
-            item_name,
+            name,
             price,
             quantity
           )
@@ -74,7 +74,7 @@ export function createSalesRepository(supabase: AppSupabaseClient) {
       }
 
       if (paymentMethod) {
-        query = query.eq('payment_method', paymentMethod);
+        query = query.eq('payment_method', paymentMethod as any);
       }
 
       const { data, error } = await query;
@@ -126,7 +126,7 @@ export function createSalesRepository(supabase: AppSupabaseClient) {
         sale_id: sale.id,
         item_type: item.type,
         item_id: item.itemId,
-        item_name: item.name,
+        name: item.name,
         price: item.price,
         quantity: item.quantity,
       }));

@@ -33,7 +33,7 @@ export function createExpensesRepository(supabase: AppSupabaseClient) {
 
       if (startDate) query = query.gte('expense_date', startDate);
       if (endDate) query = query.lte('expense_date', endDate);
-      if (category) query = query.eq('category', category);
+      if (category) query = query.eq('category', category as any);
 
       const { data, error } = await query;
       if (error) throw error;
