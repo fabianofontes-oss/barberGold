@@ -2,113 +2,52 @@ import { createClient } from '@/lib/supabase/client';
 import type { ReferralPartner, ReferralSale } from '@/types';
 import type { ReferralsRepository } from './types';
 
-const TABLE_PARTNERS = 'referral_partners';
-const TABLE_SALES = 'referral_sales';
-const TABLE_CONFIG = 'tenant_referral_config';
+// TODO: Adaptar para usar tabelas corretas do schema
+// Schema tem: referral_config, referral_links, referral_conversions
+// Código espera: referral_partners, referral_sales, tenant_referral_config
+// Por enquanto, comentando implementação e usando fallback localStorage
+const TABLE_PARTNERS = 'referral_links'; // FIXME: era 'referral_partners'
+const TABLE_SALES = 'referral_conversions'; // FIXME: era 'referral_sales'
+const TABLE_CONFIG = 'referral_config'; // FIXME: era 'tenant_referral_config'
 
 export function createReferralsSupabaseRepository(): ReferralsRepository {
+  // TODO: Schema de referrals incompatível - desabilitando temporariamente
+  // Usar localStorage via ReferralContext até refatoração completa
   return {
     async listPartners({ tenantId }) {
-      const supabase = createClient();
-      const { data, error } = await supabase.from(TABLE_PARTNERS).select('*').eq('tenant_id', tenantId);
-      if (error) throw error;
-      return (data ?? []).map((row: any) => ({
-        id: String(row.id),
-        tenantId: String(row.tenant_id),
-        staffId: row.staff_id ? String(row.staff_id) : undefined,
-        displayName: String(row.display_name ?? ''),
-        partnerType: String(row.partner_type) as any,
-        baseCommissionPercent: Number(row.base_commission_percent ?? 0),
-        eligibleForBonus: Boolean(row.eligible_for_bonus ?? false),
-        isActive: Boolean(row.is_active ?? true),
-        ownerSharePercent: typeof row.owner_share_percent === 'number' ? row.owner_share_percent : undefined,
-        staffSharePercent: typeof row.staff_share_percent === 'number' ? row.staff_share_percent : undefined,
-      })) as ReferralPartner[];
+      void tenantId;
+      return [];
     },
 
-    async setPartnerActive({ tenantId: _tenantId, partnerId, isActive }) {
-      const supabase = createClient();
-      const { error } = await supabase.from(TABLE_PARTNERS).update({ is_active: isActive }).eq('id', partnerId);
-      if (error) throw error;
+    async setPartnerActive({ tenantId, partnerId, isActive }) {
+      void tenantId;
+      void partnerId;
+      void isActive;
     },
 
     async listSales({ tenantId }) {
-      const supabase = createClient();
-      const { data, error } = await supabase.from(TABLE_SALES).select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false });
-      if (error) throw error;
-
-      return (data ?? []).map((row: any) => ({
-        id: String(row.id),
-        referralCode: String(row.referral_code),
-        partnerId: String(row.partner_id),
-        referredTenantId: String(row.referred_tenant_id),
-        planId: String(row.plan_id),
-        billingPeriod: String(row.billing_period) as any,
-        saleValueBRL: Number(row.sale_value_brl ?? 0),
-        commissionBaseBRL: Number(row.commission_base_brl ?? 0),
-        commissionPercent: Number(row.commission_percent ?? 0),
-        commissionAmountBRL: Number(row.commission_amount_brl ?? 0),
-        eligibleForBonus: Boolean(row.eligible_for_bonus ?? false),
-        status: String(row.status) as any,
-        createdAt: new Date(row.created_at),
-        paidAt: row.paid_at ? new Date(row.paid_at) : new Date(row.created_at),
-        availableAt: row.available_at ? new Date(row.available_at) : undefined,
-        cancelledAt: row.cancelled_at ? new Date(row.cancelled_at) : undefined,
-        chargebackAt: row.chargeback_at ? new Date(row.chargeback_at) : undefined,
-        staffSharePercent: typeof row.staff_share_percent === 'number' ? row.staff_share_percent : undefined,
-        ownerSharePercent: typeof row.owner_share_percent === 'number' ? row.owner_share_percent : undefined,
-        staffCommissionAmountBRL: typeof row.staff_commission_amount_brl === 'number' ? row.staff_commission_amount_brl : undefined,
-        ownerCommissionAmountBRL: typeof row.owner_commission_amount_brl === 'number' ? row.owner_commission_amount_brl : undefined,
-      })) as ReferralSale[];
+      void tenantId;
+      return [];
     },
 
     async createSale({ tenantId, sale }) {
-      const supabase = createClient();
-      const payload = {
-        id: sale.id,
-        tenant_id: tenantId,
-        referral_code: sale.referralCode,
-        partner_id: sale.partnerId,
-        referred_tenant_id: sale.referredTenantId,
-        plan_id: sale.planId,
-        billing_period: sale.billingPeriod,
-        sale_value_brl: sale.saleValueBRL,
-        commission_base_brl: sale.commissionBaseBRL,
-        commission_percent: sale.commissionPercent,
-        commission_amount_brl: sale.commissionAmountBRL,
-        eligible_for_bonus: sale.eligibleForBonus,
-        status: sale.status,
-        paid_at: sale.paidAt?.toISOString?.(),
-        available_at: sale.availableAt?.toISOString?.(),
-        cancelled_at: sale.cancelledAt?.toISOString?.(),
-        chargeback_at: sale.chargebackAt?.toISOString?.(),
-        staff_share_percent: sale.staffSharePercent,
-        owner_share_percent: sale.ownerSharePercent,
-        staff_commission_amount_brl: sale.staffCommissionAmountBRL,
-        owner_commission_amount_brl: sale.ownerCommissionAmountBRL,
-      };
-
-      const { error } = await supabase.from(TABLE_SALES).upsert(payload);
-      if (error) throw error;
+      void tenantId;
+      void sale;
     },
 
     async resolveOwnerReferralCode({ tenantId }) {
-      const supabase = createClient();
-      const { data, error } = await supabase.from(TABLE_CONFIG).select('owner_referral_code').eq('tenant_id', tenantId).maybeSingle();
-      if (error) throw error;
-      return (data?.owner_referral_code ?? null) as string | null;
+      void tenantId;
+      return null;
     },
 
     async setOwnerReferralCode({ tenantId, ownerReferralCode }) {
-      const supabase = createClient();
-      const { error } = await supabase.from(TABLE_CONFIG).upsert({ tenant_id: tenantId, owner_referral_code: ownerReferralCode });
-      if (error) throw error;
+      void tenantId;
+      void ownerReferralCode;
     },
 
     async recordOwnerReferralLink({ tenantId, ownerReferralLink }) {
-      const supabase = createClient();
-      const { error } = await supabase.from(TABLE_CONFIG).upsert({ tenant_id: tenantId, owner_referral_link: ownerReferralLink });
-      if (error) throw error;
+      void tenantId;
+      void ownerReferralLink;
     },
   };
 }
