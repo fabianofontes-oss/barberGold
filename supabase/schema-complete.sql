@@ -251,6 +251,21 @@ CREATE INDEX idx_clients_phone ON public.clients(tenant_id, phone);
 CREATE INDEX idx_clients_email ON public.clients(tenant_id, email);
 CREATE INDEX idx_clients_referral_code ON public.clients(referral_code);
 
+-- TABELA: client_dependents (Dependentes/Família)
+CREATE TABLE public.client_dependents (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  client_id UUID NOT NULL REFERENCES public.clients(id) ON DELETE CASCADE,
+  
+  name TEXT NOT NULL,
+  relationship TEXT,
+  birth_date DATE,
+  preferred_staff_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+  notes TEXT
+);
+
+CREATE INDEX idx_client_dependents_client ON public.client_dependents(client_id);
+
 -- =============================================
 -- MÓDULO 4: AGENDAMENTO
 -- =============================================
@@ -415,6 +430,56 @@ CREATE TABLE public.sale_items (
 );
 
 CREATE INDEX idx_sale_items_sale ON public.sale_items(sale_id);
+
+-- TABELA: promo_codes (Cupons Promocionais)
+CREATE TABLE public.promo_codes (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
+  
+  code TEXT NOT NULL,
+  description TEXT,
+  discount_type TEXT NOT NULL CHECK (discount_type IN ('PERCENTAGE', 'FIXED')),
+  discount_value NUMERIC(10,2) NOT NULL,
+  
+  -- Validade
+  valid_from TIMESTAMPTZ,
+  valid_until TIMESTAMPTZ,
+  
+  -- Limites
+  max_uses INTEGER,
+  current_uses INTEGER DEFAULT 0,
+  min_purchase_amount NUMERIC(10,2),
+  
+  -- Aplicabilidade
+  applies_to TEXT CHECK (applies_to IN ('ALL', 'SERVICES', 'PRODUCTS')),
+  
+  is_active BOOLEAN DEFAULT TRUE,
+  
+  UNIQUE(tenant_id, code)
+);
+
+CREATE INDEX idx_promo_codes_tenant ON public.promo_codes(tenant_id);
+CREATE INDEX idx_promo_codes_code ON public.promo_codes(tenant_id, code);
+
+-- TABELA: sale_payments (Pagamentos da Venda - Split Payment)
+CREATE TABLE public.sale_payments (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  sale_id UUID NOT NULL REFERENCES public.sales(id) ON DELETE CASCADE,
+  
+  payment_method TEXT NOT NULL,
+  amount NUMERIC(10,2) NOT NULL,
+  
+  -- Dados específicos do método
+  card_last_digits TEXT,
+  transaction_id TEXT,
+  authorization_code TEXT,
+  
+  status TEXT DEFAULT 'COMPLETED' CHECK (status IN ('PENDING', 'COMPLETED', 'FAILED', 'REFUNDED'))
+);
+
+CREATE INDEX idx_sale_payments_sale ON public.sale_payments(sale_id);
 
 -- =============================================
 -- MÓDULO 6: FINANCEIRO
@@ -903,6 +968,71 @@ CREATE TABLE public.support_messages (
 CREATE INDEX idx_support_messages_ticket ON public.support_messages(ticket_id);
 
 -- =============================================
+-- MÓDULO 13: AUDITORIA & PERMISSÕES
+-- =============================================
+
+-- TABELA: audit_logs (Logs de Auditoria)
+CREATE TABLE public.audit_logs (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
+  
+  -- Quem fez a ação
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  profile_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+  
+  -- O que foi feito
+  action TEXT NOT NULL,
+  entity_type TEXT NOT NULL,
+  entity_id UUID,
+  
+  -- Detalhes
+  old_values JSONB,
+  new_values JSONB,
+  metadata JSONB,
+  
+  -- Contexto
+  ip_address TEXT,
+  user_agent TEXT
+);
+
+CREATE INDEX idx_audit_logs_tenant ON public.audit_logs(tenant_id);
+CREATE INDEX idx_audit_logs_user ON public.audit_logs(user_id);
+CREATE INDEX idx_audit_logs_entity ON public.audit_logs(entity_type, entity_id);
+CREATE INDEX idx_audit_logs_created ON public.audit_logs(tenant_id, created_at DESC);
+
+-- TABELA: tenant_permissions (Permissões Customizadas)
+CREATE TABLE public.tenant_permissions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  tenant_id UUID NOT NULL REFERENCES public.tenants(id) ON DELETE CASCADE,
+  
+  -- Permissões de Vendas
+  can_give_discount JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": false}'::jsonb,
+  can_cancel_sale JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": false}'::jsonb,
+  can_refund JSONB DEFAULT '{"OWNER": true, "ADMIN": false, "BARBER": false}'::jsonb,
+  
+  -- Permissões de Clientes
+  can_delete_client JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": false}'::jsonb,
+  can_edit_client JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": true}'::jsonb,
+  can_view_client_contact JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": true}'::jsonb,
+  
+  -- Permissões Financeiras
+  can_view_finance JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": false}'::jsonb,
+  can_add_expense JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": false}'::jsonb,
+  can_delete_expense JSONB DEFAULT '{"OWNER": true, "ADMIN": false, "BARBER": false}'::jsonb,
+  
+  -- Permissões de Catálogo
+  can_edit_prices JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": false}'::jsonb,
+  can_manage_inventory JSONB DEFAULT '{"OWNER": true, "ADMIN": true, "BARBER": false}'::jsonb,
+  
+  UNIQUE(tenant_id)
+);
+
+CREATE INDEX idx_tenant_permissions_tenant ON public.tenant_permissions(tenant_id);
+
+-- =============================================
 -- ROW LEVEL SECURITY (RLS) - MULTI-TENANT
 -- =============================================
 
@@ -932,6 +1062,11 @@ ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.saas_invoices ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.support_tickets ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.support_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.client_dependents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.promo_codes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.sale_payments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.tenant_permissions ENABLE ROW LEVEL SECURITY;
 
 -- =============================================
 -- FUNÇÃO HELPER: get_user_tenant_id
@@ -1279,6 +1414,77 @@ CREATE POLICY "Users can create messages"
       SELECT id FROM public.support_tickets WHERE public.is_tenant_owner(tenant_id)
     )
   );
+
+-- =============================================
+-- POLÍTICAS RLS: client_dependents
+-- =============================================
+CREATE POLICY "Staff can view dependents"
+  ON public.client_dependents FOR SELECT
+  USING (
+    client_id IN (
+      SELECT id FROM public.clients WHERE tenant_id = public.get_user_tenant_id()
+    )
+  );
+
+CREATE POLICY "Staff can manage dependents"
+  ON public.client_dependents FOR ALL
+  USING (
+    client_id IN (
+      SELECT id FROM public.clients WHERE tenant_id = public.get_user_tenant_id()
+    )
+  );
+
+-- =============================================
+-- POLÍTICAS RLS: promo_codes
+-- =============================================
+CREATE POLICY "Staff can view promo codes"
+  ON public.promo_codes FOR SELECT
+  USING (tenant_id = public.get_user_tenant_id());
+
+CREATE POLICY "Owners can manage promo codes"
+  ON public.promo_codes FOR ALL
+  USING (public.is_tenant_owner(tenant_id));
+
+-- =============================================
+-- POLÍTICAS RLS: sale_payments
+-- =============================================
+CREATE POLICY "Staff can view sale payments"
+  ON public.sale_payments FOR SELECT
+  USING (
+    sale_id IN (
+      SELECT id FROM public.sales WHERE tenant_id = public.get_user_tenant_id()
+    )
+  );
+
+CREATE POLICY "Staff can create sale payments"
+  ON public.sale_payments FOR INSERT
+  WITH CHECK (
+    sale_id IN (
+      SELECT id FROM public.sales WHERE tenant_id = public.get_user_tenant_id()
+    )
+  );
+
+-- =============================================
+-- POLÍTICAS RLS: audit_logs
+-- =============================================
+CREATE POLICY "Owners can view audit logs"
+  ON public.audit_logs FOR SELECT
+  USING (public.is_tenant_owner(tenant_id));
+
+CREATE POLICY "System can create audit logs"
+  ON public.audit_logs FOR INSERT
+  WITH CHECK (tenant_id = public.get_user_tenant_id());
+
+-- =============================================
+-- POLÍTICAS RLS: tenant_permissions
+-- =============================================
+CREATE POLICY "Staff can view permissions"
+  ON public.tenant_permissions FOR SELECT
+  USING (tenant_id = public.get_user_tenant_id());
+
+CREATE POLICY "Owners can manage permissions"
+  ON public.tenant_permissions FOR ALL
+  USING (public.is_tenant_owner(tenant_id));
 
 -- =============================================
 -- TRIGGERS: updated_at automático
