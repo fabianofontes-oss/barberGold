@@ -48,6 +48,7 @@ export async function updateSession(request: NextRequest) {
     // Rotas públicas que não precisam de auth
     const publicRoutes = [
       '/login',
+      '/signup',
       '/landing',
       '/book',
       '/site',

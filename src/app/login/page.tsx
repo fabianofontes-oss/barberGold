@@ -115,11 +115,11 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-6 pt-6 border-t border-zinc-800">
-            <p className="text-[10px] text-zinc-500 text-center uppercase font-bold">
-              Não tem conta?
-            </p>
-            <p className="text-xs text-zinc-400 text-center mt-2">
-              Entre em contato com o administrador para criar sua conta.
+            <p className="text-center text-zinc-400 text-sm">
+              Não tem uma conta?{' '}
+              <a href="/signup" className="text-amber-500 hover:text-amber-400 font-bold">
+                Criar conta grátis
+              </a>
             </p>
           </div>
         </div>
