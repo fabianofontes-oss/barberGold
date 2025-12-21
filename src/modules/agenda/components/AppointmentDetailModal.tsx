@@ -1,28 +1,34 @@
 'use client';
 
 import React from 'react';
-import { useBarber } from '@/context/BarberContext';
-import { Appointment, AppointmentStatus } from '@/types';
+import { AppointmentStatus } from '@/types';
 import { format, differenceInDays, differenceInHours } from 'date-fns';
 import { 
   X, User, Scissors, Clock, Phone, MessageSquare, 
   Calendar, DollarSign, Star, Heart, AlertCircle,
   CheckCircle, Play, XCircle, Ban, History, Send, Bell
 } from 'lucide-react';
+import type { AgendaAppointment, AgendaClient, AgendaStaff } from '../hooks/useAgenda';
 
 interface AppointmentDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
-  appointment: Appointment | null;
+  appointment: AgendaAppointment | null;
+  clients: AgendaClient[];
+  staff: AgendaStaff[];
+  shopName: string;
+  onUpdateStatus: (appointmentId: string, status: AppointmentStatus) => void;
 }
 
 export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
   isOpen,
   onClose,
-  appointment
+  appointment,
+  clients,
+  staff,
+  shopName,
+  onUpdateStatus,
 }) => {
-  const { clients, updateAppointmentStatus, staff, shopProfile } = useBarber();
-
   if (!isOpen || !appointment) return null;
 
   const client = clients.find(c => c.id === appointment.clientId);
@@ -36,7 +42,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
   const hoursUntilAppointment = differenceInHours(appointment.date, new Date());
 
   const handleAction = (status: AppointmentStatus) => {
-    updateAppointmentStatus(appointment.id, status);
+    onUpdateStatus(appointment.id, status);
     onClose();
   };
 
@@ -44,7 +50,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
   const getReminderMessage = () => {
     const time = format(appointment.date, 'HH:mm');
     const date = format(appointment.date, 'dd/MM');
-    return `Olá ${client?.name}! 👋\n\nLembrando do seu horário na *${shopProfile.name}*:\n\n📅 ${date} às ${time}\n✂️ ${appointment.serviceName}\n\nTe esperamos! 💈`;
+    return `Olá ${client?.name}! 👋\n\nLembrando do seu horário na *${shopName}*:\n\n📅 ${date} às ${time}\n✂️ ${appointment.serviceName}\n\nTe esperamos! 💈`;
   };
 
   const openWhatsApp = (message?: string) => {

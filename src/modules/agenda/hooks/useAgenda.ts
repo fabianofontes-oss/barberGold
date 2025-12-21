@@ -8,10 +8,13 @@ import {
   getAgendaBootstrapAction,
   updateAgendaAppointmentStatusAction,
 } from '../actions';
-import type { Appointment, AppointmentStatus, Client, Service, StaffMember, CompensationModel } from '@/types';
+import type { AppointmentStatus as AppointmentStatusEnum, CompensationModel } from '@/types';
 
-// Tipo do staff retornado pela action (compatível com dados do Supabase)
-type AgendaStaff = {
+// =============================================
+// TIPOS LOCAIS DO HOOK (compatíveis com Supabase)
+// =============================================
+
+export type AgendaStaff = {
   id: string;
   name: string;
   role: string;
@@ -23,17 +26,81 @@ type AgendaStaff = {
   productCommissionRate: number;
   rentalFee: number;
   paymentFrequency: 'WEEKLY' | 'BIWEEKLY' | 'MONTHLY';
-  workSchedule: StaffMember['workSchedule'];
+  workSchedule: Array<{ dayIndex: number; isActive: boolean; start?: string; end?: string }>;
+  allowedServices?: string[];
+};
+
+export type AgendaClient = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  birthDate?: string;
+  totalSpent?: number;
+  lastVisit?: Date;
+  loyaltyPoints?: number;
+  notes?: string;
+  tags?: string[];
+  photo?: string;
+  preferredStaffId?: string;
+  preferences?: {
+    preferredService?: string;
+    preferredDay?: string;
+    preferredTime?: string;
+    allergies?: string;
+    observations?: string;
+  };
+};
+
+export type AgendaService = {
+  id: string;
+  name: string;
+  price: number;
+  durationMinutes: number;
+  type: 'SERVICE';
+  category?: string;
+};
+
+export type AgendaAppointment = {
+  id: string;
+  clientId: string;
+  clientName: string;
+  staffId: string;
+  serviceId: string;
+  serviceName: string;
+  date: Date;
+  price: number;
+  status: AppointmentStatusEnum;
+  notes?: string;
+};
+
+export type AgendaTenant = {
+  id: string;
+  name: string;
+  slug: string;
+  plan_id?: string;
+  status?: string;
+  settings?: unknown;
+};
+
+export type AgendaMe = {
+  profileId: string;
+  role: string;
+  displayName: string;
 };
 
 type AgendaLoadState = {
-  tenant: { id: string; name: string; slug: string } | null;
-  me: { profileId: string; role: string; displayName: string } | null;
-  clients: Client[];
-  services: Service[];
+  tenant: AgendaTenant | null;
+  me: AgendaMe | null;
+  clients: AgendaClient[];
+  services: AgendaService[];
   staff: AgendaStaff[];
-  appointments: Appointment[];
+  appointments: AgendaAppointment[];
 };
+
+// =============================================
+// HOOK PRINCIPAL
+// =============================================
 
 export function useAgenda(params: { start: Date; end: Date }) {
   const [state, setState] = useState<AgendaLoadState>({
@@ -57,12 +124,12 @@ export function useAgenda(params: { start: Date; end: Date }) {
     try {
       const data = await getAgendaBootstrapAction({ start: startIso, end: endIso });
       setState({
-        tenant: data.tenant,
-        me: data.me,
-        clients: data.clients,
-        services: data.services,
-        staff: data.staff,
-        appointments: data.appointments,
+        tenant: data.tenant as AgendaTenant,
+        me: data.me as AgendaMe,
+        clients: data.clients as AgendaClient[],
+        services: data.services as AgendaService[],
+        staff: data.staff as AgendaStaff[],
+        appointments: data.appointments as AgendaAppointment[],
       });
     } catch (e: any) {
       setError(e?.message ?? 'Erro ao carregar agenda');
@@ -75,13 +142,17 @@ export function useAgenda(params: { start: Date; end: Date }) {
     void reload();
   }, [reload]);
 
-  const createClient = useCallback(async (input: { name: string; phone: string; email: string; birthDate: string }) => {
+  // =============================================
+  // MUTATIONS
+  // =============================================
+
+  const addClient = useCallback(async (input: { name: string; phone: string; email: string; birthDate: string }) => {
     const res = await createAgendaClientAction(input);
     await reload();
     return res.id as string;
   }, [reload]);
 
-  const createServiceAppointment = useCallback(async (input: {
+  const addAppointment = useCallback(async (input: {
     clientId: string;
     staffId: string;
     serviceId: string;
@@ -103,7 +174,7 @@ export function useAgenda(params: { start: Date; end: Date }) {
     await reload();
   }, [reload]);
 
-  const createBlockedTime = useCallback(async (input: { staffId: string; scheduledAt: Date; durationMinutes: number; reason: string }) => {
+  const addBlockedTime = useCallback(async (input: { staffId: string; scheduledAt: Date; durationMinutes: number; reason: string }) => {
     await createAgendaBlockedTimeAction({
       staffId: input.staffId,
       scheduledAt: input.scheduledAt.toISOString(),
@@ -114,24 +185,34 @@ export function useAgenda(params: { start: Date; end: Date }) {
     await reload();
   }, [reload]);
 
-  const updateAppointmentStatus = useCallback(async (appointmentId: string, status: AppointmentStatus) => {
+  const updateAppointmentStatus = useCallback(async (appointmentId: string, status: AppointmentStatusEnum) => {
     await updateAgendaAppointmentStatusAction({ appointmentId, status });
     await reload();
   }, [reload]);
 
+  // =============================================
+  // RETURN
+  // =============================================
+
   return {
+    // Estado
     loading,
     error,
-    reload,
     tenant: state.tenant,
     me: state.me,
     clients: state.clients,
     services: state.services,
     staff: state.staff,
     appointments: state.appointments,
-    createClient,
-    createServiceAppointment,
-    createBlockedTime,
+
+    // Ações
+    reload,
+    addClient,
+    addAppointment,
+    addBlockedTime,
     updateAppointmentStatus,
   };
 }
+
+// Re-export do tipo para uso externo
+export type UseAgendaReturn = ReturnType<typeof useAgenda>;

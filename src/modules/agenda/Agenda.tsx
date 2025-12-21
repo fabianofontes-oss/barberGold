@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useBarber } from '@/context/BarberContext';
+import React, { useState, useMemo } from 'react';
+import { useAgenda, AgendaAppointment } from './hooks/useAgenda';
 import { QueuePanel } from './components/QueuePanel';
 import { AppointmentDetailModal } from './components/AppointmentDetailModal';
 import { MonthlyCalendar } from './components/MonthlyCalendar';
@@ -41,24 +41,59 @@ import {
   UserPlus,
   Save
 } from 'lucide-react';
-import { AppointmentStatus, RecurrenceType, Appointment } from '@/types';
+import { AppointmentStatus, RecurrenceType } from '@/types';
+import { addDays as addDaysFn, startOfToday as startOfTodayFn, endOfDay } from 'date-fns';
 
 export const Agenda = () => {
-  const { appointments, services, clients, staff, addAppointment, updateAppointmentStatus, currentUser, shopProfile, addClient } = useBarber();
+  // Date range para buscar dados (7 dias a partir de hoje)
+  const dateRange = useMemo(() => {
+    const start = startOfTodayFn();
+    const end = endOfDay(addDaysFn(start, 30)); // 30 dias para ter margem
+    return { start, end };
+  }, []);
+
+  // Hook que busca dados do Supabase
+  const {
+    appointments,
+    services,
+    clients,
+    staff,
+    tenant,
+    me,
+    loading,
+    error,
+    addAppointment,
+    addClient,
+    addBlockedTime,
+    updateAppointmentStatus,
+  } = useAgenda(dateRange);
+
+  // Simula currentUser a partir de me
+  const currentUser = useMemo(() => ({
+    id: me?.profileId ?? '',
+    role: me?.role ?? 'BARBER',
+    name: me?.displayName ?? '',
+    smartBreak: { durationMinutes: 15 },
+  }), [me]);
+
+  // Simula shopProfile a partir de tenant
+  const shopProfile = useMemo(() => ({
+    name: tenant?.name ?? 'Barbearia',
+  }), [tenant]);
   const [selectedDate, setSelectedDate] = useState(startOfToday());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookingType, setBookingType] = useState<'SERVICE' | 'BLOCK'>('SERVICE');
   const [showQueue, setShowQueue] = useState(true); // Toggle for Queue Sidebar
 
   // Appointment Detail Modal State (Mobile)
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [selectedAppointment, setSelectedAppointment] = useState<AgendaAppointment | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   // View Mode: WEEK (7 days) or MONTH (calendar)
   const [viewMode, setViewMode] = useState<'WEEK' | 'MONTH'>('WEEK');
   const [currentMonth, setCurrentMonth] = useState(startOfToday());
 
-  const openAppointmentDetail = (appt: Appointment) => {
+  const openAppointmentDetail = (appt: AgendaAppointment) => {
     setSelectedAppointment(appt);
     setIsDetailModalOpen(true);
   };
@@ -164,16 +199,12 @@ export const Agenda = () => {
     // --- END CONFLICT DETECTION ---
 
     if (bookingType === 'BLOCK') {
-      addAppointment({
-         clientId: 'BLOCK',
-         clientName: blockReason, // "Lunch", "Personal"
+      // Usa addBlockedTime para bloqueios
+      addBlockedTime({
          staffId: staffId,
-         serviceId: 'BLOCK',
-         serviceName: 'Blocked Time',
-         date: appointmentDate,
-         price: 0,
-         notes: 'Staff Blocked Time',
-         status: AppointmentStatus.BLOCKED
+         scheduledAt: appointmentDate,
+         durationMinutes: duration,
+         reason: blockReason,
       });
     } else {
       const service = services.find(s => s.id === newApptServiceId);
@@ -181,16 +212,14 @@ export const Agenda = () => {
       
       if (!service || !client) return;
 
+      // Usa addAppointment para serviços
       addAppointment({
         clientId: client.id,
-        clientName: client.name,
         staffId: staffId,
         serviceId: service.id,
-        serviceName: service.name,
-        date: appointmentDate,
-        price: service.price,
+        scheduledAt: appointmentDate,
         notes: '',
-        recurrence: recurrence,
+        recurrence: recurrence !== RecurrenceType.NONE ? recurrence : undefined,
         recurrenceEndDate: recurrence !== RecurrenceType.NONE ? new Date(recurrenceEndDate) : undefined
       });
     }
@@ -204,10 +233,10 @@ export const Agenda = () => {
     setConflictError('');
   };
 
-  const handleQuickAddClient = (e: React.FormEvent) => {
+  const handleQuickAddClient = async (e: React.FormEvent) => {
      e.preventDefault();
      if (newClientName && newClientPhone) {
-        const newId = addClient({
+        const newId = await addClient({
            name: newClientName,
            phone: newClientPhone,
            email: '',
@@ -808,6 +837,10 @@ export const Agenda = () => {
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
         appointment={selectedAppointment}
+        clients={clients}
+        staff={staff}
+        shopName={shopProfile.name}
+        onUpdateStatus={updateAppointmentStatus}
       />
     </div>
   );

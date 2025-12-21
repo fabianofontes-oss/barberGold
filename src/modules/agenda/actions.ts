@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { getCurrentProfile } from '@/lib/auth/getCurrentProfile';
+import { getAuthContext, AuthError } from '@/lib/auth/getTenantId';
 import { createAgendaRepository } from './repository';
 import { AppointmentStatus, CompensationModel } from '@/types';
 import {
@@ -47,18 +47,18 @@ function toUiStatus(input: {
 export async function getAgendaBootstrapAction(input: unknown) {
   const parsed = getAgendaBootstrapInputSchema.parse(input);
 
-  const current = await getCurrentProfile();
-  if (!current?.tenantId || !current.profile) throw new Error('Perfil não configurado para este usuário.');
+  const auth = await getAuthContext();
+  const tenantId = auth.tenantId;
 
   const supabase = await createClient();
   const repo = createAgendaRepository(supabase);
 
   const [tenant, clients, services, staff, appointments] = await Promise.all([
-    repo.getTenantById({ tenantId: current.tenantId }),
-    repo.listClients({ tenantId: current.tenantId }),
-    repo.listServices({ tenantId: current.tenantId }),
-    repo.listStaff({ tenantId: current.tenantId }),
-    repo.listAppointments({ tenantId: current.tenantId, start: parsed.start, end: parsed.end }),
+    repo.getTenantById({ tenantId }),
+    repo.listClients({ tenantId }),
+    repo.listServices({ tenantId }),
+    repo.listStaff({ tenantId }),
+    repo.listAppointments({ tenantId, start: parsed.start, end: parsed.end }),
   ]);
 
   if (!tenant) throw new Error('Tenant não encontrado.');
@@ -92,9 +92,9 @@ export async function getAgendaBootstrapAction(input: unknown) {
   return {
     tenant,
     me: {
-      profileId: current.profile.id,
-      role: current.profile.role,
-      displayName: current.profile.displayName,
+      profileId: auth.profileId,
+      role: auth.role,
+      displayName: auth.displayName,
     },
     clients: clients.map((c) => ({
       id: c.id,
@@ -136,15 +136,15 @@ export async function getAgendaBootstrapAction(input: unknown) {
 export async function createAgendaClientAction(input: unknown) {
   const parsed = createAgendaClientInputSchema.parse(input);
 
-  const current = await getCurrentProfile();
-  if (!current?.tenantId) throw new Error('Tenant não encontrado no profile.');
+  const auth = await getAuthContext();
+  const tenantId = auth.tenantId;
 
   const supabase = await createClient();
   const repo = createAgendaRepository(supabase);
 
   const created = await repo.createClient({
     input: {
-      tenant_id: current.tenantId,
+      tenant_id: tenantId,
       name: parsed.name,
       phone: parsed.phone,
       email: parsed.email || null,
@@ -158,8 +158,8 @@ export async function createAgendaClientAction(input: unknown) {
 export async function createAgendaServiceAppointmentAction(input: unknown) {
   const parsed = createAgendaServiceAppointmentInputSchema.parse(input);
 
-  const current = await getCurrentProfile();
-  if (!current?.tenantId) throw new Error('Tenant não encontrado no profile.');
+  const auth = await getAuthContext();
+  const tenantId = auth.tenantId;
 
   const supabase = await createClient();
   const repo = createAgendaRepository(supabase);
@@ -167,7 +167,7 @@ export async function createAgendaServiceAppointmentAction(input: unknown) {
   const { data: service, error: serviceError } = await supabase
     .from('services')
     .select('id,price,duration_minutes')
-    .eq('tenant_id', current.tenantId)
+    .eq('tenant_id', tenantId)
     .eq('id', parsed.serviceId)
     .maybeSingle();
 
@@ -176,7 +176,7 @@ export async function createAgendaServiceAppointmentAction(input: unknown) {
 
   const scheduledAt = new Date(parsed.scheduledAt);
   const baseRow = {
-    tenant_id: current.tenantId,
+    tenant_id: tenantId,
     client_id: parsed.clientId,
     staff_id: parsed.staffId,
     service_id: parsed.serviceId,
@@ -223,18 +223,18 @@ export async function createAgendaServiceAppointmentAction(input: unknown) {
 export async function createAgendaBlockedTimeAction(input: unknown) {
   const parsed = createAgendaBlockedTimeInputSchema.parse(input);
 
-  const current = await getCurrentProfile();
-  if (!current?.tenantId) throw new Error('Tenant não encontrado no profile.');
+  const auth = await getAuthContext();
+  const tenantId = auth.tenantId;
 
   const supabase = await createClient();
   const repo = createAgendaRepository(supabase);
 
-  const blockedService = await repo.findOrCreateBlockedService({ tenantId: current.tenantId });
+  const blockedService = await repo.findOrCreateBlockedService({ tenantId });
 
   const ids = await repo.createAppointments({
     rows: [
       {
-        tenant_id: current.tenantId,
+        tenant_id: tenantId,
         client_id: null,
         staff_id: parsed.staffId,
         service_id: blockedService.id,
@@ -258,8 +258,8 @@ export async function createAgendaBlockedTimeAction(input: unknown) {
 export async function updateAgendaAppointmentStatusAction(input: unknown) {
   const parsed = updateAgendaAppointmentStatusInputSchema.parse(input);
 
-  const current = await getCurrentProfile();
-  if (!current?.tenantId) throw new Error('Tenant não encontrado no profile.');
+  const auth = await getAuthContext();
+  const tenantId = auth.tenantId;
 
   const supabase = await createClient();
   const repo = createAgendaRepository(supabase);
@@ -267,7 +267,7 @@ export async function updateAgendaAppointmentStatusAction(input: unknown) {
   const mapped = toDbStatus({ status: parsed.status });
 
   await repo.updateAppointment({
-    tenantId: current.tenantId,
+    tenantId,
     appointmentId: parsed.appointmentId,
     patch: {
       status: mapped.dbStatus,
