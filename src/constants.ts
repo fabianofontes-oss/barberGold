@@ -73,6 +73,8 @@ export const MOCK_REFERRAL_LINKS: ReferralLink[] = [
 
 export const MOCK_REFERRAL_SALES: ReferralSale[] = [];
 
+// DEPRECATED: Agenda agora usa Supabase (src/modules/agenda)
+// Mantido apenas para modo demo
 export const MOCK_APPOINTMENTS: Appointment[] = [
   {
     id: 'apt1',
