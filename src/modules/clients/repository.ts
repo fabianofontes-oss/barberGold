@@ -23,6 +23,16 @@ export type MappedClient = {
   avatarUrl: string | null;
 };
 
+export type ClientDependent = {
+  id: string;
+  clientId: string;
+  name: string;
+  relationship: string | null;
+  birthDate: string | null;
+  preferredStaffId: string | null;
+  notes: string | null;
+};
+
 export function createClientsRepository(supabase: AppSupabaseClient) {
   return {
     async listClients({ tenantId, search, isActive = true }: { 
@@ -135,6 +145,46 @@ export function createClientsRepository(supabase: AppSupabaseClient) {
         .from('clients')
         .update({ is_active: false })
         .eq('id', clientId);
+
+      if (error) throw error;
+    },
+
+    async listDependents({ clientId }: { clientId: string }): Promise<ClientDependent[]> {
+      const { data, error } = await (supabase as any)
+        .from('client_dependents')
+        .select('*')
+        .eq('client_id', clientId)
+        .order('name', { ascending: true });
+
+      if (error) throw error;
+
+      return (data ?? []).map((row: any) => ({
+        id: row.id,
+        clientId: row.client_id,
+        name: row.name,
+        relationship: row.relationship,
+        birthDate: row.birth_date,
+        preferredStaffId: row.preferred_staff_id,
+        notes: row.notes,
+      }));
+    },
+
+    async createDependent({ input }: { input: any }) {
+      const { data, error } = await (supabase as any)
+        .from('client_dependents')
+        .insert(input)
+        .select('id')
+        .single();
+
+      if (error) throw error;
+      return { id: data.id };
+    },
+
+    async deleteDependent({ dependentId }: { dependentId: string }) {
+      const { error } = await (supabase as any)
+        .from('client_dependents')
+        .delete()
+        .eq('id', dependentId);
 
       if (error) throw error;
     },

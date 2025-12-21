@@ -26,6 +26,31 @@ export type MappedSale = {
   }>;
 };
 
+export type PromoCode = {
+  id: string;
+  code: string;
+  description: string | null;
+  discountType: 'PERCENTAGE' | 'FIXED';
+  discountValue: number;
+  validFrom: string | null;
+  validUntil: string | null;
+  maxUses: number | null;
+  currentUses: number;
+  minPurchaseAmount: number | null;
+  appliesTo: 'ALL' | 'SERVICES' | 'PRODUCTS' | null;
+  isActive: boolean;
+};
+
+export type SalePayment = {
+  id: string;
+  saleId: string;
+  paymentMethod: string;
+  amount: number;
+  cardLastDigits: string | null;
+  transactionId: string | null;
+  status: string;
+};
+
 export function createSalesRepository(supabase: AppSupabaseClient) {
   return {
     async listSales({ tenantId, startDate, endDate, staffId, paymentMethod }: { 
@@ -138,6 +163,63 @@ export function createSalesRepository(supabase: AppSupabaseClient) {
       if (itemsError) throw itemsError;
 
       return { id: sale.id };
+    },
+
+    async validatePromoCode({ tenantId, code }: { tenantId: string; code: string }): Promise<PromoCode | null> {
+      const { data, error } = await (supabase as any)
+        .from('promo_codes')
+        .select('*')
+        .eq('tenant_id', tenantId)
+        .eq('code', code.toUpperCase())
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) return null;
+
+      const now = new Date();
+      if (data.valid_from && new Date(data.valid_from) > now) return null;
+      if (data.valid_until && new Date(data.valid_until) < now) return null;
+      if (data.max_uses && data.current_uses >= data.max_uses) return null;
+
+      return {
+        id: data.id,
+        code: data.code,
+        description: data.description,
+        discountType: data.discount_type as 'PERCENTAGE' | 'FIXED',
+        discountValue: Number(data.discount_value),
+        validFrom: data.valid_from,
+        validUntil: data.valid_until,
+        maxUses: data.max_uses,
+        currentUses: data.current_uses,
+        minPurchaseAmount: data.min_purchase_amount ? Number(data.min_purchase_amount) : null,
+        appliesTo: data.applies_to as any,
+        isActive: data.is_active,
+      };
+    },
+
+    async incrementPromoCodeUsage({ promoCodeId }: { promoCodeId: string }) {
+      const { error } = await (supabase as any)
+        .from('promo_codes')
+        .update({ current_uses: (supabase as any).raw('current_uses + 1') })
+        .eq('id', promoCodeId);
+
+      if (error) throw error;
+    },
+
+    async createSalePayments({ saleId, payments }: { saleId: string; payments: Array<{ method: string; amount: number }> }) {
+      const paymentRecords = payments.map(p => ({
+        sale_id: saleId,
+        payment_method: p.method,
+        amount: p.amount,
+        status: 'COMPLETED',
+      }));
+
+      const { error } = await (supabase as any)
+        .from('sale_payments')
+        .insert(paymentRecords);
+
+      if (error) throw error;
     },
   };
 }
