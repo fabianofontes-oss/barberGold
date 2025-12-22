@@ -41,7 +41,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Aceitação dos Termos</h2>
               <p className="text-gray-700">
-                Ao acessar e usar o BarberFlow, você concorda com estes Termos de Uso. 
+                Ao acessar e usar o BarberGold, você concorda com estes Termos de Uso. 
                 Se você não concordar com algum termo, não utilize nossos serviços.
               </p>
             </section>
@@ -49,7 +49,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Descrição do Serviço</h2>
               <p className="text-gray-700">
-                O BarberFlow é uma plataforma SaaS para gestão de barbearias, oferecendo 
+                O BarberGold é uma plataforma SaaS para gestão de barbearias, oferecendo 
                 funcionalidades como agendamento, controle financeiro, gestão de clientes e relatórios.
               </p>
             </section>
@@ -94,7 +94,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Propriedade Intelectual</h2>
               <p className="text-gray-700">
-                Todo o conteúdo, marcas e código do BarberFlow são de nossa propriedade. 
+                Todo o conteúdo, marcas e código do BarberGold são de nossa propriedade. 
                 Você mantém propriedade de seus dados inseridos no sistema.
               </p>
             </section>

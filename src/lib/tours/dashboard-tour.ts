@@ -10,7 +10,7 @@ export const dashboardTour: Tour = {
   steps: [
     {
       id: 'welcome',
-      title: 'Bem-vindo ao BarberFlow! 🎉',
+      title: 'Bem-vindo ao BarberGold! 🎉',
       description: 'Vamos fazer um tour rápido para você conhecer as principais funcionalidades do sistema. Leva apenas 2 minutos!',
     },
     {

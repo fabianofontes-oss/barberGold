@@ -1,7 +1,7 @@
 /**
  * Produtos e Planos do Stripe
  * 
- * Mapeia os planos do BarberFlow para produtos Stripe
+ * Mapeia os planos do BarberGold para produtos Stripe
  */
 
 import { STRIPE_PRICES, getPriceId } from './config'

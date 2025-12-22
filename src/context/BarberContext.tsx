@@ -47,7 +47,7 @@ const INITIAL_CAMPAIGNS: MarketingCampaign[] = [
 ];
 
 const INITIAL_GLOBAL_SETTINGS: GlobalSettings = {
-   appName: 'BarberFlow',
+   appName: 'BarberGold',
    trialDays: 14,
    currency: 'USD',
    stripeKey: 'sk_live_********************',
@@ -258,7 +258,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
      heroHeadline: "Aposente o Caderno. Transforme sua Barbearia em uma Máquina de Lucro.",
      heroSubheadline: "Agenda, Financeiro e Marketing Automático em um só lugar. Tenha o controle total do seu negócio na palma da mão.",
      heroCtaText: "Começar Teste Grátis",
-     seoTitle: "BarberFlow | Sistema de Gestão para Barbearias",
+     seoTitle: "BarberGold | Sistema de Gestão para Barbearias",
      seoDescription: "O melhor sistema para barbearias. Agenda online, controle financeiro e comissões automáticas.",
      seoKeywords: "barbearia, sistema, agenda, gestão",
      showPricing: true,
@@ -266,7 +266,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
      featuredPlanId: 'PRO',
      announcementBar: {
         enabled: true,
-        text: "🎉 BarberFlow.com.br no ar! Aproveite 50% OFF no Plano Anual!",
+        text: "🎉 BarberGold.com.br no ar! Aproveite 50% OFF no Plano Anual!",
         link: "#pricing"
      }
   });

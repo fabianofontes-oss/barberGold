@@ -196,10 +196,10 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Website & Marca',
         included: true,
         items: [
-          'Website Premium (tema BarberFlow)',
+          'Website Premium (tema BarberGold)',
           'Domínio próprio (.com.br) – via parceiro',
           'Personalização de cores e logo',
-          'Remoção da marca d’água “BarberFlow”'
+          'Remoção da marca d’água “BarberGold”'
         ]
       },
       {
@@ -358,7 +358,7 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
           'Website Premium da barbearia',
           'Domínio próprio (.com.br) – via parceiro',
           'Personalização de cores, fonte e logo',
-          'Remoção da marca d’água BarberFlow'
+          'Remoção da marca d’água BarberGold'
         ]
       },
       {
@@ -518,7 +518,7 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
           'Páginas de perfil para cada barbeiro',
           'Link de agendamento próprio por barbeiro',
           'Domínio próprio (.com.br) – via parceiro',
-          'Remoção da marca d’água BarberFlow'
+          'Remoção da marca d’água BarberGold'
         ]
       },
       {
@@ -536,7 +536,7 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
         included: true,
         items: [
           'Suporte prioritário',
-          'Acesso antecipado aos novos recursos do BarberFlow'
+          'Acesso antecipado aos novos recursos do BarberGold'
         ]
       }
     ],
