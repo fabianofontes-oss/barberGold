@@ -75,10 +75,10 @@ export const AppointmentFiltersSchema = z.object({
   status: AppointmentStatus.optional(),
   date_from: z.string().datetime().optional(),
   date_to: z.string().datetime().optional(),
-  sort_by: z.enum(['scheduled_at', 'created_at', 'price']).default('scheduled_at'),
-  sort_order: z.enum(['asc', 'desc']).default('asc'),
-  limit: z.number().int().positive().max(200).default(100),
-  offset: z.number().int().nonnegative().default(0),
+  sort_by: z.enum(['scheduled_at', 'created_at', 'price']).optional(),
+  sort_order: z.enum(['asc', 'desc']).optional(),
+  limit: z.number().int().positive().max(200).optional(),
+  offset: z.number().int().nonnegative().optional(),
 });
 
 /**
