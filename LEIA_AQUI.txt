@@ -28,3 +28,4 @@ Se quiser que inicie AUTOMATICAMENTE quando abrir o terminal:
 
 Duvidas? Abra o arquivo: PROTECAO_TOTAL.md
 
+

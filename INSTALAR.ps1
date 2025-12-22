@@ -67,3 +67,4 @@ Write-Host ""
 Write-Host "OU execute agora: .\START.ps1" -ForegroundColor Cyan
 Write-Host ""
 
+

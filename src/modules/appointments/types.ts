@@ -164,3 +164,4 @@ export function isValidUpdateInput(data: unknown): data is UpdateAppointmentInpu
   return UpdateAppointmentSchema.safeParse(data).success;
 }
 
+

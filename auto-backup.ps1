@@ -43,3 +43,4 @@ while ($true) {
     Write-Host "⏰ Próximo backup em 5 minutos..." -ForegroundColor DarkGray
 }
 
+

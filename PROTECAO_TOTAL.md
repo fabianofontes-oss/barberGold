@@ -155,3 +155,4 @@ R: Sim! Copie os scripts para cada projeto.
 
 *Trabalhe com tranquilidade! 💪*
 
+

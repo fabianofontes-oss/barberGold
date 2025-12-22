@@ -44,3 +44,4 @@ Write-Host "A protecao automatica foi removida." -ForegroundColor Gray
 Write-Host "Para reinstalar, execute: .\INSTALAR_UNIVERSAL.ps1" -ForegroundColor Gray
 Write-Host ""
 
+
