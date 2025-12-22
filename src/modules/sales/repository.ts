@@ -5,7 +5,6 @@
  */
 
 import { SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@/lib/database.types';
 import {
   Sale,
   SaleItem,
@@ -17,6 +16,9 @@ import {
   SalesStats,
 } from './types';
 import { calculateCommission } from '@/lib/business-logic/commissions';
+
+// Tipo genérico para evitar problemas de inferência
+type SupabaseAny = SupabaseClient<any, any, any>;
 
 /**
  * ============================================
@@ -33,7 +35,7 @@ import { calculateCommission } from '@/lib/business-logic/commissions';
  * 5. Retorna sale completa
  */
 export async function processSale(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   input: CreateSaleInput,
   staffSettings: {
     commissionType: 'PERCENTAGE' | 'CHAIR_RENTAL' | 'OWNER';
@@ -90,7 +92,7 @@ export async function processSale(
       discount: input.discount,
       notes: input.notes || null,
       commission_snapshot: commissionSnapshot as any, // JSON no banco
-    } as any) // Cast necessário pois tenant_id é preenchido pelo RLS
+    })
     .select()
     .single();
 
@@ -111,7 +113,7 @@ export async function processSale(
 
   const { error: itemsError } = await supabase
     .from('sale_items')
-    .insert(itemsToInsert as any);
+    .insert(itemsToInsert);
 
   if (itemsError) {
     console.error('Erro ao criar sale_items:', itemsError);
@@ -141,7 +143,7 @@ export async function processSale(
           total_spent: newTotalSpent,
           loyalty_points: newLoyaltyPoints,
           last_visit: new Date().toISOString(),
-        } as any)
+        })
         .eq('id', input.client_id);
     }
   }
@@ -166,7 +168,7 @@ export async function processSale(
  * Lista sales com filtros e paginação
  */
 export async function listSales(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   filters: SaleFilters = {}
 ): Promise<PaginatedSales> {
   const {
@@ -232,7 +234,7 @@ export async function listSales(
  * Busca sale por ID
  */
 export async function getSaleById(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   saleId: string
 ): Promise<Sale | null> {
   const { data, error } = await supabase
@@ -261,7 +263,7 @@ export async function getSaleById(
  * Busca items de uma sale
  */
 export async function getSaleItems(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   saleId: string
 ): Promise<SaleItem[]> {
   const { data, error } = await supabase
@@ -287,7 +289,7 @@ export async function getSaleItems(
  * Calcula estatísticas de vendas
  */
 export async function getSalesStats(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   date_from?: string,
   date_to?: string,
   staff_id?: string
@@ -338,7 +340,7 @@ export async function getSalesStats(
  * Busca vendas de hoje
  */
 export async function getTodaySales(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   staff_id?: string
 ): Promise<Sale[]> {
   const today = new Date();

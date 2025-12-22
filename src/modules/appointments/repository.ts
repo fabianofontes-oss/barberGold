@@ -1,11 +1,10 @@
 /**
  * Repository para Appointments (Supabase)
  * 
- * Implementa CRUD type-safe usando Supabase Client
+ * Implementa CRUD usando Supabase Client
  */
 
 import { SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@/lib/database.types';
 import {
   Appointment,
   CreateAppointmentInput,
@@ -15,6 +14,9 @@ import {
   AppointmentSchema,
   AvailableSlot,
 } from './types';
+
+// Tipo genérico para evitar problemas de inferência
+type SupabaseAny = SupabaseClient<any, any, any>;
 
 /**
  * ============================================
@@ -26,7 +28,7 @@ import {
  * Lista appointments com filtros e paginação
  */
 export async function listAppointments(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   filters: AppointmentFilters = {}
 ): Promise<PaginatedAppointments> {
   const {
@@ -94,7 +96,7 @@ export async function listAppointments(
  * Busca appointment por ID
  */
 export async function getAppointmentById(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   appointmentId: string
 ): Promise<Appointment | null> {
   const { data, error } = await supabase
@@ -123,7 +125,7 @@ export async function getAppointmentById(
  * Cria novo appointment
  */
 export async function createAppointment(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   input: CreateAppointmentInput
 ): Promise<Appointment> {
   const { data, error } = await supabase
@@ -136,7 +138,7 @@ export async function createAppointment(
       price: input.price,
       status: input.status || 'SCHEDULED',
       notes: input.notes || null,
-    } as any) // Cast necessário pois tenant_id é preenchido pelo RLS
+    })
     .select()
     .single();
 
@@ -165,7 +167,7 @@ export async function createAppointment(
  * Atualiza appointment existente
  */
 export async function updateAppointment(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   appointmentId: string,
   input: UpdateAppointmentInput
 ): Promise<Appointment> {
@@ -176,7 +178,7 @@ export async function updateAppointment(
       price: input.price,
       status: input.status,
       notes: input.notes,
-    } as any) // Cast necessário para tipos parciais
+    })
     .eq('id', appointmentId)
     .select()
     .single();
@@ -205,7 +207,7 @@ export async function updateAppointment(
  * Deleta appointment
  */
 export async function deleteAppointment(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   appointmentId: string
 ): Promise<void> {
   const { error } = await supabase
@@ -229,7 +231,7 @@ export async function deleteAppointment(
  * Marca appointment como concluído
  */
 export async function completeAppointment(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   appointmentId: string
 ): Promise<Appointment> {
   return updateAppointment(supabase, appointmentId, { status: 'COMPLETED' });
@@ -239,7 +241,7 @@ export async function completeAppointment(
  * Cancela appointment
  */
 export async function cancelAppointment(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   appointmentId: string
 ): Promise<Appointment> {
   return updateAppointment(supabase, appointmentId, { status: 'CANCELLED' });
@@ -249,7 +251,7 @@ export async function cancelAppointment(
  * Marca como no-show
  */
 export async function markNoShow(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   appointmentId: string
 ): Promise<Appointment> {
   return updateAppointment(supabase, appointmentId, { status: 'NO_SHOW' });
@@ -265,7 +267,7 @@ export async function markNoShow(
  * Conta appointments por status
  */
 export async function countAppointmentsByStatus(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   date_from?: string,
   date_to?: string
 ): Promise<Record<string, number>> {
@@ -296,7 +298,7 @@ export async function countAppointmentsByStatus(
  * Busca appointments do dia
  */
 export async function getTodayAppointments(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   staff_id?: string
 ): Promise<Appointment[]> {
   const today = new Date();
@@ -322,7 +324,7 @@ export async function getTodayAppointments(
  * Busca appointments de um cliente
  */
 export async function getClientAppointments(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   client_id: string,
   limit: number = 10
 ): Promise<Appointment[]> {
@@ -345,7 +347,7 @@ export async function getClientAppointments(
  * Verifica disponibilidade de um staff em um horário
  */
 export async function checkAvailability(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseAny,
   staff_id: string,
   scheduled_at: string
 ): Promise<boolean> {
