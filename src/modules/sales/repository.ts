@@ -79,21 +79,18 @@ export async function processSale(
   };
 
   // 4. Criar sale no banco (com snapshot)
-  // tenant_id será preenchido automaticamente pelo RLS
-  const saleInsertData = {
-    client_id: input.client_id || null,
-    staff_id: input.staff_id,
-    total,
-    payment_method: input.payment_method,
-    tip: input.tip,
-    discount: input.discount,
-    notes: input.notes || null,
-    commission_snapshot: commissionSnapshot as any, // JSON no banco
-  };
-
   const { data: saleData, error: saleError } = await supabase
     .from('sales')
-    .insert(saleInsertData)
+    .insert({
+      client_id: input.client_id || null,
+      staff_id: input.staff_id,
+      total,
+      payment_method: input.payment_method,
+      tip: input.tip,
+      discount: input.discount,
+      notes: input.notes || null,
+      commission_snapshot: commissionSnapshot as any, // JSON no banco
+    } as any) // Cast necessário pois tenant_id é preenchido pelo RLS
     .select()
     .single();
 
@@ -114,7 +111,7 @@ export async function processSale(
 
   const { error: itemsError } = await supabase
     .from('sale_items')
-    .insert(itemsToInsert);
+    .insert(itemsToInsert as any);
 
   if (itemsError) {
     console.error('Erro ao criar sale_items:', itemsError);
@@ -144,7 +141,7 @@ export async function processSale(
           total_spent: newTotalSpent,
           loyalty_points: newLoyaltyPoints,
           last_visit: new Date().toISOString(),
-        })
+        } as any)
         .eq('id', input.client_id);
     }
   }

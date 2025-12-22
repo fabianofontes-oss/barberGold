@@ -126,20 +126,17 @@ export async function createAppointment(
   supabase: SupabaseClient<Database>,
   input: CreateAppointmentInput
 ): Promise<Appointment> {
-  // tenant_id será preenchido automaticamente pelo RLS
-  const insertData = {
-    client_id: input.client_id,
-    staff_id: input.staff_id,
-    service_id: input.service_id,
-    scheduled_at: input.scheduled_at,
-    price: input.price,
-    status: input.status || 'SCHEDULED',
-    notes: input.notes || null,
-  };
-
   const { data, error } = await supabase
     .from('appointments')
-    .insert(insertData)
+    .insert({
+      client_id: input.client_id,
+      staff_id: input.staff_id,
+      service_id: input.service_id,
+      scheduled_at: input.scheduled_at,
+      price: input.price,
+      status: input.status || 'SCHEDULED',
+      notes: input.notes || null,
+    } as any) // Cast necessário pois tenant_id é preenchido pelo RLS
     .select()
     .single();
 
@@ -172,16 +169,14 @@ export async function updateAppointment(
   appointmentId: string,
   input: UpdateAppointmentInput
 ): Promise<Appointment> {
-  const updateData = {
-    scheduled_at: input.scheduled_at,
-    price: input.price,
-    status: input.status,
-    notes: input.notes,
-  };
-
   const { data, error } = await supabase
     .from('appointments')
-    .update(updateData)
+    .update({
+      scheduled_at: input.scheduled_at,
+      price: input.price,
+      status: input.status,
+      notes: input.notes,
+    } as any) // Cast necessário para tipos parciais
     .eq('id', appointmentId)
     .select()
     .single();
