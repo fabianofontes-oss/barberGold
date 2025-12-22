@@ -126,17 +126,19 @@ export async function createAppointment(
   supabase: SupabaseClient<Database>,
   input: CreateAppointmentInput
 ): Promise<Appointment> {
+  const insertData: Database['public']['Tables']['appointments']['Insert'] = {
+    client_id: input.client_id,
+    staff_id: input.staff_id,
+    service_id: input.service_id,
+    scheduled_at: input.scheduled_at,
+    price: input.price,
+    status: input.status || 'SCHEDULED',
+    notes: input.notes || null,
+  };
+
   const { data, error } = await supabase
     .from('appointments')
-    .insert({
-      client_id: input.client_id,
-      staff_id: input.staff_id,
-      service_id: input.service_id,
-      scheduled_at: input.scheduled_at,
-      price: input.price,
-      status: input.status || 'SCHEDULED',
-      notes: input.notes || null,
-    })
+    .insert(insertData)
     .select()
     .single();
 
@@ -169,14 +171,16 @@ export async function updateAppointment(
   appointmentId: string,
   input: UpdateAppointmentInput
 ): Promise<Appointment> {
+  const updateData: Database['public']['Tables']['appointments']['Update'] = {
+    scheduled_at: input.scheduled_at,
+    price: input.price,
+    status: input.status,
+    notes: input.notes,
+  };
+
   const { data, error } = await supabase
     .from('appointments')
-    .update({
-      scheduled_at: input.scheduled_at,
-      price: input.price,
-      status: input.status,
-      notes: input.notes,
-    })
+    .update(updateData)
     .eq('id', appointmentId)
     .select()
     .single();

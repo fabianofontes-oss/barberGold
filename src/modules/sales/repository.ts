@@ -79,18 +79,20 @@ export async function processSale(
   };
 
   // 4. Criar sale no banco (com snapshot)
+  const saleInsertData: Database['public']['Tables']['sales']['Insert'] = {
+    client_id: input.client_id || null,
+    staff_id: input.staff_id,
+    total,
+    payment_method: input.payment_method,
+    tip: input.tip,
+    discount: input.discount,
+    notes: input.notes || null,
+    commission_snapshot: commissionSnapshot as any, // JSON no banco
+  };
+
   const { data: saleData, error: saleError } = await supabase
     .from('sales')
-    .insert({
-      client_id: input.client_id || null,
-      staff_id: input.staff_id,
-      total,
-      payment_method: input.payment_method,
-      tip: input.tip,
-      discount: input.discount,
-      notes: input.notes || null,
-      commission_snapshot: commissionSnapshot as any, // JSON no banco
-    })
+    .insert(saleInsertData)
     .select()
     .single();
 
