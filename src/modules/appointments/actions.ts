@@ -297,8 +297,11 @@ export async function getTodayAppointmentsAction(
   staff_id?: string
 ): Promise<ActionResult<Appointment[]>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const appointments = await repository.getTodayAppointments(supabase, staff_id);
+    const appointments = await repository.getTodayAppointments(supabase, tenantId, staff_id);
 
     return { success: true, data: appointments };
   } catch (error) {
@@ -318,8 +321,11 @@ export async function getClientAppointmentsAction(
   limit: number = 10
 ): Promise<ActionResult<Appointment[]>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const appointments = await repository.getClientAppointments(supabase, client_id, limit);
+    const appointments = await repository.getClientAppointments(supabase, tenantId, client_id, limit);
 
     return { success: true, data: appointments };
   } catch (error) {

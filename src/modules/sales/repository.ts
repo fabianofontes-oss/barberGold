@@ -347,6 +347,7 @@ export async function getSalesStats(
  */
 export async function getTodaySales(
   supabase: SupabaseAny,
+  tenantId: string,
   staff_id?: string
 ): Promise<Sale[]> {
   const today = new Date();
@@ -363,7 +364,7 @@ export async function getTodaySales(
     filters.staff_id = staff_id;
   }
 
-  const result = await listSales(supabase, filters);
+  const result = await listSales(supabase, tenantId, filters);
   return result.data;
 }
 

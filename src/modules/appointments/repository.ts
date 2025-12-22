@@ -312,6 +312,7 @@ export async function countAppointmentsByStatus(
  */
 export async function getTodayAppointments(
   supabase: SupabaseAny,
+  tenantId: string,
   staff_id?: string
 ): Promise<Appointment[]> {
   const today = new Date();
@@ -329,7 +330,7 @@ export async function getTodayAppointments(
     filters.staff_id = staff_id;
   }
 
-  const result = await listAppointments(supabase, filters);
+  const result = await listAppointments(supabase, tenantId, filters);
   return result.data;
 }
 
@@ -338,10 +339,11 @@ export async function getTodayAppointments(
  */
 export async function getClientAppointments(
   supabase: SupabaseAny,
+  tenantId: string,
   client_id: string,
   limit: number = 10
 ): Promise<Appointment[]> {
-  const result = await listAppointments(supabase, {
+  const result = await listAppointments(supabase, tenantId, {
     client_id,
     sort_by: 'scheduled_at',
     sort_order: 'desc',

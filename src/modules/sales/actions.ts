@@ -195,8 +195,11 @@ export async function getTodaySalesAction(
   staff_id?: string
 ): Promise<ActionResult<Sale[]>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const sales = await repository.getTodaySales(supabase, staff_id);
+    const sales = await repository.getTodaySales(supabase, tenantId, staff_id);
 
     return { success: true, data: sales };
   } catch (error) {
