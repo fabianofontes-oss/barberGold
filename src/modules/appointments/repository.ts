@@ -74,7 +74,7 @@ export async function listAppointments(
     .map(appt => {
       const parsed = AppointmentSchema.safeParse(appt);
       if (!parsed.success) {
-        console.warn('Appointment inválido:', appt.id, parsed.error);
+        console.warn('Appointment inválido:', (appt as any)?.id, parsed.error);
         return null;
       }
       return parsed.data;
