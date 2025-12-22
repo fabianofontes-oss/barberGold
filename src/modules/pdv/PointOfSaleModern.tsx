@@ -34,7 +34,7 @@ export const PointOfSaleModern = () => {
   
   // Carrinho
   const [cart, setCart] = useState<Array<{
-    item_type: 'service' | 'product';
+    item_type: 'SERVICE' | 'PRODUCT';
     item_id: string;
     name: string;
     price: number;
@@ -65,6 +65,7 @@ export const PointOfSaleModern = () => {
     try {
       const result = await listSalesAction({
         limit: 10,
+        offset: 0,
         sort_by: 'created_at',
         sort_order: 'desc',
       });
@@ -98,12 +99,12 @@ export const PointOfSaleModern = () => {
   };
 
   // Remover item do carrinho
-  const removeFromCart = (itemId: string, itemType: 'service' | 'product') => {
+  const removeFromCart = (itemId: string, itemType: 'SERVICE' | 'PRODUCT') => {
     setCart(cart.filter(i => !(i.item_id === itemId && i.item_type === itemType)));
   };
 
   // Atualizar quantidade
-  const updateQuantity = (itemId: string, itemType: 'service' | 'product', delta: number) => {
+  const updateQuantity = (itemId: string, itemType: 'SERVICE' | 'PRODUCT', delta: number) => {
     setCart(cart.map(i => {
       if (i.item_id === itemId && i.item_type === itemType) {
         const newQty = Math.max(1, i.quantity + delta);
@@ -304,7 +305,7 @@ export const PointOfSaleModern = () => {
             <div className="grid sm:grid-cols-2 gap-3">
               <button
                 onClick={() => addToCart({
-                  item_type: 'service',
+                  item_type: 'SERVICE',
                   item_id: 'service-1',
                   name: 'Corte Simples',
                   price: 35,
@@ -318,7 +319,7 @@ export const PointOfSaleModern = () => {
 
               <button
                 onClick={() => addToCart({
-                  item_type: 'service',
+                  item_type: 'SERVICE',
                   item_id: 'service-2',
                   name: 'Barba',
                   price: 25,
