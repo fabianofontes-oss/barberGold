@@ -1,16 +1,30 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createClient } from '@/lib/supabase/client';
 
 function RegisterForm() {
     const searchParams = useSearchParams();
+    const router = useRouter();
+    const supabase = createClient();
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    // Form State
+    const [fullname, setFullname] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [shopSlug, setShopSlug] = useState('');
     const [selectedPlan, setSelectedPlan] = useState('pro');
+    const [termsAccepted, setTermsAccepted] = useState(false);
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     // Read URL parameters on mount
     useEffect(() => {
@@ -24,6 +38,67 @@ function RegisterForm() {
             setSelectedPlan(urlPlan);
         }
     }, [searchParams]);
+
+    const handleRegister = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        // Validation
+        if (password !== confirmPassword) {
+            setError('As senhas não coincidem.');
+            setLoading(false);
+            return;
+        }
+
+        if (!termsAccepted) {
+            setError('Você deve aceitar os Termos de Serviço.');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const { error: authError } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        full_name: fullname,
+                        slug: shopSlug,
+                        plan: selectedPlan,
+                    }
+                }
+            });
+
+            if (authError) {
+                setError(authError.message);
+                return;
+            }
+
+            // Success - Redirect to dashboard
+            // Note: If email confirmation is enabled, we might need to show a "Check your email" message
+            // But usually for MVPs we redirect directly or to a success page.
+            router.push('/app/dashboard');
+            router.refresh();
+        } catch (err) {
+            setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                },
+            });
+        } catch (err) {
+            setError('Erro ao iniciar cadastro com Google.');
+        }
+    };
 
     return (
         <div className="min-h-screen bg-[#0f0f11] flex">
@@ -73,7 +148,13 @@ function RegisterForm() {
                         <p className="text-gray-400">Enter your details below to get started.</p>
                     </div>
 
-                    <form className="space-y-5">
+                    {error && (
+                        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleRegister} className="space-y-5">
                         {/* Full Name */}
                         <div>
                             <label htmlFor="fullname" className="block text-sm font-medium text-gray-300 mb-2">
@@ -82,12 +163,16 @@ function RegisterForm() {
                             <input
                                 id="fullname"
                                 type="text"
+                                required
+                                value={fullname}
+                                onChange={(e) => setFullname(e.target.value)}
                                 placeholder="e.g. James Cutter"
-                                className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all"
+                                disabled={loading}
+                                className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all disabled:opacity-50"
                             />
                         </div>
 
-                        {/* Barbershop Slug (from URL or manual) */}
+                        {/* Barbershop Slug */}
                         {shopSlug && (
                             <div>
                                 <label htmlFor="slug" className="block text-sm font-medium text-gray-300 mb-2">
@@ -100,14 +185,15 @@ function RegisterForm() {
                                         type="text"
                                         value={shopSlug}
                                         onChange={(e) => setShopSlug(e.target.value)}
-                                        className="flex-1 px-4 py-3 bg-[#18181b] border border-[#f79f08]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all"
+                                        disabled={loading}
+                                        className="flex-1 px-4 py-3 bg-[#18181b] border border-[#f79f08]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all disabled:opacity-50"
                                     />
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1">Reserved from landing page</p>
                             </div>
                         )}
 
-                        {/* Selected Plan (if from pricing) */}
+                        {/* Selected Plan */}
                         {selectedPlan && (
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -132,8 +218,12 @@ function RegisterForm() {
                             <input
                                 id="email"
                                 type="email"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 placeholder="name@barbershop.com"
-                                className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all"
+                                disabled={loading}
+                                className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all disabled:opacity-50"
                             />
                         </div>
 
@@ -146,8 +236,12 @@ function RegisterForm() {
                                 <input
                                     id="password"
                                     type={showPassword ? 'text' : 'password'}
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Create a password"
-                                    className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all pr-12"
+                                    disabled={loading}
+                                    className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all pr-12 disabled:opacity-50"
                                 />
                                 <button
                                     type="button"
@@ -177,8 +271,12 @@ function RegisterForm() {
                                 <input
                                     id="confirmPassword"
                                     type={showConfirmPassword ? 'text' : 'password'}
+                                    required
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder="Confirm your password"
-                                    className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all pr-12"
+                                    disabled={loading}
+                                    className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all pr-12 disabled:opacity-50"
                                 />
                                 <button
                                     type="button"
@@ -204,7 +302,11 @@ function RegisterForm() {
                             <input
                                 type="checkbox"
                                 id="terms"
-                                className="w-4 h-4 mt-1 bg-[#18181b] border border-white/10 rounded text-[#f79f08] focus:ring-2 focus:ring-[#f79f08] focus:ring-offset-0"
+                                required
+                                checked={termsAccepted}
+                                onChange={(e) => setTermsAccepted(e.target.checked)}
+                                disabled={loading}
+                                className="w-4 h-4 mt-1 bg-[#18181b] border border-white/10 rounded text-[#f79f08] focus:ring-2 focus:ring-[#f79f08] focus:ring-offset-0 disabled:opacity-50"
                             />
                             <label htmlFor="terms" className="ml-2 text-sm text-gray-300">
                                 I agree to the{' '}
@@ -221,9 +323,18 @@ function RegisterForm() {
                         {/* Create Account Button */}
                         <button
                             type="submit"
-                            className="w-full bg-[#f79f08] hover:bg-[#d88b06] text-[#0f0f11] font-bold py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] hover:shadow-[0_0_30px_rgba(247,159,8,0.4)] hover:scale-[1.02]"
+                            disabled={loading}
+                            className="w-full bg-[#f79f08] hover:bg-[#d88b06] text-[#0f0f11] font-bold py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] hover:shadow-[0_0_30px_rgba(247,159,8,0.4)] hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
-                            Create Account
+                            {loading ? (
+                                <>
+                                    <svg className="animate-spin h-5 w-5 text-[#0f0f11]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Processando...
+                                </>
+                            ) : 'Create Account'}
                         </button>
 
                         {/* Divider */}
@@ -239,7 +350,9 @@ function RegisterForm() {
                         {/* Google Button */}
                         <button
                             type="button"
-                            className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium py-3 rounded-lg transition-all flex items-center justify-center gap-3"
+                            disabled={loading}
+                            onClick={handleGoogleLogin}
+                            className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium py-3 rounded-lg transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
