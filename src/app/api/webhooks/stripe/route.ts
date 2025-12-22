@@ -231,12 +231,15 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
  */
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
   try {
-    const tenantId = invoice.subscription_details?.metadata?.tenant_id
+    // Get tenant_id from invoice metadata
+    const tenantId = invoice.metadata?.tenant_id
     
     if (!tenantId) {
-      console.error('[Webhook] Missing tenant_id in invoice')
+      console.error('[Webhook] Missing tenant_id in invoice metadata')
       return
     }
+    
+    const subscriptionId = (invoice as any).subscription as string | null
     
     const supabase = await createClient()
     
@@ -245,7 +248,7 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
       supabase,
       tenantId,
       invoice.id,
-      invoice.subscription as string | null,
+      subscriptionId,
       'paid'
     )
     
@@ -271,12 +274,14 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
  */
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   try {
-    const tenantId = invoice.subscription_details?.metadata?.tenant_id
+    const tenantId = invoice.metadata?.tenant_id
     
     if (!tenantId) {
-      console.error('[Webhook] Missing tenant_id in invoice')
+      console.error('[Webhook] Missing tenant_id in invoice metadata')
       return
     }
+    
+    const subscriptionId = (invoice as any).subscription as string | null
     
     const supabase = await createClient()
     
@@ -285,7 +290,7 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
       supabase,
       tenantId,
       invoice.id,
-      invoice.subscription as string | null,
+      subscriptionId,
       'failed'
     )
     

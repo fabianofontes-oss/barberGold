@@ -263,7 +263,7 @@ export async function canUseLoyalty(): Promise<FeatureCheckResult> {
 /**
  * Formato padronizado de erro para retornar em Server Actions
  */
-export function createFeatureBlockedError(result: FeatureCheckResult) {
+export async function createFeatureBlockedError(result: FeatureCheckResult) {
   return {
     success: false,
     error: result.reason || 'Funcionalidade não disponível no seu plano',
