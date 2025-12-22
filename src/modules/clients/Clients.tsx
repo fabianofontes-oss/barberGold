@@ -25,7 +25,7 @@ import {
   RefreshCcw
  } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
-import { AppointmentStatus, Dependent, ClientTag } from '@/types';
+import { AppointmentStatus, Dependent, ClientTag, Client as ClientUI } from '@/types';
 import { ClientTagsBadges, ClientTagsManager } from './components/ClientTagsManager';
 import { ClientPreferencesEditor } from './components/ClientPreferencesEditor';
 import { ExportClients } from './components/ExportClients';
@@ -275,7 +275,7 @@ export const Clients = () => {
               Tentar novamente
             </button>
           )}
-          {isOwner && <ExportClients clients={clients} shopName={shopProfile.name || 'Barbearia'} />}
+          {isOwner && <ExportClients clients={clients.map(convertToUIClient)} shopName={shopProfile.name || 'Barbearia'} />}
           <button 
             onClick={() => setIsModalOpen(true)}
             disabled={isPending}

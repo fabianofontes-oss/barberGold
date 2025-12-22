@@ -13,7 +13,6 @@ export {
   deleteClientAction,
   searchClientsAction,
   getClientStatsAction,
-  toClientUI,
 } from './actions';
 
 // Re-export types

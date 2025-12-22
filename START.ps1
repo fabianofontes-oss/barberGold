@@ -4,3 +4,4 @@
 & "$PSScriptRoot\iniciar-protecao.ps1"
 
 
+

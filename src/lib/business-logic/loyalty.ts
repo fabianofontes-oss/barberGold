@@ -88,3 +88,4 @@ export const DEFAULT_LOYALTY_CONFIG: LoyaltyConfig = {
   rewardType: 'FREE_SERVICE',
 };
 
+

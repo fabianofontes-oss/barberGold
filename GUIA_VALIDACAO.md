@@ -383,3 +383,5 @@ USING (tenant_id = (SELECT tenant_id FROM public.profiles WHERE id = auth.uid())
 **Próximo passo:** `GUIA_DEPLOY.md`
 
 
+
+

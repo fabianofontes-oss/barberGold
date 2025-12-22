@@ -8,6 +8,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
+import { getCurrentProfile } from '@/lib/auth/getCurrentProfile';
 import type { Database } from '@/lib/database.types';
 
 /**
@@ -40,19 +41,19 @@ export interface Client {
 }
 
 // Converte do banco para UI
-export function toClientUI(db: ClientDB): Client {
+function toClientUI(db: ClientDB): Client {
   return {
     id: db.id,
     created_at: db.created_at,
     tenant_id: db.tenant_id,
     name: db.name,
     phone: db.phone,
-    email: db.email,
-    birthDate: db.birth_date,
+    email: db.email ?? undefined, // Converte null para undefined
+    birthDate: db.birth_date ?? undefined, // Converte null para undefined
     totalSpent: db.total_spent,
     loyaltyPoints: db.loyalty_points,
-    lastVisit: db.last_visit ? new Date(db.last_visit) : null,
-    notes: db.notes,
+    lastVisit: db.last_visit ? new Date(db.last_visit) : undefined, // Converte null para undefined
+    notes: db.notes ?? undefined, // Converte null para undefined
     // Campos opcionais ficam undefined por enquanto
     preferredStaffId: undefined,
     dependents: [],
@@ -61,7 +62,13 @@ export function toClientUI(db: ClientDB): Client {
   };
 }
 
-export type CreateClientInput = Database['public']['Tables']['clients']['Insert'];
+// Tipo base do banco
+type CreateClientInputBase = Database['public']['Tables']['clients']['Insert'];
+
+// Tipo para input (tenant_id é opcional, será adicionado automaticamente)
+export type CreateClientInput = Omit<CreateClientInputBase, 'tenant_id'> & {
+  tenant_id?: string;
+};
 
 export type UpdateClientInput = Database['public']['Tables']['clients']['Update'];
 
@@ -180,11 +187,26 @@ export async function createClientAction(
   input: CreateClientInput
 ): Promise<ActionResult<Client>> {
   try {
+    // Obter tenant_id do perfil do usuário
+    const profile = await getCurrentProfile();
+    if (!profile || !profile.tenantId) {
+      return {
+        success: false,
+        error: 'Usuário não autenticado ou sem tenant associado',
+      };
+    }
+
     const supabase = await createSupabaseClient();
+
+    // Adicionar tenant_id ao input
+    const inputWithTenant: CreateClientInput = {
+      ...input,
+      tenant_id: profile.tenantId,
+    };
 
     const { data, error } = await supabase
       .from('clients')
-      .insert(input)
+      .insert(inputWithTenant)
       .select()
       .single();
 

@@ -68,3 +68,4 @@
 **Dica:** Sempre que você parar de trabalhar por hoje, rode o script para salvar seu progresso! 💪
 
 
+
