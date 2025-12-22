@@ -22,7 +22,7 @@ export default function SaasLandingPage() {
 
                <nav className="hidden md:flex items-center gap-8">
                   <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#features">Funcionalidades</a>
-                  <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#pricing">Preços</a>
+                  <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#pricing">PreÃ§os</a>
                   <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#testimonials">Depoimentos</a>
                   <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#faq">FAQ</a>
                </nav>
@@ -30,7 +30,7 @@ export default function SaasLandingPage() {
                <div className="flex items-center gap-4">
                   <Link className="hidden sm:block text-sm font-bold text-white hover:text-[#f79f08] transition-colors" href="/login">Login</Link>
                   <Link href="/register" className="bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] text-sm font-bold py-2 px-5 rounded-md transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)]">
-                     Começar Teste
+                     ComeÃ§ar Teste
                   </Link>
                   <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                      {isMobileMenuOpen ? <X /> : <Menu />}
@@ -49,7 +49,7 @@ export default function SaasLandingPage() {
                   <div className="flex flex-col gap-6 max-w-2xl">
                      <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 w-fit">
                         <span className="flex h-2 w-2 rounded-full bg-green-500"></span>
-                        <span className="text-xs font-medium text-gray-300">Nova versão 3.0 disponível</span>
+                        <span className="text-xs font-medium text-gray-300">Nova versÃ£o 3.0 disponÃ­vel</span>
                      </div>
 
                      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
@@ -57,17 +57,17 @@ export default function SaasLandingPage() {
                      </h1>
 
                      <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
-                        Agendamento automático, controle financeiro, clube de assinaturas e precificação inteligente. Transforme sua barbearia em uma máquina de lucro.
+                        Agendamento automÃ¡tico, controle financeiro, clube de assinaturas e precificaÃ§Ã£o inteligente. Transforme sua barbearia em uma mÃ¡quina de lucro.
                      </p>
 
                      <div className="flex flex-col sm:flex-row gap-4 pt-4">
                         <Link href="/register" className="bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] text-base font-bold py-4 px-8 rounded-md transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] flex items-center justify-center gap-2">
-                           Começar Teste de 14 Dias
+                           ComeÃ§ar Teste de 14 Dias
                            <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                         </Link>
                         <button className="bg-white/5 hover:bg-white/10 border border-white/10 text-white text-base font-bold py-4 px-8 rounded-md transition-all flex items-center justify-center gap-2">
                            <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                           Ver Demonstração
+                           Ver DemonstraÃ§Ã£o
                         </button>
                      </div>
 
@@ -102,7 +102,7 @@ export default function SaasLandingPage() {
                            </div>
                            <div className="bg-white/5 p-4 rounded-lg border border-white/5">
                               <p className="text-xs text-gray-400 mb-1">Agendamentos</p>
-                              <p className="text-xl font-bold text-[#f79f08] font-mono">32 <span className="text-xs text-green-500 ml-1">▲ 12%</span></p>
+                              <p className="text-xl font-bold text-[#f79f08] font-mono">32 <span className="text-xs text-green-500 ml-1">â² 12%</span></p>
                            </div>
                         </div>
                      </div>
@@ -117,7 +117,7 @@ export default function SaasLandingPage() {
                <div className="flex flex-col lg:flex-row gap-10 items-center justify-between">
                   <div className="max-w-md text-center lg:text-left">
                      <h3 className="text-2xl font-bold text-white mb-2">Usado pela elite</h3>
-                     <p className="text-gray-400 text-sm">As barbearias mais lucrativas do país rodam no nosso sistema operacional.</p>
+                     <p className="text-gray-400 text-sm">As barbearias mais lucrativas do paÃ­s rodam no nosso sistema operacional.</p>
                   </div>
                   <div className="flex flex-1 w-full flex-col sm:flex-row gap-6 items-center justify-end">
                      <div className="flex items-center gap-4 bg-white/5 px-6 py-4 rounded-xl border border-white/5 w-full sm:w-auto">
@@ -126,7 +126,7 @@ export default function SaasLandingPage() {
                         </div>
                         <div>
                            <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Volume Mensal</p>
-                           <p className="text-xl font-bold text-white font-mono">+ R$ 5 Milhões</p>
+                           <p className="text-xl font-bold text-white font-mono">+ R$ 5 MilhÃµes</p>
                         </div>
                      </div>
                      <div className="flex items-center gap-4 bg-white/5 px-6 py-4 rounded-xl border border-white/5 w-full sm:w-auto">
@@ -155,20 +155,20 @@ export default function SaasLandingPage() {
          <section className="py-24 px-4 sm:px-6 lg:px-8 relative bg-[#0f0f11]">
             <div className="mx-auto max-w-4xl text-center mb-16">
                <div className="inline-block px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-semibold mb-6">
-                  Alerta de Prejuízo
+                  Alerta de PrejuÃ­zo
                </div>
-               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Pare de perder dinheiro invisível</h2>
-               <p className="text-lg text-gray-400">Todo mês sua barbearia sangra lucro com erros que você nem percebe. O BarberGOLD estanca esse sangramento no primeiro dia.</p>
+               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Pare de perder dinheiro invisÃ­vel</h2>
+               <p className="text-lg text-gray-400">Todo mÃªs sua barbearia sangra lucro com erros que vocÃª nem percebe. O BarberGOLD estanca esse sangramento no primeiro dia.</p>
             </div>
             <div className="mx-auto max-w-7xl grid md:grid-cols-3 gap-6">
                {[
-                  { icon: "event_busy", title: "No-Shows Sem Multa", desc: "Clientes que marcam e não aparecem custam em média R$ 2.000/mês por cadeira. Nosso sistema cobra antecipado ou taxa de cancelamento automática." },
-                  { icon: "calculate", title: "Comissões Erradas", desc: "Planilhas manuais geram erros de cálculo. Pagar comissão a mais ou a menos destrói seu caixa ou sua equipe. O Smart Split calcula centavos com precisão." },
-                  { icon: "trending_down", title: "Horários Ociosos", desc: "Cadeiras vazias em horários de pico ou vale. O Smart Pricing ajusta preços dinamicamente para preencher sua agenda 100% do tempo." }
+                  { icon: "event_busy", title: "No-Shows Sem Multa", desc: "Clientes que marcam e nÃ£o aparecem custam em mÃ©dia R$ 2.000/mÃªs por cadeira. Nosso sistema cobra antecipado ou taxa de cancelamento automÃ¡tica." },
+                  { icon: "calculate", title: "ComissÃµes Erradas", desc: "Planilhas manuais geram erros de cÃ¡lculo. Pagar comissÃ£o a mais ou a menos destrÃ³i seu caixa ou sua equipe. O Smart Split calcula centavos com precisÃ£o." },
+                  { icon: "trending_down", title: "HorÃ¡rios Ociosos", desc: "Cadeiras vazias em horÃ¡rios de pico ou vale. O Smart Pricing ajusta preÃ§os dinamicamente para preencher sua agenda 100% do tempo." }
                ].map((item, i) => (
                   <div key={i} className="bg-[#18181b] border border-white/5 p-8 rounded-2xl relative overflow-hidden group hover:border-red-500/30 transition-colors">
                      <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-red-500/10 transition-all"></div>
-                     <div className="text-4xl text-red-500 mb-6">⚠️</div>
+                     <div className="text-4xl text-red-500 mb-6">â ï¸</div>
                      <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
                      <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
                   </div>
@@ -182,7 +182,7 @@ export default function SaasLandingPage() {
                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                   <div className="max-w-2xl">
                      <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Muito mais que uma agenda</h2>
-                     <p className="text-xl text-gray-400">Módulos premium projetados para aumentar o LTV e automatizar sua gestão.</p>
+                     <p className="text-xl text-gray-400">MÃ³dulos premium projetados para aumentar o LTV e automatizar sua gestÃ£o.</p>
                   </div>
                </div>
 
@@ -196,15 +196,15 @@ export default function SaasLandingPage() {
                            </div>
                            <div>
                               <h3 className="text-xl font-bold text-white mb-2">Barber Club</h3>
-                              <p className="text-sm text-gray-300 leading-relaxed">Crie planos de assinatura recorrente e garanta receita fixa todo mês.</p>
+                              <p className="text-sm text-gray-300 leading-relaxed">Crie planos de assinatura recorrente e garanta receita fixa todo mÃªs.</p>
                            </div>
                         </div>
                      </div>
 
                      {[
-                        { icon: "price_change", title: "Smart Pricing", desc: "Ajuste automático de preços baseado na demanda e horários.", color: "blue" },
-                        { icon: "pie_chart", title: "Smart Split", desc: "Divisão automática e transparente de comissões para a equipe.", color: "purple" },
-                        { icon: "inventory_2", title: "Vendas & Estoque", desc: "Controle total de produtos, vitrine e baixa automática.", color: "orange" }
+                        { icon: "price_change", title: "Smart Pricing", desc: "Ajuste automÃ¡tico de preÃ§os baseado na demanda e horÃ¡rios.", color: "blue" },
+                        { icon: "pie_chart", title: "Smart Split", desc: "DivisÃ£o automÃ¡tica e transparente de comissÃµes para a equipe.", color: "purple" },
+                        { icon: "inventory_2", title: "Vendas & Estoque", desc: "Controle total de produtos, vitrine e baixa automÃ¡tica.", color: "orange" }
                      ].map((feat, i) => (
                         <div key={i} className="group p-6 rounded-2xl bg-[#18181b] border border-white/5 cursor-pointer transition-all duration-300 hover:bg-[#1f1f22] hover:-translate-y-1.5 hover:border-[#f79f08] hover:shadow-[0_10px_30px_-10px_rgba(247,159,8,0.2)]">
                            <div className="flex items-start gap-4">
@@ -227,16 +227,16 @@ export default function SaasLandingPage() {
                         <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">
                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f79f08]/20 border border-[#f79f08]/20 text-[#f79f08] text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
                               <span className="w-2 h-2 rounded-full bg-[#f79f08] animate-pulse"></span>
-                              Módulo Premium
+                              MÃ³dulo Premium
                            </div>
-                           <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Transforme clientes em sócios</h3>
+                           <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Transforme clientes em sÃ³cios</h3>
                            <p className="text-lg text-gray-300 mb-8 max-w-xl">
-                              Com o <strong>Barber Club</strong>, você cria planos de assinatura (como "Corte Ilimitado" ou "Barba VIP") e debita automaticamente no cartão do cliente todo mês.
+                              Com o <strong>Barber Club</strong>, vocÃª cria planos de assinatura (como "Corte Ilimitado" ou "Barba VIP") e debita automaticamente no cartÃ£o do cliente todo mÃªs.
                            </p>
                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-3">
                                  <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 shrink-0">
-                                    💰
+                                    ð°
                                  </div>
                                  <div>
                                     <p className="text-xs text-gray-400 uppercase">Receita Recorrente</p>
@@ -245,11 +245,11 @@ export default function SaasLandingPage() {
                               </div>
                               <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-3">
                                  <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 shrink-0">
-                                    ✓
+                                    â
                                  </div>
                                  <div>
-                                    <p className="text-xs text-gray-400 uppercase">Fidelização</p>
-                                    <p className="text-white font-bold">Retenção Máxima</p>
+                                    <p className="text-xs text-gray-400 uppercase">FidelizaÃ§Ã£o</p>
+                                    <p className="text-white font-bold">RetenÃ§Ã£o MÃ¡xima</p>
                                  </div>
                               </div>
                            </div>
@@ -278,13 +278,13 @@ export default function SaasLandingPage() {
                            </div>
                            <div className="flex flex-col gap-3 mt-4">
                               <div className="self-start bg-[#1f1f22] p-3 rounded-2xl rounded-tl-none max-w-[85%]">
-                                 <p className="text-xs text-gray-300">Olá João! Seu corte está confirmado para amanhã às 15h. Deseja adicionar uma Barboterapia com 20% OFF?</p>
+                                 <p className="text-xs text-gray-300">OlÃ¡ JoÃ£o! Seu corte estÃ¡ confirmado para amanhÃ£ Ã s 15h. Deseja adicionar uma Barboterapia com 20% OFF?</p>
                               </div>
                               <div className="self-end bg-[#f79f08] p-3 rounded-2xl rounded-tr-none max-w-[85%]">
                                  <p className="text-xs text-[#231c10] font-bold">Sim, pode adicionar!</p>
                               </div>
                               <div className="self-start bg-[#1f1f22] p-3 rounded-2xl rounded-tl-none max-w-[85%]">
-                                 <p className="text-xs text-gray-300">Perfeito! Atualizado. Até amanhã 👊</p>
+                                 <p className="text-xs text-gray-300">Perfeito! Atualizado. AtÃ© amanhÃ£ ð</p>
                               </div>
                            </div>
                            <div className="mt-auto mb-8 bg-[#1f1f22] p-4 rounded-xl border border-white/5">
@@ -300,24 +300,24 @@ export default function SaasLandingPage() {
                </div>
                <div className="lg:w-1/2">
                   <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">Zero Barreira de Entrada para seu cliente.</h2>
-                  <p className="text-lg text-gray-400 mb-8">Esqueça aplicativos que ninguém baixa. O BarberGOLD funciona onde seu cliente já está.</p>
+                  <p className="text-lg text-gray-400 mb-8">EsqueÃ§a aplicativos que ninguÃ©m baixa. O BarberGOLD funciona onde seu cliente jÃ¡ estÃ¡.</p>
                   <div className="space-y-6">
                      <div className="flex gap-4">
                         <div className="flex-shrink-0 w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
-                           📱
+                           ð±
                         </div>
                         <div>
                            <h4 className="text-xl font-bold text-white">Sem Login, Sem App</h4>
-                           <p className="text-sm text-gray-400 mt-1">Seu cliente agenda através de um link simples e bonito, sem precisar criar conta ou lembrar senha.</p>
+                           <p className="text-sm text-gray-400 mt-1">Seu cliente agenda atravÃ©s de um link simples e bonito, sem precisar criar conta ou lembrar senha.</p>
                         </div>
                      </div>
                      <div className="flex gap-4">
                         <div className="flex-shrink-0 w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
-                           💬
+                           ð¬
                         </div>
                         <div>
-                           <h4 className="text-xl font-bold text-white">Automação WhatsApp</h4>
-                           <p className="text-sm text-gray-400 mt-1">Lembretes automáticos, confirmações e recuperação de clientes inativos direto no 'Zap'.</p>
+                           <h4 className="text-xl font-bold text-white">AutomaÃ§Ã£o WhatsApp</h4>
+                           <p className="text-sm text-gray-400 mt-1">Lembretes automÃ¡ticos, confirmaÃ§Ãµes e recuperaÃ§Ã£o de clientes inativos direto no 'Zap'.</p>
                         </div>
                      </div>
                   </div>
@@ -330,20 +330,20 @@ export default function SaasLandingPage() {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                <div className="text-center max-w-3xl mx-auto mb-16">
                   <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Planos que se pagam no primeiro dia</h2>
-                  <p className="text-lg text-gray-400">Escolha a potência ideal para o seu negócio. Sem fidelidade, cancele quando quiser.</p>
+                  <p className="text-lg text-gray-400">Escolha a potÃªncia ideal para o seu negÃ³cio. Sem fidelidade, cancele quando quiser.</p>
                </div>
                <div className="grid md:grid-cols-3 gap-8 items-start">
                   <div className="bg-[#18181b] border border-white/5 rounded-2xl p-8 flex flex-col hover:border-[#f79f08]/50 hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(247,159,8,0.2)] transition-all duration-300 group relative">
                      <h3 className="text-xl font-bold text-white mb-2">Start</h3>
                      <div className="flex items-baseline gap-1 mb-6">
                         <span className="text-4xl font-bold text-white">R$ 89</span>
-                        <span className="text-gray-500">/mês</span>
+                        <span className="text-gray-500">/mÃªs</span>
                      </div>
                      <p className="text-gray-400 text-sm mb-8">Ideal para barbearias em crescimento que precisam organizar a casa.</p>
                      <ul className="space-y-4 mb-8 flex-1">
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Agenda Online e Links</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Gestão de Clientes (CRM)</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Financeiro Básico</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>Agenda Online e Links</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>GestÃ£o de Clientes (CRM)</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>Financeiro BÃ¡sico</li>
                      </ul>
                      <Link href="/register" className="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-lg border border-white/10 transition-colors text-center">Escolher Start</Link>
                   </div>
@@ -355,14 +355,14 @@ export default function SaasLandingPage() {
                      <h3 className="text-xl font-bold text-white mb-2">Pro Gold</h3>
                      <div className="flex items-baseline gap-1 mb-6">
                         <span className="text-4xl font-bold text-white">R$ 149</span>
-                        <span className="text-gray-500">/mês</span>
+                        <span className="text-gray-500">/mÃªs</span>
                      </div>
-                     <p className="text-gray-400 text-sm mb-8">A escolha da elite. Automação completa para maximizar o lucro.</p>
+                     <p className="text-gray-400 text-sm mb-8">A escolha da elite. AutomaÃ§Ã£o completa para maximizar o lucro.</p>
                      <ul className="space-y-4 mb-8 flex-1">
-                        <li className="flex items-start gap-3 text-white font-medium text-sm"><span className="text-[#f79f08]">✓</span>Tudo do plano Start</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Smart Split (Comissões)</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Confirmação WhatsApp</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Gestão de Estoque</li>
+                        <li className="flex items-start gap-3 text-white font-medium text-sm"><span className="text-[#f79f08]">â</span>Tudo do plano Start</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>Smart Split (ComissÃµes)</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>ConfirmaÃ§Ã£o WhatsApp</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>GestÃ£o de Estoque</li>
                      </ul>
                      <Link href="/register" className="w-full bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] font-bold py-3 rounded-lg shadow-[0_0_20px_rgba(247,159,8,0.2)] transition-all text-center">Escolher Pro Gold</Link>
                   </div>
@@ -371,14 +371,14 @@ export default function SaasLandingPage() {
                      <h3 className="text-xl font-bold text-white mb-2">Empire</h3>
                      <div className="flex items-baseline gap-1 mb-6">
                         <span className="text-4xl font-bold text-white">R$ 299</span>
-                        <span className="text-gray-500">/mês</span>
+                        <span className="text-gray-500">/mÃªs</span>
                      </div>
                      <p className="text-gray-400 text-sm mb-8">Para redes de barbearias e empreendedores que querem dominar o mercado.</p>
                      <ul className="space-y-4 mb-8 flex-1">
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Tudo do plano Pro Gold</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Barber Club (Assinaturas)</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Múltiplas Unidades</li>
-                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">✓</span>Gerente de Contas VIP</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>Tudo do plano Pro Gold</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>Barber Club (Assinaturas)</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>MÃºltiplas Unidades</li>
+                        <li className="flex items-start gap-3 text-gray-300 text-sm"><span className="text-[#f79f08]">â</span>Gerente de Contas VIP</li>
                      </ul>
                      <Link href="/register" className="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-lg border border-white/10 transition-colors text-center">Escolher Empire</Link>
                   </div>
@@ -401,22 +401,22 @@ export default function SaasLandingPage() {
                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-gray-400 font-medium w-1/3 min-w-[240px]">Recursos & Funcionalidades</th>
                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
                       <div className="text-white font-bold text-lg mb-1">Start</div>
-                      <div className="text-gray-500 text-sm font-normal">R$ 89/m�s</div>
+                      <div className="text-gray-500 text-sm font-normal">R$ 89/mês</div>
                     </th>
                     <th className="p-6 bg-[#202024] border-b border-[#f79f08]/20 border-t-4 border-t-[#f79f08] text-center w-1/5 min-w-[160px] relative">
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#f79f08] text-[#231c10] text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap shadow-lg shadow-[#f79f08]/20">Recomendado</div>
                       <div className="text-[#f79f08] font-bold text-xl mb-1" style={{textShadow: '0 0 20px rgba(247, 159, 8, 0.3)'}}>Pro Gold</div>
-                      <div className="text-white text-sm font-normal">R$ 149/m�s</div>
+                      <div className="text-white text-sm font-normal">R$ 149/mês</div>
                     </th>
                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
                       <div className="text-white font-bold text-lg mb-1">Empire</div>
-                      <div className="text-gray-500 text-sm font-normal">R$ 299/m�s</div>
+                      <div className="text-gray-500 text-sm font-normal">R$ 299/mês</div>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-sm text-gray-300">
                   <tr className="bg-white/[0.02]">
-                    <td className="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colSpan={4}>Gest�o Essencial</td>
+                    <td className="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colSpan={4}>Gestão Essencial</td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors group">
                     <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Agendamento Online</td>
@@ -425,13 +425,13 @@ export default function SaasLandingPage() {
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors group">
-                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">CRM (Gest�o de Clientes)</td>
+                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">CRM (Gestão de Clientes)</td>
                     <td className="p-5 text-center border-r border-white/5"><span className="text-[#f79f08] text-xl"></span></td>
                     <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl"></span></td>
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors group">
-                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium">Confirma��o via WhatsApp</td>
+                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium">Confirmação via WhatsApp</td>
                     <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl"></span></td>
                     <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl"></span></td>
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
@@ -446,7 +446,7 @@ export default function SaasLandingPage() {
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors group">
-                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium text-white/90">Smart Split (Comiss�es)</td>
+                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium text-white/90">Smart Split (Comissões)</td>
                     <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl"></span></td>
                     <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl"></span></td>
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
@@ -458,16 +458,16 @@ export default function SaasLandingPage() {
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
                   </tr>
                   <tr className="bg-white/[0.02]">
-                    <td className="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colSpan={4}>Escala & Opera��o</td>
+                    <td className="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colSpan={4}>Escala & Operação</td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors group">
-                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Gest�o de Estoque</td>
+                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Gestão de Estoque</td>
                     <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl"></span></td>
                     <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl"></span></td>
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors group">
-                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">M�ltiplas Unidades</td>
+                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Múltiplas Unidades</td>
                     <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl"></span></td>
                     <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-gray-700 text-xl"></span></td>
                     <td className="p-5 text-center"><span className="text-[#f79f08] text-xl"></span></td>
@@ -503,14 +503,14 @@ export default function SaasLandingPage() {
                <h2 className="text-3xl font-bold text-white text-center mb-12">Perguntas Frequentes</h2>
                <div className="space-y-4">
                   {[
-                     { q: "Preciso instalar algum programa no computador?", a: "Não. O BarberGOLD é 100% online e roda direto no navegador, seja no PC, tablet ou celular. Seus dados ficam salvos na nuvem com segurança bancária." },
-                     { q: "Consigo migrar os dados do meu sistema antigo?", a: "Sim! Temos uma equipe dedicada a importação de dados. Trazemos sua lista de clientes, produtos e histórico." },
-                     { q: "O período de teste é realmente gratuito?", a: "Sim, 14 dias totalmente grátis, sem necessidade de cartão de crédito. Você testa todas as funcionalidades premium." }
+                     { q: "Preciso instalar algum programa no computador?", a: "NÃ£o. O BarberGOLD Ã© 100% online e roda direto no navegador, seja no PC, tablet ou celular. Seus dados ficam salvos na nuvem com seguranÃ§a bancÃ¡ria." },
+                     { q: "Consigo migrar os dados do meu sistema antigo?", a: "Sim! Temos uma equipe dedicada a importaÃ§Ã£o de dados. Trazemos sua lista de clientes, produtos e histÃ³rico." },
+                     { q: "O perÃ­odo de teste Ã© realmente gratuito?", a: "Sim, 14 dias totalmente grÃ¡tis, sem necessidade de cartÃ£o de crÃ©dito. VocÃª testa todas as funcionalidades premium." }
                   ].map((faq, i) => (
                      <details key={i} className="group bg-[#18181b] rounded-lg border border-white/5 open:bg-white/5 transition-all">
                         <summary className="flex cursor-pointer items-center justify-between p-6 text-lg font-medium text-white list-none">
                            {faq.q}
-                           <span className="transition group-open:rotate-180">▼</span>
+                           <span className="transition group-open:rotate-180">â¼</span>
                         </summary>
                         <div className="px-6 pb-6 text-gray-400">{faq.a}</div>
                      </details>
@@ -523,12 +523,12 @@ export default function SaasLandingPage() {
          <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0f0f11] relative border-t border-white/5">
             <div className="absolute inset-0 bg-[#f79f08]/5 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(247, 159, 8, 0.05) 0%, transparent 70%)' }}></div>
             <div className="mx-auto max-w-4xl text-center relative z-10">
-               <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">Pare de ser refém do WhatsApp.</h2>
-               <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">Profissionalize sua gestão, elimine erros manuais e veja seu lucro crescer. Teste sem compromisso.</p>
+               <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">Pare de ser refÃ©m do WhatsApp.</h2>
+               <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">Profissionalize sua gestÃ£o, elimine erros manuais e veja seu lucro crescer. Teste sem compromisso.</p>
                <Link href="/register" className="inline-block bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] text-lg font-bold py-4 px-10 rounded-lg transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] transform hover:scale-105">
-                  Começar Teste de 14 Dias
+                  ComeÃ§ar Teste de 14 Dias
                </Link>
-               <p className="mt-6 text-sm text-gray-500">Sem cartão de crédito • Cancelamento a qualquer momento</p>
+               <p className="mt-6 text-sm text-gray-500">Sem cartÃ£o de crÃ©dito â¢ Cancelamento a qualquer momento</p>
             </div>
          </section>
 
@@ -536,7 +536,7 @@ export default function SaasLandingPage() {
          <footer className="py-8 bg-black border-t border-white/10">
             <div className="mx-auto max-w-7xl px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
                <div className="mb-4 md:mb-0">
-                  <span className="font-bold text-gray-500">BarberGOLD © 2024</span>
+                  <span className="font-bold text-gray-500">BarberGOLD Â© 2024</span>
                </div>
                <div className="flex gap-6">
                   <a className="hover:text-[#f79f08] transition-colors" href="#">Termos de Uso</a>
