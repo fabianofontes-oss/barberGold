@@ -253,7 +253,7 @@ WHERE plan_id = 'STUDIO';
 
 -- Índices para melhorar queries de feature gating
 CREATE INDEX IF NOT EXISTS idx_clients_tenant_created ON public.clients(tenant_id, created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_appointments_tenant_date ON public.appointments(tenant_id, date DESC);
+CREATE INDEX IF NOT EXISTS idx_appointments_tenant_scheduled ON public.appointments(tenant_id, scheduled_at DESC);
 CREATE INDEX IF NOT EXISTS idx_sales_tenant_created ON public.sales(tenant_id, created_at DESC);
 
 -- =============================================
