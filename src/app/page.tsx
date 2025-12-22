@@ -40,7 +40,7 @@ const LoginScreen = ({ onLogin }: { onLogin: () => void }) => (
       <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-amber-500/30">
         <Scissors className="w-12 h-12 text-zinc-950" />
       </div>
-      <h1 className="text-4xl font-bold text-white mb-2">BarberFlow</h1>
+      <h1 className="text-4xl font-bold text-white mb-2">BarberGold</h1>
       <p className="text-zinc-400 mb-2 text-lg">Premium Gold</p>
       <p className="text-zinc-500 mb-8 text-sm">Sistema de Gestão para Barbearias</p>
       <button

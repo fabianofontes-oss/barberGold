@@ -86,7 +86,7 @@ export function WelcomeModal({ isOpen, onClose, userName = 'Barbeiro' }: Welcome
           </div>
           
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Bem-vindo ao BarberFlow, {userName}! 🎉
+            Bem-vindo ao BarberGold, {userName}! 🎉
           </h1>
           
           <p className="text-lg text-gray-600">

@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BarberFlow | Sistema de Gestão para Barbearias",
+  title: "BarberGold | Sistema de Gestão para Barbearias",
   description: "O melhor sistema para barbearias. Agenda online, controle financeiro e comissões automáticas.",
 };
 

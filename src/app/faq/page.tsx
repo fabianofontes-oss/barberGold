@@ -20,8 +20,8 @@ const FAQ_ITEMS: FAQItem[] = [
   // GERAL
   {
     category: 'geral',
-    question: 'O que é o BarberFlow?',
-    answer: 'O BarberFlow é um sistema completo de gestão para barbearias e salões. Oferecemos agendamento online, controle financeiro, gestão de clientes, sistema de comissões, programa de fidelidade e muito mais. Tudo em uma plataforma moderna e fácil de usar.',
+    question: 'O que é o BarberGold?',
+    answer: 'O BarberGold é um sistema completo de gestão para barbearias e salões. Oferecemos agendamento online, controle financeiro, gestão de clientes, sistema de comissões, programa de fidelidade e muito mais. Tudo em uma plataforma moderna e fácil de usar.',
   },
   {
     category: 'geral',
@@ -36,12 +36,12 @@ const FAQ_ITEMS: FAQItem[] = [
   {
     category: 'geral',
     question: 'Preciso instalar algum programa?',
-    answer: 'Não! O BarberFlow funciona 100% na nuvem através do navegador. Basta acessar barber.gold de qualquer computador, tablet ou celular com internet. Não precisa instalar nada.',
+    answer: 'Não! O BarberGold funciona 100% na nuvem através do navegador. Basta acessar barber.gold de qualquer computador, tablet ou celular com internet. Não precisa instalar nada.',
   },
   {
     category: 'geral',
     question: 'Funciona no celular?',
-    answer: 'Sim! O BarberFlow é totalmente responsivo e funciona perfeitamente em celulares e tablets. Você pode gerenciar sua barbearia de qualquer lugar, a qualquer momento.',
+    answer: 'Sim! O BarberGold é totalmente responsivo e funciona perfeitamente em celulares e tablets. Você pode gerenciar sua barbearia de qualquer lugar, a qualquer momento.',
   },
   
   // PLANOS
@@ -112,7 +112,7 @@ const FAQ_ITEMS: FAQItem[] = [
   {
     category: 'tecnico',
     question: 'Funciona offline?',
-    answer: 'Não, o BarberFlow requer conexão com internet para funcionar, pois todos os dados ficam na nuvem. Isso garante que você possa acessar de qualquer dispositivo e que seus dados estejam sempre seguros e sincronizados.',
+    answer: 'Não, o BarberGold requer conexão com internet para funcionar, pois todos os dados ficam na nuvem. Isso garante que você possa acessar de qualquer dispositivo e que seus dados estejam sempre seguros e sincronizados.',
   },
   {
     category: 'tecnico',
@@ -228,7 +228,7 @@ export default function FAQPage() {
             Perguntas Frequentes
           </h1>
           <p className="text-xl text-gray-600">
-            Tire todas as suas dúvidas sobre o BarberFlow
+            Tire todas as suas dúvidas sobre o BarberGold
           </p>
         </div>
         

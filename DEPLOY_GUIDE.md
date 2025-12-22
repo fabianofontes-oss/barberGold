@@ -1,8 +1,8 @@
-# 🚀 GUIA DE DEPLOY - BARBERFLOW
+# 🚀 GUIA DE DEPLOY - BARBERGOLD
 
 **Última atualização:** Dezembro 2025
 
-Este guia detalha todos os passos para fazer deploy do BarberFlow em produção.
+Este guia detalha todos os passos para fazer deploy do BarberGold em produção.
 
 ---
 
@@ -24,7 +24,7 @@ Antes de começar, você precisa ter:
 1. Acesse https://app.supabase.com
 2. Clique em "New Project"
 3. Preencha:
-   - **Name:** barberflow-prod
+   - **Name:** barbergold-prod
    - **Database Password:** [gere uma senha forte]
    - **Region:** South America (São Paulo)
 4. Aguarde ~2 minutos até o projeto estar pronto
@@ -96,28 +96,28 @@ node seed-stripe.js sk_test_sua_chave_aqui
 2. Crie 5 produtos com os seguintes preços:
 
 **SOLO:**
-- Nome: BarberFlow Solo
+- Nome: BarberGold Solo
 - Preço Mensal: R$ 49,90
 - Preço Anual: R$ 479,04
 - Copie os Price IDs
 
 **SOLO PRO:**
-- Nome: BarberFlow Solo Pro
+- Nome: BarberGold Solo Pro
 - Preço Mensal: R$ 79,90
 - Preço Anual: R$ 767,04
 
 **TEAM:**
-- Nome: BarberFlow Team
+- Nome: BarberGold Team
 - Preço Mensal: R$ 149,90
 - Preço Anual: R$ 1.439,04
 
 **PREMIUM:**
-- Nome: BarberFlow Premium
+- Nome: BarberGold Premium
 - Preço Mensal: R$ 249,90
 - Preço Anual: R$ 2.399,04
 
 **ENTERPRISE:**
-- Nome: BarberFlow Enterprise
+- Nome: BarberGold Enterprise
 - Preço Mensal: R$ 499,90
 - Preço Anual: R$ 4.799,04
 
@@ -438,7 +438,7 @@ Antes de considerar o deploy completo:
 
 ## 🎉 PARABÉNS!
 
-Seu BarberFlow está no ar! 🚀
+Seu BarberGold está no ar! 🚀
 
 **Próximos Passos:**
 1. Monitorar primeiros usuários
@@ -451,5 +451,5 @@ Seu BarberFlow está no ar! 🚀
 
 **Desenvolvido com 💙 para barbeiros que querem crescer**
 
-*BarberFlow - Gestão Profissional para Barbearias Modernas*
+*BarberGold - Gestão Profissional para Barbearias Modernas*
 

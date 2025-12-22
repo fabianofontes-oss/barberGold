@@ -301,7 +301,7 @@ Este projeto é proprietário. Todos os direitos reservados.
 
 Desenvolvido com 💙 para barbeiros que querem crescer.
 
-**BarberFlow - Transformando Barbearias em Negócios Digitais**
+**BarberGold - Transformando Barbearias em Negócios Digitais**
 
 ---
 

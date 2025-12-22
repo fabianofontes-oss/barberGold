@@ -433,7 +433,7 @@ Use este checklist para garantir que tudo está pronto antes do lançamento.
 
 ---
 
-**🚀 Boa sorte no lançamento do BarberFlow!**
+**🚀 Boa sorte no lançamento do BarberGold!**
 
 *"O sucesso é a soma de pequenos esforços repetidos dia após dia."*
 

@@ -286,7 +286,7 @@ export const SaasLandingPage = () => {
                   Barbeiros Que Já <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Transformaram</span> Seus Negócios
                </h2>
                <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto">
-                  Veja o que nossos clientes têm a dizer sobre o BarberFlow
+                  Veja o que nossos clientes têm a dizer sobre o BarberGold
                </p>
             </div>
 
@@ -294,7 +294,7 @@ export const SaasLandingPage = () => {
 
             <div className="text-center mt-12">
                <p className="text-zinc-500 text-sm">
-                  Junte-se a <span className="text-amber-500 font-bold">500+ barbearias</span> que já usam o BarberFlow
+                  Junte-se a <span className="text-amber-500 font-bold">500+ barbearias</span> que já usam o BarberGold
                </p>
             </div>
          </div>

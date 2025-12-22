@@ -8,7 +8,7 @@
 
 ## 📊 RESUMO EXECUTIVO
 
-O **BarberFlow** é um sistema SaaS completo para gestão de barbearias com:
+O **BarberGold** é um sistema SaaS completo para gestão de barbearias com:
 - ✅ **Multi-tenancy** (cada barbearia isolada)
 - ✅ **Pagamentos Stripe** (checkout + webhooks)
 - ✅ **6 planos** (FREE até ENTERPRISE)
@@ -541,7 +541,7 @@ Todos os arquivos importantes têm:
 
 ## 🎉 CONCLUSÃO
 
-O **BarberFlow** está **85% completo** e **pronto para deploy em produção**.
+O **BarberGold** está **85% completo** e **pronto para deploy em produção**.
 
 ### O que ESTÁ PRONTO:
 ✅ Toda a funcionalidade core
@@ -564,7 +564,7 @@ O **BarberFlow** está **85% completo** e **pronto para deploy em produção**.
 
 Foi um prazer trabalhar neste projeto!
 
-O BarberFlow tem tudo para ser um sucesso:
+O BarberGold tem tudo para ser um sucesso:
 - Produto sólido
 - Tecnologia moderna
 - UX excepcional
@@ -588,7 +588,7 @@ O BarberFlow tem tudo para ser um sucesso:
 
 **Desenvolvido com 💙 para transformar barbearias em negócios digitais**
 
-*BarberFlow - O futuro da gestão de barbearias*
+*BarberGold - O futuro da gestão de barbearias*
 
 **Versão:** 1.0.0  
 **Data:** 22 de Dezembro de 2025  

@@ -283,7 +283,7 @@ export default function PricingPage() {
             Pronto para Transformar sua Barbearia?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Junte-se a centenas de barbeiros que já usam o BarberFlow
+            Junte-se a centenas de barbeiros que já usam o BarberGold
           </p>
           <button
             onClick={() => router.push('/register')}

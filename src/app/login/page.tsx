@@ -65,7 +65,7 @@ export default function LoginPage() {
           <div className="w-20 h-20 bg-amber-500 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-2xl shadow-amber-500/20 rotate-3 hover:rotate-0 transition-transform duration-500">
             <Scissors className="w-10 h-10 text-zinc-900" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">BarberFlow</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">BarberGold</h1>
           <p className="text-zinc-400">Entre para gerenciar seu negócio.</p>
         </div>
 
@@ -179,7 +179,7 @@ export default function LoginPage() {
         </div>
         
         <p className="text-center text-zinc-600 text-xs mt-8">
-          &copy; {new Date().getFullYear()} BarberFlow SaaS. All rights reserved.
+          &copy; {new Date().getFullYear()} BarberGold SaaS. All rights reserved.
         </p>
       </div>
     </div>

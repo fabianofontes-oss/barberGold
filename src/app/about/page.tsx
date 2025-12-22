@@ -32,7 +32,7 @@ export default function AboutPage() {
         {/* Hero */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Sobre o BarberFlow
+            Sobre o BarberGold
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Transformando a gestão de barbearias com tecnologia moderna e simplicidade
@@ -44,7 +44,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Nossa História</h2>
           <div className="space-y-4 text-gray-700 leading-relaxed">
             <p>
-              O BarberFlow nasceu da necessidade real de barbeiros que lutavam diariamente com agendas de papel, 
+              O BarberGold nasceu da necessidade real de barbeiros que lutavam diariamente com agendas de papel, 
               planilhas confusas e a dificuldade de controlar comissões e fidelidade de clientes.
             </p>
             <p>

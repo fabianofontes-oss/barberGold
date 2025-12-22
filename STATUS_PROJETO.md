@@ -323,7 +323,7 @@ Siga estes passos na ordem:
 
 ## 🎉 CONCLUSÃO
 
-O BarberFlow está **85% completo** e **pronto para lançamento**.
+O BarberGold está **85% completo** e **pronto para lançamento**.
 
 ### ✅ Tudo Funciona
 - Core business

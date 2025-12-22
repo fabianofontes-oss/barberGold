@@ -40,23 +40,23 @@ O script vai criar os produtos e mostrar algo assim:
 
 👇 COPIE O RESULTADO ABAIXO PARA SEU .ENV 👇
 
-# BarberFlow Solo
+# BarberGold Solo
 STRIPE_PRICE_SOLO_MONTHLY=price_1OxxxxxxxxxxxM
 STRIPE_PRICE_SOLO_YEARLY=price_1Oxxxxxxxxxxxy
 
-# BarberFlow Solo Pro
+# BarberGold Solo Pro
 STRIPE_PRICE_SOLO_PRO_MONTHLY=price_1Oxxxxxxxxxxxp
 STRIPE_PRICE_SOLO_PRO_YEARLY=price_1Oxxxxxxxxxxx0
 
-# BarberFlow Team
+# BarberGold Team
 STRIPE_PRICE_TEAM_MONTHLY=price_1OxxxxxxxxxxxT
 STRIPE_PRICE_TEAM_YEARLY=price_1Oxxxxxxxxxxx1
 
-# BarberFlow Premium
+# BarberGold Premium
 STRIPE_PRICE_PREMIUM_MONTHLY=price_1OxxxxxxxxxxxP
 STRIPE_PRICE_PREMIUM_YEARLY=price_1Oxxxxxxxxxxx2
 
-# BarberFlow Enterprise
+# BarberGold Enterprise
 STRIPE_PRICE_ENTERPRISE_MONTHLY=price_1OxxxxxxxxxxxE
 STRIPE_PRICE_ENTERPRISE_YEARLY=price_1Oxxxxxxxxxxx3
 ```
@@ -200,7 +200,7 @@ node seed-stripe.js sk_test_51xxxxxxxxxxxxxxxxxx
 🚀 Iniciando sincronização com Stripe...
 👇 COPIE O RESULTADO ABAIXO PARA SEU .ENV 👇
 
-# BarberFlow Solo
+# BarberGold Solo
 STRIPE_PRICE_SOLO_MONTHLY=price_1OxxxxM
 STRIPE_PRICE_SOLO_YEARLY=price_1Oxxxxxr
 
@@ -235,5 +235,5 @@ Após executar este script:
 
 **🚀 Script criado para facilitar sua vida!**
 
-*Criado com 💙 para o BarberFlow*
+*Criado com 💙 para o BarberGold*
 
