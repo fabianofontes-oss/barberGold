@@ -163,3 +163,81 @@ function getErrorMessage(message: string): string {
 
   return errorMap[message] || message;
 }
+
+/**
+ * Solicita reset de senha via email
+ */
+export async function requestPasswordResetAction(email: string): Promise<AuthActionResult> {
+  try {
+    // Modo Demo: simular envio
+    if (isInDemoMode()) {
+      console.log('🎭 Modo Demo: Simulando envio de email de reset para:', email);
+      return {
+        success: true,
+        demoMode: true,
+      };
+    }
+    
+    const supabase = await createClient();
+    
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password`,
+    });
+    
+    if (error) {
+      console.error('Reset password error:', error);
+      return {
+        success: false,
+        error: getErrorMessage(error.message),
+      };
+    }
+    
+    return { success: true };
+    
+  } catch (error: any) {
+    console.error('Request password reset error:', error);
+    return {
+      success: false,
+      error: 'Erro ao enviar email de recuperação',
+    };
+  }
+}
+
+/**
+ * Redefine a senha do usuário
+ */
+export async function resetPasswordAction(newPassword: string): Promise<AuthActionResult> {
+  try {
+    // Modo Demo: simular reset
+    if (isInDemoMode()) {
+      console.log('🎭 Modo Demo: Simulando reset de senha');
+      return {
+        success: true,
+        demoMode: true,
+      };
+    }
+    
+    const supabase = await createClient();
+    
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+    
+    if (error) {
+      console.error('Reset password error:', error);
+      return {
+        success: false,
+        error: getErrorMessage(error.message),
+      };
+    }
+    
+    return { success: true };
+    
+  } catch (error: any) {
+    console.error('Reset password error:', error);
+    return {
+      success: false,
+      error: 'Erro ao redefinir senha',
+    };
+  }
+}
