@@ -387,3 +387,4 @@ USING (tenant_id = (SELECT tenant_id FROM public.profiles WHERE id = auth.uid())
 
 
 
+
