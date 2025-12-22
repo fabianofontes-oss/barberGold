@@ -1,12 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function RegisterPage() {
+    const searchParams = useSearchParams();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [shopSlug, setShopSlug] = useState('');
+    const [selectedPlan, setSelectedPlan] = useState('pro');
+
+    // Read URL parameters on mount
+    useEffect(() => {
+        const urlSlug = searchParams.get('slug');
+        const urlPlan = searchParams.get('plan');
+
+        if (urlSlug) {
+            setShopSlug(urlSlug);
+        }
+        if (urlPlan) {
+            setSelectedPlan(urlPlan);
+        }
+    }, [searchParams]);
 
     return (
         <div className="min-h-screen bg-[#0f0f11] flex">
@@ -69,6 +86,43 @@ export default function RegisterPage() {
                                 className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all"
                             />
                         </div>
+
+                        {/* Barbershop Slug (from URL or manual) */}
+                        {shopSlug && (
+                            <div>
+                                <label htmlFor="slug" className="block text-sm font-medium text-gray-300 mb-2">
+                                    Your Barbershop URL
+                                </label>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-gray-500 text-sm">barber.gold/</span>
+                                    <input
+                                        id="slug"
+                                        type="text"
+                                        value={shopSlug}
+                                        onChange={(e) => setShopSlug(e.target.value)}
+                                        className="flex-1 px-4 py-3 bg-[#18181b] border border-[#f79f08]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all"
+                                    />
+                                </div>
+                                <p className="text-xs text-gray-500 mt-1">Reserved from landing page</p>
+                            </div>
+                        )}
+
+                        {/* Selected Plan (if from pricing) */}
+                        {selectedPlan && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    Selected Plan
+                                </label>
+                                <div className="px-4 py-3 bg-[#f79f08]/10 border border-[#f79f08]/30 rounded-lg">
+                                    <span className="text-[#f79f08] font-bold capitalize">{selectedPlan} Plan</span>
+                                    <span className="text-gray-400 text-sm ml-2">
+                                        {selectedPlan === 'start' && '- R$ 89/mês'}
+                                        {selectedPlan === 'pro' && '- R$ 149/mês'}
+                                        {selectedPlan === 'empire' && '- R$ 299/mês'}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Email Address */}
                         <div>
