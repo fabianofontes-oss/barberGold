@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
    Scissors, CheckCircle2, TrendingUp, Shield, Globe, Users,
-   Zap, AlertTriangle, DollarSign, Calculator, CalendarCheck, Link as LinkIcon, Menu, X
+   Zap, AlertTriangle, DollarSign, Calculator, CalendarCheck, Link as LinkIcon, Menu, X,
+   Crown, BarChart3, MessageCircle, Star
 } from 'lucide-react';
 
 export const SaasLandingPage = () => {
@@ -26,7 +27,7 @@ export const SaasLandingPage = () => {
                   <div className="w-10 h-10 bg-gradient-to-tr from-amber-400 to-amber-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.3)]">
                      <Scissors className="w-6 h-6 text-black" />
                   </div>
-                  <span className="font-bold text-xl tracking-tight text-white">Barber.App</span>
+                  <span className="font-bold text-xl tracking-tight text-white">Barber<span className="text-amber-500">.Gold</span></span>
                </div>
 
                {/* DESKTOP MENU */}
@@ -34,6 +35,7 @@ export const SaasLandingPage = () => {
                   <a href="#features" className="hover:text-white transition-colors">Recursos</a>
                   <a href="#pain" className="hover:text-white transition-colors">Por que usar?</a>
                   <a href="#pricing" className="hover:text-white transition-colors">Planos</a>
+                  <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
                </div>
 
                {/* DESKTOP ACTIONS */}
@@ -91,18 +93,18 @@ export const SaasLandingPage = () => {
                </h1>
 
                <p className="text-base sm:text-lg md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed animate-fade-in-up font-light" style={{ animationDelay: '200ms' }}>
-                  Garanta seu link exclusivo <b>barber.app</b> e transforme seguidores em agendamentos automáticos.
+                  Garanta seu link exclusivo <b>barber.gold</b> e transforme seguidores em agendamentos automáticos.
                </p>
 
                {/* DOMAIN CLAIM INPUT (Responsive Stack) */}
                <div className="max-w-lg mx-auto mb-12 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
                   <div className="flex flex-col sm:flex-row bg-zinc-900/80 backdrop-blur-md border border-zinc-700 p-2 rounded-2xl shadow-2xl focus-within:border-amber-500/50 focus-within:ring-4 focus-within:ring-amber-500/10 transition-all">
                      <div className="flex items-center px-4 py-3 sm:py-0 border-b sm:border-b-0 sm:border-r border-zinc-800 justify-center sm:justify-start">
-                        <span className="text-zinc-500 font-bold font-mono text-lg">barber.app/</span>
+                        <span className="text-zinc-500 font-bold font-mono text-lg">barber.gold/</span>
                      </div>
                      <input
                         type="text"
-                        placeholder="sua-barbearia"
+                        placeholder="sua-marca"
                         value={slugInput}
                         onChange={(e) => setSlugInput(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
                         className="flex-1 bg-transparent border-none text-white font-bold text-lg px-4 py-3 focus:outline-none placeholder:text-zinc-700 text-center sm:text-left"
@@ -180,7 +182,7 @@ export const SaasLandingPage = () => {
 
                   <div className="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-zinc-400 text-sm">Custo da Solução Barber.App</span>
+                        <span className="text-zinc-400 text-sm">Custo da Solução BarberGold</span>
                         <span className="text-emerald-500 font-bold">R$ 89,00/mês</span>
                      </div>
                      <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
@@ -265,15 +267,46 @@ export const SaasLandingPage = () => {
                         </div>
                         <h3 className="text-xl font-bold text-white mb-2">Link Curto & Próprio</h3>
                         <p className="text-zinc-400 text-sm">
-                           Pare de mandar link feio. Use <b>barber.app/seu-nome</b> ou conecte seu domínio <b>.com.br</b>.
+                           Pare de mandar link feio. Use <b>barber.gold/seu-nome</b> ou conecte seu domínio <b>.com.br</b>.
                         </p>
                      </div>
                      <div className="mt-4 bg-zinc-950 p-2 rounded-lg border border-zinc-800 flex items-center gap-2">
                         <LinkIcon className="w-3 h-3 text-zinc-500" />
-                        <span className="text-xs font-mono text-white">barber.app/vintage</span>
+                        <span className="text-xs font-mono text-white">barber.gold/vintage</span>
                      </div>
                   </div>
+               </div>
 
+               {/* EXTRA FEATURES GRID */}
+               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
+                     <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center mb-3">
+                        <Crown className="w-4 h-4 text-purple-500" />
+                     </div>
+                     <h4 className="font-bold text-white mb-1">Barber Club</h4>
+                     <p className="text-xs text-zinc-500">Crie planos de assinatura recorrente.</p>
+                  </div>
+                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
+                     <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center mb-3">
+                        <BarChart3 className="w-4 h-4 text-sky-500" />
+                     </div>
+                     <h4 className="font-bold text-white mb-1">Growth Marketing</h4>
+                     <p className="text-xs text-zinc-500">Campanhas automáticas de retorno.</p>
+                  </div>
+                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
+                     <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center mb-3">
+                        <Star className="w-4 h-4 text-pink-500" />
+                     </div>
+                     <h4 className="font-bold text-white mb-1">Avaliações</h4>
+                     <p className="text-xs text-zinc-500">Coleta de feedback pós-corte.</p>
+                  </div>
+                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
+                     <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center mb-3">
+                        <MessageCircle className="w-4 h-4 text-green-500" />
+                     </div>
+                     <h4 className="font-bold text-white mb-1">WhatsApp Bot</h4>
+                     <p className="text-xs text-zinc-500">Confirmação automática.</p>
+                  </div>
                </div>
             </div>
          </section>
@@ -297,7 +330,7 @@ export const SaasLandingPage = () => {
                      </div>
                      <ul className="space-y-4 mb-8 flex-1">
                         <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> 1 Barbeiro</li>
-                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> Link <b>barber.app</b></li>
+                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> Link <b>barber.gold</b></li>
                         <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> Agenda Online</li>
                      </ul>
                      <Link href="/login" className="w-full py-3 rounded-xl border border-zinc-700 text-white font-bold hover:bg-zinc-800 transition-all text-center block">Começar</Link>
@@ -340,6 +373,31 @@ export const SaasLandingPage = () => {
             </div>
          </section>
 
+         {/* --- FAQ SECTION --- */}
+         <section id="faq" className="py-16 bg-zinc-900/50 border-y border-zinc-800/50">
+            <div className="max-w-4xl mx-auto px-6">
+               <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-10">Perguntas Frequentes</h2>
+               <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
+                     <h3 className="font-bold text-white mb-2 text-lg">Preciso de cartão para testar?</h3>
+                     <p className="text-zinc-400 text-sm">Não. Você tem 14 dias grátis sem precisar cadastrar cartão de crédito.</p>
+                  </div>
+                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
+                     <h3 className="font-bold text-white mb-2 text-lg">Funciona no celular?</h3>
+                     <p className="text-zinc-400 text-sm">Sim. O BarberGold é 100% online e funciona em qualquer celular, tablet ou computador.</p>
+                  </div>
+                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
+                     <h3 className="font-bold text-white mb-2 text-lg">Tem fidelidade?</h3>
+                     <p className="text-zinc-400 text-sm">Não. Você pode cancelar sua assinatura a qualquer momento sem taxas.</p>
+                  </div>
+                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
+                     <h3 className="font-bold text-white mb-2 text-lg">Migram meus dados?</h3>
+                     <p className="text-zinc-400 text-sm">Temos uma equipe dedicada para importar seus clientes e agenda de outros sistemas.</p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
          {/* --- FOOTER CTA --- */}
          <section className="py-16 md:py-24 relative overflow-hidden text-center px-6">
             <div className="absolute inset-0 bg-gradient-to-t from-amber-600/20 to-transparent z-0"></div>
@@ -355,7 +413,7 @@ export const SaasLandingPage = () => {
 
          {/* Footer Links */}
          <footer className="py-12 border-t border-zinc-900 bg-black text-center text-zinc-600 text-sm">
-            <p>&copy; 2024 Barber.App SaaS. Feito para quem domina a navalha.</p>
+            <p>&copy; 2024 BarberGold SaaS. Feito para quem domina a navalha.</p>
             <Link href="/login" className="mt-4 text-xs text-zinc-700 hover:text-amber-500 flex items-center justify-center gap-1 mx-auto">
                <Shield className="w-3 h-3" /> HQ Access
             </Link>
