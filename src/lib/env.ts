@@ -16,7 +16,7 @@ const envSchema = z.object({
 
   SUPABASE_SERVICE_ROLE_KEY: z
     .string()
-    .min(1, 'SUPABASE_SERVICE_ROLE_KEY é obrigatória (para webhooks e admin)'),
+    .optional(), // Opcional - só necessária para webhooks e operações de admin
 
   NEXT_PUBLIC_APP_MODE: z
     .enum(['demo', 'pilot', 'prod', 'DEMO', 'PILOT', 'PROD'])
