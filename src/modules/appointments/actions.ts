@@ -9,6 +9,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { getCurrentTenantId } from '@/lib/tenant/getCurrentTenant';
+import { canCreateAppointment, createFeatureBlockedError } from '@/lib/features/gate';
 import {
   Appointment,
   CreateAppointmentInput,
@@ -95,6 +96,12 @@ export async function createAppointmentAction(
   input: CreateAppointmentInput
 ): Promise<ActionResult<Appointment>> {
   try {
+    // ✅ FEATURE GATE: Verificar limite de agendamentos
+    const gateCheck = await canCreateAppointment();
+    if (!gateCheck.allowed) {
+      return createFeatureBlockedError(gateCheck) as ActionResult<Appointment>;
+    }
+    
     // Obter tenant_id do usuário atual
     const tenantId = await getCurrentTenantId();
     

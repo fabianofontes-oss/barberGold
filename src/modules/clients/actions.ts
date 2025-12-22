@@ -10,6 +10,7 @@ import { revalidatePath } from 'next/cache';
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 import { getCurrentProfile } from '@/lib/auth/getCurrentProfile';
 import { getCurrentTenantId } from '@/lib/tenant/getCurrentTenant';
+import { canCreateClient, createFeatureBlockedError } from '@/lib/features/gate';
 import type { Database } from '@/lib/database.types';
 
 /**
@@ -196,6 +197,12 @@ export async function createClientAction(
   input: CreateClientInput
 ): Promise<ActionResult<Client>> {
   try {
+    // ✅ FEATURE GATE: Verificar limite de clientes
+    const gateCheck = await canCreateClient();
+    if (!gateCheck.allowed) {
+      return createFeatureBlockedError(gateCheck) as ActionResult<Client>;
+    }
+    
     // Obter tenant_id do perfil do usuário
     const profile = await getCurrentProfile();
     if (!profile || !profile.tenantId) {
