@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useBarber } from '@/context/BarberContext';
+import { useRouter } from 'next/navigation';
 import { 
   Scissors, CheckCircle2, TrendingUp, Shield, Globe, Users,
   Zap, AlertTriangle, DollarSign, Calculator, CalendarCheck, Link, Menu, X
@@ -9,7 +9,7 @@ import {
 import { Testimonials } from '@/components/marketing/Testimonials';
 
 export const SaasLandingPage = () => {
-  const { setView } = useBarber();
+  const router = useRouter();
   const [slugInput, setSlugInput] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -38,10 +38,10 @@ export const SaasLandingPage = () => {
 
            {/* DESKTOP ACTIONS */}
            <div className="hidden md:flex gap-4 items-center">
-              <button onClick={() => setView('AUTH')} className="text-sm font-bold text-zinc-300 hover:text-white transition-colors">
+              <button onClick={() => router.push('/login')} className="text-sm font-bold text-zinc-300 hover:text-white transition-colors">
                  Login
               </button>
-              <button onClick={() => setView('AUTH')} className="bg-white hover:bg-zinc-200 text-black font-bold py-2.5 px-6 rounded-full text-sm transition-all hover:scale-105 shadow-lg shadow-white/10">
+              <button onClick={() => router.push('/register')} className="bg-white hover:bg-zinc-200 text-black font-bold py-2.5 px-6 rounded-full text-sm transition-all hover:scale-105 shadow-lg shadow-white/10">
                  Começar Agora
               </button>
            </div>
@@ -62,8 +62,8 @@ export const SaasLandingPage = () => {
               <a href="#pain" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-bold text-zinc-300 hover:text-white">Por que usar?</a>
               <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-bold text-zinc-300 hover:text-white">Planos</a>
               <hr className="w-20 border-zinc-800" />
-              <button onClick={() => { setView('AUTH'); setIsMobileMenuOpen(false); }} className="text-xl font-bold text-white">Login</button>
-              <button onClick={() => { setView('AUTH'); setIsMobileMenuOpen(false); }} className="w-full max-w-xs bg-amber-500 text-black font-bold py-4 rounded-xl text-lg shadow-[0_0_20px_rgba(245,158,11,0.4)]">
+              <button onClick={() => { router.push('/login'); setIsMobileMenuOpen(false); }} className="text-xl font-bold text-white">Login</button>
+              <button onClick={() => { router.push('/register'); setIsMobileMenuOpen(false); }} className="w-full max-w-xs bg-amber-500 text-black font-bold py-4 rounded-xl text-lg shadow-[0_0_20px_rgba(245,158,11,0.4)]">
                  Começar Agora
               </button>
            </div>
@@ -108,7 +108,7 @@ export const SaasLandingPage = () => {
                      className="flex-1 bg-transparent border-none text-white font-bold text-lg px-4 py-3 focus:outline-none placeholder:text-zinc-700 text-center sm:text-left"
                   />
                   <button 
-                     onClick={() => setView('AUTH')}
+                     onClick={() => router.push('/register')}
                      className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 px-6 rounded-xl transition-all whitespace-nowrap active:scale-95"
                   >
                      Reservar Link
@@ -322,7 +322,7 @@ export const SaasLandingPage = () => {
                      <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600"/> Link <b>barber.app</b></li>
                      <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600"/> Agenda Online</li>
                   </ul>
-                  <button onClick={() => setView('AUTH')} className="w-full py-3 rounded-xl border border-zinc-700 text-white font-bold hover:bg-zinc-800 transition-all">Começar</button>
+                  <button onClick={() => router.push('/register')} className="w-full py-3 rounded-xl border border-zinc-700 text-white font-bold hover:bg-zinc-800 transition-all">Começar</button>
                </div>
 
                {/* PRO (DESTACADO) */}
@@ -340,7 +340,7 @@ export const SaasLandingPage = () => {
                      <li className="flex gap-3 text-sm text-white"><CheckCircle2 className="w-5 h-5 text-amber-500"/> Disparos WhatsApp</li>
                      <li className="flex gap-3 text-sm text-white"><CheckCircle2 className="w-5 h-5 text-amber-500"/> Financeiro Completo</li>
                   </ul>
-                  <button onClick={() => setView('AUTH')} className="w-full py-4 rounded-xl bg-amber-500 text-black font-bold hover:bg-amber-400 transition-all shadow-lg active:scale-95">Testar Grátis (14 dias)</button>
+                  <button onClick={() => router.push('/register')} className="w-full py-4 rounded-xl bg-amber-500 text-black font-bold hover:bg-amber-400 transition-all shadow-lg active:scale-95">Testar Grátis (14 dias)</button>
                </div>
 
                {/* EMPIRE */}
@@ -356,7 +356,7 @@ export const SaasLandingPage = () => {
                      <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600"/> Múltiplas Unidades</li>
                      <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600"/> API Aberta</li>
                   </ul>
-                  <button onClick={() => setView('AUTH')} className="w-full py-3 rounded-xl border border-zinc-700 text-white font-bold hover:bg-zinc-800 transition-all">Falar com Consultor</button>
+                  <button onClick={() => router.push('/contact')} className="w-full py-3 rounded-xl border border-zinc-700 text-white font-bold hover:bg-zinc-800 transition-all">Falar com Consultor</button>
                </div>
             </div>
          </div>
@@ -368,7 +368,7 @@ export const SaasLandingPage = () => {
          <div className="relative z-10 max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-6xl font-bold text-white mb-6">Domine sua região.</h2>
             <p className="text-lg md:text-xl text-zinc-300 mb-10">Junte-se a mais de 500 barbearias que já modernizaram sua gestão.</p>
-            <button onClick={() => setView('AUTH')} className="bg-white text-black font-bold py-4 px-12 rounded-full text-lg hover:scale-105 transition-transform shadow-2xl active:scale-95">
+            <button onClick={() => router.push('/register')} className="bg-white text-black font-bold py-4 px-12 rounded-full text-lg hover:scale-105 transition-transform shadow-2xl active:scale-95">
                Começar Teste Grátis
             </button>
             <p className="mt-6 text-sm text-zinc-500">Sem cartão • Cancele quando quiser</p>
@@ -378,7 +378,7 @@ export const SaasLandingPage = () => {
       {/* Footer Links */}
       <footer className="py-12 border-t border-zinc-900 bg-black text-center text-zinc-600 text-sm">
          <p>&copy; 2024 Barber.App SaaS. Feito para quem domina a navalha.</p>
-         <button onClick={() => setView('AUTH')} className="mt-4 text-xs text-zinc-700 hover:text-amber-500 flex items-center justify-center gap-1 mx-auto">
+         <button onClick={() => router.push('/pricing')} className="mt-4 text-xs text-zinc-700 hover:text-amber-500 flex items-center justify-center gap-1 mx-auto">
             <Shield className="w-3 h-3" /> HQ Access
          </button>
       </footer>
