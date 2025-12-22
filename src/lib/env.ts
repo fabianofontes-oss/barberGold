@@ -9,15 +9,23 @@ const envSchema = z.object({
     .string()
     .url('NEXT_PUBLIC_SUPABASE_URL deve ser uma URL válida')
     .min(1, 'NEXT_PUBLIC_SUPABASE_URL é obrigatória'),
-  
+
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z
     .string()
     .min(1, 'NEXT_PUBLIC_SUPABASE_ANON_KEY é obrigatória'),
-  
+
+  SUPABASE_SERVICE_ROLE_KEY: z
+    .string()
+    .min(1, 'SUPABASE_SERVICE_ROLE_KEY é obrigatória (para webhooks e admin)'),
+
   NEXT_PUBLIC_APP_MODE: z
     .enum(['demo', 'pilot', 'prod', 'DEMO', 'PILOT', 'PROD'])
     .default('demo')
     .transform((val) => val.toLowerCase() as 'demo' | 'pilot' | 'prod'),
+
+  STRIPE_SECRET_KEY: z.string().optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().optional(),
+  NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
 });
 
 export type AppMode = 'demo' | 'pilot' | 'prod';
@@ -30,19 +38,23 @@ function getEnv() {
   const parsed = envSchema.safeParse({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
     NEXT_PUBLIC_APP_MODE: process.env.NEXT_PUBLIC_APP_MODE,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   });
 
   if (!parsed.success) {
     console.error('❌ Variáveis de ambiente inválidas:', parsed.error.flatten().fieldErrors);
-    
+
     // Em desenvolvimento, mostra erro detalhado
     if (process.env.NODE_ENV === 'development') {
       throw new Error(
         `Variáveis de ambiente inválidas:\n${JSON.stringify(parsed.error.flatten().fieldErrors, null, 2)}`
       );
     }
-    
+
     // Em produção, falha silenciosamente mas loga
     return {
       NEXT_PUBLIC_SUPABASE_URL: '',
