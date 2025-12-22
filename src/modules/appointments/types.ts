@@ -20,7 +20,6 @@ export const AppointmentStatus = z.enum([
   'COMPLETED',  // Concluído
   'CANCELLED',  // Cancelado
   'NO_SHOW',    // Não compareceu
-  'BLOCKED',    // Horário bloqueado
 ]);
 export type AppointmentStatus = z.infer<typeof AppointmentStatus>;
 
