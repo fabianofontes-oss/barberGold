@@ -126,7 +126,8 @@ export async function createAppointment(
   supabase: SupabaseClient<Database>,
   input: CreateAppointmentInput
 ): Promise<Appointment> {
-  const insertData: Database['public']['Tables']['appointments']['Insert'] = {
+  // tenant_id será preenchido automaticamente pelo RLS
+  const insertData = {
     client_id: input.client_id,
     staff_id: input.staff_id,
     service_id: input.service_id,
@@ -171,7 +172,7 @@ export async function updateAppointment(
   appointmentId: string,
   input: UpdateAppointmentInput
 ): Promise<Appointment> {
-  const updateData: Database['public']['Tables']['appointments']['Update'] = {
+  const updateData = {
     scheduled_at: input.scheduled_at,
     price: input.price,
     status: input.status,
