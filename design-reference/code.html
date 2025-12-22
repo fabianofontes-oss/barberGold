@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BarberGOLD - O Sistema Operacional da Barbearia Moderna</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f79f08",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#0f0f11","surface-dark": "#18181b","gold-dim": "rgba(247, 159, 8, 0.15)",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem","lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                    },
+                    boxShadow: {
+                        "glow": "0 0 20px rgba(247, 159, 8, 0.2)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(247, 159, 8, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white font-display overflow-x-hidden selection:bg-primary selection:text-white">
+<header class="fixed top-0 z-50 w-full border-b border-white/10 bg-background-dark/90 backdrop-blur-md">
+<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-2">
+<div class="text-primary">
+<span class="material-symbols-outlined !text-[32px]">content_cut</span>
+</div>
+<h2 class="text-white text-xl font-extrabold tracking-tight">Barber<span class="text-primary">GOLD</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#features">Funcionalidades</a>
+<a class="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#pricing">Preços</a>
+<a class="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#testimonials">Depoimentos</a>
+<a class="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#faq">FAQ</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="hidden sm:block text-sm font-bold text-white hover:text-primary transition-colors" href="#">Login</a>
+<button class="bg-primary hover:bg-[#d88b06] text-[#231c10] text-sm font-bold py-2 px-5 rounded-md transition-all shadow-glow">
+                Começar Teste
+            </button>
+</div>
+</div>
+</header>
+<section class="relative pt-32 pb-16 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+<div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/3 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="mx-auto max-w-7xl">
+<div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+<div class="flex flex-col gap-6 max-w-2xl">
+<div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 w-fit">
+<span class="flex h-2 w-2 rounded-full bg-green-500"></span>
+<span class="text-xs font-medium text-gray-300">Nova versão 3.0 disponível</span>
+</div>
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
+                    O Sistema Operacional da <span class="text-primary text-glow">Barbearia Moderna.</span>
+</h1>
+<p class="text-lg text-gray-400 leading-relaxed max-w-lg">
+                    Agendamento automático, controle financeiro, clube de assinaturas e precificação inteligente. Transforme sua barbearia em uma máquina de lucro.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="bg-primary hover:bg-[#d88b06] text-[#231c10] text-base font-bold py-4 px-8 rounded-md transition-all shadow-glow flex items-center justify-center gap-2">
+                        Começar Teste de 14 Dias
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<button class="bg-white/5 hover:bg-white/10 border border-white/10 text-white text-base font-bold py-4 px-8 rounded-md transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+                        Ver Demonstração
+                    </button>
+</div>
+<div class="pt-4 flex items-center gap-4 text-sm text-gray-500">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-background-dark bg-gray-600" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACR_wFhVOmSQvJdDlXtT4KTs3cJggF-rMl9iFbl4ZClri4CIixEycfzzue_gXumVxAUZPSB777oczwEYBWABuCWCECfull_2bya2DcMclbfeVJjlKvDdCz-p6OAenjPtv_-NJ2y0x9OLy2FGQRCJF5HLSd9aDo3613J-N9SrrokeFDgFGXc1HUsz7BeYgVsbit2L8d2zMnXB0tamNzulbjbk3twtIPNY8HTw0etWlP-VsrXJF7tWUA_6dBt-z5LiCO8y2gHSQRVs0'); background-size: cover;"></div>
+<div class="h-8 w-8 rounded-full border-2 border-background-dark bg-gray-600" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBp-u1cPHDNp-0DTXESnfbRmmHOmBLKcNjH-u79rn9PthZutE2l2vQRTGX7fLJ-svMApzu3-sWDvcopmzBAElO0HBDJixApJEFxEF3mnC4sicjpsRekRfPughk6wJUwVklTZ6Xc8p1SKPPRTqYxKqF64anr6uc78hd-dr-E6zdZKaznBVV0I0xIQwktVRQJjJxyqI41Vun7ki6i5qanu81QscSe3YoOvfpGGjSlVkiiu4LLitFvM1jgPctn503Ru0g-kn6VMdBQd4E'); background-size: cover;"></div>
+<div class="h-8 w-8 rounded-full border-2 border-background-dark bg-gray-600" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0j6pEVrnFYictbabsZz63Yxp0xpxbpL8riq9ph2LYMOb9Cqr29doRxTNtZX88x9FgfbKIF1Gpi6FzWBGt8Z12o5lOGTYAWxbfgHrFiJSf7u-GD77hs8PCtZ3lj3c-m8Mb5LV1bOahRtIXMf6TcrWR90zP5yJkV-xx3MTd-d2oI0keF219UtrEX7R7qPfmoduAe2y8WouPN4jNNFzxqKSGQiLlF6GOKBitJChyXAaqcqABvHyM8U1F-xXJiSkY_17TPyc_m0VmKWk'); background-size: cover;"></div>
+</div>
+<p>Junte-se a +500 donos de barbearia</p>
+</div>
+</div>
+<div class="relative lg:h-auto w-full flex justify-center lg:justify-end">
+<div class="relative z-10 w-full max-w-[500px] rounded-2xl border border-white/10 bg-surface-dark shadow-2xl shadow-black/50 overflow-hidden transform transition hover:scale-[1.01] duration-500">
+<div class="p-4 border-b border-white/5 flex items-center gap-2 bg-[#1f1f23]">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+</div>
+<div class="mx-auto text-xs text-gray-500 font-mono">dashboard.barbergold.com</div>
+</div>
+<div class="aspect-[4/3] w-full bg-surface-dark relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="High fidelity dark mode dashboard interface showing charts and scheduling grid" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDv-z38pNbnCShJXXRH89BSFe0Nk8tZt290bXI5O_NZRRdxC2TxoPrHTl_H8U8wg1g7d9wnPz_WR6wW5AxZ8gyHiW0F_7_qm4acvpj6L3QLDpaeHPjkGLzx3cusHwwzE9hyAJGd8Xk0bYvvDFCTPfp3t-Aqa2BhZy2zUO--BTg_YSajRn6ZX2-eqdIfnMucx3yKqS2DgiRgfb1e_vRNdLBRbXql6tIKm9Nu8YIT_qBLsIOg3EDQ2h9w4x4hV0P5uM1wn6FV8elljXE'); opacity: 0.9;"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark via-transparent to-transparent"></div>
+</div>
+<div class="p-6 grid grid-cols-2 gap-4 bg-surface-dark">
+<div class="bg-white/5 p-4 rounded-lg border border-white/5">
+<p class="text-xs text-gray-400 mb-1">Faturamento Hoje</p>
+<p class="text-xl font-bold text-white font-mono">R$ 2.450,00</p>
+</div>
+<div class="bg-white/5 p-4 rounded-lg border border-white/5">
+<p class="text-xs text-gray-400 mb-1">Agendamentos</p>
+<p class="text-xl font-bold text-primary font-mono">32 <span class="text-xs text-green-500 ml-1">▲ 12%</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="border-y border-white/5 bg-[#141416] py-12">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col lg:flex-row gap-10 items-center justify-between">
+<div class="max-w-md text-center lg:text-left">
+<h3 class="text-2xl font-bold text-white mb-2">Usado pela elite</h3>
+<p class="text-gray-400 text-sm">As barbearias mais lucrativas do país rodam no nosso sistema operacional.</p>
+</div>
+<div class="flex flex-1 w-full flex-col sm:flex-row gap-6 items-center justify-end">
+<div class="flex items-center gap-4 bg-white/5 px-6 py-4 rounded-xl border border-white/5 w-full sm:w-auto">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Volume Mensal</p>
+<p class="text-xl font-bold text-white font-mono">+ R$ 5 Milhões</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white/5 px-6 py-4 rounded-xl border border-white/5 w-full sm:w-auto">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<div>
+<p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Barbearias</p>
+<p class="text-xl font-bold text-white font-mono">500+ Ativas</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="h-12 flex items-center justify-center font-bold text-xl text-white">BARBER<span class="font-light">KING</span></div>
+<div class="h-12 flex items-center justify-center font-bold text-xl text-white">ROYAL<span class="font-light">CUTS</span></div>
+<div class="h-12 flex items-center justify-center font-bold text-xl text-white">THE<span class="font-light">GENT</span></div>
+<div class="h-12 flex items-center justify-center font-bold text-xl text-white">VINTAGE<span class="font-light">CLUB</span></div>
+<div class="h-12 flex items-center justify-center font-bold text-xl text-white">SHARP<span class="font-light">&amp;CO</span></div>
+<div class="h-12 flex items-center justify-center font-bold text-xl text-white">ELITE<span class="font-light">GROOM</span></div>
+</div>
+</div>
+</section>
+<section class="py-24 px-4 sm:px-6 lg:px-8 relative bg-background-dark">
+<div class="mx-auto max-w-4xl text-center mb-16">
+<div class="inline-block px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-semibold mb-6">
+            Alerta de Prejuízo
+        </div>
+<h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Pare de perder dinheiro invisível</h2>
+<p class="text-lg text-gray-400">Todo mês sua barbearia sangra lucro com erros que você nem percebe. O BarberGOLD estanca esse sangramento no primeiro dia.</p>
+</div>
+<div class="mx-auto max-w-7xl grid md:grid-cols-3 gap-6">
+<div class="bg-surface-dark border border-white/5 p-8 rounded-2xl relative overflow-hidden group hover:border-red-500/30 transition-colors">
+<div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-red-500/10 transition-all"></div>
+<span class="material-symbols-outlined text-4xl text-red-500 mb-6">event_busy</span>
+<h3 class="text-xl font-bold text-white mb-3">No-Shows Sem Multa</h3>
+<p class="text-gray-400 text-sm leading-relaxed">
+                Clientes que marcam e não aparecem custam em média R$ 2.000/mês por cadeira. Nosso sistema cobra antecipado ou taxa de cancelamento automática.
+            </p>
+</div>
+<div class="bg-surface-dark border border-white/5 p-8 rounded-2xl relative overflow-hidden group hover:border-red-500/30 transition-colors">
+<div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-red-500/10 transition-all"></div>
+<span class="material-symbols-outlined text-4xl text-red-500 mb-6">calculate</span>
+<h3 class="text-xl font-bold text-white mb-3">Comissões Erradas</h3>
+<p class="text-gray-400 text-sm leading-relaxed">
+                Planilhas manuais geram erros de cálculo. Pagar comissão a mais ou a menos destrói seu caixa ou sua equipe. O Smart Split calcula centavos com precisão.
+            </p>
+</div>
+<div class="bg-surface-dark border border-white/5 p-8 rounded-2xl relative overflow-hidden group hover:border-red-500/30 transition-colors">
+<div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-red-500/10 transition-all"></div>
+<span class="material-symbols-outlined text-4xl text-red-500 mb-6">trending_down</span>
+<h3 class="text-xl font-bold text-white mb-3">Horários Ociosos</h3>
+<p class="text-gray-400 text-sm leading-relaxed">
+                Cadeiras vazias em horários de pico ou vale. O Smart Pricing ajusta preços dinamicamente para preencher sua agenda 100% do tempo.
+            </p>
+</div>
+</div>
+</section>
+<section class="py-24 bg-[#121214]" id="features">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div class="max-w-2xl">
+<h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Muito mais que uma agenda</h2>
+<p class="text-xl text-gray-400">Módulos premium projetados para aumentar o LTV e automatizar sua gestão.</p>
+</div>
+<div>
+<button class="text-primary hover:text-white font-bold flex items-center gap-2 transition-colors">
+                    Ver todos os recursos
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="grid lg:grid-cols-12 gap-8 items-stretch">
+<div class="lg:col-span-5 flex flex-col gap-4">
+<div class="group relative p-6 rounded-2xl bg-[#1c1c1f] border border-primary ring-1 ring-primary/30 shadow-[0_0_40px_rgba(247,159,8,0.15)] cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_15px_50px_-5px_rgba(247,159,8,0.3)]">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-2xl"></div>
+<div class="relative flex items-start gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-xl bg-primary text-[#121214] flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">loyalty</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white mb-2">Barber Club</h3>
+<p class="text-sm text-gray-300 leading-relaxed">Crie planos de assinatura recorrente e garanta receita fixa todo mês.</p>
+</div>
+</div>
+</div>
+<div class="group p-6 rounded-2xl bg-surface-dark border border-white/5 cursor-pointer transition-all duration-300 hover:bg-[#1f1f22] hover:-translate-y-1.5 hover:border-primary hover:shadow-[0_10px_30px_-10px_rgba(247,159,8,0.2)]">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-xl bg-white/5 text-gray-400 group-hover:bg-blue-500/10 group-hover:text-blue-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">price_change</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-gray-300 group-hover:text-white transition-colors mb-2">Smart Pricing</h3>
+<p class="text-sm text-gray-500 group-hover:text-gray-400 transition-colors leading-relaxed">Ajuste automático de preços baseado na demanda e horários.</p>
+</div>
+</div>
+</div>
+<div class="group p-6 rounded-2xl bg-surface-dark border border-white/5 cursor-pointer transition-all duration-300 hover:bg-[#1f1f22] hover:-translate-y-1.5 hover:border-primary hover:shadow-[0_10px_30px_-10px_rgba(247,159,8,0.2)]">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-xl bg-white/5 text-gray-400 group-hover:bg-purple-500/10 group-hover:text-purple-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">pie_chart</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-gray-300 group-hover:text-white transition-colors mb-2">Smart Split</h3>
+<p class="text-sm text-gray-500 group-hover:text-gray-400 transition-colors leading-relaxed">Divisão automática e transparente de comissões para a equipe.</p>
+</div>
+</div>
+</div>
+<div class="group p-6 rounded-2xl bg-surface-dark border border-white/5 cursor-pointer transition-all duration-300 hover:bg-[#1f1f22] hover:-translate-y-1.5 hover:border-primary hover:shadow-[0_10px_30px_-10px_rgba(247,159,8,0.2)]">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-xl bg-white/5 text-gray-400 group-hover:bg-orange-500/10 group-hover:text-orange-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-gray-300 group-hover:text-white transition-colors mb-2">Vendas &amp; Estoque</h3>
+<p class="text-sm text-gray-500 group-hover:text-gray-400 transition-colors leading-relaxed">Controle total de produtos, vitrine e baixa automática.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7 h-full min-h-[500px] lg:h-auto">
+<div class="relative h-full w-full rounded-3xl overflow-hidden border border-white/10 bg-[#1a1a1d] shadow-2xl">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLYrbLeMM2VQsp19qISFlbcEM22WWo9nYI01lqdpll1OrgDdQvVshloIQw9KV9cECoV1U3sJ0I9wmvFE4P2ISH7ISWGOF0O4Tudwc8GApkF73g80o-ujk1L4S7WFP5LIl942oT5AiQ5goqHcxMvP8qIWtbQRxOr3e1O7tWJSO1SwU3bWFdsCecT7lQKJCeZdEKevScAcUNvMrqlmm5XdeMyz5QtIeRPOYqFV0dsXyeqRwwaxrhUj-hPtftDsNXKjVqE_THWDmk8RI');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/60 to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-full p-8 md:p-12">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            Módulo Premium
+                        </div>
+<h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Transforme clientes em sócios</h3>
+<p class="text-lg text-gray-300 mb-8 max-w-xl">
+                            Com o <strong>Barber Club</strong>, você cria planos de assinatura (como "Corte Ilimitado" ou "Barba VIP") e debita automaticamente no cartão do cliente todo mês.
+                        </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 shrink-0">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="text-xs text-gray-400 uppercase">Receita Recorrente</p>
+<p class="text-white font-bold">Previsibilidade de Caixa</p>
+</div>
+</div>
+<div class="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 shrink-0">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<p class="text-xs text-gray-400 uppercase">Fidelização</p>
+<p class="text-white font-bold">Retenção Máxima</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 px-4 sm:px-6 lg:px-8 bg-background-dark relative overflow-hidden">
+<div class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[500px] bg-gradient-to-r from-background-dark via-primary/5 to-background-dark pointer-events-none"></div>
+<div class="mx-auto max-w-7xl flex flex-col lg:flex-row items-center gap-16 relative z-10">
+<div class="lg:w-1/2">
+<div class="relative w-full max-w-sm mx-auto">
+<div class="relative border-8 border-[#2d2d30] rounded-[3rem] overflow-hidden shadow-2xl bg-[#0f0f11]">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#2d2d30] rounded-b-xl z-20"></div>
+<div class="bg-background-dark h-[600px] w-full pt-12 px-6 flex flex-col gap-4">
+<div class="flex items-center gap-3 pb-4 border-b border-white/5">
+<div class="w-10 h-10 rounded-full bg-gray-700" data-alt="Barbershop logo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDc-RJJTK8lKGxDzLMMfRjuh2m6vAX50cpbScJasKfBBLI5jOaG8EK9iPijnuwsuuylQnnbHZdSQjR_eQIC9L_kBE77qijfgFH0Cep3Mz0b8QBxqdGpRaZbrfHIUwu1y045j4jwx7L7ti_Zo9yzkgA1g4OwwMHeB8c9U-IL0LZUuEJl306-b_gTU1mzymGyssNMwijklnmIos_7pW5jwLdyW0_uh3CWlcYF9h-Xv59uuxujuSA8JupkCW7aYxyFEzzrt3iaHhpRxY0'); background-size: cover;"></div>
+<div>
+<div class="h-2 w-24 bg-gray-700 rounded mb-1"></div>
+<div class="h-2 w-16 bg-gray-800 rounded"></div>
+</div>
+</div>
+<div class="flex flex-col gap-3 mt-4">
+<div class="self-start bg-[#1f1f22] p-3 rounded-2xl rounded-tl-none max-w-[85%]">
+<p class="text-xs text-gray-300">Olá João! Seu corte está confirmado para amanhã às 15h. Deseja adicionar uma Barboterapia com 20% OFF?</p>
+</div>
+<div class="self-end bg-primary p-3 rounded-2xl rounded-tr-none max-w-[85%]">
+<p class="text-xs text-[#231c10] font-bold">Sim, pode adicionar!</p>
+</div>
+<div class="self-start bg-[#1f1f22] p-3 rounded-2xl rounded-tl-none max-w-[85%] flex flex-col gap-2">
+<p class="text-xs text-gray-300">Perfeito! Atualizado. Até amanhã 👊</p>
+</div>
+</div>
+<div class="mt-auto mb-8 bg-[#1f1f22] p-4 rounded-xl border border-white/5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs text-gray-400">Resumo</span>
+<span class="text-xs text-white font-bold">R$ 85,00</span>
+</div>
+<button class="w-full bg-green-600 hover:bg-green-500 text-white text-xs font-bold py-3 rounded-lg">Pagar via PIX</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2">
+<h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">Zero Barreira de Entrada para seu cliente.</h2>
+<p class="text-lg text-gray-400 mb-8">Esqueça aplicativos que ninguém baixa. O BarberGOLD funciona onde seu cliente já está.</p>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+<span class="material-symbols-outlined">smartphone</span>
+</div>
+<div>
+<h4 class="text-xl font-bold text-white">Sem Login, Sem App</h4>
+<p class="text-sm text-gray-400 mt-1">Seu cliente agenda através de um link simples e bonito, sem precisar criar conta ou lembrar senha.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+<span class="material-symbols-outlined">chat</span>
+</div>
+<div>
+<h4 class="text-xl font-bold text-white">Automação WhatsApp</h4>
+<p class="text-sm text-gray-400 mt-1">Lembretes automáticos, confirmações e recuperação de clientes inativos direto no 'Zap'.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-[#0a0a0c]" id="pricing">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Planos que se pagam no primeiro dia</h2>
+<p class="text-lg text-gray-400">Escolha a potência ideal para o seu negócio. Sem fidelidade, cancele quando quiser.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8 items-start">
+<div class="bg-surface-dark border border-white/5 rounded-2xl p-8 flex flex-col hover:border-primary/50 hover:-translate-y-2 hover:shadow-glow transition-all duration-300 group relative">
+<h3 class="text-xl font-bold text-white mb-2">Start</h3>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-4xl font-bold text-white">R$ 89</span>
+<span class="text-gray-500">/mês</span>
+</div>
+<p class="text-gray-400 text-sm mb-8">Ideal para barbearias em crescimento que precisam organizar a casa.</p>
+<ul class="space-y-4 mb-8 flex-1">
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Agenda Online e Links
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Gestão de Clientes (CRM)
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Financeiro Básico
+          </li>
+</ul>
+<button class="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-lg border border-white/10 transition-colors">Escolher Start</button>
+</div>
+<div class="bg-[#18181b] border border-primary/30 rounded-2xl p-8 flex flex-col hover:-translate-y-2 hover:border-primary hover:shadow-[0_0_30px_rgba(247,159,8,0.25)] transition-all duration-300 relative transform scale-105 md:scale-100 lg:scale-105 z-10">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-[#231c10] text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow-lg shadow-primary/30">
+            Mais Popular
+        </div>
+<h3 class="text-xl font-bold text-white mb-2">Pro Gold</h3>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-4xl font-bold text-white">R$ 149</span>
+<span class="text-gray-500">/mês</span>
+</div>
+<p class="text-gray-400 text-sm mb-8">A escolha da elite. Automação completa para maximizar o lucro.</p>
+<ul class="space-y-4 mb-8 flex-1">
+<li class="flex items-start gap-3 text-white font-medium text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+            Tudo do plano Start
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Smart Split (Comissões)
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Confirmação WhatsApp
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Gestão de Estoque
+          </li>
+</ul>
+<button class="w-full bg-primary hover:bg-[#d88b06] text-[#231c10] font-bold py-3 rounded-lg shadow-glow transition-all">Escolher Pro Gold</button>
+</div>
+<div class="bg-surface-dark border border-white/5 rounded-2xl p-8 flex flex-col hover:border-primary/50 hover:-translate-y-2 hover:shadow-glow transition-all duration-300 group">
+<h3 class="text-xl font-bold text-white mb-2">Empire</h3>
+<div class="flex items-baseline gap-1 mb-6">
+<span class="text-4xl font-bold text-white">R$ 299</span>
+<span class="text-gray-500">/mês</span>
+</div>
+<p class="text-gray-400 text-sm mb-8">Para redes de barbearias e empreendedores que querem dominar o mercado.</p>
+<ul class="space-y-4 mb-8 flex-1">
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Tudo do plano Pro Gold
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Barber Club (Assinaturas)
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Múltiplas Unidades
+          </li>
+<li class="flex items-start gap-3 text-gray-300 text-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">check</span>
+            Gerente de Contas VIP
+          </li>
+</ul>
+<button class="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-lg border border-white/10 transition-colors">Escolher Empire</button>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-[#0e0e10] border-t border-white/5">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Compare os Planos Lado a Lado</h2>
+<p class="text-gray-400 max-w-2xl mx-auto">Confira em detalhes o que cada plano oferece e escolha a ferramenta certa para o momento da sua barbearia.</p>
+</div>
+<div class="overflow-hidden rounded-2xl border border-white/5 bg-surface-dark shadow-2xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr>
+<th class="p-6 bg-[#18181b] border-b border-white/5 text-gray-400 font-medium w-1/3 min-w-[240px]">Recursos &amp; Funcionalidades</th>
+<th class="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
+<div class="text-white font-bold text-lg mb-1">Start</div>
+<div class="text-gray-500 text-sm font-normal">R$ 89/mês</div>
+</th>
+<th class="p-6 bg-[#202024] border-b border-primary/20 border-t-4 border-t-primary text-center w-1/5 min-w-[160px] relative">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-[#231c10] text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap shadow-lg shadow-primary/20">Recomendado</div>
+<div class="text-primary font-bold text-xl mb-1 text-glow">Pro Gold</div>
+<div class="text-white text-sm font-normal">R$ 149/mês</div>
+</th>
+<th class="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
+<div class="text-white font-bold text-lg mb-1">Empire</div>
+<div class="text-gray-500 text-sm font-normal">R$ 299/mês</div>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5 text-sm text-gray-300">
+<tr class="bg-white/[0.02]">
+<td class="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colspan="4">Gestão Essencial</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors">Agendamento Online</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors">CRM (Gestão de Clientes)</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium">Confirmação via WhatsApp</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-gray-700">remove</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="bg-white/[0.02]">
+<td class="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colspan="4">Financeiro &amp; Lucro</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors">Controle de Caixa</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium text-white/90">Smart Split (Comissões)</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-gray-700">remove</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium text-white/90">Barber Club (Assinaturas)</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-gray-700">remove</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-gray-700">remove</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="bg-white/[0.02]">
+<td class="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colspan="4">Escala &amp; Operação</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors">Gestão de Estoque</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-gray-700">remove</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-primary">check</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors">Múltiplas Unidades</td>
+<td class="p-5 text-center border-r border-white/5"><span class="material-symbols-outlined text-gray-700">remove</span></td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span class="material-symbols-outlined text-gray-700">remove</span></td>
+<td class="p-5 text-center"><span class="material-symbols-outlined text-primary">check</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-5 border-r border-white/5 group-hover:text-white transition-colors">Atendimento</td>
+<td class="p-5 text-center border-r border-white/5 text-xs text-gray-500">Email</td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50 text-xs text-white font-medium">Chat &amp; Email</td>
+<td class="p-5 text-center text-xs text-primary font-bold">Gerente VIP</td>
+</tr>
+<tr class="bg-[#18181b]">
+<td class="p-5 border-r border-white/5"></td>
+<td class="p-5 text-center border-r border-white/5">
+<button class="w-full bg-white/5 hover:bg-white/10 text-white text-xs font-bold py-2 rounded transition-colors">Escolher Start</button>
+</td>
+<td class="p-5 text-center border-r border-white/5 bg-[#202024]/50">
+<button class="w-full bg-primary hover:bg-[#d88b06] text-[#231c10] text-xs font-bold py-2 rounded shadow-glow transition-all">Escolher Pro</button>
+</td>
+<td class="p-5 text-center">
+<button class="w-full bg-white/5 hover:bg-white/10 text-white text-xs font-bold py-2 rounded transition-colors">Escolher Empire</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-[#141416] border-t border-white/5" id="testimonials">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">O que os donos dizem</h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-surface-dark p-8 rounded-2xl border border-white/5 flex flex-col">
+<div class="flex gap-1 text-primary mb-6">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-300 italic mb-6 flex-1">"Eu perdia cerca de R$ 3.000 por mês só com gente que marcava e não vinha. Implementei a cobrança antecipada do BarberGOLD e o prejuízo zerou na mesma semana."</p>
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-gray-600" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4kDkxb3gDgt38xA1SF7nJ2XcYwt4Ody0WoLBc9fMVhqmlO4_QTDXrz1vCPo3jfncdXWUrC2aAOSO1KZ0bmv8WQD2n9oA29XkS_9v-v4Cf40IqGT0GVVm2d0Fva9akSIvYQt59LSsTaxzfwB6EKmAYucghATe6LEXF1roS1lFeslXeTf1FukVme7rTS4XOUVhrE02OELju_xZDAagPNcG36wqDNuoGEgUhtIE__OLYNhVffcfgQsNM-wvl7y4HJ9ke4DdWOHvFv7M'); background-size: cover;"></div>
+<div>
+<p class="text-white font-bold text-sm">Carlos Mendez</p>
+<p class="text-gray-500 text-xs">Dono da Vintage Club</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-dark p-8 rounded-2xl border border-white/5 flex flex-col transform md:-translate-y-4 shadow-xl shadow-primary/5">
+<div class="flex gap-1 text-primary mb-6">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-300 italic mb-6 flex-1">"O Barber Club foi a virada de chave. Tenho 150 assinantes pagando R$ 89 todo mês. Eu começo o mês já com as contas pagas antes de cortar o primeiro cabelo."</p>
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-gray-600" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3OTr4zFHD35ssn7s3udqUNpO0sT29RcCphZnPV39J3R_j8dkQD0OLmun_afgEeuF3OSHCGCIGQAZ8UVBV4L2kUU7i9dKBAj3nlrzVhjZZMxJuxtFR2FeE2JIvWwu_Q2RyvddblBmL1hvNGusYPabNMPehrwMYOjrlpDsIpE34qMV9zwS44T2gtEJ1JWPcIRwtoIakXuRJOWnAFoipM0L9SEGcZYU-5eOa6dNDCjFgeMx1KJ3CWuO94is_AznUVKoeTa838Obh800'); background-size: cover;"></div>
+<div>
+<p class="text-white font-bold text-sm">Ricardo Silva</p>
+<p class="text-gray-500 text-xs">CEO da Barbearia Black</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-dark p-8 rounded-2xl border border-white/5 flex flex-col">
+<div class="flex gap-1 text-primary mb-6">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-gray-300 italic mb-6 flex-1">"O controle financeiro é absurdo. Eu achava que estava lucrando, mas o Smart Split me mostrou onde o dinheiro estava vazando nas comissões. Recomendo demais."</p>
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-gray-600" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB14xirx1c38h6PG_7y2pq5CPMxG3dzgvuRCcPj8azFeFHhNhE_5VMReiNR0E2rma3OTKhlbdIkbHVxWy68jU6011LkkL_NnXGQR6rKCU8mPnRIS6BwgQNcXM_qEQPODRGyBMJQn1ugRu7_SwfiQeHTXNkbOBWm3Lp_OwHGQWynlUAYqIuLmGppDkZDxT2OgOd0xb1j29-Eida_gCaiuWeiv1miIkx1hcaZMY6O4kx9JsI_VYEOdYnIBQNAJuJJma2Y54WXeDXGC9E'); background-size: cover;"></div>
+<div>
+<p class="text-white font-bold text-sm">André Lucca</p>
+<p class="text-gray-500 text-xs">Fundador da Mustache</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-background-dark" id="faq">
+<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+<h2 class="text-3xl font-bold text-white text-center mb-12">Perguntas Frequentes</h2>
+<div class="space-y-4">
+<details class="group bg-surface-dark rounded-lg border border-white/5 open:bg-white/5 transition-all">
+<summary class="flex cursor-pointer items-center justify-between p-6 text-lg font-medium text-white marker:content-none">
+                    Preciso instalar algum programa no computador?
+                    <span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 text-gray-400">
+                    Não. O BarberGOLD é 100% online e roda direto no navegador, seja no PC, tablet ou celular. Seus dados ficam salvos na nuvem com segurança bancária.
+                </div>
+</details>
+<details class="group bg-surface-dark rounded-lg border border-white/5 open:bg-white/5 transition-all">
+<summary class="flex cursor-pointer items-center justify-between p-6 text-lg font-medium text-white marker:content-none">
+                    Consigo migrar os dados do meu sistema antigo?
+                    <span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 text-gray-400">
+                    Sim! Temos uma equipe dedicada a importação de dados. Trazemos sua lista de clientes, produtos e histórico.
+                </div>
+</details>
+<details class="group bg-surface-dark rounded-lg border border-white/5 open:bg-white/5 transition-all">
+<summary class="flex cursor-pointer items-center justify-between p-6 text-lg font-medium text-white marker:content-none">
+                    O período de teste é realmente gratuito?
+                    <span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 text-gray-400">
+                    Sim, 14 dias totalmente grátis, sem necessidade de cartão de crédito. Você testa todas as funcionalidades premium.
+                </div>
+</details>
+</div>
+</div>
+</section>
+<section class="py-24 px-4 sm:px-6 lg:px-8 bg-[#0f0f11] relative border-t border-white/5">
+<div class="absolute inset-0 bg-primary/5 pointer-events-none" style="background: radial-gradient(circle at center, rgba(247, 159, 8, 0.05) 0%, transparent 70%);"></div>
+<div class="mx-auto max-w-4xl text-center relative z-10">
+<h2 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">Pare de ser refém do WhatsApp.</h2>
+<p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">Profissionalize sua gestão, elimine erros manuais e veja seu lucro crescer. Teste sem compromisso.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="bg-primary hover:bg-[#d88b06] text-[#231c10] text-lg font-bold py-4 px-10 rounded-lg transition-all shadow-glow transform hover:scale-105">
+                Começar Teste de 14 Dias
+            </button>
+</div>
+<p class="mt-6 text-sm text-gray-500">Sem cartão de crédito • Cancelamento a qualquer momento</p>
+</div>
+</section>
+<footer class="py-8 bg-black border-t border-white/10">
+<div class="mx-auto max-w-7xl px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+<div class="mb-4 md:mb-0">
+<span class="font-bold text-gray-500">BarberGOLD © 2024</span>
+</div>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Termos de Uso</a>
+<a class="hover:text-primary transition-colors" href="#">Privacidade</a>
+<a class="hover:text-primary transition-colors" href="#">Contato</a>
+</div>
+</div>
+</footer>
+
+</body></html>
