@@ -21,7 +21,7 @@ export default function ForgotPasswordPage() {
                     <div className="text-center mb-8">
                         <h2 className="text-3xl font-bold text-white mb-2">Forgot Password?</h2>
                         <p className="text-gray-400">
-                            Don't worry, it happens. Enter the email associated with your BarberGOLD account.
+                            Don&apos;t worry, it happens. Enter the email associated with your BarberGOLD account.
                         </p>
                     </div>
 
