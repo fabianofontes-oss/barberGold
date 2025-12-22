@@ -73,6 +73,24 @@ As policies já estão no schema. Verifique se foram criadas:
 
 ### Criar Produtos e Preços
 
+#### Via Script Automático (RECOMENDADO) ⭐
+
+Use o script `seed-stripe.js` para criar tudo automaticamente:
+
+```bash
+# 1. Instalar Stripe SDK
+npm install stripe
+
+# 2. Executar o seed
+node seed-stripe.js sk_test_sua_chave_aqui
+
+# 3. Copiar os Price IDs gerados e colar no .env.local
+```
+
+**Veja o guia completo:** `STRIPE_SEED_GUIDE.md`
+
+---
+
 #### Via Dashboard (Manual):
 1. Vá em **Products > Add product**
 2. Crie 5 produtos com os seguintes preços:
