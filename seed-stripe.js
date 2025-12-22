@@ -4,11 +4,11 @@ const Stripe = require('stripe');
 const stripe = new Stripe('sk_test_51ShB5oFsUilypLmdTCryuTj92wOYt4gndc20KZlKKRewcaBzb3IHn8TmChm6CYXBpYcPSB1u3FvBMBcAgSW8yKWw00K40Yc79G'); 
 
 const plans = [
-  { id: 'SOLO', name: 'BarberFlow Solo', monthly: 4990, yearly: 47904 },
-  { id: 'SOLO_PRO', name: 'BarberFlow Solo Pro', monthly: 7990, yearly: 76704 },
-  { id: 'TEAM', name: 'BarberFlow Team', monthly: 14990, yearly: 143904 },
-  { id: 'PREMIUM', name: 'BarberFlow Premium', monthly: 24990, yearly: 239904 },
-  { id: 'ENTERPRISE', name: 'BarberFlow Enterprise', monthly: 49990, yearly: 479904 },
+  { id: 'SOLO', name: 'BarberGold Solo', monthly: 4990, yearly: 47904 },
+  { id: 'SOLO_PRO', name: 'BarberGold Solo Pro', monthly: 7990, yearly: 76704 },
+  { id: 'TEAM', name: 'BarberGold Team', monthly: 14990, yearly: 143904 },
+  { id: 'PREMIUM', name: 'BarberGold Premium', monthly: 24990, yearly: 239904 },
+  { id: 'ENTERPRISE', name: 'BarberGold Enterprise', monthly: 49990, yearly: 479904 },
 ];
 
 async function seed() {
