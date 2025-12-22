@@ -37,6 +37,12 @@ Antes de começar, você precisa ter:
 5. Clique em **Run** (F5)
 6. ✅ Verifique se todas as tabelas foram criadas
 
+7. **IMPORTANTE:** Execute também o SQL de atualização
+8. Abra o arquivo `supabase/update-plans-and-onboarding.sql`
+9. Copie e cole no SQL Editor
+10. Clique em **Run** (F5)
+11. ✅ Isso vai atualizar os planos para os valores corretos
+
 ### Configurar RLS (Row Level Security)
 As policies já estão no schema. Verifique se foram criadas:
 - Vá em **Authentication > Policies**
