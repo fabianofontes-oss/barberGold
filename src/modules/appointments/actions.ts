@@ -44,7 +44,7 @@ export async function listAppointmentsAction(
 ): Promise<ActionResult<PaginatedAppointments>> {
   try {
     // Validar filtros
-    const validatedFilters = filters 
+    const validatedFilters: AppointmentFilters = filters 
       ? AppointmentFiltersSchema.parse(filters)
       : {};
 
