@@ -9,6 +9,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 import { getCurrentProfile } from '@/lib/auth/getCurrentProfile';
+import { getCurrentTenantId } from '@/lib/tenant/getCurrentTenant';
 import type { Database } from '@/lib/database.types';
 
 /**
