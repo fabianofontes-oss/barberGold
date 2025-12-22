@@ -200,7 +200,7 @@ export async function createClientAction(
     // ✅ FEATURE GATE: Verificar limite de clientes
     const gateCheck = await canCreateClient();
     if (!gateCheck.allowed) {
-      return createFeatureBlockedError(gateCheck) as ActionResult<Client>;
+      return await createFeatureBlockedError(gateCheck) as ActionResult<Client>;
     }
     
     // Obter tenant_id do perfil do usuário

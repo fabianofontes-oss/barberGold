@@ -22,7 +22,7 @@ export async function seedDemoDataAction(): Promise<SeedResult> {
   try {
     const profile = await getCurrentProfile()
     
-    if (!profile || !profile.userId || !profile.tenantId) {
+    if (!profile || !profile.user || !profile.tenantId) {
       return {
         success: false,
         error: 'Usuário não autenticado',
@@ -41,7 +41,7 @@ export async function seedDemoDataAction(): Promise<SeedResult> {
     }
     
     // Popular dados
-    const result = await seedDemoData(profile.tenantId, profile.userId)
+    const result = await seedDemoData(profile.tenantId, profile.user.id)
     
     if (!result.success) {
       return {

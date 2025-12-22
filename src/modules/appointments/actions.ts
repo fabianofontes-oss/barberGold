@@ -99,7 +99,7 @@ export async function createAppointmentAction(
     // ✅ FEATURE GATE: Verificar limite de agendamentos
     const gateCheck = await canCreateAppointment();
     if (!gateCheck.allowed) {
-      return createFeatureBlockedError(gateCheck) as ActionResult<Appointment>;
+      return await createFeatureBlockedError(gateCheck) as ActionResult<Appointment>;
     }
     
     // Obter tenant_id do usuário atual

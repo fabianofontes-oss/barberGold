@@ -23,10 +23,10 @@ export function getStripeClient(): Stripe {
   }
   
   stripeInstance = new Stripe(STRIPE_CONFIG.secretKey, {
-    apiVersion: '2024-11-20.acacia',
+    apiVersion: '2025-12-15.clover',
     typescript: true,
     appInfo: {
-      name: 'BarberFlow',
+      name: 'BarberGold',
       version: '1.0.0',
       url: 'https://barber.gold',
     },
