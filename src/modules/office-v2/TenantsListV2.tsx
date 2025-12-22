@@ -19,21 +19,10 @@ export const TenantsListV2: React.FC<TenantsListV2Props> = ({
   const [planFilter, setPlanFilter] = useState<'ALL' | SaasPlanId>('ALL');
   const [query, setQuery] = useState('');
 
-  if (!tenants || tenants.length === 0) {
-    return (
-      <div className="p-4 text-sm text-zinc-400">
-        Nenhuma barbearia cadastrada ainda.
-      </div>
-    );
-  }
-
-  const handlePlanChange = (tenantId: string, planId: SaasPlanId) => {
-     updateTenant(tenantId, { planId });
-  };
-
   const filteredTenants = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return tenants.filter((t) => {
+    const list = tenants || [];
+    return list.filter((t) => {
       if (statusFilter !== 'ALL' && t.status !== statusFilter) return false;
       if (planFilter !== 'ALL' && t.planId !== planFilter) return false;
       if (!q) return true;
@@ -44,6 +33,18 @@ export const TenantsListV2: React.FC<TenantsListV2Props> = ({
       );
     });
   }, [planFilter, query, statusFilter, tenants]);
+
+  if (!tenants || tenants.length === 0) {
+    return (
+      <div className="p-4 text-sm text-zinc-400">
+        Nenhuma barbearia cadastrada ainda.
+      </div>
+    );
+  }
+
+  const handlePlanChange = (tenantId: string, planId: SaasPlanId) => {
+    updateTenant(tenantId, { planId });
+  };
 
   return (
     <div className="space-y-4">
@@ -108,14 +109,13 @@ export const TenantsListV2: React.FC<TenantsListV2Props> = ({
                 <p className="text-[10px] text-zinc-600 font-mono truncate">{tenant.id}</p>
               </div>
               <span
-                className={`text-[10px] font-bold px-2 py-1 rounded-full border bg-zinc-900 ${
-                  {
+                className={`text-[10px] font-bold px-2 py-1 rounded-full border bg-zinc-900 ${{
                     TRIAL: 'text-sky-400 border-sky-400/20',
                     ACTIVE: 'text-emerald-400 border-emerald-400/20',
                     OVERDUE: 'text-amber-400 border-amber-400/20',
                     SUSPENDED: 'text-red-400 border-red-400/20',
                   }[tenant.status as string]
-                }`}
+                  }`}
               >
                 {tenant.status}
               </span>
@@ -162,64 +162,65 @@ export const TenantsListV2: React.FC<TenantsListV2Props> = ({
           </thead>
           <tbody>
             {filteredTenants.map((tenant) => {
-               const currentPlan = plans.find(p => p.id === tenant.planId);
-               return (
-              <tr
-                key={tenant.id}
-                className="border-b border-zinc-900 hover:bg-zinc-900/60"
-              >
-                <td className="py-2 pr-4">
-                  <div className="flex flex-col">
-                    <span className="text-[12px] text-zinc-50 font-medium">
-                      {tenant.shopName}
-                    </span>
-                    <span className="text-[10px] text-zinc-500">
-                      {tenant.country} • Desde{' '}
-                      {tenant.createdAt?.toLocaleDateString?.() ?? ''}
-                    </span>
-                  </div>
-                </td>
-                <td className="py-2 pr-4 text-zinc-300">
-                  {tenant.ownerName}
-                </td>
-                <td className="py-2 pr-4">
-                   <select 
-                      value={tenant.planId} 
+              const currentPlan = plans.find(p => p.id === tenant.planId);
+              return (
+                <tr
+                  key={tenant.id}
+                  className="border-b border-zinc-900 hover:bg-zinc-900/60"
+                >
+                  <td className="py-2 pr-4">
+                    <div className="flex flex-col">
+                      <span className="text-[12px] text-zinc-50 font-medium">
+                        {tenant.shopName}
+                      </span>
+                      <span className="text-[10px] text-zinc-500">
+                        {tenant.country} • Desde{' '}
+                        {tenant.createdAt?.toLocaleDateString?.() ?? ''}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="py-2 pr-4 text-zinc-300">
+                    {tenant.ownerName}
+                  </td>
+                  <td className="py-2 pr-4">
+                    <select
+                      value={tenant.planId}
                       onChange={(e) => handlePlanChange(tenant.id, e.target.value as SaasPlanId)}
                       className="bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-white text-[10px] focus:border-violet-500 outline-none"
-                   >
+                    >
                       {plans.map(p => (
-                         <option key={p.id} value={p.id}>{p.name}</option>
+                        <option key={p.id} value={p.id}>{p.name}</option>
                       ))}
-                   </select>
-                </td>
-                <td className="py-2 pr-4 text-zinc-300 font-mono">
-                   R$ {tenant.mrr}
-                </td>
-                <td className="py-2 pr-4">
-                  <span
-                    className={
-                      {
-                        TRIAL: 'text-sky-400',
-                        ACTIVE: 'text-emerald-400',
-                        OVERDUE: 'text-amber-400',
-                        SUSPENDED: 'text-red-400',
-                      }[tenant.status as string]
-                    }
-                  >
-                    {tenant.status}
-                  </span>
-                </td>
-                <td className="py-2 pr-4 text-right">
-                  <button
-                    onClick={() => onSelectTenant(tenant.id)}
-                    className="inline-flex items-center px-3 py-1.5 rounded-lg border border-zinc-700 text-[11px] text-zinc-100 hover:border-amber-500 hover:text-amber-400 transition-colors"
-                  >
-                    Ver detalhes
-                  </button>
-                </td>
-              </tr>
-            )})}
+                    </select>
+                  </td>
+                  <td className="py-2 pr-4 text-zinc-300 font-mono">
+                    R$ {tenant.mrr}
+                  </td>
+                  <td className="py-2 pr-4">
+                    <span
+                      className={
+                        {
+                          TRIAL: 'text-sky-400',
+                          ACTIVE: 'text-emerald-400',
+                          OVERDUE: 'text-amber-400',
+                          SUSPENDED: 'text-red-400',
+                        }[tenant.status as string]
+                      }
+                    >
+                      {tenant.status}
+                    </span>
+                  </td>
+                  <td className="py-2 pr-4 text-right">
+                    <button
+                      onClick={() => onSelectTenant(tenant.id)}
+                      className="inline-flex items-center px-3 py-1.5 rounded-lg border border-zinc-700 text-[11px] text-zinc-100 hover:border-amber-500 hover:text-amber-400 transition-colors"
+                    >
+                      Ver detalhes
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

@@ -253,7 +253,7 @@ function RegisterForm() {
 
                     {/* Sign In Link */}
                     <p className="mt-8 text-center text-sm text-gray-400">
-                        Don&apos;t have an account?{' '}
+                        Already have an account?{' '}
                         <Link href="/login" className="text-[#f79f08] hover:text-[#d88b06] font-medium transition-colors">
                             Log In
                         </Link>
