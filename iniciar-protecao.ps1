@@ -1,24 +1,22 @@
-# 🚀 Inicia o sistema de proteção em segundo plano
-# Use este comando quando começar a trabalhar
+# Inicia o sistema de protecao em segundo plano
+# Use este comando quando comecar a trabalhar
 
-Write-Host @"
-
-╔════════════════════════════════════════════════╗
-║   🛡️  SISTEMA DE PROTEÇÃO AUTOMÁTICA 🛡️      ║
-╔════════════════════════════════════════════════╗
-
-"@ -ForegroundColor Green
-
-Write-Host "✅ Arquivos salvam automaticamente" -ForegroundColor Cyan
-Write-Host "✅ Backup a cada 5 minutos" -ForegroundColor Cyan
-Write-Host "✅ Sincroniza com GitHub" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "===================================================" -ForegroundColor Green
+Write-Host "     SISTEMA DE PROTECAO AUTOMATICA" -ForegroundColor Green
+Write-Host "===================================================" -ForegroundColor Green
 Write-Host ""
 
-# Verifica se já está rodando
+Write-Host "OK Arquivos salvam automaticamente" -ForegroundColor Cyan
+Write-Host "OK Backup a cada 5 minutos" -ForegroundColor Cyan
+Write-Host "OK Sincroniza com GitHub" -ForegroundColor Cyan
+Write-Host ""
+
+# Verifica se ja esta rodando
 $jaRodando = Get-Job | Where-Object { $_.Name -eq "AutoBackup" -and $_.State -eq "Running" }
 
 if ($jaRodando) {
-    Write-Host "⚠️ Proteção já está ativa!" -ForegroundColor Yellow
+    Write-Host "AVISO: Protecao ja esta ativa!" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "Para ver status: Get-Job" -ForegroundColor Gray
     Write-Host "Para parar: Stop-Job -Name AutoBackup; Remove-Job -Name AutoBackup" -ForegroundColor Gray
@@ -30,13 +28,12 @@ else {
         & "$using:PWD\auto-backup.ps1"
     } | Out-Null
     
-    Write-Host "🚀 Proteção ATIVADA! Trabalhando em segundo plano..." -ForegroundColor Green
+    Write-Host "Protecao ATIVADA! Trabalhando em segundo plano..." -ForegroundColor Green
     Write-Host ""
-    Write-Host "💡 Agora você pode trabalhar tranquilo!" -ForegroundColor Yellow
-    Write-Host "   Seu trabalho está sendo salvo automaticamente" -ForegroundColor Gray
+    Write-Host "Agora voce pode trabalhar tranquilo!" -ForegroundColor Yellow
+    Write-Host "Seu trabalho esta sendo salvo automaticamente" -ForegroundColor Gray
     Write-Host ""
-    Write-Host "📊 Ver atividade: " -NoNewline -ForegroundColor Cyan
-    Write-Host "Receive-Job -Name AutoBackup" -ForegroundColor White
+    Write-Host "Ver atividade: Receive-Job -Name AutoBackup" -ForegroundColor Cyan
     Write-Host ""
 }
 

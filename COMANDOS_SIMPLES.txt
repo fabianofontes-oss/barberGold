@@ -1,0 +1,69 @@
+╔══════════════════════════════════════════════════════╗
+║                                                      ║
+║          COMANDOS SUPER SIMPLES                      ║
+║                                                      ║
+╚══════════════════════════════════════════════════════╝
+
+
+┌─────────────────────────────────────────────────────┐
+│  INICIAR PROTECAO                                   │
+└─────────────────────────────────────────────────────┘
+
+   .\START.ps1
+
+   Inicia a protecao automatica. Faz backup a cada 5 min.
+
+
+┌─────────────────────────────────────────────────────┐
+│  INSTALAR (FAZ UMA VEZ SO!)                         │
+└─────────────────────────────────────────────────────┘
+
+   .\INSTALAR.ps1
+
+   Configura para iniciar AUTOMATICAMENTE sempre que
+   voce abrir o terminal. Nunca mais precisa lembrar!
+
+
+┌─────────────────────────────────────────────────────┐
+│  SALVAR AGORA (Commit Manual)                       │
+└─────────────────────────────────────────────────────┘
+
+   .\commit-rapido.ps1 "o que voce fez"
+
+   Exemplo:
+   .\commit-rapido.ps1 "melhorias no sistema"
+
+
+┌─────────────────────────────────────────────────────┐
+│  VER SE ESTA FUNCIONANDO                            │
+└─────────────────────────────────────────────────────┘
+
+   Get-Job
+
+   Mostra se a protecao esta rodando
+
+
+┌─────────────────────────────────────────────────────┐
+│  VER ATIVIDADE DO BACKUP                            │
+└─────────────────────────────────────────────────────┘
+
+   Receive-Job -Name AutoBackup -Keep
+
+   Mostra o que o backup automatico esta fazendo
+
+
+═══════════════════════════════════════════════════════
+
+           RESUMAO: SO PRECISA LEMBRAR DISSO
+
+   1. Abriu o terminal? Digite: .\INSTALAR.ps1
+   2. Pronto! Nunca mais precisa lembrar de nada!
+
+═══════════════════════════════════════════════════════
+
+
+DICA PRO:
+---------
+Depois de instalar, sempre que abrir o projeto
+o sistema ja vai iniciar sozinho! ZERO esforco! :)
+

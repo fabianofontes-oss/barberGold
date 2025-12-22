@@ -1,0 +1,30 @@
+╔══════════════════════════════════════════════════════╗
+║                                                      ║
+║   COMO ATIVAR A PROTECAO AUTOMATICA                  ║
+║                                                      ║
+║   Basta digitar no terminal:                         ║
+║                                                      ║
+║        .\START.ps1                                   ║
+║                                                      ║
+║   OU simplesmente:                                   ║
+║                                                      ║
+║        START                                         ║
+║                                                      ║
+║   Pronto! Esta protegido!                            ║
+║                                                      ║
+╚══════════════════════════════════════════════════════╝
+
+
+---------------------------------------------------------
+          CONFIGURAR PARA INICIAR SOZINHO
+---------------------------------------------------------
+
+Se quiser que inicie AUTOMATICAMENTE quando abrir o terminal:
+
+1. Digite: .\INSTALAR.ps1
+2. Pronto! Nunca mais precisa fazer nada!
+
+---------------------------------------------------------
+
+Duvidas? Abra o arquivo: PROTECAO_TOTAL.md
+
