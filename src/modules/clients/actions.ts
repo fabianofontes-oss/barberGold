@@ -16,7 +16,50 @@ import type { Database } from '@/lib/database.types';
  * ============================================
  */
 
-export type Client = Database['public']['Tables']['clients']['Row'];
+// Tipo do banco de dados (snake_case)
+export type ClientDB = Database['public']['Tables']['clients']['Row'];
+
+// Tipo para UI (camelCase + campos extras opcionais)
+export interface Client {
+  id: string;
+  created_at: string;
+  tenant_id: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  birthDate: string | null;
+  totalSpent: number;
+  loyaltyPoints: number;
+  lastVisit: Date | null;
+  notes: string | null;
+  // Campos opcionais (não existem no banco ainda)
+  preferredStaffId?: string;
+  dependents?: Array<{ id: string; name: string; preferredStaffId?: string }>;
+  tags?: string[];
+  preferences?: Record<string, any>;
+}
+
+// Converte do banco para UI
+export function toClientUI(db: ClientDB): Client {
+  return {
+    id: db.id,
+    created_at: db.created_at,
+    tenant_id: db.tenant_id,
+    name: db.name,
+    phone: db.phone,
+    email: db.email,
+    birthDate: db.birth_date,
+    totalSpent: db.total_spent,
+    loyaltyPoints: db.loyalty_points,
+    lastVisit: db.last_visit ? new Date(db.last_visit) : null,
+    notes: db.notes,
+    // Campos opcionais ficam undefined por enquanto
+    preferredStaffId: undefined,
+    dependents: [],
+    tags: [],
+    preferences: {},
+  };
+}
 
 export type CreateClientInput = Database['public']['Tables']['clients']['Insert'];
 
@@ -83,10 +126,13 @@ export async function listClientsAction(
 
     if (error) throw error;
 
+    // Converter para formato UI (camelCase)
+    const clientsUI = (data || []).map(toClientUI);
+
     return {
       success: true,
       data: {
-        data: data || [],
+        data: clientsUI,
         total: count || 0,
         hasMore: (count || 0) > offset + limit,
       },
@@ -117,7 +163,7 @@ export async function getClientAction(
 
     if (error && error.code !== 'PGRST116') throw error;
 
-    return { success: true, data: data || null };
+    return { success: true, data: data ? toClientUI(data) : null };
   } catch (error) {
     console.error('Erro em getClientAction:', error);
     return {
@@ -148,7 +194,7 @@ export async function createClientAction(
     revalidatePath('/app/clients');
     revalidatePath('/app/dashboard');
 
-    return { success: true, data };
+    return { success: true, data: toClientUI(data) };
   } catch (error) {
     console.error('Erro em createClientAction:', error);
     return {
@@ -181,7 +227,7 @@ export async function updateClientAction(
     revalidatePath('/app/clients');
     revalidatePath('/app/dashboard');
 
-    return { success: true, data };
+    return { success: true, data: toClientUI(data) };
   } catch (error) {
     console.error('Erro em updateClientAction:', error);
     return {
