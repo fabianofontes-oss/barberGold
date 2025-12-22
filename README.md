@@ -1,4 +1,4 @@
-# 💈 BarberFlow - Sistema SaaS para Gestão de Barbearias
+# 💈 BarberGold - Sistema SaaS para Gestão de Barbearias
 
 ![Status](https://img.shields.io/badge/Status-Ready_to_Launch-success)
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
