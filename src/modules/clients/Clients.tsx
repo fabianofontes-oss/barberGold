@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useTransition } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { 
@@ -20,17 +20,33 @@ import {
   Unlock,
   ShieldCheck,
   Users,
-  Trash2
+  Trash2,
+  Loader2,
+  RefreshCcw
  } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
-import { AppointmentStatus, Client, Dependent, ClientTag } from '@/types';
+import { AppointmentStatus, Dependent, ClientTag } from '@/types';
 import { ClientTagsBadges, ClientTagsManager } from './components/ClientTagsManager';
 import { ClientPreferencesEditor } from './components/ClientPreferencesEditor';
 import { ExportClients } from './components/ExportClients';
+import { 
+  Client, 
+  CreateClientInput,
+  listClientsAction, 
+  createClientAction, 
+  updateClientAction 
+} from '@/modules/clients';
 
 export const Clients = () => {
-  const { clients, addClient, appointments, updateClient, shopSettings, currentUser, staff, services, products, shopProfile } = useBarber();
+  // Context (só para dados não migrados ainda)
+  const { appointments, shopSettings, currentUser, staff, services, products, shopProfile } = useBarber();
   const { canUseFeature } = useFeatureGate();
+  
+  // State para clients (agora do Supabase!)
+  const [clients, setClients] = useState<Client[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
   
   const hasLoyalty = canUseFeature('LOYALTY');
 
@@ -39,6 +55,27 @@ export const Clients = () => {
   const [formData, setFormData] = useState<{name: string, phone: string, email: string, birthDate: string, referrerCode: string, dependents: Dependent[]}>({ 
      name: '', phone: '', email: '', birthDate: '', referrerCode: '', dependents: [] 
   });
+
+  // Carregar clients do Supabase
+  useEffect(() => {
+    loadClients();
+  }, []);
+
+  const loadClients = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    const result = await listClientsAction({ limit: 100 });
+    
+    if (!result.success) {
+      setError(result.error);
+      setIsLoading(false);
+      return;
+    }
+    
+    setClients(result.data.data);
+    setIsLoading(false);
+  };
   
   // Dependent Form State
   const [newDependentName, setNewDependentName] = useState('');
@@ -93,16 +130,56 @@ export const Clients = () => {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
     
-    addClient({
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email, 
-      birthDate: formData.birthDate,
-      referrerCode: formData.referrerCode,
-      dependents: formData.dependents
+    startTransition(async () => {
+      const input: CreateClientInput = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || undefined,
+        birth_date: formData.birthDate || undefined,
+        // TODO: referrerCode e dependents não estão no schema ainda
+        // Adicionar depois na migration
+      };
+
+      const result = await createClientAction(input);
+      
+      if (!result.success) {
+        alert(result.error);
+        return;
+      }
+      
+      // Adicionar client à lista local
+      setClients(prev => [result.data, ...prev]);
+      
+      setFormData({ name: '', phone: '', email: '', birthDate: '', referrerCode: '', dependents: [] });
+      setIsModalOpen(false);
     });
-    setFormData({ name: '', phone: '', email: '', birthDate: '', referrerCode: '', dependents: [] });
-    setIsModalOpen(false);
+  };
+
+  // Helper para atualizar client (local + Supabase)
+  const handleUpdateClient = async (clientId: string, updates: Partial<Client>) => {
+    startTransition(async () => {
+      const input: any = {};
+      if (updates.name !== undefined) input.name = updates.name;
+      if (updates.phone !== undefined) input.phone = updates.phone;
+      if (updates.email !== undefined) input.email = updates.email;
+      if (updates.notes !== undefined) input.notes = updates.notes;
+      // TODO: birth_date, dependents, tags, preferences (adicionar depois)
+      
+      const result = await updateClientAction(clientId, input);
+      
+      if (!result.success) {
+        alert(result.error);
+        return;
+      }
+      
+      // Atualizar lista local
+      setClients(prev => prev.map(c => c.id === clientId ? result.data : c));
+      
+      // Atualizar selectedClient se for o mesmo
+      if (selectedClient?.id === clientId) {
+        setSelectedClient(result.data);
+      }
+    });
   };
 
   const handleAddDependent = () => {
@@ -114,10 +191,10 @@ export const Clients = () => {
         };
         
         if (selectedClient) {
-           // Editing existing client
-           const updatedDependents = [...(selectedClient.dependents || []), dep];
-           updateClient({ ...selectedClient, dependents: updatedDependents });
-           setSelectedClient({ ...selectedClient, dependents: updatedDependents });
+           // TODO: Dependents não estão no schema ainda
+           // Por enquanto, só atualiza localmente
+           const updatedDependents = [...((selectedClient as any).dependents || []), dep];
+           setSelectedClient({ ...selectedClient, dependents: updatedDependents } as any);
         } else {
            // Creating new client
            setFormData(prev => ({ ...prev, dependents: [...prev.dependents, dep] }));
@@ -129,9 +206,9 @@ export const Clients = () => {
 
   const removeDependent = (id: string) => {
      if (selectedClient) {
-        const updated = (selectedClient.dependents || []).filter(d => d.id !== id);
-        updateClient({ ...selectedClient, dependents: updated });
-        setSelectedClient({ ...selectedClient, dependents: updated });
+        // TODO: Dependents não estão no schema ainda
+        const updated = ((selectedClient as any).dependents || []).filter((d: Dependent) => d.id !== id);
+        setSelectedClient({ ...selectedClient, dependents: updated } as any);
      } else {
         setFormData(prev => ({ ...prev, dependents: prev.dependents.filter(d => d.id !== id) }));
      }
@@ -145,7 +222,7 @@ export const Clients = () => {
 
   const saveNotes = () => {
     if (selectedClient) {
-      updateClient({ ...selectedClient, notes: noteText });
+      handleUpdateClient(selectedClient.id, { notes: noteText });
     }
   };
 
@@ -183,12 +260,29 @@ export const Clients = () => {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          {isLoading && (
+            <div className="flex items-center gap-2 text-zinc-500 text-sm">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Carregando...
+            </div>
+          )}
+          {error && (
+            <button
+              onClick={loadClients}
+              className="flex items-center gap-2 text-red-400 text-sm hover:text-red-300"
+            >
+              <RefreshCcw className="w-4 h-4" />
+              Tentar novamente
+            </button>
+          )}
           {isOwner && <ExportClients clients={clients} shopName={shopProfile.name || 'Barbearia'} />}
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
+            disabled={isPending}
+            className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50"
           >
-            <UserPlus className="w-5 h-5" /> Add Client
+            {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5" />}
+            {isPending ? 'Salvando...' : 'Add Client'}
           </button>
         </div>
       </div>
@@ -219,7 +313,46 @@ export const Clients = () => {
         </div>
       )}
 
+      {/* Error State */}
+      {error && (
+        <div className="mb-6 rounded-xl border border-red-500/30 bg-red-950/20 p-4 text-sm text-red-400 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-5 h-5" />
+            <span>{error}</span>
+          </div>
+          <button
+            onClick={loadClients}
+            className="bg-red-500/20 hover:bg-red-500/30 text-red-300 px-3 py-1.5 rounded-lg text-xs font-bold"
+          >
+            Tentar Novamente
+          </button>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {isLoading && (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-10 h-10 text-amber-500 animate-spin" />
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && !error && clients.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-20 text-zinc-500">
+          <Users className="w-16 h-16 mb-4 opacity-30" />
+          <p className="text-lg font-bold mb-2">Nenhum cliente cadastrado</p>
+          <p className="text-sm mb-6">Comece adicionando seu primeiro cliente!</p>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all"
+          >
+            <UserPlus className="w-5 h-5" /> Adicionar Cliente
+          </button>
+        </div>
+      )}
+
       {/* Client List */}
+      {!isLoading && !error && clients.length > 0 && (
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
         {filteredClients.map((client) => {
              const returnStatus = getReturnStatus(client.lastVisit);
@@ -291,6 +424,7 @@ export const Clients = () => {
            })
         }
       </div>
+      )}
 
       {/* Add Client Modal */}
       {isModalOpen && (
@@ -450,14 +584,14 @@ export const Clients = () => {
                        {/* Tags Section */}
                        <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
                           <ClientTagsManager
-                             tags={selectedClient.tags || []}
+                             tags={(selectedClient as any).tags || []}
                              onToggleTag={(tag: ClientTag) => {
-                                const currentTags = selectedClient.tags || [];
+                                // TODO: Tags não estão no schema ainda
+                                const currentTags = (selectedClient as any).tags || [];
                                 const newTags = currentTags.includes(tag)
-                                   ? currentTags.filter(t => t !== tag)
+                                   ? currentTags.filter((t: ClientTag) => t !== tag)
                                    : [...currentTags, tag];
-                                updateClient({ ...selectedClient, tags: newTags });
-                                setSelectedClient({ ...selectedClient, tags: newTags });
+                                setSelectedClient({ ...selectedClient, tags: newTags } as any);
                              }}
                           />
                        </div>
@@ -465,12 +599,12 @@ export const Clients = () => {
                        {/* Preferences Section */}
                        <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
                           <ClientPreferencesEditor
-                             preferences={selectedClient.preferences || {}}
+                             preferences={(selectedClient as any).preferences || {}}
                              services={services}
                              products={products}
                              onSave={(prefs) => {
-                                updateClient({ ...selectedClient, preferences: prefs });
-                                setSelectedClient({ ...selectedClient, preferences: prefs });
+                                // TODO: Preferences não estão no schema ainda
+                                setSelectedClient({ ...selectedClient, preferences: prefs } as any);
                              }}
                           />
                        </div>
