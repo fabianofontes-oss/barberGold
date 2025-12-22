@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 
 export default function ForgotPasswordPage() {
-    const supabase = createClient();
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
     const handleReset = async (e: React.FormEvent) => {
+        const supabase = createClient();
         e.preventDefault();
         setLoading(true);
         setError(null);

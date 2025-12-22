@@ -8,7 +8,6 @@ import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
   const router = useRouter();
-  const supabase = createClient();
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -21,6 +20,7 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
+    const supabase = createClient();
     try {
       const { error: authError } = await supabase.auth.signInWithPassword({
         email,
@@ -43,8 +43,9 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
+    const supabase = createClient();
     try {
-      await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,

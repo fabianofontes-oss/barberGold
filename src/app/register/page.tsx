@@ -9,7 +9,6 @@ import { createClient } from '@/lib/supabase/client';
 function RegisterForm() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const supabase = createClient();
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -40,6 +39,7 @@ function RegisterForm() {
     }, [searchParams]);
 
     const handleRegister = async (e: React.FormEvent) => {
+        const supabase = createClient();
         e.preventDefault();
         setLoading(true);
         setError(null);
@@ -88,13 +88,18 @@ function RegisterForm() {
     };
 
     const handleGoogleLogin = async () => {
+        const supabase = createClient();
         try {
-            await supabase.auth.signInWithOAuth({
+            const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
                     redirectTo: `${window.location.origin}/auth/callback`,
                 },
             });
+            if (error) {
+                setError(error.message);
+                return;
+            }
         } catch (err) {
             setError('Erro ao iniciar cadastro com Google.');
         }
