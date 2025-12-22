@@ -2,7 +2,7 @@
 
 import React, { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Scissors, Lock, Mail, ArrowRight, ChevronLeft, Loader2 } from 'lucide-react';
+import { Scissors, Lock, Mail, ArrowRight, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
 import { signInWithPasswordAction } from '@/modules/auth/actions';
 
 export default function LoginPage() {
@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [demoMode, setDemoMode] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,13 +27,25 @@ export default function LoginPage() {
       
       if (!result.success) {
         setError(result.error || 'Erro ao fazer login');
+        setDemoMode(result.demoMode || false);
         return;
+      }
+
+      // Mostra se está em modo demo
+      if (result.demoMode) {
+        setDemoMode(true);
       }
 
       // Redireciona para o app após login
       router.push('/app/dashboard');
       router.refresh();
     });
+  };
+
+  const fillDemoCredentials = () => {
+    setEmail('admin@barberflow.com');
+    setPassword('admin123');
+    setError('');
   };
 
   return (
@@ -57,10 +70,43 @@ export default function LoginPage() {
         </div>
 
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
+          {/* Demo Mode Banner */}
+          <div className="mb-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-amber-400 text-sm font-bold mb-2">
+                  🎭 Modo Demo Ativo
+                </p>
+                <p className="text-amber-300 text-xs mb-3">
+                  Supabase não configurado. Use estas credenciais para testar:
+                </p>
+                <button
+                  type="button"
+                  onClick={fillDemoCredentials}
+                  className="w-full px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 rounded-lg text-amber-300 text-xs font-mono transition-colors"
+                >
+                  <div className="text-left">
+                    <div><strong>Email:</strong> admin@barberflow.com</div>
+                    <div><strong>Senha:</strong> admin123</div>
+                  </div>
+                </button>
+                <p className="text-amber-400/60 text-[10px] mt-2">
+                  Clique acima para preencher automaticamente
+                </p>
+              </div>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs p-3 rounded-lg text-center font-bold">
                 {error}
+                {demoMode && (
+                  <div className="mt-2 text-[10px] text-red-300">
+                    Use as credenciais de demo acima para entrar
+                  </div>
+                )}
               </div>
             )}
             
