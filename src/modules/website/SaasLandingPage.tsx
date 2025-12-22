@@ -1,423 +1,343 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
-   Scissors, CheckCircle2, TrendingUp, Shield, Globe, Users,
-   Zap, AlertTriangle, DollarSign, Calculator, CalendarCheck, Link as LinkIcon, Menu, X,
-   Crown, BarChart3, MessageCircle, Star
+   Check,
+   Calendar,
+   TrendingUp,
+   Crown,
+   Share2,
+   Wallet,
+   ChevronDown,
+   Star,
+   ArrowRight,
+   Menu,
+   X
 } from 'lucide-react';
 
-export const SaasLandingPage = () => {
-   const router = useRouter(); // Use router for programmatic navigation if needed
-   const [slugInput, setSlugInput] = useState('');
+export default function SaasLandingPage() {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+   const [slug, setSlug] = useState('');
+   const router = useRouter();
 
-   // Calculadora de Perda (Simulação Visual)
-   const lostMoney = 3200; // Valor fictício de perda mensal sem sistema
+   // Função para reservar o link
+   const handleReserve = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!slug) return;
+      const cleanSlug = slug.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      router.push(`/register?slug=${cleanSlug}`);
+   };
 
    return (
-      <div className="min-h-screen bg-black font-sans text-zinc-100 overflow-x-hidden selection:bg-amber-500 selection:text-black">
+      <div className="min-h-screen bg-[#0f0f11] text-white font-sans selection:bg-[#f79f08] selection:text-black">
 
-         {/* --- NAVBAR FLUTUANTE --- */}
-         <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/80 backdrop-blur-xl transition-all">
-            <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-               <div className="flex items-center gap-3 relative z-50">
-                  <div className="w-10 h-10 bg-gradient-to-tr from-amber-400 to-amber-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.3)]">
-                     <Scissors className="w-6 h-6 text-black" />
-                  </div>
-                  <span className="font-bold text-xl tracking-tight text-white">Barber<span className="text-amber-500">.Gold</span></span>
+         {/* HEADER */}
+         <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#0f0f11]/90 backdrop-blur-md">
+            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+               <div className="flex items-center gap-2">
+                  <span className="text-[#f79f08]">
+                     {/* Ícone Tesoura Simples */}
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3" /><path d="M8.12 8.12 12 12" /><path d="M20 4 8.12 15.88" /><circle cx="6" cy="18" r="3" /><path d="M14.8 14.8 20 20" /></svg>
+                  </span>
+                  <span className="text-xl font-bold tracking-tight text-white">Barber<span className="text-[#f79f08]">GOLD</span></span>
                </div>
 
-               {/* DESKTOP MENU */}
-               <div className="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
-                  <a href="#features" className="hover:text-white transition-colors">Recursos</a>
-                  <a href="#pain" className="hover:text-white transition-colors">Por que usar?</a>
-                  <a href="#pricing" className="hover:text-white transition-colors">Planos</a>
-                  <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
-               </div>
-
-               {/* DESKTOP ACTIONS */}
-               <div className="hidden md:flex gap-4 items-center">
-                  <Link href="/login" className="text-sm font-bold text-zinc-300 hover:text-white transition-colors">
-                     Login
+               {/* Desktop Nav */}
+               <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                  <Link href="#features" className="hover:text-white transition-colors">Funcionalidades</Link>
+                  <Link href="#pricing" className="hover:text-white transition-colors">Preços</Link>
+                  <Link href="/login" className="text-white hover:text-[#f79f08] transition-colors">Login</Link>
+                  <Link
+                     href="/register"
+                     className="bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] px-5 py-2 rounded-md font-bold transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)]"
+                  >
+                     Começar Teste
                   </Link>
-                  <Link href="/login" className="bg-white hover:bg-zinc-200 text-black font-bold py-2.5 px-6 rounded-full text-sm transition-all hover:scale-105 shadow-lg shadow-white/10">
-                     Começar Agora
-                  </Link>
-               </div>
+               </nav>
 
-               {/* MOBILE HAMBURGER */}
-               <button
-                  className="md:hidden text-zinc-300 hover:text-white relative z-50 p-2"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-               >
-                  {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+               {/* Mobile Menu Button */}
+               <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                  {isMobileMenuOpen ? <X /> : <Menu />}
                </button>
             </div>
 
-            {/* MOBILE MENU OVERLAY */}
+            {/* Mobile Menu */}
             {isMobileMenuOpen && (
-               <div className="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center space-y-8 p-6 md:hidden animate-fade-in">
-                  <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-bold text-zinc-300 hover:text-white">Recursos</a>
-                  <a href="#pain" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-bold text-zinc-300 hover:text-white">Por que usar?</a>
-                  <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-bold text-zinc-300 hover:text-white">Planos</a>
-                  <hr className="w-20 border-zinc-800" />
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-bold text-white">Login</Link>
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-xs bg-amber-500 text-black font-bold py-4 rounded-xl text-lg shadow-[0_0_20px_rgba(245,158,11,0.4)] text-center">
-                     Começar Agora
-                  </Link>
+               <div className="md:hidden bg-[#0f0f11] border-b border-white/10 p-4 flex flex-col gap-4">
+                  <Link href="#features" className="text-gray-300">Funcionalidades</Link>
+                  <Link href="#pricing" className="text-gray-300">Preços</Link>
+                  <Link href="/login" className="text-white font-bold">Login</Link>
                </div>
             )}
-         </nav>
+         </header>
 
-         {/* --- HERO SECTION: IMPONÊNCIA --- */}
-         <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-            {/* Efeitos de Fundo */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] md:w-[1000px] h-[300px] md:h-[600px] bg-amber-500/20 rounded-full blur-[80px] md:blur-[120px] -z-10 opacity-30 animate-pulse-slow"></div>
+         {/* HERO SECTION */}
+         <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+            {/* Glow Effects */}
+            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[500px] h-[500px] bg-[#f79f08]/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-            <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-               <div className="inline-flex items-center gap-2 bg-zinc-900/80 border border-zinc-800 rounded-full px-3 py-1.5 md:px-4 md:py-1.5 mb-6 md:mb-8 backdrop-blur-md animate-fade-in-up">
-                  <span className="flex h-2 w-2 relative">
-                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  <span className="text-[10px] md:text-xs font-bold text-zinc-300 uppercase tracking-wide">Nova Versão 2.0 Disponível</span>
+            <div className="container mx-auto max-w-4xl text-center relative z-10">
+               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 mb-8">
+                  <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                  <span className="text-xs font-medium text-gray-300">Nova versão 2.0 disponível</span>
                </div>
 
-               {/* Responsive Typography: smaller on mobile, huge on desktop */}
-               <h1 className="text-4xl sm:text-5xl md:text-8xl font-extrabold tracking-tight mb-6 md:mb-8 text-white leading-[1.1] animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-                  O sistema operacional<br className="hidden md:block" />
-                  da sua <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Barbearia.</span>
+               <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                  O Sistema Operacional da <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f79f08] to-[#ffbe4a]">
+                     Barbearia Moderna.
+                  </span>
                </h1>
 
-               <p className="text-base sm:text-lg md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed animate-fade-in-up font-light" style={{ animationDelay: '200ms' }}>
-                  Garanta seu link exclusivo <b>barber.gold</b> e transforme seguidores em agendamentos automáticos.
+               <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+                  Garanta seu link exclusivo <strong>barber.gold</strong> e transforme seguidores em agendamentos automáticos. Sem login para seu cliente.
                </p>
 
-               {/* DOMAIN CLAIM INPUT (Responsive Stack) */}
-               <div className="max-w-lg mx-auto mb-12 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                  <div className="flex flex-col sm:flex-row bg-zinc-900/80 backdrop-blur-md border border-zinc-700 p-2 rounded-2xl shadow-2xl focus-within:border-amber-500/50 focus-within:ring-4 focus-within:ring-amber-500/10 transition-all">
-                     <div className="flex items-center px-4 py-3 sm:py-0 border-b sm:border-b-0 sm:border-r border-zinc-800 justify-center sm:justify-start">
-                        <span className="text-zinc-500 font-bold font-mono text-lg">barber.gold/</span>
-                     </div>
+               {/* INPUT DE RESERVA (FUNCIONAL) */}
+               <form onSubmit={handleReserve} className="max-w-md mx-auto relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-[#f79f08] to-[#ffbe4a] rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-200"></div>
+                  <div className="relative flex items-center bg-[#18181b] rounded-lg border border-white/10 p-2">
+                     <span className="pl-4 text-gray-500 font-mono select-none">barber.gold/</span>
                      <input
                         type="text"
                         placeholder="sua-marca"
-                        value={slugInput}
-                        onChange={(e) => setSlugInput(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-                        className="flex-1 bg-transparent border-none text-white font-bold text-lg px-4 py-3 focus:outline-none placeholder:text-zinc-700 text-center sm:text-left"
+                        className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-600 font-medium ml-1"
+                        value={slug}
+                        onChange={(e) => setSlug(e.target.value)}
                      />
-                     <Link
-                        href={`/login?store=${slugInput}`}
-                        className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 px-6 rounded-xl transition-all whitespace-nowrap active:scale-95 flex items-center justify-center"
-                     >
+                     <button type="submit" className="bg-[#f79f08] hover:bg-[#d88b06] text-black font-bold px-6 py-3 rounded-md transition-colors whitespace-nowrap">
                         Reservar Link
+                     </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-3 flex items-center justify-center gap-1">
+                     <Check className="w-3 h-3 text-green-500" /> Grátis por 14 dias. Sem cartão.
+                  </p>
+               </form>
+
+               {/* Social Proof Simples */}
+               <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-center gap-6 opacity-60 grayscale hover:grayscale-0 transition-all">
+                  <span className="font-bold text-xl">BARBER<span className="font-light">KING</span></span>
+                  <span className="font-bold text-xl">ROYAL<span className="font-light">CUTS</span></span>
+                  <span className="font-bold text-xl">THE<span className="font-light">GENT</span></span>
+                  <span className="font-bold text-xl">VINTAGE<span className="font-light">CLUB</span></span>
+               </div>
+            </div>
+         </section>
+
+         {/* SECTION: PAIN POINTS (ROI) */}
+         <section className="py-24 bg-[#0a0a0c] border-y border-white/5">
+            <div className="container mx-auto px-4">
+               <div className="grid md:grid-cols-2 gap-16 items-center">
+
+                  {/* Esquerda: A Dor */}
+                  <div>
+                     <div className="inline-block px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-bold mb-6">
+                        ALERTA FINANCEIRO
+                     </div>
+                     <h2 className="text-4xl font-bold mb-6">Pare de perder clientes no WhatsApp.</h2>
+                     <p className="text-gray-400 text-lg mb-8">
+                        Sem um link rápido, você perde 30% dos clientes que desistem de esperar você responder "tem horário?".
+                     </p>
+
+                     <div className="space-y-6">
+                        <div className="flex gap-4">
+                           <div className="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0">
+                              <Calendar className="text-red-500" />
+                           </div>
+                           <div>
+                              <h3 className="font-bold text-white">No-Shows (Furos)</h3>
+                              <p className="text-sm text-gray-400">Lembretes automáticos reduzem furos em 80%.</p>
+                           </div>
+                        </div>
+                        <div className="flex gap-4">
+                           <div className="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0">
+                              <TrendingUp className="text-red-500" />
+                           </div>
+                           <div>
+                              <h3 className="font-bold text-white">Erros de Comissão</h3>
+                              <p className="text-sm text-gray-400">Cálculo automático de splits e aluguel de cadeira.</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Direita: O Card de Prejuízo (Mantido como você queria) */}
+                  <div className="relative">
+                     <div className="absolute inset-0 bg-red-500/5 blur-3xl rounded-full"></div>
+                     <div className="relative bg-[#18181b] border border-white/10 rounded-2xl p-8 shadow-2xl">
+                        <div className="flex justify-between items-center mb-8">
+                           <span className="text-gray-500 text-sm">Estimativa de perda mensal</span>
+                           <span className="text-red-500 bg-red-500/10 px-2 py-1 rounded text-xs">Sem sistema</span>
+                        </div>
+
+                        <div className="text-center py-8 border-b border-white/5">
+                           <div className="text-6xl font-bold text-white mb-2">R$ 3.200</div>
+                           <p className="text-gray-500 text-sm">Baseado em 4 furos semanais + 2h de gestão.</p>
+                        </div>
+
+                        <div className="mt-8">
+                           <div className="flex justify-between text-sm mb-2">
+                              <span className="text-white font-medium">Custo do BarberGold</span>
+                              <span className="text-[#f79f08] font-bold">R$ 89,00</span>
+                           </div>
+                           <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                              <div className="bg-[#f79f08] w-[5%] h-full"></div>
+                           </div>
+                           <p className="text-xs text-gray-500 mt-2 text-center">O sistema se paga no primeiro "No-Show" evitado.</p>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </section>
+
+         {/* SECTION: FEATURES (BENTO GRID - Modulos Enterprise) */}
+         <section id="features" className="py-24 bg-[#0f0f11]">
+            <div className="container mx-auto px-4">
+               <div className="text-center mb-16">
+                  <h2 className="text-4xl font-bold mb-4">Mais que uma agenda</h2>
+                  <p className="text-gray-400">Inteligência de negócio para quem quer lucrar de verdade.</p>
+               </div>
+
+               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
+                  {/* Agenda (Big) */}
+                  <div className="md:col-span-2 md:row-span-2 rounded-3xl p-8 bg-[#18181b] border border-white/5 hover:border-[#f79f08]/30 transition-all group relative overflow-hidden">
+                     <div className="absolute top-4 right-4 p-2 bg-[#f79f08]/10 rounded-lg">
+                        <Calendar className="text-[#f79f08]" />
+                     </div>
+                     <h3 className="text-2xl font-bold mb-2">Agenda Inteligente</h3>
+                     <p className="text-gray-400 mb-8">Lista de espera automática e confirmação via WhatsApp.</p>
+                     {/* Fake UI */}
+                     <div className="bg-black/50 border border-white/5 rounded-xl p-4 space-y-3">
+                        <div className="flex justify-between text-sm"><span className="text-gray-400">09:00</span> <span className="text-[#f79f08]">Confirmado</span></div>
+                        <div className="h-2 bg-white/10 rounded-full w-3/4"></div>
+                        <div className="flex justify-between text-sm mt-2"><span className="text-gray-400">10:00</span> <span className="text-green-500">Pago</span></div>
+                        <div className="h-2 bg-white/10 rounded-full w-full"></div>
+                     </div>
+                  </div>
+
+                  {/* Smart Pricing */}
+                  <div className="md:col-span-1 md:row-span-2 rounded-3xl p-6 bg-[#18181b] border border-white/5 hover:border-green-500/30 transition-all">
+                     <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-4">
+                        <TrendingUp className="text-green-500" />
+                     </div>
+                     <h3 className="text-xl font-bold mb-2">Lucro Turbo ⚡</h3>
+                     <p className="text-sm text-gray-400 mb-4">Preço dinâmico para horários de pico. Lucre 20% mais na sexta-feira.</p>
+                     <div className="mt-auto bg-green-500/10 text-green-500 text-xs font-bold p-2 rounded text-center border border-green-500/20">
+                        +R$ 1.500/mês
+                     </div>
+                  </div>
+
+                  {/* Barber Club */}
+                  <div className="md:col-span-1 md:row-span-1 rounded-3xl p-6 bg-[#18181b] border border-white/5 hover:border-purple-500/30 transition-all">
+                     <div className="flex justify-between items-start mb-2">
+                        <Crown className="text-purple-500" />
+                        <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full">NOVO</span>
+                     </div>
+                     <h3 className="font-bold">Barber Club</h3>
+                     <p className="text-xs text-gray-400">Crie planos de assinatura recorrente.</p>
+                  </div>
+
+                  {/* Split */}
+                  <div className="md:col-span-1 md:row-span-1 rounded-3xl p-6 bg-[#18181b] border border-white/5 hover:border-blue-500/30 transition-all">
+                     <Wallet className="text-blue-500 mb-2" />
+                     <h3 className="font-bold">Split Auto</h3>
+                     <p className="text-xs text-gray-400">Comissão cai direto na conta do barbeiro.</p>
+                  </div>
+
+                  {/* Viral */}
+                  <div className="md:col-span-2 md:row-span-1 rounded-3xl p-6 bg-[#18181b] border border-white/5 flex items-center gap-6">
+                     <div className="w-12 h-12 rounded-xl bg-[#f79f08]/10 flex items-center justify-center shrink-0">
+                        <Share2 className="text-[#f79f08]" />
+                     </div>
+                     <div>
+                        <h3 className="font-bold">Indique & Ganhe</h3>
+                        <p className="text-sm text-gray-400">Seu cliente ganha pontos trazendo amigos. Marketing grátis.</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         {/* SECTION: PRICING (PREÇOS) */}
+         <section id="pricing" className="py-24 bg-[#0a0a0c] border-t border-white/5">
+            <div className="container mx-auto px-4 text-center">
+               <h2 className="text-4xl font-bold mb-16">Planos que se pagam no dia 01</h2>
+
+               <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+                  {/* START */}
+                  <div className="bg-[#18181b] rounded-2xl p-8 border border-white/5 flex flex-col text-left">
+                     <h3 className="text-xl font-bold mb-2">Start</h3>
+                     <div className="text-4xl font-bold mb-6">R$ 89<span className="text-sm text-gray-500 font-normal">/mês</span></div>
+                     <ul className="space-y-4 mb-8 flex-1 text-sm text-gray-300">
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Agenda Online</li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Gestão de Clientes</li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Financeiro Básico</li>
+                     </ul>
+                     <Link href="/register" className="block text-center w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-lg font-bold transition-colors">
+                        Escolher Start
                      </Link>
                   </div>
-                  <p className="mt-3 text-xs text-zinc-500 flex items-center justify-center gap-2">
-                     <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Grátis por 14 dias. Sem cartão.
-                  </p>
-               </div>
 
-               <div className="flex flex-wrap justify-center gap-6 md:gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 px-4">
-                  {/* Fake Logos for Social Proof */}
-                  {['BARBER KINGS', 'VINTAGE CUTS', 'ELITE GROOMING', 'THE GENTLEMAN'].map(brand => (
-                     <span key={brand} className="text-xs md:text-sm font-bold text-zinc-500 tracking-widest">{brand}</span>
-                  ))}
-               </div>
-            </div>
-         </section>
-
-         {/* --- SECTION: THE PAIN (O Custo do Caos) --- */}
-         <section id="pain" className="py-16 md:py-24 bg-zinc-950 border-y border-white/5 relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-               <div className="order-2 md:order-1">
-                  <div className="flex items-center gap-2 text-red-500 font-bold mb-4 uppercase tracking-wider text-sm">
-                     <AlertTriangle className="w-4 h-4" /> Alerta Financeiro
-                  </div>
-                  <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-                     Pare de perder clientes no WhatsApp.
-                  </h2>
-                  <p className="text-zinc-400 text-base md:text-lg mb-8 leading-relaxed">
-                     Sem um link de agendamento rápido, você perde 30% dos clientes que desistem de esperar você responder &quot;tem horário?&quot;.
-                  </p>
-
-                  <ul className="space-y-4">
-                     <li className="flex items-start gap-4">
-                        <div className="bg-red-500/10 p-2 rounded-lg text-red-500 flex-shrink-0"><Users className="w-5 h-5" /></div>
-                        <div>
-                           <h4 className="text-white font-bold">No-Shows (Furos)</h4>
-                           <p className="text-zinc-500 text-sm">Lembretes automáticos reduzem furos em 80%.</p>
-                        </div>
-                     </li>
-                     <li className="flex items-start gap-4">
-                        <div className="bg-red-500/10 p-2 rounded-lg text-red-500 flex-shrink-0"><Calculator className="w-5 h-5" /></div>
-                        <div>
-                           <h4 className="text-white font-bold">Erros de Comissão</h4>
-                           <p className="text-zinc-500 text-sm">Cálculo automático de splits e aluguel de cadeira.</p>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-
-               {/* Visual da "Perda" */}
-               <div className="order-1 md:order-2 bg-zinc-900 border border-red-900/30 rounded-3xl p-6 md:p-8 relative">
-                  <div className="absolute top-0 right-0 p-4">
-                     <div className="flex items-center gap-2 text-red-500 text-xs font-bold bg-red-500/10 px-3 py-1 rounded-full animate-pulse">
-                        <TrendingUp className="w-3 h-3" /> Prejuízo Acumulado
+                  {/* PRO GOLD (DESTAQUE) */}
+                  <div className="bg-[#18181b] rounded-2xl p-8 border border-[#f79f08] relative transform md:-translate-y-4 shadow-[0_0_30px_rgba(247,159,8,0.15)] flex flex-col text-left">
+                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#f79f08] text-black text-xs font-bold px-4 py-1 rounded-full uppercase">
+                        Mais Escolhido
                      </div>
-                  </div>
-
-                  <div className="text-center py-8">
-                     <p className="text-zinc-500 mb-2">Estimativa de perda mensal sem sistema</p>
-                     <div className="text-5xl md:text-6xl font-bold text-white mb-2 flex items-center justify-center gap-1">
-                        <span className="text-zinc-600 text-3xl md:text-4xl">R$</span> {lostMoney}
-                     </div>
-                     <p className="text-sm text-zinc-400 max-w-xs mx-auto">
-                        Baseado em 4 furos semanais + 2h de gestão manual/dia.
-                     </p>
-                  </div>
-
-                  <div className="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
-                     <div className="flex justify-between items-center mb-2">
-                        <span className="text-zinc-400 text-sm">Custo da Solução BarberGold</span>
-                        <span className="text-emerald-500 font-bold">R$ 89,00/mês</span>
-                     </div>
-                     <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
-                        <div className="h-full bg-emerald-500 w-[5%]"></div>
-                     </div>
-                     <p className="text-[10px] text-zinc-500 mt-2 text-center">O sistema se paga no primeiro &quot;No-Show&quot; evitado.</p>
-                  </div>
-               </div>
-            </div>
-         </section>
-
-         {/* --- SECTION: BENTO GRID FEATURES --- */}
-         <section id="features" className="py-16 md:py-24">
-            <div className="max-w-7xl mx-auto px-6">
-               <div className="text-center mb-12 md:mb-16">
-                  <h2 className="text-3xl md:text-5xl font-bold mb-6">Controle Total do Seu Império</h2>
-                  <p className="text-zinc-400 max-w-2xl mx-auto text-sm md:text-base">
-                     Cada detalhe foi pensado para barbearias de alto padrão.
-                  </p>
-               </div>
-
-               {/* Responsive Grid: Stacks on mobile, Bento on desktop */}
-               <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 auto-rows-min md:h-[800px]">
-
-                  {/* FEATURE 1: AGENDA (Large Left) */}
-                  <div className="md:col-span-2 md:row-span-2 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden group hover:border-amber-500/50 transition-all min-h-[400px]">
-                     <div className="relative z-10">
-                        <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center mb-6 text-amber-500">
-                           <CalendarCheck className="w-6 h-6" />
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Agenda Inteligente</h3>
-                        <p className="text-zinc-400 mb-6 max-w-md text-sm md:text-base">
-                           Evite buracos na agenda. O sistema envia lembretes automáticos e cobra taxas de reserva para clientes novos.
-                        </p>
-                        <ul className="space-y-2 text-sm text-zinc-300 mb-8">
-                           <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Confirmação via WhatsApp</li>
-                           <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Lista de Espera Automática</li>
-                        </ul>
-                     </div>
-
-                     {/* Mock UI */}
-                     <div className="absolute right-0 bottom-0 w-3/4 md:w-2/3 h-2/3 bg-zinc-950 rounded-tl-3xl border-t border-l border-zinc-800 p-4 shadow-2xl translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform">
-                        <div className="flex gap-2 mb-4">
-                           <div className="bg-zinc-900 px-3 py-1 rounded-full text-xs text-zinc-400 border border-zinc-800">Hoje</div>
-                           <div className="bg-amber-500 text-black px-3 py-1 rounded-full text-xs font-bold">Agenda Cheia</div>
-                        </div>
-                        <div className="space-y-2">
-                           {[1, 2, 3].map(i => (
-                              <div key={i} className="flex items-center justify-between p-3 bg-zinc-900 rounded-xl border border-zinc-800/50">
-                                 <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-zinc-800"></div>
-                                    <div className="h-2 w-24 bg-zinc-800 rounded"></div>
-                                 </div>
-                                 <div className="h-2 w-12 bg-emerald-500/20 rounded"></div>
-                              </div>
-                           ))}
-                        </div>
-                     </div>
-                  </div>
-
-                  {/* FEATURE 2: FINANCEIRO (Top Right) */}
-                  <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:p-8 flex flex-col justify-between group hover:border-emerald-500/50 transition-all min-h-[250px]">
-                     <div>
-                        <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 text-emerald-500">
-                           <DollarSign className="w-5 h-5" />
-                        </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Split de Pagamento</h3>
-                        <p className="text-zinc-400 text-sm">
-                           O sistema divide automaticamente: parte para a barbearia, parte para o barbeiro. Fim das planilhas.
-                        </p>
-                     </div>
-                     <div className="mt-4 flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-500/5 p-2 rounded border border-emerald-500/10">
-                        <Zap className="w-3 h-3" /> Pagamento: R$ 100 → R$ 50/R$ 50
-                     </div>
-                  </div>
-
-                  {/* FEATURE 3: SITE (Bottom Right) */}
-                  <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:p-8 flex flex-col justify-between group hover:border-blue-500/50 transition-all min-h-[250px]">
-                     <div>
-                        <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 text-blue-500">
-                           <Globe className="w-5 h-5" />
-                        </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Link Curto & Próprio</h3>
-                        <p className="text-zinc-400 text-sm">
-                           Pare de mandar link feio. Use <b>barber.gold/seu-nome</b> ou conecte seu domínio <b>.com.br</b>.
-                        </p>
-                     </div>
-                     <div className="mt-4 bg-zinc-950 p-2 rounded-lg border border-zinc-800 flex items-center gap-2">
-                        <LinkIcon className="w-3 h-3 text-zinc-500" />
-                        <span className="text-xs font-mono text-white">barber.gold/vintage</span>
-                     </div>
-                  </div>
-               </div>
-
-               {/* EXTRA FEATURES GRID */}
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
-                     <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center mb-3">
-                        <Crown className="w-4 h-4 text-purple-500" />
-                     </div>
-                     <h4 className="font-bold text-white mb-1">Barber Club</h4>
-                     <p className="text-xs text-zinc-500">Crie planos de assinatura recorrente.</p>
-                  </div>
-                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
-                     <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center mb-3">
-                        <BarChart3 className="w-4 h-4 text-sky-500" />
-                     </div>
-                     <h4 className="font-bold text-white mb-1">Growth Marketing</h4>
-                     <p className="text-xs text-zinc-500">Campanhas automáticas de retorno.</p>
-                  </div>
-                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
-                     <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center mb-3">
-                        <Star className="w-4 h-4 text-pink-500" />
-                     </div>
-                     <h4 className="font-bold text-white mb-1">Avaliações</h4>
-                     <p className="text-xs text-zinc-500">Coleta de feedback pós-corte.</p>
-                  </div>
-                  <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
-                     <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center mb-3">
-                        <MessageCircle className="w-4 h-4 text-green-500" />
-                     </div>
-                     <h4 className="font-bold text-white mb-1">WhatsApp Bot</h4>
-                     <p className="text-xs text-zinc-500">Confirmação automática.</p>
-                  </div>
-               </div>
-            </div>
-         </section>
-
-         {/* --- PRICING --- */}
-         <section id="pricing" className="py-16 md:py-24">
-            <div className="max-w-7xl mx-auto px-6">
-               <div className="text-center mb-12 md:mb-16">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Investimento Simples</h2>
-                  <p className="text-zinc-400">Sem taxas de instalação. Sem fidelidade.</p>
-               </div>
-
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                  {/* BASIC */}
-                  <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 flex flex-col">
-                     <h3 className="text-xl font-bold text-white mb-2">Start</h3>
-                     <p className="text-sm text-zinc-500 mb-6">Para quem está começando.</p>
-                     <div className="mb-6">
-                        <span className="text-4xl font-bold text-white">R$ 89</span>
-                        <span className="text-zinc-500">/mês</span>
-                     </div>
-                     <ul className="space-y-4 mb-8 flex-1">
-                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> 1 Barbeiro</li>
-                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> Link <b>barber.gold</b></li>
-                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> Agenda Online</li>
+                     <h3 className="text-xl font-bold mb-2 text-[#f79f08]">Pro Gold</h3>
+                     <div className="text-4xl font-bold mb-6">R$ 149<span className="text-sm text-gray-500 font-normal">/mês</span></div>
+                     <ul className="space-y-4 mb-8 flex-1 text-sm text-white font-medium">
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> <strong>Tudo do Start</strong></li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Confirmação WhatsApp</li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Smart Pricing (Lucro Turbo)</li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Split de Comissão</li>
                      </ul>
-                     <Link href="/login" className="w-full py-3 rounded-xl border border-zinc-700 text-white font-bold hover:bg-zinc-800 transition-all text-center block">Começar</Link>
-                  </div>
-
-                  {/* PRO (DESTACADO) */}
-                  <div className="bg-zinc-900 border-2 border-amber-500 rounded-3xl p-8 flex flex-col relative shadow-[0_0_30px_rgba(245,158,11,0.1)] transform md:scale-105 z-10 order-first md:order-none">
-                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-500 text-black text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">Mais Escolhido</div>
-                     <h3 className="text-xl font-bold text-white mb-2">Pro Gold</h3>
-                     <p className="text-sm text-zinc-400 mb-6">Para barbearias em crescimento.</p>
-                     <div className="mb-6">
-                        <span className="text-5xl font-bold text-white">R$ 149</span>
-                        <span className="text-zinc-500">/mês</span>
-                     </div>
-                     <ul className="space-y-4 mb-8 flex-1">
-                        <li className="flex gap-3 text-sm text-white font-bold"><CheckCircle2 className="w-5 h-5 text-amber-500" /> Até 5 Barbeiros</li>
-                        <li className="flex gap-3 text-sm text-white"><CheckCircle2 className="w-5 h-5 text-amber-500" /> Domínio Próprio (.com.br)</li>
-                        <li className="flex gap-3 text-sm text-white"><CheckCircle2 className="w-5 h-5 text-amber-500" /> Disparos WhatsApp</li>
-                        <li className="flex gap-3 text-sm text-white"><CheckCircle2 className="w-5 h-5 text-amber-500" /> Financeiro Completo</li>
-                     </ul>
-                     <Link href="/login" className="w-full py-4 rounded-xl bg-amber-500 text-black font-bold hover:bg-amber-400 transition-all shadow-lg active:scale-95 text-center block">Testar Grátis (14 dias)</Link>
+                     <Link href="/register" className="block text-center w-full bg-[#f79f08] hover:bg-[#d88b06] text-black py-3 rounded-lg font-bold transition-colors">
+                        Escolher Pro Gold
+                     </Link>
                   </div>
 
                   {/* EMPIRE */}
-                  <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 flex flex-col">
-                     <h3 className="text-xl font-bold text-white mb-2">Empire</h3>
-                     <p className="text-sm text-zinc-500 mb-6">Para grandes redes.</p>
-                     <div className="mb-6">
-                        <span className="text-4xl font-bold text-white">R$ 299</span>
-                        <span className="text-zinc-500">/mês</span>
-                     </div>
-                     <ul className="space-y-4 mb-8 flex-1">
-                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> Barbeiros Ilimitados</li>
-                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> Múltiplas Unidades</li>
-                        <li className="flex gap-3 text-sm text-zinc-300"><CheckCircle2 className="w-5 h-5 text-zinc-600" /> API Aberta</li>
+                  <div className="bg-[#18181b] rounded-2xl p-8 border border-white/5 flex flex-col text-left">
+                     <h3 className="text-xl font-bold mb-2">Empire</h3>
+                     <div className="text-4xl font-bold mb-6">R$ 299<span className="text-sm text-gray-500 font-normal">/mês</span></div>
+                     <ul className="space-y-4 mb-8 flex-1 text-sm text-gray-300">
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Tudo do Pro Gold</li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Barber Club (Assinaturas)</li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Múltiplas Unidades</li>
+                        <li className="flex gap-2"><Check className="text-[#f79f08] w-4" /> Gerente de Conta VIP</li>
                      </ul>
-                     <Link href="https://wa.me/5511999999999" target="_blank" className="w-full py-3 rounded-xl border border-zinc-700 text-white font-bold hover:bg-zinc-800 transition-all text-center block">Falar com Consultor</Link>
+                     <Link href="/register" className="block text-center w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-lg font-bold transition-colors">
+                        Escolher Empire
+                     </Link>
                   </div>
+
                </div>
             </div>
          </section>
 
-         {/* --- FAQ SECTION --- */}
-         <section id="faq" className="py-16 bg-zinc-900/50 border-y border-zinc-800/50">
-            <div className="max-w-4xl mx-auto px-6">
-               <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-10">Perguntas Frequentes</h2>
-               <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
-                     <h3 className="font-bold text-white mb-2 text-lg">Preciso de cartão para testar?</h3>
-                     <p className="text-zinc-400 text-sm">Não. Você tem 14 dias grátis sem precisar cadastrar cartão de crédito.</p>
-                  </div>
-                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
-                     <h3 className="font-bold text-white mb-2 text-lg">Funciona no celular?</h3>
-                     <p className="text-zinc-400 text-sm">Sim. O BarberGold é 100% online e funciona em qualquer celular, tablet ou computador.</p>
-                  </div>
-                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
-                     <h3 className="font-bold text-white mb-2 text-lg">Tem fidelidade?</h3>
-                     <p className="text-zinc-400 text-sm">Não. Você pode cancelar sua assinatura a qualquer momento sem taxas.</p>
-                  </div>
-                  <div className="bg-black/40 p-6 rounded-2xl border border-zinc-800/50">
-                     <h3 className="font-bold text-white mb-2 text-lg">Migram meus dados?</h3>
-                     <p className="text-zinc-400 text-sm">Temos uma equipe dedicada para importar seus clientes e agenda de outros sistemas.</p>
-                  </div>
-               </div>
-            </div>
-         </section>
-
-         {/* --- FOOTER CTA --- */}
-         <section className="py-16 md:py-24 relative overflow-hidden text-center px-6">
-            <div className="absolute inset-0 bg-gradient-to-t from-amber-600/20 to-transparent z-0"></div>
-            <div className="relative z-10 max-w-4xl mx-auto">
-               <h2 className="text-3xl md:text-6xl font-bold text-white mb-6">Domine sua região.</h2>
-               <p className="text-lg md:text-xl text-zinc-300 mb-10">Junte-se a mais de 500 barbearias que já modernizaram sua gestão.</p>
-               <Link href="/login" className="bg-white text-black font-bold py-4 px-12 rounded-full text-lg hover:scale-105 transition-transform shadow-2xl active:scale-95 inline-block">
-                  Começar Teste Grátis
-               </Link>
-               <p className="mt-6 text-sm text-zinc-500">Sem cartão • Cancele quando quiser</p>
-            </div>
-         </section>
-
-         {/* Footer Links */}
-         <footer className="py-12 border-t border-zinc-900 bg-black text-center text-zinc-600 text-sm">
-            <p>&copy; 2024 BarberGold SaaS. Feito para quem domina a navalha.</p>
-            <Link href="/login" className="mt-4 text-xs text-zinc-700 hover:text-amber-500 flex items-center justify-center gap-1 mx-auto">
-               <Shield className="w-3 h-3" /> HQ Access
+         {/* FOOTER CTA */}
+         <section className="py-24 bg-[#0f0f11] border-t border-white/5 relative overflow-hidden text-center px-4">
+            <div className="absolute inset-0 bg-[#f79f08]/5 pointer-events-none"></div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 relative z-10">Pare de ser refém do WhatsApp.</h2>
+            <Link
+               href="/register"
+               className="inline-block bg-[#f79f08] hover:bg-[#d88b06] text-black text-lg font-bold py-4 px-10 rounded-lg shadow-[0_0_30px_rgba(247,159,8,0.3)] transition-all relative z-10 hover:scale-105"
+            >
+               Começar Teste de 14 Dias
             </Link>
+            <p className="mt-6 text-sm text-gray-500 relative z-10">Sem cartão de crédito • Cancele quando quiser</p>
+         </section>
+
+         {/* Footer Simple */}
+         <footer className="py-8 bg-black border-t border-white/10 text-center text-sm text-gray-600">
+            <p>BarberGOLD © 2024. Todos os direitos reservados.</p>
          </footer>
+
       </div>
    );
-};
+}
