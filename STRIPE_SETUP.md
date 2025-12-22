@@ -261,3 +261,4 @@ stripe logs tail --filter-event-type checkout.session.completed
 - [Checkout](https://stripe.com/docs/payments/checkout)
 - [Billing Portal](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal)
 
+

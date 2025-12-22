@@ -384,3 +384,4 @@ Após o setup básico funcionar:
 
 Seja em modo demo ou produção, o BarberFlow está 100% funcional e pronto para gerenciar sua barbearia!
 
+

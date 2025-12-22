@@ -523,3 +523,4 @@ toast.error('Erro ao criar cliente')
 **Próximo passo:** Criar projeto no Supabase (10 minutos)
 
 
+

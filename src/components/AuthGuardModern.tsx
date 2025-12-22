@@ -67,3 +67,4 @@ export function AuthGuardModern({ children }: AuthGuardModernProps) {
   return <>{children}</>;
 }
 
+

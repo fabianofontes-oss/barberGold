@@ -184,3 +184,4 @@ export function suggestSubdomains(name: string): string[] {
   return suggestions.slice(0, 5) // Máximo 5 sugestões
 }
 
+

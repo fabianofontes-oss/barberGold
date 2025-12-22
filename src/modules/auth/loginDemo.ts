@@ -110,3 +110,4 @@ export function isDemoLoggedIn(): boolean {
   return localStorage.getItem('demo_session') === 'active';
 }
 
+
