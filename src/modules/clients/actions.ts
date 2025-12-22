@@ -292,7 +292,7 @@ export async function searchClientsAction(
 
     if (error) throw error;
 
-    return { success: true, data: data || [] };
+    return { success: true, data: (data || []).map(toClientUI) };
   } catch (error) {
     console.error('Erro em searchClientsAction:', error);
     return {
