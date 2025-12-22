@@ -1,19 +1,12 @@
 /**
- * Módulo de Sales/PDV - Exports
- * 
- * Ponto único de import para o módulo
+ * Barrel export para Sales Module
  */
 
-// Types & Schemas
+// Types
 export * from './types';
 
-// Repository (CRUD Supabase + Process Sale)
+// Repository
 export * from './repository';
 
 // Server Actions
 export * from './actions';
-
-
-
-
-

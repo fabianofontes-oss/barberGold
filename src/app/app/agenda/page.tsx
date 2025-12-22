@@ -1,7 +1,7 @@
 'use client';
 
-import { Agenda } from '@/modules/agenda/Agenda';
+import { AgendaModern } from '@/modules/agenda/AgendaModern';
 
 export default function AgendaPage() {
-  return <Agenda />;
+  return <AgendaModern />;
 }

@@ -1,19 +1,12 @@
 /**
- * Módulo de Appointments - Exports
- * 
- * Ponto único de import para o módulo
+ * Barrel export para Appointments Module
  */
 
-// Types & Schemas
+// Types
 export * from './types';
 
-// Repository (CRUD Supabase)
+// Repository
 export * from './repository';
 
 // Server Actions
 export * from './actions';
-
-
-
-
-
