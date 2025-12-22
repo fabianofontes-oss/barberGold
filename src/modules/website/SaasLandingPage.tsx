@@ -6,6 +6,7 @@ import {
   Scissors, CheckCircle2, TrendingUp, Shield, Globe, Users,
   Zap, AlertTriangle, DollarSign, Calculator, CalendarCheck, Link, Menu, X
 } from 'lucide-react';
+import { Testimonials } from '@/components/marketing/Testimonials';
 
 export const SaasLandingPage = () => {
   const { setView } = useBarber();
@@ -273,6 +274,28 @@ export const SaasLandingPage = () => {
                   </div>
                </div>
 
+            </div>
+         </div>
+      </section>
+
+      {/* --- TESTIMONIALS --- */}
+      <section className="py-16 md:py-24 bg-zinc-950/50">
+         <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-12 md:mb-16">
+               <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                  Barbeiros Que Já <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Transformaram</span> Seus Negócios
+               </h2>
+               <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto">
+                  Veja o que nossos clientes têm a dizer sobre o BarberFlow
+               </p>
+            </div>
+
+            <Testimonials variant="carousel" showPlan={true} className="mb-8" />
+
+            <div className="text-center mt-12">
+               <p className="text-zinc-500 text-sm">
+                  Junte-se a <span className="text-amber-500 font-bold">500+ barbearias</span> que já usam o BarberFlow
+               </p>
             </div>
          </div>
       </section>
