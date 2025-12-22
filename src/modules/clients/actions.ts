@@ -115,6 +115,9 @@ export async function listClientsAction(
   filters?: ClientFilters
 ): Promise<ActionResult<PaginatedClients>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createSupabaseClient();
     const limit = filters?.limit || 100;
     const offset = filters?.offset || 0;
@@ -122,6 +125,7 @@ export async function listClientsAction(
     let query = supabase
       .from('clients')
       .select('*', { count: 'exact' })
+      .eq('tenant_id', tenantId) // Filtro explícito por tenant
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
 
@@ -161,12 +165,16 @@ export async function getClientAction(
   clientId: string
 ): Promise<ActionResult<Client | null>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createSupabaseClient();
     
     const { data, error } = await supabase
       .from('clients')
       .select('*')
       .eq('id', clientId)
+      .eq('tenant_id', tenantId) // Filtro explícito por tenant
       .single();
 
     if (error && error.code !== 'PGRST116') throw error;
@@ -235,12 +243,30 @@ export async function updateClientAction(
   input: UpdateClientInput
 ): Promise<ActionResult<Client>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createSupabaseClient();
+
+    // Validar se o client pertence ao tenant (segurança cross-tenant)
+    const { data: existing } = await supabase
+      .from('clients')
+      .select('tenant_id')
+      .eq('id', clientId)
+      .single();
+
+    if (!existing || existing.tenant_id !== tenantId) {
+      return {
+        success: false,
+        error: 'Cliente não encontrado ou acesso negado',
+      };
+    }
 
     const { data, error } = await supabase
       .from('clients')
       .update(input)
       .eq('id', clientId)
+      .eq('tenant_id', tenantId) // Filtro explícito por tenant
       .select()
       .single();
 
@@ -267,12 +293,30 @@ export async function deleteClientAction(
   clientId: string
 ): Promise<ActionResult<void>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createSupabaseClient();
+
+    // Validar se o client pertence ao tenant (segurança cross-tenant)
+    const { data: existing } = await supabase
+      .from('clients')
+      .select('tenant_id')
+      .eq('id', clientId)
+      .single();
+
+    if (!existing || existing.tenant_id !== tenantId) {
+      return {
+        success: false,
+        error: 'Cliente não encontrado ou acesso negado',
+      };
+    }
 
     const { error } = await supabase
       .from('clients')
       .delete()
-      .eq('id', clientId);
+      .eq('id', clientId)
+      .eq('tenant_id', tenantId); // Filtro explícito por tenant
 
     if (error) throw error;
 

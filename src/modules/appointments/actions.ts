@@ -8,6 +8,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
+import { getCurrentTenantId } from '@/lib/tenant/getCurrentTenant';
 import {
   Appointment,
   CreateAppointmentInput,
@@ -43,13 +44,16 @@ export async function listAppointmentsAction(
   filters?: AppointmentFilters
 ): Promise<ActionResult<PaginatedAppointments>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     // Validar filtros
     const validatedFilters: AppointmentFilters = filters 
       ? AppointmentFiltersSchema.parse(filters)
       : {};
 
     const supabase = await createClient();
-    const result = await repository.listAppointments(supabase, validatedFilters);
+    const result = await repository.listAppointments(supabase, tenantId, validatedFilters);
 
     return { success: true, data: result };
   } catch (error) {
@@ -68,8 +72,11 @@ export async function getAppointmentAction(
   appointmentId: string
 ): Promise<ActionResult<Appointment | null>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const appointment = await repository.getAppointmentById(supabase, appointmentId);
+    const appointment = await repository.getAppointmentById(supabase, tenantId, appointmentId);
 
     return { success: true, data: appointment };
   } catch (error) {
@@ -88,11 +95,14 @@ export async function createAppointmentAction(
   input: CreateAppointmentInput
 ): Promise<ActionResult<Appointment>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     // Validar input
     const validatedInput = CreateAppointmentSchema.parse(input);
 
     const supabase = await createClient();
-    const appointment = await repository.createAppointment(supabase, validatedInput);
+    const appointment = await repository.createAppointment(supabase, tenantId, validatedInput);
 
     // Revalidar cache
     revalidatePath('/app/agenda');
@@ -116,11 +126,14 @@ export async function updateAppointmentAction(
   input: UpdateAppointmentInput
 ): Promise<ActionResult<Appointment>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     // Validar input
     const validatedInput = UpdateAppointmentSchema.parse(input);
 
     const supabase = await createClient();
-    const appointment = await repository.updateAppointment(supabase, appointmentId, validatedInput);
+    const appointment = await repository.updateAppointment(supabase, tenantId, appointmentId, validatedInput);
 
     // Revalidar cache
     revalidatePath('/app/agenda');
@@ -143,8 +156,11 @@ export async function deleteAppointmentAction(
   appointmentId: string
 ): Promise<ActionResult<void>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    await repository.deleteAppointment(supabase, appointmentId);
+    await repository.deleteAppointment(supabase, tenantId, appointmentId);
 
     // Revalidar cache
     revalidatePath('/app/agenda');
@@ -173,8 +189,11 @@ export async function completeAppointmentAction(
   appointmentId: string
 ): Promise<ActionResult<Appointment>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const appointment = await repository.completeAppointment(supabase, appointmentId);
+    const appointment = await repository.completeAppointment(supabase, tenantId, appointmentId);
 
     // Revalidar cache
     revalidatePath('/app/agenda');
@@ -197,8 +216,11 @@ export async function cancelAppointmentAction(
   appointmentId: string
 ): Promise<ActionResult<Appointment>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const appointment = await repository.cancelAppointment(supabase, appointmentId);
+    const appointment = await repository.cancelAppointment(supabase, tenantId, appointmentId);
 
     // Revalidar cache
     revalidatePath('/app/agenda');
@@ -221,8 +243,11 @@ export async function markNoShowAction(
   appointmentId: string
 ): Promise<ActionResult<Appointment>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const appointment = await repository.markNoShow(supabase, appointmentId);
+    const appointment = await repository.markNoShow(supabase, tenantId, appointmentId);
 
     // Revalidar cache
     revalidatePath('/app/agenda');

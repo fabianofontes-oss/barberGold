@@ -29,6 +29,7 @@ type SupabaseAny = SupabaseClient<any, any, any>;
  */
 export async function listAppointments(
   supabase: SupabaseAny,
+  tenantId: string, // Tenant ID obrigatório para isolamento
   filters: AppointmentFilters = {}
 ): Promise<PaginatedAppointments> {
   const {
@@ -44,10 +45,11 @@ export async function listAppointments(
     offset = 0,
   } = filters;
 
-  // Base query
+  // Base query com filtro de tenant
   let query = supabase
     .from('appointments')
-    .select('*', { count: 'exact' });
+    .select('*', { count: 'exact' })
+    .eq('tenant_id', tenantId); // Filtro explícito por tenant
 
   // Filtros
   if (client_id) query = query.eq('client_id', client_id);
@@ -97,12 +99,14 @@ export async function listAppointments(
  */
 export async function getAppointmentById(
   supabase: SupabaseAny,
+  tenantId: string, // Tenant ID obrigatório para isolamento
   appointmentId: string
 ): Promise<Appointment | null> {
   const { data, error } = await supabase
     .from('appointments')
     .select('*')
     .eq('id', appointmentId)
+    .eq('tenant_id', tenantId) // Filtro explícito por tenant
     .single();
 
   if (error) {
@@ -126,11 +130,13 @@ export async function getAppointmentById(
  */
 export async function createAppointment(
   supabase: SupabaseAny,
+  tenantId: string, // Tenant ID obrigatório para isolamento
   input: CreateAppointmentInput
 ): Promise<Appointment> {
   const { data, error } = await supabase
     .from('appointments')
     .insert({
+      tenant_id: tenantId, // Adicionar tenant_id explicitamente
       client_id: input.client_id,
       staff_id: input.staff_id,
       service_id: input.service_id,
@@ -168,6 +174,7 @@ export async function createAppointment(
  */
 export async function updateAppointment(
   supabase: SupabaseAny,
+  tenantId: string, // Tenant ID obrigatório para isolamento
   appointmentId: string,
   input: UpdateAppointmentInput
 ): Promise<Appointment> {
@@ -180,6 +187,7 @@ export async function updateAppointment(
       notes: input.notes,
     })
     .eq('id', appointmentId)
+    .eq('tenant_id', tenantId) // Filtro explícito por tenant
     .select()
     .single();
 
@@ -208,12 +216,14 @@ export async function updateAppointment(
  */
 export async function deleteAppointment(
   supabase: SupabaseAny,
+  tenantId: string, // Tenant ID obrigatório para isolamento
   appointmentId: string
 ): Promise<void> {
   const { error } = await supabase
     .from('appointments')
     .delete()
-    .eq('id', appointmentId);
+    .eq('id', appointmentId)
+    .eq('tenant_id', tenantId); // Filtro explícito por tenant
 
   if (error) {
     console.error('Erro ao deletar appointment:', error);
@@ -232,9 +242,10 @@ export async function deleteAppointment(
  */
 export async function completeAppointment(
   supabase: SupabaseAny,
+  tenantId: string,
   appointmentId: string
 ): Promise<Appointment> {
-  return updateAppointment(supabase, appointmentId, { status: 'COMPLETED' });
+  return updateAppointment(supabase, tenantId, appointmentId, { status: 'COMPLETED' });
 }
 
 /**
@@ -242,9 +253,10 @@ export async function completeAppointment(
  */
 export async function cancelAppointment(
   supabase: SupabaseAny,
+  tenantId: string,
   appointmentId: string
 ): Promise<Appointment> {
-  return updateAppointment(supabase, appointmentId, { status: 'CANCELLED' });
+  return updateAppointment(supabase, tenantId, appointmentId, { status: 'CANCELLED' });
 }
 
 /**
@@ -252,9 +264,10 @@ export async function cancelAppointment(
  */
 export async function markNoShow(
   supabase: SupabaseAny,
+  tenantId: string,
   appointmentId: string
 ): Promise<Appointment> {
-  return updateAppointment(supabase, appointmentId, { status: 'NO_SHOW' });
+  return updateAppointment(supabase, tenantId, appointmentId, { status: 'NO_SHOW' });
 }
 
 /**

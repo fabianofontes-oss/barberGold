@@ -8,6 +8,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
+import { getCurrentTenantId } from '@/lib/tenant/getCurrentTenant';
 import {
   Sale,
   CreateSaleInput,
@@ -53,12 +54,16 @@ export async function processSaleAction(
   }
 ): Promise<ActionResult<Sale>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     // Validar input
     const validatedInput = CreateSaleSchema.parse(input);
 
     const supabase = await createClient();
     const sale = await repository.processSale(
       supabase,
+      tenantId,
       validatedInput,
       staffSettings,
       shopSettings
@@ -93,11 +98,14 @@ export async function listSalesAction(
   filters?: SaleFilters
 ): Promise<ActionResult<PaginatedSales>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     // Validar filtros (com valores padrão)
     const validatedFilters = SaleFiltersSchema.parse(filters || {});
 
     const supabase = await createClient();
-    const result = await repository.listSales(supabase, validatedFilters);
+    const result = await repository.listSales(supabase, tenantId, validatedFilters);
 
     return { success: true, data: result };
   } catch (error) {
@@ -116,8 +124,11 @@ export async function getSaleAction(
   saleId: string
 ): Promise<ActionResult<Sale | null>> {
   try {
+    // Obter tenant_id do usuário atual
+    const tenantId = await getCurrentTenantId();
+    
     const supabase = await createClient();
-    const sale = await repository.getSaleById(supabase, saleId);
+    const sale = await repository.getSaleById(supabase, tenantId, saleId);
 
     return { success: true, data: sale };
   } catch (error) {
