@@ -4,9 +4,10 @@ import { stripe } from '@/lib/stripe';
 import { createClient } from '@supabase/supabase-js';
 
 // Configurar Supabase Admin (para liberar acesso sem estar logado)
+// Configurar Supabase Admin (para liberar acesso sem estar logado)
 const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY! // ⚠️ Você precisará dessa chave no .env
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || 'service_role_key_mock'
 );
 
 export async function POST(req: Request) {
