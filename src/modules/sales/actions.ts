@@ -93,10 +93,8 @@ export async function listSalesAction(
   filters?: SaleFilters
 ): Promise<ActionResult<PaginatedSales>> {
   try {
-    // Validar filtros
-    const validatedFilters = filters 
-      ? SaleFiltersSchema.parse(filters)
-      : {};
+    // Validar filtros (com valores padrão)
+    const validatedFilters = SaleFiltersSchema.parse(filters || {});
 
     const supabase = await createClient();
     const result = await repository.listSales(supabase, validatedFilters);

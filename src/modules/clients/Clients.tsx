@@ -56,6 +56,25 @@ export const Clients = () => {
      name: '', phone: '', email: '', birthDate: '', referrerCode: '', dependents: [] 
   });
 
+  // Função para converter Client de actions para Client de types
+  const convertToUIClient = (client: Client): ClientUI => {
+    return {
+      id: client.id,
+      name: client.name,
+      phone: client.phone,
+      email: client.email,
+      birthDate: client.birthDate,
+      totalSpent: client.totalSpent,
+      lastVisit: client.lastVisit,
+      loyaltyPoints: client.loyaltyPoints,
+      preferredStaffId: client.preferredStaffId,
+      notes: client.notes,
+      dependents: client.dependents,
+      tags: client.tags as ClientTag[] | undefined,
+      preferences: client.preferences,
+    };
+  };
+
   // Carregar clients do Supabase
   useEffect(() => {
     loadClients();
@@ -406,9 +425,9 @@ export const Clients = () => {
                          <span>{client.dependents!.length} Dependents</span>
                       </div>
                    )}
-                   {client.tags && client.tags.length > 0 && (
-                      <ClientTagsBadges tags={client.tags} />
-                   )}
+                    {client.tags && client.tags.length > 0 && (
+                      <ClientTagsBadges tags={client.tags as ClientTag[]} />
+                    )}
                  </div>
 
                  <div className={`grid grid-cols-2 gap-3 pt-4 border-t relative z-10 ${returnStatus.status === 'LOST' ? 'border-white/20' : 'border-zinc-800'}`}>

@@ -169,7 +169,7 @@ export async function processSale(
  */
 export async function listSales(
   supabase: SupabaseAny,
-  filters: SaleFilters = {}
+  filters: Partial<SaleFilters> = {}
 ): Promise<PaginatedSales> {
   const {
     client_id,
@@ -348,7 +348,7 @@ export async function getTodaySales(
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const filters: SaleFilters = {
+  const filters: Partial<SaleFilters> = {
     date_from: today.toISOString(),
     date_to: tomorrow.toISOString(),
   };

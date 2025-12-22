@@ -27,12 +27,12 @@ export interface Client {
   tenant_id: string;
   name: string;
   phone: string;
-  email: string | null;
-  birthDate: string | null;
+  email?: string; // undefined em vez de null para compatibilidade
+  birthDate?: string; // undefined em vez de null para compatibilidade
   totalSpent: number;
   loyaltyPoints: number;
-  lastVisit: Date | null;
-  notes: string | null;
+  lastVisit?: Date; // undefined em vez de null para compatibilidade
+  notes?: string; // undefined em vez de null para compatibilidade
   // Campos opcionais (não existem no banco ainda)
   preferredStaffId?: string;
   dependents?: Array<{ id: string; name: string; preferredStaffId?: string }>;
