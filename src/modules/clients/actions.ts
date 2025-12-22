@@ -24,7 +24,6 @@ export type UpdateClientInput = Database['public']['Tables']['clients']['Update'
 
 export interface ClientFilters {
   search?: string;
-  preferred_staff_id?: string;
   limit?: number;
   offset?: number;
 }
@@ -78,10 +77,6 @@ export async function listClientsAction(
     // Aplicar filtros
     if (filters?.search) {
       query = query.or(`name.ilike.%${filters.search}%,phone.ilike.%${filters.search}%`);
-    }
-
-    if (filters?.preferred_staff_id) {
-      query = query.eq('preferred_staff_id', filters.preferred_staff_id);
     }
 
     const { data, error, count } = await query;
