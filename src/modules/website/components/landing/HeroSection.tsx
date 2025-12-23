@@ -1,8 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight, PlayCircle } from 'lucide-react';
+
+const avatarUrls = [
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuACR_wFhVOmSQvJdDlXtT4KTs3cJggF-rMl9iFbl4ZClri4CIixEycfzzue_gXumVxAUZPSB777oczwEYBWABuCWCECfull_2bya2DcMclbfeVJjlKvDdCz-p6OAenjPtv_-NJ2y0x9OLy2FGQRCJF5HLSd9aDo3613J-N9SrrokeFDgFGXc1HUsz7BeYgVsbit2L8d2zMnXB0tamNzulbjbk3twtIPNY8HTw0etWlP-VsrXJF7tWUA_6dBt-z5LiCO8y2gHSQRVs0',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuBp-u1cPHDNp-0DTXESnfbRmmHOmBLKcNjH-u79rn9PthZutE2l2vQRTGX7fLJ-svMApzu3-sWDvcopmzBAElO0HBDJixApJEFxEF3mnC4sicjpsRekRfPughk6wJUwVklTZ6Xc8p1SKPPRTqYxKqF64anr6uc78hd-dr-E6zdZKaznBVV0I0xIQwktVRQJjJxyqI41Vun7ki6i5qanu81QscSe3YoOvfpGGjSlVkiiu4LLitFvM1jgPctn503Ru0g-kn6VMdBQd4E',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuB0j6pEVrnFYictbabsZz63Yxp0xpxbpL8riq9ph2LYMOb9Cqr29doRxTNtZX88x9FgfbKIF1Gpi6FzWBGt8Z12o5lOGTYAWxbfgHrFiJSf7u-GD77hs8PCtZ3lj3c-m8Mb5LV1bOahRtIXMf6TcrWR90zP5yJkV-xx3MTd-d2oI0keF219UtrEX7R7qPfmoduAe2y8WouPN4jNNFzxqKSGQiLlF6GOKBitJChyXAaqcqABvHyM8U1F-xXJiSkY_17TPyc_m0VmKWk',
+];
+
+const dashboardImageUrl = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDv-z38pNbnCShJXXRH89BSFe0Nk8tZt290bXI5O_NZRRdxC2TxoPrHTl_H8U8wg1g7d9wnPz_WR6wW5AxZ8gyHiW0F_7_qm4acvpj6L3QLDpaeHPjkGLzx3cusHwwzE9hyAJGd8Xk0bYvvDFCTPfp3t-Aqa2BhZy2zUO--BTg_YSajRn6ZX2-eqdIfnMucx3yKqS2DgiRgfb1e_vRNdLBRbXql6tIKm9Nu8YIT_qBLsIOg3EDQ2h9w4x4hV0P5uM1wn6FV8elljXE';
 
 export function HeroSection() {
     return (
@@ -47,10 +54,11 @@ export function HeroSection() {
                         
                         <div className="pt-4 flex items-center gap-4 text-sm text-gray-500">
                             <div className="flex -space-x-2">
-                                {[1, 2, 3].map((i) => (
+                                {avatarUrls.map((url, i) => (
                                     <div 
                                         key={i} 
-                                        className="h-8 w-8 rounded-full border-2 border-[#0f0f11] bg-gray-600"
+                                        className="h-8 w-8 rounded-full border-2 border-[#0f0f11] bg-gray-600 bg-cover bg-center"
+                                        style={{ backgroundImage: `url('${url}')` }}
                                     />
                                 ))}
                             </div>
@@ -71,17 +79,13 @@ export function HeroSection() {
                                 <div className="mx-auto text-xs text-gray-500 font-mono">dashboard.barbergold.com</div>
                             </div>
                             
-                            {/* Dashboard Content Placeholder */}
+                            {/* Dashboard Image */}
                             <div className="aspect-[4/3] w-full bg-[#18181b] relative">
-                                <div className="absolute inset-0 bg-gradient-to-br from-[#f79f08]/5 to-transparent"></div>
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="text-center">
-                                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#f79f08]/10 flex items-center justify-center">
-                                            <span className="text-[#f79f08] text-2xl font-bold">BG</span>
-                                        </div>
-                                        <p className="text-gray-500 text-sm">Dashboard Preview</p>
-                                    </div>
-                                </div>
+                                <div 
+                                    className="absolute inset-0 bg-cover bg-center opacity-90"
+                                    style={{ backgroundImage: `url('${dashboardImageUrl}')` }}
+                                ></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#18181b] via-transparent to-transparent"></div>
                             </div>
                             
                             {/* Stats */}

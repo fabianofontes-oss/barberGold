@@ -93,7 +93,10 @@ export function FeaturesSection() {
                     {/* Feature Showcase */}
                     <div className="lg:col-span-7 h-full min-h-[500px] lg:h-auto">
                         <div className="relative h-full w-full rounded-3xl overflow-hidden border border-white/10 bg-[#1a1a1d] shadow-2xl">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#f79f08]/5 to-transparent"></div>
+                            <div 
+                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
+                                style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLYrbLeMM2VQsp19qISFlbcEM22WWo9nYI01lqdpll1OrgDdQvVshloIQw9KV9cECoV1U3sJ0I9wmvFE4P2ISH7ISWGOF0O4Tudwc8GApkF73g80o-ujk1L4S7WFP5LIl942oT5AiQ5goqHcxMvP8qIWtbQRxOr3e1O7tWJSO1SwU3bWFdsCecT7lQKJCeZdEKevScAcUNvMrqlmm5XdeMyz5QtIeRPOYqFV0dsXyeqRwwaxrhUj-hPtftDsNXKjVqE_THWDmk8RI')` }}
+                            ></div>
                             <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/60 to-transparent"></div>
                             
                             <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">

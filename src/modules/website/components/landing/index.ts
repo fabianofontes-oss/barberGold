@@ -5,6 +5,7 @@ export { ProblemSection } from './ProblemSection';
 export { FeaturesSection } from './FeaturesSection';
 export { MobileExperienceSection } from './MobileExperienceSection';
 export { PricingSection } from './PricingSection';
+export { PricingComparisonSection } from './PricingComparisonSection';
 export { TestimonialsSection } from './TestimonialsSection';
 export { FAQSection } from './FAQSection';
 export { FinalCTASection } from './FinalCTASection';

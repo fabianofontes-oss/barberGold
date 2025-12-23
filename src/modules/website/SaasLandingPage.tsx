@@ -6,6 +6,7 @@ import {
     FeaturesSection,
     MobileExperienceSection,
     PricingSection,
+    PricingComparisonSection,
     TestimonialsSection,
     FAQSection,
     FinalCTASection,
@@ -22,6 +23,7 @@ export default function SaasLandingPage() {
             <FeaturesSection />
             <MobileExperienceSection />
             <PricingSection />
+            <PricingComparisonSection />
             <TestimonialsSection />
             <FAQSection />
             <FinalCTASection />

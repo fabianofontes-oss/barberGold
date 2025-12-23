@@ -17,7 +17,10 @@ export function MobileExperienceSection() {
                             <div className="bg-[#0f0f11] h-[600px] w-full pt-12 px-6 flex flex-col gap-4">
                                 {/* Header */}
                                 <div className="flex items-center gap-3 pb-4 border-b border-white/5">
-                                    <div className="w-10 h-10 rounded-full bg-gray-700"></div>
+                                    <div 
+                                        className="w-10 h-10 rounded-full bg-gray-700 bg-cover bg-center"
+                                        style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDc-RJJTK8lKGxDzLMMfRjuh2m6vAX50cpbScJasKfBBLI5jOaG8EK9iPijnuwsuuylQnnbHZdSQjR_eQIC9L_kBE77qijfgFH0Cep3Mz0b8QBxqdGpRaZbrfHIUwu1y045j4jwx7L7ti_Zo9yzkgA1g4OwwMHeB8c9U-IL0LZUuEJl306-b_gTU1mzymGyssNMwijklnmIos_7pW5jwLdyW0_uh3CWlcYF9h-Xv59uuxujuSA8JupkCW7aYxyFEzzrt3iaHhpRxY0')` }}
+                                    ></div>
                                     <div>
                                         <div className="h-2 w-24 bg-gray-700 rounded mb-1"></div>
                                         <div className="h-2 w-16 bg-gray-800 rounded"></div>
