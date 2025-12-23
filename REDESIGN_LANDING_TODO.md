@@ -113,11 +113,51 @@ import { Scissors, DollarSign, Users, Calendar, TrendingDown, Shield, Star, Chec
 - Botão "Back to Login" com ícone ArrowLeft
 - Barra decorativa no bottom (gradient dourado)
 
+## Login Page
+
+### Arquivo: `src/app/login/page.tsx`
+
+**Layout Split Screen:**
+- **Lado Esquerdo (Desktop only):** Imagem hero de barbearia com overlay gradient
+  - Logo grande com ícone Scissors
+  - Título: "BarberGOLD"
+  - Descrição: "Premium management for the modern barbershop"
+  - Background: Imagem de barbearia vintage com opacity 0.8
+  - Gradient: `from-[#231c0f] via-[#231c0f]/60 to-transparent`
+
+- **Lado Direito:** Formulário de login
+  - Logo mobile (visível apenas em telas pequenas)
+  - Título: "Welcome Back"
+  - Descrição: "Please enter your details to sign in"
+  - Campos:
+    - Email or Username (input com border dourado no focus)
+    - Password (com botão de toggle visibility)
+  - Checkbox: "Remember me"
+  - Link: "Forgot Password?" (text-primary)
+  - Botão: "Log In" (bg-primary com glow effect)
+  - Footer: "Don't have an account? Register Here"
+
+**Cores específicas:**
+- Card bg: `#231c10`
+- Border: `#4a3e2a` / `#695430`
+- Input bg: `#342a18`
+- Text secondary: `#ccb58f`
+- Primary: `#f79f08`
+
+**Efeitos:**
+- Glow no botão hover: `shadow-[0_0_20px_rgba(247,159,8,0.3)]`
+- Active scale: `active:scale-[0.98]`
+- Checkbox customizado com ícone check
+
 ## Status
 - [ ] Landing Page (SaasLandingPage.tsx)
 - [ ] Forgot Password (forgot-password/page.tsx)
-- [ ] Login Page (opcional - manter atual ou atualizar)
+- [ ] Login Page (login/page.tsx)
 - [ ] Register Page (opcional - manter atual ou atualizar)
 
 ## Próxima Sessão
-Implementar as mudanças de forma incremental, testando o build a cada seção adicionada.
+Implementar as mudanças de forma incremental:
+1. Login page (split screen com hero image)
+2. Forgot password (card centralizado)
+3. Landing page (todas as seções)
+4. Testar build a cada implementação
