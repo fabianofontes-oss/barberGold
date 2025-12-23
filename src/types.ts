@@ -500,7 +500,7 @@ export interface GlobalSettings {
   appName: string;
   trialDays: number;
   currency: string;
-  stripeKey: string;
+  stripeKey?: string; // Deprecated: não deve ser usado no client-side
   enableMaintenance: boolean;
   enableSignup: boolean;
 }

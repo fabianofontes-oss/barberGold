@@ -1,13 +1,15 @@
-'use client';
-
 import React from 'react';
-import { Layout } from '@/components/Layout';
-import { SubscriptionGuard } from '@/components/SubscriptionGuard';
+import { AuthGuard } from '@/components/AuthGuard';
+import { AppLayoutClient } from './layout.client';
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+/**
+ * Layout principal de /app/*
+ * Server Component que aplica AuthGuard antes de renderizar o client layout
+ */
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Layout>
-      <SubscriptionGuard>{children}</SubscriptionGuard>
-    </Layout>
+    <AuthGuard requireProfile={true}>
+      <AppLayoutClient>{children}</AppLayoutClient>
+    </AuthGuard>
   );
 }

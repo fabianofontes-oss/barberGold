@@ -46,11 +46,14 @@ const INITIAL_CAMPAIGNS: MarketingCampaign[] = [
    { id: '2', title: 'New Finance Module', content: 'Check out the new Financial Reports in your dashboard.', type: 'MODAL', targetAudience: 'ALL', status: 'COMPLETED', clicks: 890, views: 1200, createdAt: new Date() },
 ];
 
+/**
+ * Configurações globais da aplicação (modo demo/localStorage)
+ * IMPORTANTE: Chaves de API (Stripe, etc.) devem ser server-side only (env vars)
+ */
 const INITIAL_GLOBAL_SETTINGS: GlobalSettings = {
    appName: 'BarberFlow',
    trialDays: 14,
    currency: 'USD',
-   stripeKey: 'sk_live_********************',
    enableMaintenance: false,
    enableSignup: true
 };
