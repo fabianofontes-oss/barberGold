@@ -48,23 +48,20 @@ function getEnv() {
   if (!parsed.success) {
     const errorDetails = JSON.stringify(parsed.error.flatten().fieldErrors, null, 2);
     
-    console.error('❌ ERRO CRÍTICO: Variáveis de ambiente inválidas');
+    console.error('⚠️ AVISO: Variáveis de ambiente faltando ou inválidas.');
     console.error('Detalhes:', errorDetails);
-    console.error('NODE_ENV:', process.env.NODE_ENV);
-    console.error('\n🔧 SOLUÇÃO:');
-    console.error('1. Acesse Vercel Dashboard > Settings > Environment Variables');
-    console.error('2. Configure: NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY');
-    console.error('3. Redeploy a aplicação\n');
+    console.error('Iniciando em MODO DE SEGURANÇA (DEMO) para evitar crash.');
 
-    // SEMPRE falha, tanto em dev quanto em prod
-    throw new Error(
-      `❌ Variáveis de ambiente obrigatórias faltando!\n\n` +
-      `Detalhes: ${errorDetails}\n\n` +
-      `Configure no Vercel Dashboard > Settings > Environment Variables:\n` +
-      `- NEXT_PUBLIC_SUPABASE_URL\n` +
-      `- NEXT_PUBLIC_SUPABASE_ANON_KEY\n\n` +
-      `Após configurar, faça redeploy.`
-    );
+    // Fallback seguro para evitar tela branca
+    return {
+      NEXT_PUBLIC_SUPABASE_URL: 'https://placeholder.supabase.co',
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'placeholder',
+      SUPABASE_SERVICE_ROLE_KEY: undefined,
+      NEXT_PUBLIC_APP_MODE: 'demo' as const,
+      STRIPE_SECRET_KEY: undefined,
+      STRIPE_WEBHOOK_SECRET: undefined,
+      NEXT_PUBLIC_SITE_URL: undefined,
+    };
   }
 
   return parsed.data;
