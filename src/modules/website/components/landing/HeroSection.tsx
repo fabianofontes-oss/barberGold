@@ -9,7 +9,7 @@ const avatarUrls = [
     'https://lh3.googleusercontent.com/aida-public/AB6AXuB0j6pEVrnFYictbabsZz63Yxp0xpxbpL8riq9ph2LYMOb9Cqr29doRxTNtZX88x9FgfbKIF1Gpi6FzWBGt8Z12o5lOGTYAWxbfgHrFiJSf7u-GD77hs8PCtZ3lj3c-m8Mb5LV1bOahRtIXMf6TcrWR90zP5yJkV-xx3MTd-d2oI0keF219UtrEX7R7qPfmoduAe2y8WouPN4jNNFzxqKSGQiLlF6GOKBitJChyXAaqcqABvHyM8U1F-xXJiSkY_17TPyc_m0VmKWk',
 ];
 
-const dashboardImageUrl = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDv-z38pNbnCShJXXRH89BSFe0Nk8tZt290bXI5O_NZRRdxC2TxoPrHTl_H8U8wg1g7d9wnPz_WR6wW5AxZ8gyHiW0F_7_qm4acvpj6L3QLDpaeHPjkGLzx3cusHwwzE9hyAJGd8Xk0bYvvDFCTPfp3t-Aqa2BhZy2zUO--BTg_YSajRn6ZX2-eqdIfnMucx3yKqS2DgiRgfb1e_vRNdLBRbXql6tIKm9Nu8YIT_qBLsIOg3EDQ2h9w4x4hV0P5uM1wn6FV8elljXE';
+const heroImageUrl = 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070';
 
 export function HeroSection() {
     return (
@@ -83,7 +83,7 @@ export function HeroSection() {
                             <div className="aspect-[4/3] w-full bg-[#18181b] relative">
                                 <div 
                                     className="absolute inset-0 bg-cover bg-center opacity-90"
-                                    style={{ backgroundImage: `url('${dashboardImageUrl}')` }}
+                                    style={{ backgroundImage: `url('${heroImageUrl}')` }}
                                 ></div>
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#18181b] via-transparent to-transparent"></div>
                             </div>
