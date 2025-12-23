@@ -959,3 +959,107 @@ As páginas em `src/app/app/*/page.tsx` estão como `use client`, mas apenas ren
 ---
 
 **Próxima Fase:** Auditoria Final (Parte 5/5)
+
+---
+
+## 5. 🧹 Qualidade e Veredito Final
+
+### 5.1 🧼 Higiene de Código
+
+#### ✅ TODOs e FIXMEs
+
+- ✅ Nenhum `TODO`/`FIXME` encontrado via varredura na pasta `src/`
+
+**Status:** ✅ Higiene de pendências em comentários está OK
+
+---
+
+#### ⚠️ Código morto / importações não utilizadas
+
+Executando `npm run lint`:
+
+- ✅ 0 errors
+- ⚠️ 128 warnings
+
+Principais sinais de “código morto”/desalinhamento:
+
+- ⚠️ Muitos `no-unused-vars` (imports/variáveis não usados), ex.:
+  - `src/modules/pdv/PointOfSale.tsx` (`Star` não usado)
+  - `src/modules/referrals/ReferralDashboard.tsx` (vários ícones e `ownerLink` não usados)
+  - `src/modules/office-v2/TenantsListV2.tsx` (`currentPlan` não usado)
+  - `src/modules/settings/components/PlanComparisonTable.tsx` (`Minus`, `catIdx` não usados)
+- ⚠️ `react-hooks/exhaustive-deps` (deps faltando em `useEffect`) em vários modais/telas
+- ⚠️ `jsx-a11y/alt-text` (img sem `alt`) em:
+  - `src/modules/pdv/PointOfSale.tsx`
+  - `src/modules/tips/TipsReviewWizard.tsx`
+
+Itens possivelmente “não integrados” hoje (sinal de acoplamento/arquitetura em transição):
+
+- ⚠️ `src/app/app/(protected)/layout.tsx` (o route group `(protected)` existe, mas as páginas estão em `src/app/app/*` — a checagem pode não estar ativa)
+- ⚠️ `src/lib/stripe/index.ts` exporta `getStripeSession`, mas não foi encontrado uso no projeto
+
+**Status:** ⚠️ Há oportunidades claras de limpeza e redução de ruído no código
+
+---
+
+#### ❌ TypeScript e tipagem (`any`)
+
+Varredura de tipagem no `src/`:
+
+- ❌ Alto uso de `any` (103 ocorrências em 27 arquivos)
+- Concentração notável em:
+  - `src/context/BarberContext.tsx` (muitas ocorrências; núcleo de estado/ações)
+  - `src/context/SaasV2Context.tsx`
+  - `src/modules/finance/Finance.tsx`
+  - `src/repositories/*/supabase.ts` (mapeamento de linhas do banco como `any`)
+- Impacto:
+  - ❌ Refactors arriscados
+  - ❌ Aumenta chance de bug em tempo de execução
+  - ❌ Dificulta evolução do modelo multi-tenant com segurança
+
+**Status:** ❌ Precisa reduzir `any` antes de evolução/escala do produto
+
+---
+
+## ✅ CONCLUSÃO E PLANO DE AÇÃO
+
+### Veredito
+
+**[CORRIGIR ANTES]**
+
+Motivos objetivos (bloqueadores para lançamento em produção):
+
+1. ❌ **Fluxo de autenticação incompleto**: `/auth/callback` é referenciado e não existe; reset de senha aponta para rota inexistente; `requireProfile` pode não estar aplicado em `/app/*`
+2. ❌ **Inconsistência Schema vs Código**: repositórios e webhook Stripe referenciam tabelas/colunas não presentes nos SQLs versionados
+3. 🚨 **Risco operacional de secrets/fallbacks**: fallbacks (`sk_test_mock_key`, `service_role_key_mock`) e chave Stripe em estado client-side (mesmo em demo)
+
+---
+
+### P1 (FAZER HOJE) — 3 tarefas prioritárias
+
+1. **P1 - Fechar Auth/Onboarding End-to-End**
+   - Criar rota `/auth/callback` no App Router
+   - Garantir proteção por perfil/tenant (`AuthGuard` realmente aplicado em `/app/*`)
+   - Definir fluxo único pós-signup (principalmente se houver confirmação de e-mail)
+
+2. **P1 - Alinhar Banco (SQL) com o Código**
+   - Resolver “Schema vs Código” (tabelas/colunas faltantes)
+   - Ajustar webhook Stripe para escrever em colunas existentes (ou criar migração)
+   - Definir fonte única de verdade para schema (migrations)
+
+3. **P1 - Remover riscos de secrets e endurecer env**
+   - Remover fallbacks de chaves (Stripe/Supabase service role)
+   - Falhar rápido em rotas server se env estiver faltando
+   - Garantir que `Stripe Secret Key` nunca exista no client (nem via “Super Admin UI”)
+
+---
+
+### P2 (PRÓXIMAS)
+
+1. **Reduzir `any` e aumentar tipagem** (começando por `BarberContext` e repos Supabase)
+2. **Corrigir warnings do ESLint** (unused vars, deps de hooks, `alt` em imagens)
+3. **Otimizar performance de imagens e bundle** (remotePatterns, `next/image`, lazy/dynamic charts)
+
+---
+
+**Status Final da Auditoria:** ✅ Partes 1–5 concluídas e consolidadas neste relatório
