@@ -309,6 +309,7 @@ export const PointOfSale = () => {
                   onClick={() => setDisplayMode('GRID')}
                   className={`p-1.5 rounded transition-all ${displayMode === 'GRID' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                   title="Grade Grande"
+                  aria-label="Grade Grande"
                 >
                   <LayoutGrid className="w-4 h-4" />
                 </button>
@@ -316,6 +317,7 @@ export const PointOfSale = () => {
                   onClick={() => setDisplayMode('COMPACT')}
                   className={`p-1.5 rounded transition-all ${displayMode === 'COMPACT' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                   title="Grade Compacta"
+                  aria-label="Grade Compacta"
                 >
                   <Grid3X3 className="w-4 h-4" />
                 </button>
@@ -323,6 +325,7 @@ export const PointOfSale = () => {
                   onClick={() => setDisplayMode('LIST')}
                   className={`p-1.5 rounded transition-all ${displayMode === 'LIST' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                   title="Lista"
+                  aria-label="Lista"
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -415,7 +418,11 @@ export const PointOfSale = () => {
           {/* Mobile Header for Cart */}
           <div className="lg:hidden p-4 border-b border-zinc-800 flex justify-between items-center bg-zinc-950">
              <h3 className="font-bold text-white text-lg">Carrinho ({cart.length})</h3>
-             <button onClick={() => setMobileView('CATALOG')} className="p-2 bg-zinc-800 rounded-full text-zinc-400">
+             <button
+               onClick={() => setMobileView('CATALOG')}
+               className="p-2 bg-zinc-800 rounded-full text-zinc-400"
+               aria-label="Minimizar carrinho"
+             >
                 <ChevronDown className="w-5 h-5" />
              </button>
           </div>
@@ -442,6 +449,7 @@ export const PointOfSale = () => {
                         onClick={() => setIsClientModalOpen(true)}
                         className="bg-zinc-800 hover:bg-zinc-700 text-white p-2 rounded-lg transition-colors border border-zinc-700"
                         title="Quick Add Client"
+                        aria-label="Adicionar cliente rapidamente"
                      >
                         <UserPlus className="w-4 h-4" />
                      </button>
@@ -489,7 +497,11 @@ export const PointOfSale = () => {
                           activeDiscount.type === 'WINBACK' ? '👋 Win-Back Promo' : 
                           activeDiscount.type === 'CLUB_CREDIT' ? '👑 Crédito do Clube' : '🏆 Reward Claimed'}
                       </span>
-                      <button onClick={() => { setActiveDiscount(null); setClubCreditApplied(false); }} className="text-zinc-500 hover:text-white">
+                      <button
+                        onClick={() => { setActiveDiscount(null); setClubCreditApplied(false); }}
+                        className="text-zinc-500 hover:text-white"
+                        aria-label="Remover desconto"
+                      >
                          <Trash2 className="w-3 h-3" />
                       </button>
                    </div>
@@ -540,7 +552,11 @@ export const PointOfSale = () => {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-amber-500 font-medium">${item.price}</span>
-                    <button onClick={() => removeFromCart(idx)} className="text-zinc-600 hover:text-red-400">
+                    <button
+                      onClick={() => removeFromCart(idx)}
+                      className="text-zinc-600 hover:text-red-400"
+                      aria-label={`Remover ${item.name} do carrinho`}
+                    >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -654,7 +670,11 @@ export const PointOfSale = () => {
                         <span className="text-xs text-zinc-300">{PAYMENT_LABELS[sp.method]}</span>
                         <div className="flex items-center gap-2">
                           <span className="text-sm text-white font-bold">${sp.amount.toFixed(2)}</span>
-                          <button onClick={() => handleRemoveSplitPayment(idx)} className="text-red-400 hover:text-red-300">
+                          <button
+                            onClick={() => handleRemoveSplitPayment(idx)}
+                            className="text-red-400 hover:text-red-300"
+                            aria-label={`Remover pagamento parcial de ${PAYMENT_LABELS[sp.method]}`}
+                          >
                             <Trash2 className="w-3 h-3" />
                           </button>
                         </div>
@@ -736,6 +756,7 @@ export const PointOfSale = () => {
             <button 
                onClick={() => setMobileView('CART')}
                className="w-full bg-amber-500 text-zinc-900 font-bold py-3 rounded-xl shadow-lg flex justify-between items-center px-6 animate-fade-in-up"
+               aria-label="Ver carrinho"
             >
                <span className="flex items-center gap-2"><ShoppingBag className="w-5 h-5" /> {cart.length} itens</span>
                <div className="flex items-center gap-2">
@@ -753,7 +774,13 @@ export const PointOfSale = () => {
             <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-sm p-6 shadow-2xl animate-fade-in md:rounded-2xl border-0 md:border md:border-zinc-800 flex flex-col justify-center">
                <div className="flex justify-between items-center mb-6">
                   <h3 className="text-xl font-bold text-white">Quick Add Client</h3>
-                  <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"><X className="w-5 h-5"/></button>
+                  <button
+                     onClick={() => setIsClientModalOpen(false)}
+                     className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"
+                     aria-label="Fechar modal"
+                  >
+                     <X className="w-5 h-5"/>
+                  </button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-6">
                   <div>
