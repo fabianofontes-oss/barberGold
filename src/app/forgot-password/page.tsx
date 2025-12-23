@@ -66,9 +66,9 @@ export default function ForgotPasswordPage() {
                     
                     {/* Page Heading */}
                     <div className="flex flex-col gap-3 p-6 pb-2 text-center">
-                        <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">Forgot Password?</h1>
+                        <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">Esqueceu a Senha?</h1>
                         <p className="text-[#ccb58f] text-sm font-normal leading-relaxed px-4">
-                            Don&apos;t worry, it happens. Enter the email associated with your BarberGOLD account.
+                            Não se preocupe, acontece. Digite o email associado à sua conta BarberGOLD.
                         </p>
                     </div>
                     
@@ -89,13 +89,13 @@ export default function ForgotPasswordPage() {
                         <form onSubmit={handleReset} className="flex flex-col gap-5">
                             {/* Email TextField */}
                             <label className="flex flex-col min-w-40 flex-1 gap-2">
-                                <p className="text-white text-sm font-medium leading-normal ml-1">Email Address</p>
+                                <p className="text-white text-sm font-medium leading-normal ml-1">Email</p>
                                 <input
                                     type="email"
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Enter your registered email"
+                                    placeholder="Digite seu email cadastrado"
                                     disabled={loading || success}
                                     className="w-full rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-[#f79f08] border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-14 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal leading-normal transition-colors disabled:opacity-50"
                                 />
@@ -113,7 +113,7 @@ export default function ForgotPasswordPage() {
                                             <Loader2 className="animate-spin h-5 w-5 mr-2" />
                                             Enviando...
                                         </>
-                                    ) : 'Send Reset Link'}
+                                    ) : 'Enviar Link de Recuperação'}
                                 </button>
                             </div>
                         </form>
@@ -121,7 +121,7 @@ export default function ForgotPasswordPage() {
                         {/* Divider */}
                         <div className="flex items-center gap-4 py-1">
                             <div className="h-[1px] flex-1 bg-[#4a3e2a]"></div>
-                            <span className="text-[#ccb58f] text-[10px] font-bold uppercase tracking-widest opacity-60">OR</span>
+                            <span className="text-[#ccb58f] text-[10px] font-bold uppercase tracking-widest opacity-60">OU</span>
                             <div className="h-[1px] flex-1 bg-[#4a3e2a]"></div>
                         </div>
                         
@@ -132,7 +132,7 @@ export default function ForgotPasswordPage() {
                                 className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent hover:bg-[#342a18] text-[#ccb58f] hover:text-white text-sm font-bold leading-normal tracking-wide transition-colors gap-2 group"
                             >
                                 <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-                                <span>Back to Login</span>
+                                <span>Voltar para Login</span>
                             </Link>
                         </div>
                     </div>

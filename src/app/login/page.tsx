@@ -81,7 +81,7 @@ export default function LoginPage() {
             <h2 className="text-4xl font-bold text-white tracking-tight">BarberGOLD</h2>
           </Link>
           <p className="text-xl text-[#ccb58f] font-medium leading-relaxed">
-            Premium management for the modern barbershop. Streamline your appointments, manage your staff, and elevate your client experience.
+            Gestão premium para a barbearia moderna. Organize seus agendamentos, gerencie sua equipe e eleve a experiência do seu cliente.
           </p>
         </div>
       </div>
@@ -97,8 +97,8 @@ export default function LoginPage() {
           
           {/* Header */}
           <div className="text-center lg:text-left space-y-2">
-            <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">Welcome Back</h1>
-            <p className="text-[#ccb58f] text-base font-normal leading-normal">Please enter your details to sign in.</p>
+            <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">Bem-vindo de Volta</h1>
+            <p className="text-[#ccb58f] text-base font-normal leading-normal">Digite seus dados para entrar.</p>
           </div>
 
           {error && (
@@ -111,13 +111,13 @@ export default function LoginPage() {
           <form onSubmit={handleLogin} className="flex flex-col gap-5 mt-4">
             {/* Email / Username Field */}
             <label className="flex flex-col w-full">
-              <p className="text-white text-base font-medium leading-normal pb-2">Email or Username</p>
+              <p className="text-white text-base font-medium leading-normal pb-2">Email</p>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email or username"
+                placeholder="Digite seu email"
                 disabled={loading}
                 className="w-full rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-[#f79f08] border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-14 placeholder:text-[#ccb58f]/70 px-4 text-base font-normal leading-normal transition-colors disabled:opacity-50"
               />
@@ -126,7 +126,7 @@ export default function LoginPage() {
             {/* Password Field */}
             <label className="flex flex-col w-full">
               <div className="flex justify-between items-center pb-2">
-                <p className="text-white text-base font-medium leading-normal">Password</p>
+                <p className="text-white text-base font-medium leading-normal">Senha</p>
               </div>
               <div className="flex w-full flex-1 items-stretch rounded-lg focus-within:ring-1 focus-within:ring-[#f79f08] focus-within:border-[#f79f08] border border-[#695430] bg-[#342a18] h-14 overflow-hidden transition-colors">
                 <input
@@ -134,7 +134,7 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  placeholder="Digite sua senha"
                   disabled={loading}
                   className="flex w-full min-w-0 flex-1 resize-none overflow-hidden border-none bg-transparent text-white focus:outline-none focus:ring-0 placeholder:text-[#ccb58f]/70 px-4 text-base font-normal leading-normal h-full disabled:opacity-50"
                 />
@@ -159,10 +159,10 @@ export default function LoginPage() {
                   />
                   <Check className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-[#231c0f] opacity-0 peer-checked:opacity-100 font-bold" />
                 </div>
-                <span className="text-base font-medium text-[#ccb58f] group-hover:text-[#f79f08] transition-colors">Remember me</span>
+                <span className="text-base font-medium text-[#ccb58f] group-hover:text-[#f79f08] transition-colors">Lembrar-me</span>
               </label>
               <Link href="/forgot-password" className="text-base font-medium text-[#f79f08] hover:text-[#f79f08]/80 transition-colors">
-                Forgot Password?
+                Esqueceu a Senha?
               </Link>
             </div>
 
@@ -177,16 +177,16 @@ export default function LoginPage() {
                   <Loader2 className="animate-spin h-5 w-5 mr-2" />
                   Processando...
                 </>
-              ) : 'Log In'}
+              ) : 'Entrar'}
             </button>
           </form>
 
           {/* Footer */}
           <div className="flex justify-center mt-4">
             <p className="text-[#ccb58f] text-base font-normal">
-              Don&apos;t have an account?{' '}
+              Não tem uma conta?{' '}
               <Link href="/register" className="text-[#f79f08] font-bold hover:underline ml-1">
-                Register Here
+                Cadastre-se
               </Link>
             </p>
           </div>

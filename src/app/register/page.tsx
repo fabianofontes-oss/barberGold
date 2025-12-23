@@ -135,10 +135,10 @@ function RegisterForm() {
                     {/* Hero Text */}
                     <div className="max-w-md">
                         <h1 className="text-4xl font-black leading-tight tracking-tight mb-4 text-white">
-                            Join the Gold Standard.
+                            Entre para o Padrão Ouro.
                         </h1>
                         <p className="text-[#ccb58f] text-lg font-medium leading-relaxed">
-                            Manage your shop with precision and style. Streamline appointments, manage staff, and grow your business with the platform built for professionals.
+                            Gerencie sua barbearia com precisão e estilo. Organize agendamentos, gerencie equipe e faça seu negócio crescer com a plataforma feita para profissionais.
                         </p>
                         <div className="mt-8 flex gap-2">
                             <div className="h-1 w-12 rounded-full bg-[#f79f08]"></div>
@@ -163,15 +163,15 @@ function RegisterForm() {
                         <span className="font-bold text-lg">BarberGOLD</span>
                     </Link>
                     <Link href="/login" className="text-sm font-bold text-[#f79f08] hover:text-white transition-colors">
-                        Log In
+                        Entrar
                     </Link>
                 </div>
                 
                 <div className="w-full max-w-[480px] flex flex-col gap-8">
                     {/* Form Header */}
                     <div className="space-y-2">
-                        <h2 className="text-white text-3xl font-bold leading-tight tracking-tight">Create Account</h2>
-                        <p className="text-[#ccb58f] text-base">Enter your details below to get started.</p>
+                        <h2 className="text-white text-3xl font-bold leading-tight tracking-tight">Criar Conta</h2>
+                        <p className="text-[#ccb58f] text-base">Preencha seus dados para começar.</p>
                     </div>
 
                     {error && (
@@ -183,13 +183,13 @@ function RegisterForm() {
                     <form onSubmit={handleRegister} className="flex flex-col gap-5">
                         {/* Full Name */}
                         <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal">Full Name</span>
+                            <span className="text-white text-sm font-medium leading-normal">Nome Completo</span>
                             <input
                                 type="text"
                                 required
                                 value={fullname}
                                 onChange={(e) => setFullname(e.target.value)}
-                                placeholder="e.g. James Cutter"
+                                placeholder="Ex: João Silva"
                                 disabled={loading}
                                 className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
@@ -198,7 +198,7 @@ function RegisterForm() {
                         {/* Barbershop Slug */}
                         {shopSlug && (
                             <label className="flex flex-col gap-2">
-                                <span className="text-white text-sm font-medium leading-normal">Your Barbershop URL</span>
+                                <span className="text-white text-sm font-medium leading-normal">URL da sua Barbearia</span>
                                 <div className="flex items-center gap-2">
                                     <span className="text-[#ccb58f]/50 text-sm">barber.gold/</span>
                                     <input
@@ -209,16 +209,16 @@ function RegisterForm() {
                                         className="flex-1 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#f79f08]/30 bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                                     />
                                 </div>
-                                <p className="text-xs text-[#ccb58f]/50">Reserved from landing page</p>
+                                <p className="text-xs text-[#ccb58f]/50">Reservado da página inicial</p>
                             </label>
                         )}
 
                         {/* Selected Plan */}
                         {selectedPlan && (
                             <div className="flex flex-col gap-2">
-                                <span className="text-white text-sm font-medium leading-normal">Selected Plan</span>
+                                <span className="text-white text-sm font-medium leading-normal">Plano Selecionado</span>
                                 <div className="px-4 h-12 flex items-center bg-[#f79f08]/10 border border-[#f79f08]/30 rounded-lg">
-                                    <span className="text-[#f79f08] font-bold capitalize">{selectedPlan} Plan</span>
+                                    <span className="text-[#f79f08] font-bold capitalize">Plano {selectedPlan}</span>
                                     <span className="text-[#ccb58f] text-sm ml-2">
                                         {selectedPlan === 'start' && '- R$ 89/mês'}
                                         {selectedPlan === 'pro' && '- R$ 149/mês'}
@@ -230,13 +230,13 @@ function RegisterForm() {
 
                         {/* Email Address */}
                         <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal">Email Address</span>
+                            <span className="text-white text-sm font-medium leading-normal">Email</span>
                             <input
                                 type="email"
                                 required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="name@barbershop.com"
+                                placeholder="email@suabarbearia.com"
                                 disabled={loading}
                                 className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
@@ -244,14 +244,14 @@ function RegisterForm() {
 
                         {/* Password */}
                         <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal">Password</span>
+                            <span className="text-white text-sm font-medium leading-normal">Senha</span>
                             <div className="relative">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="Create a password"
+                                    placeholder="Crie uma senha"
                                     disabled={loading}
                                     className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 pl-4 pr-12 text-base font-normal transition-all duration-200 disabled:opacity-50"
                                 />
@@ -267,14 +267,14 @@ function RegisterForm() {
 
                         {/* Confirm Password */}
                         <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal">Confirm Password</span>
+                            <span className="text-white text-sm font-medium leading-normal">Confirmar Senha</span>
                             <div className="relative">
                                 <input
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     required
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
-                                    placeholder="Confirm your password"
+                                    placeholder="Confirme sua senha"
                                     disabled={loading}
                                     className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 pl-4 pr-12 text-base font-normal transition-all duration-200 disabled:opacity-50"
                                 />
@@ -302,13 +302,13 @@ function RegisterForm() {
                                 />
                             </div>
                             <label htmlFor="terms" className="text-sm font-normal text-[#ccb58f] leading-tight cursor-pointer select-none">
-                                I agree to the{' '}
+                                Eu concordo com os{' '}
                                 <Link href="/termos" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
-                                    Terms of Service
+                                    Termos de Serviço
                                 </Link>
-                                {' '}and{' '}
+                                {' '}e{' '}
                                 <Link href="/privacidade" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
-                                    Privacy Policy
+                                    Política de Privacidade
                                 </Link>.
                             </label>
                         </div>
@@ -324,7 +324,7 @@ function RegisterForm() {
                                     <Loader2 className="animate-spin h-5 w-5 mr-2" />
                                     Processando...
                                 </>
-                            ) : 'Create Account'}
+                            ) : 'Criar Conta'}
                         </button>
 
                     </form>
@@ -332,7 +332,7 @@ function RegisterForm() {
                     {/* Divider */}
                     <div className="relative flex items-center py-2">
                         <div className="flex-grow border-t border-[#695430]/50"></div>
-                        <span className="flex-shrink-0 mx-4 text-[#ccb58f] text-sm">Or continue with</span>
+                        <span className="flex-shrink-0 mx-4 text-[#ccb58f] text-sm">Ou continue com</span>
                         <div className="flex-grow border-t border-[#695430]/50"></div>
                     </div>
 
@@ -355,9 +355,9 @@ function RegisterForm() {
                     {/* Login Link */}
                     <div className="text-center mt-2">
                         <p className="text-[#ccb58f] text-sm">
-                            Already have an account?{' '}
+                            Já tem uma conta?{' '}
                             <Link href="/login" className="text-[#f79f08] font-bold hover:underline ml-1">
-                                Log In
+                                Entrar
                             </Link>
                         </p>
                     </div>
