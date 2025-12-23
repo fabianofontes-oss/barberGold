@@ -4,6 +4,17 @@ import type { TenantPlanRepository, TenantRecord } from './types';
 const TABLE_TENANTS = 'tenants_registry';
 const TABLE_SESSION = 'app_session';
 
+// Tipo para linhas do banco de dados
+type TenantRow = {
+  id: string;
+  name: string;
+  owner_name: string;
+  plan_id: string;
+  billing_interval: string;
+  status: string;
+  created_at: string;
+};
+
 export function createTenantPlanSupabaseRepository(): TenantPlanRepository {
   return {
     async getTenants() {
@@ -15,7 +26,7 @@ export function createTenantPlanSupabaseRepository(): TenantPlanRepository {
 
       if (error) throw error;
 
-      return (data ?? []).map((row: any) => ({
+      return (data ?? []).map((row: TenantRow): TenantRecord => ({
         id: String(row.id),
         shopName: String(row.name ?? ''),
         ownerName: String(row.owner_name ?? ''),

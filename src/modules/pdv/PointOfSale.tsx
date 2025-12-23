@@ -13,7 +13,6 @@ import {
   Scissors,
   Package,
   Gift,
-  Star,
   Zap,
   HandCoins,
   Wallet,
@@ -532,7 +531,7 @@ export const PointOfSale = () => {
                 <div key={idx} className="flex justify-between items-center bg-zinc-950/50 p-3 rounded-lg border border-zinc-800/50">
                   <div className="flex items-center gap-3">
                      {item.type === 'PRODUCT' && 'image' in item && item.image && (
-                        <img src={item.image} className="w-8 h-8 rounded object-cover" />
+                        <img src={item.image} alt={item.name} className="w-8 h-8 rounded object-cover" />
                      )}
                      <div>
                       <p className="text-zinc-200 font-medium text-sm">{item.name}</p>
