@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getCurrentProfile } from '@/lib/auth/getCurrentProfile';
+import { headers } from 'next/headers';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -13,6 +14,8 @@ interface AuthGuardProps {
  */
 export async function AuthGuard({ children, requireProfile = true }: AuthGuardProps) {
   const profileResult = await getCurrentProfile();
+  const headersList = await headers();
+  const pathname = headersList.get('x-invoke-path') || headersList.get('x-pathname') || '';
 
   // Não está logado
   if (!profileResult) {
@@ -20,7 +23,8 @@ export async function AuthGuard({ children, requireProfile = true }: AuthGuardPr
   }
 
   // Logado mas sem profile
-  if (requireProfile && !profileResult.profile) {
+  // IMPORTANTE: Não redirecionar para /app/setup se já estiver em /app/setup (evita loop)
+  if (requireProfile && !profileResult.profile && !pathname.includes('/app/setup')) {
     redirect('/app/setup');
   }
 

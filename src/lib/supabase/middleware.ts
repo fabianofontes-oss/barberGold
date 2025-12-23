@@ -6,6 +6,9 @@ export async function updateSession(request: NextRequest) {
     request,
   })
 
+  // Adiciona pathname aos headers para que AuthGuard possa detectar a rota
+  supabaseResponse.headers.set('x-pathname', request.nextUrl.pathname)
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
