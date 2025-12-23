@@ -310,9 +310,9 @@ export default function SaasLandingPage() {
                             © 2025 BarberGOLD. Todos os direitos reservados.
                         </p>
                         <div className="flex justify-center gap-6 text-sm">
-                            <a href="#" className="hover:text-[#f79f08] transition-colors text-gray-400">Termos de Uso</a>
-                            <a href="#" className="hover:text-[#f79f08] transition-colors text-gray-400">Privacidade</a>
-                            <a href="#" className="hover:text-[#f79f08] transition-colors text-gray-400">Contato</a>
+                            <a href="/login" className="hover:text-[#f79f08] transition-colors text-gray-400">Termos de Uso</a>
+                            <a href="/login" className="hover:text-[#f79f08] transition-colors text-gray-400">Privacidade</a>
+                            <a href="mailto:contato@barbergold.com" className="hover:text-[#f79f08] transition-colors text-gray-400">Contato</a>
                         </div>
                     </div>
                 </div>
