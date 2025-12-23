@@ -94,11 +94,13 @@ ALTER TABLE public.referral_partners ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.referral_sales ENABLE ROW LEVEL SECURITY;
 
 -- Políticas RLS para app_session
+DROP POLICY IF EXISTS "Users can manage their own session" ON public.app_session;
 CREATE POLICY "Users can manage their own session"
   ON public.app_session FOR ALL
   USING (user_id = auth.uid());
 
 -- Políticas RLS para tenant_referral_config
+DROP POLICY IF EXISTS "Owners can view their tenant referral config" ON public.tenant_referral_config;
 CREATE POLICY "Owners can view their tenant referral config"
   ON public.tenant_referral_config FOR SELECT
   USING (
@@ -107,6 +109,7 @@ CREATE POLICY "Owners can view their tenant referral config"
     )
   );
 
+DROP POLICY IF EXISTS "Owners can manage their tenant referral config" ON public.tenant_referral_config;
 CREATE POLICY "Owners can manage their tenant referral config"
   ON public.tenant_referral_config FOR ALL
   USING (
@@ -116,6 +119,7 @@ CREATE POLICY "Owners can manage their tenant referral config"
   );
 
 -- Políticas RLS para referral_partners
+DROP POLICY IF EXISTS "Users can view partners of their tenant" ON public.referral_partners;
 CREATE POLICY "Users can view partners of their tenant"
   ON public.referral_partners FOR SELECT
   USING (
@@ -124,6 +128,7 @@ CREATE POLICY "Users can view partners of their tenant"
     )
   );
 
+DROP POLICY IF EXISTS "Owners can manage partners" ON public.referral_partners;
 CREATE POLICY "Owners can manage partners"
   ON public.referral_partners FOR ALL
   USING (
@@ -133,6 +138,7 @@ CREATE POLICY "Owners can manage partners"
   );
 
 -- Políticas RLS para referral_sales
+DROP POLICY IF EXISTS "Users can view sales of their tenant" ON public.referral_sales;
 CREATE POLICY "Users can view sales of their tenant"
   ON public.referral_sales FOR SELECT
   USING (
@@ -141,6 +147,7 @@ CREATE POLICY "Users can view sales of their tenant"
     )
   );
 
+DROP POLICY IF EXISTS "System can create sales" ON public.referral_sales;
 CREATE POLICY "System can create sales"
   ON public.referral_sales FOR INSERT
   WITH CHECK (true);
