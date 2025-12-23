@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
+import { Scissors, ArrowLeft, Loader2 } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
@@ -36,100 +38,111 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f0f11] flex items-center justify-center p-8">
-            <div className="w-full max-w-md">
-                {/* Card */}
-                <div className="bg-[#18181b] border border-white/10 rounded-2xl p-8 shadow-2xl">
-                    {/* Icon */}
-                    <div className="flex justify-center mb-6">
-                        <div className="w-16 h-16 bg-[#f79f08] rounded-2xl flex items-center justify-center">
-                            <svg className="w-8 h-8 text-[#0f0f11]" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2L3 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
-                            </svg>
+        <div className="relative flex h-full min-h-screen w-full flex-col bg-[#231c0f] overflow-x-hidden antialiased">
+            {/* Background Image with Overlay */}
+            <div className="fixed inset-0 z-0">
+                <div className="absolute inset-0">
+                    <Image
+                        src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074"
+                        alt="Dark moody barbershop interior"
+                        fill
+                        className="object-cover opacity-20 blur-[2px] scale-105"
+                        priority
+                    />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-[#231c0f] via-[#231c0f]/95 to-[#231c0f]"></div>
+            </div>
+            
+            {/* Main Layout Container */}
+            <div className="flex h-full grow flex-col relative z-10 items-center justify-center p-4">
+                {/* Central Card */}
+                <div className="flex flex-col w-full max-w-[480px] bg-[#231c10] rounded-xl border border-[#4a3e2a] shadow-2xl overflow-hidden backdrop-blur-sm">
+                    {/* Logo / Brand Area */}
+                    <div className="flex justify-center pt-10 pb-2">
+                        <div className="h-20 w-20 bg-gradient-to-br from-[#f79f08] to-[#cc8400] rounded-xl flex items-center justify-center shadow-lg shadow-[#f79f08]/10 rotate-3 border-b-4 border-b-[#9e6b00]">
+                            <Scissors className="text-[#231c0f] w-10 h-10" />
                         </div>
                     </div>
-
-                    {/* Title */}
-                    <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-white mb-2">Forgot Password?</h2>
-                        <p className="text-gray-400">
+                    
+                    {/* Page Heading */}
+                    <div className="flex flex-col gap-3 p-6 pb-2 text-center">
+                        <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">Forgot Password?</h1>
+                        <p className="text-[#ccb58f] text-sm font-normal leading-relaxed px-4">
                             Don&apos;t worry, it happens. Enter the email associated with your BarberGOLD account.
                         </p>
                     </div>
+                    
+                    {/* Form Fields */}
+                    <div className="flex flex-col gap-5 p-8 pt-4">
+                        {error && (
+                            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
+                                {error}
+                            </div>
+                        )}
 
-                    {error && (
-                        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
-                            {error}
-                        </div>
-                    )}
-
-                    {success && (
-                        <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500 text-sm">
-                            Link de recuperação enviado com sucesso! Verifique seu e-mail.
-                        </div>
-                    )}
-
-                    {/* Form */}
-                    <form onSubmit={handleReset} className="space-y-6">
-                        {/* Email */}
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                                Email Address
+                        {success && (
+                            <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500 text-sm">
+                                Link de recuperação enviado com sucesso! Verifique seu e-mail.
+                            </div>
+                        )}
+                        
+                        <form onSubmit={handleReset} className="flex flex-col gap-5">
+                            {/* Email TextField */}
+                            <label className="flex flex-col min-w-40 flex-1 gap-2">
+                                <p className="text-white text-sm font-medium leading-normal ml-1">Email Address</p>
+                                <input
+                                    type="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Enter your registered email"
+                                    disabled={loading || success}
+                                    className="w-full rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-[#f79f08] border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-14 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal leading-normal transition-colors disabled:opacity-50"
+                                />
                             </label>
-                            <input
-                                id="email"
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Enter your registered email"
-                                disabled={loading || success}
-                                className="w-full px-4 py-3 bg-[#0f0f11] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all disabled:opacity-50"
-                            />
-                        </div>
-
-                        {/* Submit Button */}
-                        <button
-                            type="submit"
-                            disabled={loading || success}
-                            className="w-full bg-[#f79f08] hover:bg-[#d88b06] text-[#0f0f11] font-bold py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] hover:shadow-[0_0_30px_rgba(247,159,8,0.4)] hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                        >
-                            {loading ? (
-                                <>
-                                    <svg className="animate-spin h-5 w-5 text-[#0f0f11]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    Enviando...
-                                </>
-                            ) : 'Send Reset Link'}
-                        </button>
-
+                            
+                            {/* Primary Button */}
+                            <div className="pt-2">
+                                <button
+                                    type="submit"
+                                    disabled={loading || success}
+                                    className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#f79f08] hover:bg-[#ffad1f] text-[#231c10] text-base font-bold leading-normal tracking-wide transition-all transform active:scale-[0.98] shadow-lg shadow-[#f79f08]/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {loading ? (
+                                        <>
+                                            <Loader2 className="animate-spin h-5 w-5 mr-2" />
+                                            Enviando...
+                                        </>
+                                    ) : 'Send Reset Link'}
+                                </button>
+                            </div>
+                        </form>
+                        
                         {/* Divider */}
-                        <div className="relative my-6">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-white/10"></div>
-                            </div>
-                            <div className="relative flex justify-center text-sm">
-                                <span className="px-4 bg-[#18181b] text-gray-500 uppercase text-xs tracking-wider">OR</span>
-                            </div>
+                        <div className="flex items-center gap-4 py-1">
+                            <div className="h-[1px] flex-1 bg-[#4a3e2a]"></div>
+                            <span className="text-[#ccb58f] text-[10px] font-bold uppercase tracking-widest opacity-60">OR</span>
+                            <div className="h-[1px] flex-1 bg-[#4a3e2a]"></div>
                         </div>
-
-                        {/* Back to Login */}
-                        <Link
-                            href="/login"
-                            className="flex items-center justify-center gap-2 w-full text-gray-300 hover:text-white transition-colors group"
-                        >
-                            <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                            <span className="font-medium">Back to Login</span>
-                        </Link>
-                    </form>
+                        
+                        {/* Secondary Button (Back to Login) */}
+                        <div>
+                            <Link
+                                href="/login"
+                                className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent hover:bg-[#342a18] text-[#ccb58f] hover:text-white text-sm font-bold leading-normal tracking-wide transition-colors gap-2 group"
+                            >
+                                <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
+                                <span>Back to Login</span>
+                            </Link>
+                        </div>
+                    </div>
+                    
+                    {/* Decorative bottom edge */}
+                    <div className="h-1 w-full bg-gradient-to-r from-[#231c10] via-[#f79f08]/50 to-[#231c10]"></div>
                 </div>
-
-                {/* Footer Text */}
-                <p className="mt-8 text-center text-sm text-gray-600">
+                
+                {/* Simple Footer */}
+                <p className="mt-8 text-[#ccb58f]/40 text-xs font-medium tracking-wide">
                     BARBERGOLD MANAGEMENT SYSTEMS
                 </p>
             </div>

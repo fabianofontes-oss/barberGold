@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
+import { Scissors, Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
 
 function RegisterForm() {
     const searchParams = useSearchParams();
@@ -106,107 +107,119 @@ function RegisterForm() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f0f11] flex">
+        <div className="min-h-screen bg-[#231c0f] flex">
             {/* Left Side - Image */}
-            <div className="hidden lg:flex lg:w-1/2 relative bg-[#18181b] overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/40 z-10" />
-                <Image
-                    src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070"
-                    alt="Professional Barber"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-                <div className="relative z-20 flex flex-col justify-between p-12 text-white">
-                    <Link href="/" className="flex items-center gap-3">
-                        <svg className="w-10 h-10 text-[#f79f08]" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2L3 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
-                        </svg>
-                        <span className="text-2xl font-bold">Barber<span className="text-[#f79f08]">GOLD</span></span>
+            <div className="hidden lg:flex lg:w-1/2 xl:w-5/12 relative flex-col justify-between bg-[#1a150b] overflow-hidden">
+                {/* Background Image */}
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070"
+                        alt="Barber working"
+                        fill
+                        className="object-cover opacity-60 grayscale mix-blend-overlay"
+                        priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#231c0f] via-[#231c0f]/80 to-transparent"></div>
+                </div>
+                
+                {/* Content Overlay */}
+                <div className="relative z-10 p-12 flex flex-col h-full justify-between">
+                    {/* Brand Logo */}
+                    <Link href="/" className="flex items-center gap-3 text-[#f79f08]">
+                        <div className="size-8 rounded bg-[#f79f08]/20 flex items-center justify-center text-[#f79f08]">
+                            <Sparkles className="size-5" />
+                        </div>
+                        <span className="text-xl font-bold tracking-tight text-white">BarberGOLD</span>
                     </Link>
-
-                    <div>
-                        <h1 className="text-4xl font-bold mb-4 leading-tight">
+                    
+                    {/* Hero Text */}
+                    <div className="max-w-md">
+                        <h1 className="text-4xl font-black leading-tight tracking-tight mb-4 text-white">
                             Join the Gold Standard.
                         </h1>
-                        <p className="text-gray-300 text-lg max-w-md">
+                        <p className="text-[#ccb58f] text-lg font-medium leading-relaxed">
                             Manage your shop with precision and style. Streamline appointments, manage staff, and grow your business with the platform built for professionals.
                         </p>
-                        <div className="w-16 h-1 bg-[#f79f08] mt-6"></div>
+                        <div className="mt-8 flex gap-2">
+                            <div className="h-1 w-12 rounded-full bg-[#f79f08]"></div>
+                            <div className="h-1 w-4 rounded-full bg-[#342a18]"></div>
+                            <div className="h-1 w-4 rounded-full bg-[#342a18]"></div>
+                        </div>
+                    </div>
+                    
+                    {/* Footer Text */}
+                    <div className="text-sm text-[#ccb58f]/60">
+                        © 2025 BarberGOLD Inc. All rights reserved.
                     </div>
                 </div>
             </div>
 
             {/* Right Side - Form */}
-            <div className="flex-1 flex items-center justify-center p-8">
-                <div className="w-full max-w-md">
-                    {/* Mobile Logo */}
-                    <Link href="/" className="lg:hidden flex items-center gap-2 mb-8 justify-center">
-                        <svg className="w-8 h-8 text-[#f79f08]" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2L3 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
-                        </svg>
-                        <span className="text-xl font-bold text-white">Barber<span className="text-[#f79f08]">GOLD</span></span>
+            <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12 xl:p-20 relative bg-[#231c0f]">
+                {/* Mobile Header */}
+                <div className="lg:hidden w-full flex justify-between items-center mb-8">
+                    <Link href="/" className="flex items-center gap-2 text-white">
+                        <Sparkles className="size-6 text-[#f79f08]" />
+                        <span className="font-bold text-lg">BarberGOLD</span>
                     </Link>
-
-                    <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
-                        <p className="text-gray-400">Enter your details below to get started.</p>
+                    <Link href="/login" className="text-sm font-bold text-[#f79f08] hover:text-white transition-colors">
+                        Log In
+                    </Link>
+                </div>
+                
+                <div className="w-full max-w-[480px] flex flex-col gap-8">
+                    {/* Form Header */}
+                    <div className="space-y-2">
+                        <h2 className="text-white text-3xl font-bold leading-tight tracking-tight">Create Account</h2>
+                        <p className="text-[#ccb58f] text-base">Enter your details below to get started.</p>
                     </div>
 
                     {error && (
-                        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
+                        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
                             {error}
                         </div>
                     )}
 
-                    <form onSubmit={handleRegister} className="space-y-5">
+                    <form onSubmit={handleRegister} className="flex flex-col gap-5">
                         {/* Full Name */}
-                        <div>
-                            <label htmlFor="fullname" className="block text-sm font-medium text-gray-300 mb-2">
-                                Full Name
-                            </label>
+                        <label className="flex flex-col gap-2">
+                            <span className="text-white text-sm font-medium leading-normal">Full Name</span>
                             <input
-                                id="fullname"
                                 type="text"
                                 required
                                 value={fullname}
                                 onChange={(e) => setFullname(e.target.value)}
                                 placeholder="e.g. James Cutter"
                                 disabled={loading}
-                                className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all disabled:opacity-50"
+                                className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
-                        </div>
+                        </label>
 
                         {/* Barbershop Slug */}
                         {shopSlug && (
-                            <div>
-                                <label htmlFor="slug" className="block text-sm font-medium text-gray-300 mb-2">
-                                    Your Barbershop URL
-                                </label>
+                            <label className="flex flex-col gap-2">
+                                <span className="text-white text-sm font-medium leading-normal">Your Barbershop URL</span>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-gray-500 text-sm">barber.gold/</span>
+                                    <span className="text-[#ccb58f]/50 text-sm">barber.gold/</span>
                                     <input
-                                        id="slug"
                                         type="text"
                                         value={shopSlug}
                                         onChange={(e) => setShopSlug(e.target.value)}
                                         disabled={loading}
-                                        className="flex-1 px-4 py-3 bg-[#18181b] border border-[#f79f08]/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all disabled:opacity-50"
+                                        className="flex-1 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#f79f08]/30 bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                                     />
                                 </div>
-                                <p className="text-xs text-gray-500 mt-1">Reserved from landing page</p>
-                            </div>
+                                <p className="text-xs text-[#ccb58f]/50">Reserved from landing page</p>
+                            </label>
                         )}
 
                         {/* Selected Plan */}
                         {selectedPlan && (
-                            <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">
-                                    Selected Plan
-                                </label>
-                                <div className="px-4 py-3 bg-[#f79f08]/10 border border-[#f79f08]/30 rounded-lg">
+                            <div className="flex flex-col gap-2">
+                                <span className="text-white text-sm font-medium leading-normal">Selected Plan</span>
+                                <div className="px-4 h-12 flex items-center bg-[#f79f08]/10 border border-[#f79f08]/30 rounded-lg">
                                     <span className="text-[#f79f08] font-bold capitalize">{selectedPlan} Plan</span>
-                                    <span className="text-gray-400 text-sm ml-2">
+                                    <span className="text-[#ccb58f] text-sm ml-2">
                                         {selectedPlan === 'start' && '- R$ 89/mês'}
                                         {selectedPlan === 'pro' && '- R$ 149/mês'}
                                         {selectedPlan === 'empire' && '- R$ 299/mês'}
@@ -216,112 +229,87 @@ function RegisterForm() {
                         )}
 
                         {/* Email Address */}
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                                Email Address
-                            </label>
+                        <label className="flex flex-col gap-2">
+                            <span className="text-white text-sm font-medium leading-normal">Email Address</span>
                             <input
-                                id="email"
                                 type="email"
                                 required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="name@barbershop.com"
                                 disabled={loading}
-                                className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all disabled:opacity-50"
+                                className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
-                        </div>
+                        </label>
 
                         {/* Password */}
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-                                Password
-                            </label>
+                        <label className="flex flex-col gap-2">
+                            <span className="text-white text-sm font-medium leading-normal">Password</span>
                             <div className="relative">
                                 <input
-                                    id="password"
                                     type={showPassword ? 'text' : 'password'}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Create a password"
                                     disabled={loading}
-                                    className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all pr-12 disabled:opacity-50"
+                                    className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 pl-4 pr-12 text-base font-normal transition-all duration-200 disabled:opacity-50"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ccb58f] hover:text-white transition-colors"
                                 >
-                                    {showPassword ? (
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                                        </svg>
-                                    ) : (
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    )}
+                                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
-                        </div>
+                        </label>
 
                         {/* Confirm Password */}
-                        <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                                Confirm Password
-                            </label>
+                        <label className="flex flex-col gap-2">
+                            <span className="text-white text-sm font-medium leading-normal">Confirm Password</span>
                             <div className="relative">
                                 <input
-                                    id="confirmPassword"
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     required
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder="Confirm your password"
                                     disabled={loading}
-                                    className="w-full px-4 py-3 bg-[#18181b] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f79f08] focus:border-transparent transition-all pr-12 disabled:opacity-50"
+                                    className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 pl-4 pr-12 text-base font-normal transition-all duration-200 disabled:opacity-50"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ccb58f] hover:text-white transition-colors"
                                 >
-                                    {showConfirmPassword ? (
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                                        </svg>
-                                    ) : (
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    )}
+                                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
-                        </div>
+                        </label>
 
                         {/* Terms Checkbox */}
-                        <div className="flex items-start">
-                            <input
-                                type="checkbox"
-                                id="terms"
-                                required
-                                checked={termsAccepted}
-                                onChange={(e) => setTermsAccepted(e.target.checked)}
-                                disabled={loading}
-                                className="w-4 h-4 mt-1 bg-[#18181b] border border-white/10 rounded text-[#f79f08] focus:ring-2 focus:ring-[#f79f08] focus:ring-offset-0 disabled:opacity-50"
-                            />
-                            <label htmlFor="terms" className="ml-2 text-sm text-gray-300">
+                        <div className="flex items-start gap-3 mt-2">
+                            <div className="flex items-center h-5">
+                                <input
+                                    type="checkbox"
+                                    id="terms"
+                                    required
+                                    checked={termsAccepted}
+                                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                                    disabled={loading}
+                                    className="w-5 h-5 rounded border-[#695430] bg-[#342a18] text-[#f79f08] focus:ring-[#f79f08]/50 focus:ring-offset-0 cursor-pointer disabled:opacity-50"
+                                />
+                            </div>
+                            <label htmlFor="terms" className="text-sm font-normal text-[#ccb58f] leading-tight cursor-pointer select-none">
                                 I agree to the{' '}
-                                <Link href="/terms" className="text-[#f79f08] hover:text-[#d88b06] transition-colors">
+                                <Link href="/termos" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
                                     Terms of Service
                                 </Link>
                                 {' '}and{' '}
-                                <Link href="/privacy" className="text-[#f79f08] hover:text-[#d88b06] transition-colors">
+                                <Link href="/privacidade" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
                                     Privacy Policy
-                                </Link>
+                                </Link>.
                             </label>
                         </div>
 
@@ -329,58 +317,50 @@ function RegisterForm() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-[#f79f08] hover:bg-[#d88b06] text-[#0f0f11] font-bold py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] hover:shadow-[0_0_30px_rgba(247,159,8,0.4)] hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-[#f79f08] hover:bg-[#f79f08]/90 active:bg-[#f79f08]/80 text-[#231c0f] text-base font-bold leading-normal tracking-wide transition-all shadow-[0_0_20px_rgba(247,159,8,0.15)] hover:shadow-[0_0_25px_rgba(247,159,8,0.25)] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? (
                                 <>
-                                    <svg className="animate-spin h-5 w-5 text-[#0f0f11]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
+                                    <Loader2 className="animate-spin h-5 w-5 mr-2" />
                                     Processando...
                                 </>
                             ) : 'Create Account'}
                         </button>
 
-                        {/* Divider */}
-                        <div className="relative my-6">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-white/10"></div>
-                            </div>
-                            <div className="relative flex justify-center text-sm">
-                                <span className="px-4 bg-[#0f0f11] text-gray-500">Or continue with</span>
-                            </div>
-                        </div>
-
-                        {/* Google Button */}
-                        <button
-                            type="button"
-                            disabled={loading}
-                            onClick={handleGoogleLogin}
-                            className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium py-3 rounded-lg transition-all flex items-center justify-center gap-3 disabled:opacity-50"
-                        >
-                            <svg className="w-5 h-5" viewBox="0 0 24 24">
-                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                            </svg>
-                            Google
-                        </button>
                     </form>
+                    
+                    {/* Divider */}
+                    <div className="relative flex items-center py-2">
+                        <div className="flex-grow border-t border-[#695430]/50"></div>
+                        <span className="flex-shrink-0 mx-4 text-[#ccb58f] text-sm">Or continue with</span>
+                        <div className="flex-grow border-t border-[#695430]/50"></div>
+                    </div>
 
-                    {/* Sign In Link */}
-                    <p className="mt-8 text-center text-sm text-gray-400">
-                        Already have an account?{' '}
-                        <Link href="/login" className="text-[#f79f08] hover:text-[#d88b06] font-medium transition-colors">
-                            Log In
-                        </Link>
-                    </p>
+                    {/* Google Button */}
+                    <button
+                        type="button"
+                        disabled={loading}
+                        onClick={handleGoogleLogin}
+                        className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-lg h-12 px-4 bg-[#342a18] hover:bg-[#342a18]/80 border border-[#695430] text-white text-sm font-bold leading-normal transition-all disabled:opacity-50"
+                    >
+                        <svg className="h-5 w-5" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                        </svg>
+                        Google
+                    </button>
 
-                    {/* Copyright */}
-                    <p className="mt-6 text-center text-xs text-gray-600">
-                        © 2025 BarberGOLD Inc. All rights reserved.
-                    </p>
+                    {/* Login Link */}
+                    <div className="text-center mt-2">
+                        <p className="text-[#ccb58f] text-sm">
+                            Already have an account?{' '}
+                            <Link href="/login" className="text-[#f79f08] font-bold hover:underline ml-1">
+                                Log In
+                            </Link>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -390,8 +370,8 @@ function RegisterForm() {
 export default function RegisterPage() {
     return (
         <Suspense fallback={
-            <div className="min-h-screen bg-[#0f0f11] flex items-center justify-center">
-                <div className="text-white">Carregando...</div>
+            <div className="min-h-screen bg-[#231c0f] flex items-center justify-center">
+                <Loader2 className="w-8 h-8 text-[#f79f08] animate-spin" />
             </div>
         }>
             <RegisterForm />
