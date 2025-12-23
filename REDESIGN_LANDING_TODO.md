@@ -1,0 +1,123 @@
+# 🎨 Redesign Landing Page - TODO
+
+## Objetivo
+Implementar o novo design moderno baseado nos layouts da pasta:
+`D:\projetos\Antigravity\barbergold\layout\stitch_barbergold_landing_page authenticacao\stitch_barbergold_landing_page\`
+
+## Arquivos de Referência
+1. `barbergold_landing_page/code.html` - Landing page principal
+2. `barbergold_forgot_password/code.html` - Página de forgot password
+
+## Características do Novo Design
+
+### Paleta de Cores
+- Primary: `#f79f08` (dourado)
+- Background Dark: `#0f0f11` / `#231c0f`
+- Surface Dark: `#18181b`
+- Text: Branco com variações de gray
+
+### Elementos Visuais
+- ✅ Background blur effects (gradientes circulares)
+- ✅ Glass morphism (backdrop-blur)
+- ✅ Glow effects nas sombras (`shadow-[0_0_20px_rgba(247,159,8,0.2)]`)
+- ✅ Animações suaves (hover, translate-y, scale)
+- ✅ Ícones usando Lucide React (substituir material-symbols)
+
+## Seções da Landing Page
+
+### 1. Header (Fixed)
+- Logo com ícone Scissors
+- Nav: Funcionalidades, Preços, Depoimentos, FAQ
+- CTA: "Começar Teste"
+
+### 2. Hero Section
+- Badge: "Nova versão 3.0 disponível" com dot verde pulsante
+- H1: "O Sistema Operacional da **Barbearia Moderna**"
+- Descrição com foco em resultados
+- 2 CTAs: "Começar Teste de 14 Dias" + "Ver Demonstração"
+- Social proof: "+500 donos de barbearia"
+- Mockup do dashboard (card com browser chrome)
+
+### 3. Social Proof Bar
+- "Usado pela elite"
+- Stats: "R$ 5 Milhões" volume mensal, "500+ Ativas"
+- Logos de clientes (placeholders)
+
+### 4. Problem Section (Alerta de Prejuízo)
+- Badge vermelho: "Alerta de Prejuízo"
+- H2: "Pare de perder dinheiro invisível"
+- 3 cards de problemas:
+  - No-Shows Sem Multa
+  - Comissões Erradas
+  - Horários Ociosos
+
+### 5. Features Section
+- Grid assimétrico (5 cols + 7 cols)
+- Lado esquerdo: 4 feature cards (Barber Club destacado)
+- Lado direito: Hero image com overlay de benefícios
+
+### 6. Mobile Experience Section
+- Mockup de iPhone com chat WhatsApp
+- 2 benefícios: "Sem Login, Sem App" + "Automação WhatsApp"
+
+### 7. Pricing Section
+- 3 planos: Start (R$ 89), Pro Gold (R$ 149 - destacado), Empire (R$ 299)
+- Badge "Mais Popular" no Pro Gold
+- Features list com ícones Check
+
+### 8. Comparison Table (Opcional)
+- Tabela responsiva com scroll horizontal
+- Categorias: Gestão Essencial, Financeiro & Lucro, Escala & Operação
+
+### 9. Testimonials Section
+- 3 depoimentos com fotos, nomes e empresas
+- 5 estrelas em cada
+- Card central elevado (transform -translate-y-4)
+
+### 10. FAQ Section
+- Accordion com `<details>` nativo
+- Ícone ChevronDown que rotaciona
+
+### 11. Final CTA
+- H2: "Pare de ser refém do WhatsApp"
+- CTA grande: "Começar Teste Grátis"
+- Disclaimer: "Sem cartão • Cancelamento a qualquer momento"
+
+### 12. Footer
+- Copyright
+- Links: Termos, Privacidade, Contato (mailto:contato@barbergold.com)
+
+## Implementação
+
+### Arquivo: `src/modules/website/SaasLandingPage.tsx`
+
+**Imports necessários:**
+```typescript
+import Link from 'next/link';
+import { Scissors, DollarSign, Users, Calendar, TrendingDown, Shield, Star, Check, ArrowRight, Calculator, Smartphone, MessageSquare, Play, ChevronDown } from 'lucide-react';
+```
+
+**Estrutura:**
+- Remover sistema de slug reservation (simplificar)
+- Focar em conversão direta para /register
+- Manter responsividade mobile-first
+
+## Forgot Password Page
+
+### Arquivo: `src/app/forgot-password/page.tsx`
+
+**Mudanças:**
+- Background com imagem de barbearia + overlay
+- Card centralizado com logo dourado 3D (rotação + sombra)
+- Cores: `#231c10` (card bg), `#ccb58f` (text secondary)
+- Botão "Back to Login" com ícone ArrowLeft
+- Barra decorativa no bottom (gradient dourado)
+
+## Status
+- [ ] Landing Page (SaasLandingPage.tsx)
+- [ ] Forgot Password (forgot-password/page.tsx)
+- [ ] Login Page (opcional - manter atual ou atualizar)
+- [ ] Register Page (opcional - manter atual ou atualizar)
+
+## Próxima Sessão
+Implementar as mudanças de forma incremental, testando o build a cada seção adicionada.
