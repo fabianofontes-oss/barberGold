@@ -129,7 +129,11 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
               {registerStatus === 'OPEN' ? 'Caixa Aberto' : 'Caixa Fechado'}
             </span>
           </div>
-          <button onClick={onClose} className="p-2 bg-zinc-800 rounded-full text-zinc-400 hover:text-white">
+          <button
+            onClick={onClose}
+            className="p-2 bg-zinc-800 rounded-full text-zinc-400 hover:text-white"
+            aria-label="Fechar caixa"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
