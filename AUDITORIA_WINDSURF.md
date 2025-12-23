@@ -874,4 +874,88 @@ As páginas em `src/app/app/*/page.tsx` estão como `use client`, mas apenas ren
 
 ---
 
-**Próxima Fase:** Auditoria de Estado, Performance e Qualidade
+**Próxima Fase:** Auditoria de Segurança e Performance
+
+---
+
+## 4. 🔐 Segurança e Performance
+
+### 4.1 🚨 Segurança (Crítico)
+
+#### 🚨 Secrets Hardcoded
+
+**Varredura por padrões de chaves:**
+
+- ⚠️ Encontrado `sk_live_***` (placeholder mascarado) em `src/context/BarberContext.tsx` (`stripeKey` em `INITIAL_GLOBAL_SETTINGS`)
+- ⚠️ Encontrado fallback `sk_test_mock_key` em `src/lib/stripe/index.ts` (fallback perigoso caso `STRIPE_SECRET_KEY` não exista)
+- ⚠️ Encontrado fallback `service_role_key_mock` em `src/app/api/webhooks/stripe/route.ts` (webhook cria Supabase Admin com chave mock se env não existir)
+- ✅ Não encontrado `pk_live`/`pk_test` no código
+- ✅ Não encontrados tokens JWT aparentes (`eyJ...`) hardcoded
+
+**Status:** ⚠️ Não há evidência de chave real exposta, mas existem **placeholders/fallbacks perigosos** e um campo `stripeKey` em estado client-side (mesmo que em modo demo)
+
+**Recomendações:**
+1. ❌ Remover fallbacks (`sk_test_mock_key`, `service_role_key_mock`) e falhar rápido se env obrigatórias estiverem ausentes
+2. ⚠️ Evitar qualquer cenário onde `Stripe Secret Key` seja armazenada/gerida no client (mesmo em “Super Admin”)
+
+---
+
+#### ✅ SQL Injection
+
+- ✅ Não foi encontrado uso de SQL “raw” em template strings (ex.: `` `SELECT ...` ``) no código TS/TSX
+- ✅ Não foram encontradas libs/padrões típicos de query raw (`$queryRaw`, `knex.raw`, `pg.query`, `sequelize.query`)
+- ✅ As consultas (quando existem) seguem o padrão do Supabase query builder
+
+**Status:** ✅ Baixo risco de SQL Injection no código atual
+
+---
+
+#### ✅ Tenant Isolation (Multi-tenant)
+
+- ✅ No banco (ver Seção 2), o isolamento é garantido por RLS e helpers (`get_user_tenant_id`, `is_tenant_owner`)
+- ✅ No app, o client Supabase padrão usa `anon key` + sessão (cookies) → respeita RLS
+- ⚠️ Ponto de atenção: uso de `SUPABASE_SERVICE_ROLE_KEY` em `src/app/api/webhooks/stripe/route.ts` **bypassa RLS** (correto para admin) — porém o fallback para chave mock é arriscado
+- ⚠️ Em modo demo/localStorage, não existe garantia real de isolamento entre tenants (ex.: `src/context/BarberContext.tsx` usa `localStorage` com chave única `barberflow_data`)
+
+**Status:** ✅ Em `pilot/prod` (Supabase+RLS), é **muito improvável** um usuário acessar dados de outro tenant; ⚠️ em modo demo não há isolamento forte
+
+---
+
+### 4.2 ⚡ Performance
+
+#### ⚠️ Imagens
+
+- ⚠️ `next/image` é usado em `/login` e `/register` com imagens externas (Unsplash)
+- ❌ `next.config.ts` não possui configuração de `images.domains`/`remotePatterns` → risco de erro em runtime/dev e falta de otimização
+- ⚠️ Foram encontradas **27 ocorrências de `<img>` em 17 arquivos** no `src/` (ex.: `src/modules/website/Website.tsx`, `src/components/Layout.tsx`, `src/components/Sidebar.tsx`, `src/components/shared/ImageUpload.tsx`)
+
+**Status:** ⚠️ Uso de imagens está funcional, mas sem padronização e com perdas de otimização/CLS em páginas públicas
+
+**Recomendações:**
+1. ✅ Configurar `images.remotePatterns` (ex.: `images.unsplash.com`) no `next.config.ts`
+2. ⚠️ Migrar imagens de marketing/landing para `next/image` quando possível
+3. ⚠️ Para imagens de usuário (logo/upload), avaliar `next/image` com `unoptimized`/loader ou manter `<img>` com cuidado (tamanho/placeholder)
+
+---
+
+#### ✅ Console Logs
+
+- ✅ `console.log(...)`: **1 ocorrência** em `src/context/BarberContext.tsx`
+
+**Status:** ✅ Baixo ruído de logs em produção (pelo menos via `console.log`)
+
+---
+
+#### ⚠️ Bundle (imports pesados)
+
+- ⚠️ `recharts` é importado em 3 módulos client-side (`Dashboard`, `SuperAdminDashboard`, `SuperAdminSystem`) e pode pesar no bundle inicial (principalmente no dashboard)
+- ⚠️ `src/components/Sidebar.tsx` importa muitos ícones do `lucide-react` (bundle do “shell” do app)
+- ✅ `stripe` (lib pesada) está restrita ao server (`src/app/api/webhooks/stripe/route.ts`) e não aparece importada no client
+
+**Recomendações:**
+1. ⚠️ Considerar `dynamic(() => import(...), { ssr: false })` para gráficos (`recharts`) e/ou carregar sob demanda
+2. ⚠️ Avaliar split do Sidebar/menus por contexto (ex.: owner vs staff vs super admin) para reduzir bundle inicial
+
+---
+
+**Próxima Fase:** Auditoria Final (Parte 5/5)
