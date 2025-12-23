@@ -4,6 +4,7 @@ import {
     SocialProofSection,
     ProblemSection,
     FeaturesSection,
+    AllFeaturesSection,
     MobileExperienceSection,
     PricingSection,
     PricingComparisonSection,
@@ -21,6 +22,7 @@ export default function SaasLandingPage() {
             <SocialProofSection />
             <ProblemSection />
             <FeaturesSection />
+            <AllFeaturesSection />
             <MobileExperienceSection />
             <PricingSection />
             <PricingComparisonSection />

@@ -3,6 +3,7 @@ export { HeroSection } from './HeroSection';
 export { SocialProofSection } from './SocialProofSection';
 export { ProblemSection } from './ProblemSection';
 export { FeaturesSection } from './FeaturesSection';
+export { AllFeaturesSection } from './AllFeaturesSection';
 export { MobileExperienceSection } from './MobileExperienceSection';
 export { PricingSection } from './PricingSection';
 export { PricingComparisonSection } from './PricingComparisonSection';

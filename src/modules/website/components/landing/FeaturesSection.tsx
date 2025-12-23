@@ -43,10 +43,10 @@ export function FeaturesSection() {
                         <p className="text-xl text-gray-400">Módulos premium projetados para aumentar o LTV e automatizar sua gestão.</p>
                     </div>
                     <div>
-                        <button className="text-[#f79f08] hover:text-white font-bold flex items-center gap-2 transition-colors">
+                        <a href="#all-features" className="text-[#f79f08] hover:text-white font-bold flex items-center gap-2 transition-colors">
                             Ver todos os recursos
                             <ArrowRight className="w-4 h-4" />
-                        </button>
+                        </a>
                     </div>
                 </div>
                 
