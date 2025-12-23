@@ -46,21 +46,25 @@ function getEnv() {
   });
 
   if (!parsed.success) {
-    console.error('❌ Variáveis de ambiente inválidas:', parsed.error.flatten().fieldErrors);
+    const errorDetails = JSON.stringify(parsed.error.flatten().fieldErrors, null, 2);
+    
+    console.error('❌ ERRO CRÍTICO: Variáveis de ambiente inválidas');
+    console.error('Detalhes:', errorDetails);
+    console.error('NODE_ENV:', process.env.NODE_ENV);
+    console.error('\n🔧 SOLUÇÃO:');
+    console.error('1. Acesse Vercel Dashboard > Settings > Environment Variables');
+    console.error('2. Configure: NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY');
+    console.error('3. Redeploy a aplicação\n');
 
-    // Em desenvolvimento, mostra erro detalhado
-    if (process.env.NODE_ENV === 'development') {
-      throw new Error(
-        `Variáveis de ambiente inválidas:\n${JSON.stringify(parsed.error.flatten().fieldErrors, null, 2)}`
-      );
-    }
-
-    // Em produção, falha silenciosamente mas loga
-    return {
-      NEXT_PUBLIC_SUPABASE_URL: '',
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: '',
-      NEXT_PUBLIC_APP_MODE: 'demo' as const,
-    };
+    // SEMPRE falha, tanto em dev quanto em prod
+    throw new Error(
+      `❌ Variáveis de ambiente obrigatórias faltando!\n\n` +
+      `Detalhes: ${errorDetails}\n\n` +
+      `Configure no Vercel Dashboard > Settings > Environment Variables:\n` +
+      `- NEXT_PUBLIC_SUPABASE_URL\n` +
+      `- NEXT_PUBLIC_SUPABASE_ANON_KEY\n\n` +
+      `Após configurar, faça redeploy.`
+    );
   }
 
   return parsed.data;
