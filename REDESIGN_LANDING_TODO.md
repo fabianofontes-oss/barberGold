@@ -149,15 +149,65 @@ import { Scissors, DollarSign, Users, Calendar, TrendingDown, Shield, Star, Chec
 - Active scale: `active:scale-[0.98]`
 - Checkbox customizado com ícone check
 
+## Register Page
+
+### Arquivo: `src/app/register/page.tsx`
+
+**Layout Split Screen (similar ao Login):**
+- **Lado Esquerdo (Desktop only):** Hero visual com imagem de barbeiro
+  - Logo pequeno no topo (ícone estrela + "BarberGOLD")
+  - Título: "Join the Gold Standard."
+  - Descrição: "Manage your shop with precision and style"
+  - Progress dots (3 dots, primeiro ativo)
+  - Footer: Copyright
+  - Background: Imagem de barbeiro trabalhando (grayscale, opacity 60%)
+  - Gradient overlay: `from-[#231c0f] via-[#231c0f]/80 to-transparent`
+
+- **Lado Direito:** Formulário de registro
+  - Logo mobile (visível apenas em telas pequenas) + link "Log In"
+  - Título: "Create Account"
+  - Descrição: "Enter your details below to get started"
+  - Campos:
+    - Full Name (placeholder: "e.g. James Cutter")
+    - Email Address (placeholder: "name@barbershop.com")
+    - Password (com toggle visibility)
+    - Confirm Password (com toggle visibility)
+  - Checkbox: "I agree to Terms of Service and Privacy Policy"
+  - Botão: "Create Account" (bg-primary com glow effect)
+  - Divider: "Or continue with"
+  - Botão Google (com ícone SVG)
+  - Footer: "Already have an account? Log In"
+
+**Cores específicas:**
+- Background: `#231c0f`
+- Surface: `#342a18`
+- Border: `#695430`
+- Text muted: `#ccb58f`
+- Primary: `#f79f08`
+
+**Efeitos:**
+- Focus ring: `focus:ring-2 focus:ring-primary/50`
+- Button glow: `shadow-[0_0_20px_rgba(247,159,8,0.15)]`
+- Hover glow: `hover:shadow-[0_0_25px_rgba(247,159,8,0.25)]`
+- Custom scrollbar (webkit) com cores do tema
+
 ## Status
 - [ ] Landing Page (SaasLandingPage.tsx)
 - [ ] Forgot Password (forgot-password/page.tsx)
 - [ ] Login Page (login/page.tsx)
-- [ ] Register Page (opcional - manter atual ou atualizar)
+- [ ] Register Page (register/page.tsx)
 
 ## Próxima Sessão
 Implementar as mudanças de forma incremental:
-1. Login page (split screen com hero image)
-2. Forgot password (card centralizado)
-3. Landing page (todas as seções)
-4. Testar build a cada implementação
+1. Register page (split screen com hero image)
+2. Login page (split screen com hero image)
+3. Forgot password (card centralizado)
+4. Landing page (todas as seções)
+5. Testar build a cada implementação
+
+## Observações Importantes
+- Usar Lucide React para ícones (substituir material-symbols)
+- Manter funcionalidade de OAuth Google existente
+- Preservar validações e lógica de autenticação Supabase
+- Adicionar imagens via next/image quando possível
+- Configurar remotePatterns para imagens do Google (lh3.googleusercontent.com)
