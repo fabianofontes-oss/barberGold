@@ -24,18 +24,34 @@ const saveToStorage = (data: any) => {
 };
 
 const loadFromStorage = () => {
+  if (typeof window === 'undefined') return null;
+
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    // Reconverte strings para Dates
-    return JSON.parse(raw, (key, value) => {
+
+    // Safety check: if raw is not valid JSON, catch block will handle it
+    const data = JSON.parse(raw, (key, value) => {
+      // Safe Date parsing
       if (value && typeof value === 'object' && value.__type === 'Date') {
-        return new Date(value.value);
+        const date = new Date(value.value);
+        return isNaN(date.getTime()) ? null : date;
+      }
+      // Detect ISO date strings if they were saved directly
+      if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value)) {
+         const date = new Date(value);
+         return isNaN(date.getTime()) ? value : date;
       }
       return value;
     });
+
+    return data;
   } catch (e) {
-    console.warn('Erro ao carregar do localStorage:', e);
+    console.error('❌ CRITICAL: Erro ao carregar localStorage (Dados corrompidos). Resetando...', e);
+    // Em caso de erro crítico de parse, limpa o storage para recuperar o app
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
     return null;
   }
 };
