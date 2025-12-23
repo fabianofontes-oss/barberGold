@@ -33,9 +33,8 @@ export default function LoginPage() {
         return;
       }
 
-      // Success - Redirect to dashboard
-      router.push('/app/dashboard');
-      router.refresh();
+      // Success - Hard redirect para garantir que cookies sejam propagados
+      window.location.href = '/app/dashboard';
     } catch (err: any) {
       setError('Ocorreu um erro inesperado ao tentar fazer login.');
     } finally {

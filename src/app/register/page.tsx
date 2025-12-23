@@ -76,11 +76,8 @@ function RegisterForm() {
                 return;
             }
 
-            // Success - Redirect to dashboard
-            // Note: If email confirmation is enabled, we might need to show a "Check your email" message
-            // But usually for MVPs we redirect directly or to a success page.
-            router.push('/app/dashboard');
-            router.refresh();
+            // Success - Hard redirect para garantir que cookies sejam propagados
+            window.location.href = '/app/dashboard';
         } catch (err) {
             setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
         } finally {
