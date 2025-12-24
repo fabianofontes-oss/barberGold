@@ -1,7 +1,7 @@
 'use client';
 
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { OwnerReferralModal } from '@/modules/settings/modals/OwnerReferralModal';
@@ -42,31 +42,47 @@ interface SidebarProps {
   onCloseMobile: () => void;
 }
 
+interface NavItemProps {
+  view: ViewState;
+  icon: any;
+  label: string;
+  disabled?: boolean;
+  className?: string;
+  currentView: ViewState;
+  onSelect: (view: ViewState) => void;
+}
+
+const NavItem = React.memo(({ view, icon: Icon, label, disabled = false, className = '', currentView, onSelect }: NavItemProps) => (
+  <button
+    onClick={() => {
+      if (!disabled) {
+        onSelect(view);
+      }
+    }}
+    disabled={disabled}
+    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
+      currentView === view
+        ? 'bg-amber-500 text-zinc-990 font-semibold shadow-lg shadow-amber-500/20'
+        : disabled ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100'
+    } ${className}`}
+  >
+    <Icon className={`w-5 h-5 ${currentView === view ? 'text-zinc-950' : disabled ? 'text-zinc-600' : 'text-zinc-400 group-hover:text-zinc-100'}`} />
+    <span>{label}</span>
+  </button>
+));
+
+NavItem.displayName = 'NavItem';
+
 export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
   const { currentView, setView, currentUser, staff, switchUser, shopProfile, logout, shopSettings } = useBarber();
   const { canUseFeature } = useFeatureGate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isReferralModalOpen, setIsReferralModalOpen] = useState(false);
 
-  const NavItem = ({ view, icon: Icon, label, disabled = false, className = '' }: { view: ViewState; icon: any; label: string; disabled?: boolean; className?: string }) => (
-    <button
-      onClick={() => {
-        if (!disabled) {
-          setView(view);
-          onCloseMobile();
-        }
-      }}
-      disabled={disabled}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
-        currentView === view 
-          ? 'bg-amber-500 text-zinc-990 font-semibold shadow-lg shadow-amber-500/20' 
-          : disabled ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100'
-      } ${className}`}
-    >
-      <Icon className={`w-5 h-5 ${currentView === view ? 'text-zinc-950' : disabled ? 'text-zinc-600' : 'text-zinc-400 group-hover:text-zinc-100'}`} />
-      <span>{label}</span>
-    </button>
-  );
+  const handleNavSelect = useCallback((view: ViewState) => {
+    setView(view);
+    onCloseMobile();
+  }, [setView, onCloseMobile]);
 
   const isOwner = currentUser.role === 'OWNER';
   const isSuperAdmin = currentUser.role === 'SUPER_ADMIN';
@@ -116,9 +132,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
           {isSuperAdmin ? (
              <>
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Command Center</p>
-               <NavItem view="SUPER_ADMIN_DASHBOARD" icon={Activity} label="Live Monitor" className={currentView === 'SUPER_ADMIN_DASHBOARD' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_TENANTS" icon={Users} label="Barbershops" className={currentView === 'SUPER_ADMIN_TENANTS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_PLANS" icon={Layers} label="Plans & Features" className={currentView === 'SUPER_ADMIN_PLANS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
+               <NavItem view="SUPER_ADMIN_DASHBOARD" icon={Activity} label="Live Monitor" className={currentView === 'SUPER_ADMIN_DASHBOARD' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="SUPER_ADMIN_TENANTS" icon={Users} label="Barbershops" className={currentView === 'SUPER_ADMIN_TENANTS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="SUPER_ADMIN_PLANS" icon={Layers} label="Plans & Features" className={currentView === 'SUPER_ADMIN_PLANS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
                
                {/* Office God V2 Button */}
                <div className="mx-4 my-2 pt-2 border-t border-zinc-800">
@@ -138,48 +154,48 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                </div>
 
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Operations</p>
-               <NavItem view="SUPER_ADMIN_PARTNERS" icon={Handshake} label="Partner Program" className={currentView === 'SUPER_ADMIN_PARTNERS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_MARKETING" icon={Megaphone} label="Marketing HQ" className={currentView === 'SUPER_ADMIN_MARKETING' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_CMS" icon={Globe} label="Public Site CMS" className={currentView === 'SUPER_ADMIN_CMS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_SUPPORT" icon={LifeBuoy} label="Helpdesk" className={currentView === 'SUPER_ADMIN_SUPPORT' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_BILLING" icon={Receipt} label="Global Billing" className={currentView === 'SUPER_ADMIN_BILLING' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
+               <NavItem view="SUPER_ADMIN_PARTNERS" icon={Handshake} label="Partner Program" className={currentView === 'SUPER_ADMIN_PARTNERS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="SUPER_ADMIN_MARKETING" icon={Megaphone} label="Marketing HQ" className={currentView === 'SUPER_ADMIN_MARKETING' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="SUPER_ADMIN_CMS" icon={Globe} label="Public Site CMS" className={currentView === 'SUPER_ADMIN_CMS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="SUPER_ADMIN_SUPPORT" icon={LifeBuoy} label="Helpdesk" className={currentView === 'SUPER_ADMIN_SUPPORT' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="SUPER_ADMIN_BILLING" icon={Receipt} label="Global Billing" className={currentView === 'SUPER_ADMIN_BILLING' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
                
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Ecosystem</p>
-               <NavItem view="SUPER_ADMIN_MARKETPLACE" icon={Puzzle} label="App Store / Add-ons" className={currentView === 'SUPER_ADMIN_MARKETPLACE' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
+               <NavItem view="SUPER_ADMIN_MARKETPLACE" icon={Puzzle} label="App Store / Add-ons" className={currentView === 'SUPER_ADMIN_MARKETPLACE' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} currentView={currentView} onSelect={handleNavSelect} />
                
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Infrastructure</p>
-               <NavItem view="SUPER_ADMIN_SYSTEM" icon={Server} label="System Ops" className={currentView === 'SUPER_ADMIN_SYSTEM' ? 'bg-red-900/50 text-red-100 border border-red-500/30' : 'text-red-400 hover:text-red-300'} />
+               <NavItem view="SUPER_ADMIN_SYSTEM" icon={Server} label="System Ops" className={currentView === 'SUPER_ADMIN_SYSTEM' ? 'bg-red-900/50 text-red-100 border border-red-500/30' : 'text-red-400 hover:text-red-300'} currentView={currentView} onSelect={handleNavSelect} />
                
                <div className="my-2 border-t border-zinc-800 opacity-50"></div>
-               <NavItem view="SUPER_ADMIN_SETTINGS" icon={Settings} label="Global Settings" />
+               <NavItem view="SUPER_ADMIN_SETTINGS" icon={Settings} label="Global Settings" currentView={currentView} onSelect={handleNavSelect} />
              </>
           ) : (
              /* STANDARD BARBERSHOP MENU */
              <>
-               <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
-               <NavItem view="AGENDA" icon={CalendarDays} label="Agenda" />
-               <NavItem view="PDV" icon={ShoppingCart} label="Point of Sale" />
-               <NavItem view="CLIENTS" icon={Users} label="Clients" /> 
+               <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="AGENDA" icon={CalendarDays} label="Agenda" currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="PDV" icon={ShoppingCart} label="Point of Sale" currentView={currentView} onSelect={handleNavSelect} />
+               <NavItem view="CLIENTS" icon={Users} label="Clients" currentView={currentView} onSelect={handleNavSelect} />
                
                {(isOwner) && (
-                  <NavItem view="CATALOG" icon={PackageSearch} label="Catalog" />
+                  <NavItem view="CATALOG" icon={PackageSearch} label="Catalog" currentView={currentView} onSelect={handleNavSelect} />
                )}
 
-               <NavItem view="FINANCE" icon={DollarSign} label={isOwner ? "Finance" : "My Earnings"} />
+               <NavItem view="FINANCE" icon={DollarSign} label={isOwner ? "Finance" : "My Earnings"} currentView={currentView} onSelect={handleNavSelect} />
                
                {isOwner && (
                   <>
-                     <NavItem view="BARBER_CLUB" icon={Crown} label="Barber Club™" className="text-purple-500 font-bold" />
-                     <NavItem view="SMART_PRICING" icon={LineChart} label="Dynamic Pricing" className="text-emerald-500 font-bold" />
+                     <NavItem view="BARBER_CLUB" icon={Crown} label="Barber Club™" className="text-purple-500 font-bold" currentView={currentView} onSelect={handleNavSelect} />
+                     <NavItem view="SMART_PRICING" icon={LineChart} label="Dynamic Pricing" className="text-emerald-500 font-bold" currentView={currentView} onSelect={handleNavSelect} />
                   </>
                )}
 
                <div className="pt-4 mt-4 border-t border-zinc-800">
                  {/* MY_PLAN moved to footer */}
-                 <NavItem view="SETTINGS" icon={Settings} label={isOwner ? "Settings" : "My Profile"} />
+                 <NavItem view="SETTINGS" icon={Settings} label={isOwner ? "Settings" : "My Profile"} currentView={currentView} onSelect={handleNavSelect} />
                  
                  {isOwner && hasPremiumWebsite && (
-                    <NavItem view="WEBSITE_EDITOR" icon={Globe} label="Website & Brand" />
+                    <NavItem view="WEBSITE_EDITOR" icon={Globe} label="Website & Brand" currentView={currentView} onSelect={handleNavSelect} />
                  )}
                </div>
              </>
