@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Scissors, Loader2, ArrowRight } from 'lucide-react';
+import { createTenantAndProfile } from './actions';
 
 export default function SetupPage() {
   const router = useRouter();
@@ -22,15 +23,15 @@ export default function SetupPage() {
     setError(null);
 
     try {
-      // TODO: Implementar criação de profile via Server Action
-      // Por enquanto, apenas redireciona para o dashboard
-      console.log('Setup data:', formData);
+      const result = await createTenantAndProfile(formData);
       
-      // Simula delay de API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Redireciona para dashboard
-      router.push('/app/dashboard');
+      if (result.success) {
+        // Redireciona para o dashboard
+        router.push('/app/dashboard');
+      } else {
+        setError(result.error || 'Erro ao configurar barbearia');
+        setLoading(false);
+      }
     } catch (err: any) {
       setError('Erro ao configurar perfil. Tente novamente.');
       setLoading(false);
@@ -121,16 +122,19 @@ export default function SetupPage() {
                 URL da Barbearia
               </label>
               <div className="flex items-center gap-2">
-                <span className="text-zinc-500 text-sm">barbergold.app/</span>
                 <input
                   type="text"
                   required
                   value={formData.shopSlug}
-                  onChange={(e) => setFormData({ ...formData, shopSlug: e.target.value })}
+                  onChange={(e) => {
+                    const slug = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
+                    setFormData({ ...formData, shopSlug: slug });
+                  }}
                   placeholder="premium-gold"
                   disabled={loading}
                   className="flex-1 px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all disabled:opacity-50"
                 />
+                <span className="text-zinc-500 text-sm">.barber.gold</span>
               </div>
               <p className="text-xs text-zinc-500 mt-1">
                 Esta será a URL pública da sua barbearia

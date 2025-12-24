@@ -41,9 +41,11 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE TABLE public.stores (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
   owner_id UUID NOT NULL REFERENCES auth.users(id),
   plan_id TEXT DEFAULT 'FREE',
   status TEXT DEFAULT 'ACTIVE',
+  settings JSONB DEFAULT '{}'::jsonb,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
