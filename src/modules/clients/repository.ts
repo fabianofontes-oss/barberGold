@@ -59,11 +59,18 @@ export class ClientsRepository {
     return data;
   }
 
-  async create(client: Omit<ClientInsert, 'id' | 'created_at' | 'updated_at'>, storeId: string): Promise<ClientDB> {
+  async create(client: any, storeId: string): Promise<ClientDB> {
     const { data, error } = await this.supabase
       .from('clients')
       .insert({
-        ...client,
+        name: client.name,
+        phone: client.phone,
+        email: client.email || null,
+        birth_date: client.birthDate || null,
+        document: client.document || null,
+        preferred_staff_id: client.preferredStaffId || null,
+        tags: client.tags || null,
+        notes: client.notes || null,
         store_id: storeId,
       })
       .select()
