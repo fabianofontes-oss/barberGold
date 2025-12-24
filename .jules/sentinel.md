@@ -1,0 +1,4 @@
+## 2024-05-23 - Hardcoded Supabase Cookie Name
+**Vulnerability:** The middleware (`middleware.ts`) relies on a hardcoded cookie name (`sb-yitrspfqpakpygfytduz-auth-token`) for authentication checks. This name depends on the Supabase project ID (`yitrspfqpakpygfytduz`).
+**Learning:** Hardcoding project-specific identifiers in code makes the application brittle and difficult to deploy to different environments (e.g., dev/staging/prod with different Supabase projects) without code changes. It also creates a potential bypass if the cookie name changes but the code is not updated.
+**Prevention:** Use environment variables or Supabase client helpers to dynamically determine the correct cookie name based on the configured project, or rely solely on `supabase.auth.getUser()` which handles cookie resolution internally.
