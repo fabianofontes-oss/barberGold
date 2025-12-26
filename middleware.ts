@@ -8,7 +8,10 @@ export async function middleware(request: NextRequest) {
 
   // Detectar subdomínio
   const subdomain = hostname.split('.')[0]
-  const isMainDomain = subdomain === 'barber' || subdomain === 'localhost:3000' || subdomain === 'barber-gold-alpha'
+  
+  // Lista de domínios principais (não são tenants)
+  const mainDomains = ['barber', 'localhost:3000', 'localhost', 'barber-gold-alpha', 'www']
+  const isMainDomain = mainDomains.includes(subdomain) || hostname === 'localhost:3000' || hostname.startsWith('localhost')
   
   // Se não é o domínio principal, é um tenant (barbearia)
   if (!isMainDomain && subdomain && !pathname.startsWith('/api')) {
