@@ -19,25 +19,10 @@ function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [shopSlug, setShopSlug] = useState('');
-    const [selectedPlan, setSelectedPlan] = useState('pro');
     const [termsAccepted, setTermsAccepted] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
-    // Read URL parameters on mount
-    useEffect(() => {
-        const urlSlug = searchParams.get('slug');
-        const urlPlan = searchParams.get('plan');
-
-        if (urlSlug) {
-            setShopSlug(urlSlug);
-        }
-        if (urlPlan) {
-            setSelectedPlan(urlPlan);
-        }
-    }, [searchParams]);
 
     const handleRegister = async (e: React.FormEvent) => {
         const supabase = createClient();
@@ -59,14 +44,25 @@ function RegisterForm() {
         }
 
         try {
+            // Gerar slug automaticamente a partir do nome
+            const autoSlug = fullname
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                .replace(/[^a-z0-9\s-]/g, '') // Remove caracteres especiais
+                .replace(/\s+/g, '-') // Substitui espaços por hífens
+                .replace(/-+/g, '-') // Remove hífens duplicados
+                .substring(0, 30) // Limita tamanho
+                + '-' + Math.floor(Math.random() * 10000); // Adiciona número aleatório
+
             const { error: authError } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
                     data: {
                         full_name: fullname,
-                        slug: shopSlug,
-                        plan: selectedPlan,
+                        slug: autoSlug,
+                        plan: 'FREE', // SEMPRE FREE - Sistema gratuito
                     }
                 }
             });
