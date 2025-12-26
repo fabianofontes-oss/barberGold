@@ -44,7 +44,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
   const router = useRouter();
-  const { currentUser, logout, shopProfile } = useBarber();
+  const { currentUser, logout, shopProfile, staff, switchUser, shopSettings } = useBarber();
   const { canUseFeature } = useFeatureGate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -119,15 +119,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
           {isSuperAdmin ? (
              <>
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Command Center</p>
-               <NavItem view="SUPER_ADMIN_DASHBOARD" icon={Activity} label="Live Monitor" className={currentView === 'SUPER_ADMIN_DASHBOARD' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_TENANTS" icon={Users} label="Barbershops" className={currentView === 'SUPER_ADMIN_TENANTS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_PLANS" icon={Layers} label="Plans & Features" className={currentView === 'SUPER_ADMIN_PLANS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
+               <NavItem href="/app/super-admin" icon={Activity} label="Live Monitor" />
+               <NavItem href="/app/super-admin" icon={Users} label="Barbershops" />
+               <NavItem href="/app/super-admin" icon={Layers} label="Plans & Features" />
                
                {/* Office God V2 Button */}
                <div className="mx-4 my-2 pt-2 border-t border-zinc-800">
                   <button
                     onClick={() => {
-                       setView('SUPER_OFFICE_V2');
+                       router.push('/app/super-admin');
                        onCloseMobile();
                     }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold bg-violet-900/20 text-violet-300 border border-violet-500/30 hover:bg-violet-900/40 transition-all group"
@@ -141,48 +141,48 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                </div>
 
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Operations</p>
-               <NavItem view="SUPER_ADMIN_PARTNERS" icon={Handshake} label="Partner Program" className={currentView === 'SUPER_ADMIN_PARTNERS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_MARKETING" icon={Megaphone} label="Marketing HQ" className={currentView === 'SUPER_ADMIN_MARKETING' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_CMS" icon={Globe} label="Public Site CMS" className={currentView === 'SUPER_ADMIN_CMS' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_SUPPORT" icon={LifeBuoy} label="Helpdesk" className={currentView === 'SUPER_ADMIN_SUPPORT' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
-               <NavItem view="SUPER_ADMIN_BILLING" icon={Receipt} label="Global Billing" className={currentView === 'SUPER_ADMIN_BILLING' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
+               <NavItem href="/app/super-admin" icon={Handshake} label="Partner Program" />
+               <NavItem href="/app/super-admin" icon={Megaphone} label="Marketing HQ" />
+               <NavItem href="/app/super-admin" icon={Globe} label="Public Site CMS" />
+               <NavItem href="/app/super-admin" icon={LifeBuoy} label="Helpdesk" />
+               <NavItem href="/app/super-admin" icon={Receipt} label="Global Billing" />
                
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Ecosystem</p>
-               <NavItem view="SUPER_ADMIN_MARKETPLACE" icon={Puzzle} label="App Store / Add-ons" className={currentView === 'SUPER_ADMIN_MARKETPLACE' ? 'bg-indigo-600 text-white shadow-indigo-500/20' : ''} />
+               <NavItem href="/app/super-admin" icon={Puzzle} label="App Store / Add-ons" />
                
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Infrastructure</p>
-               <NavItem view="SUPER_ADMIN_SYSTEM" icon={Server} label="System Ops" className={currentView === 'SUPER_ADMIN_SYSTEM' ? 'bg-red-900/50 text-red-100 border border-red-500/30' : 'text-red-400 hover:text-red-300'} />
+               <NavItem href="/app/super-admin" icon={Server} label="System Ops" />
                
                <div className="my-2 border-t border-zinc-800 opacity-50"></div>
-               <NavItem view="SUPER_ADMIN_SETTINGS" icon={Settings} label="Global Settings" />
+               <NavItem href="/app/super-admin" icon={Settings} label="Global Settings" />
              </>
           ) : (
              /* STANDARD BARBERSHOP MENU */
              <>
-               <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
-               <NavItem view="AGENDA" icon={CalendarDays} label="Agenda" />
-               <NavItem view="PDV" icon={ShoppingCart} label="Point of Sale" />
-               <NavItem view="CLIENTS" icon={Users} label="Clients" /> 
+               <NavItem href="/app/dashboard" icon={LayoutDashboard} label="Dashboard" />
+               <NavItem href="/app/agenda" icon={CalendarDays} label="Agenda" />
+               <NavItem href="/app/pdv" icon={ShoppingCart} label="Point of Sale" />
+               <NavItem href="/app/clients" icon={Users} label="Clients" /> 
                
                {(isOwner) && (
-                  <NavItem view="CATALOG" icon={PackageSearch} label="Catalog" />
+                  <NavItem href="/app/catalog" icon={PackageSearch} label="Catalog" />
                )}
 
-               <NavItem view="FINANCE" icon={DollarSign} label={isOwner ? "Finance" : "My Earnings"} />
+               <NavItem href="/app/finance" icon={DollarSign} label={isOwner ? "Finance" : "My Earnings"} />
                
                {isOwner && (
                   <>
-                     <NavItem view="BARBER_CLUB" icon={Crown} label="Barber Club™" className="text-purple-500 font-bold" />
-                     <NavItem view="SMART_PRICING" icon={LineChart} label="Dynamic Pricing" className="text-emerald-500 font-bold" />
+                     <NavItem href="/app/barber-club" icon={Crown} label="Barber Club™" className="text-purple-500 font-bold" />
+                     <NavItem href="/app/smart-pricing" icon={LineChart} label="Dynamic Pricing" className="text-emerald-500 font-bold" />
                   </>
                )}
 
                <div className="pt-4 mt-4 border-t border-zinc-800">
                  {/* MY_PLAN moved to footer */}
-                 <NavItem view="SETTINGS" icon={Settings} label={isOwner ? "Settings" : "My Profile"} />
+                 <NavItem href="/app/settings" icon={Settings} label={isOwner ? "Settings" : "My Profile"} />
                  
                  {isOwner && (
-                    <NavItem view="WEBSITE_EDITOR" icon={Globe} label="Website & Brand" />
+                    <NavItem href="/app/website" icon={Globe} label="Website & Brand" />
                  )}
                </div>
              </>
@@ -219,7 +219,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
         {isOwner && !isSuperAdmin && (
            <button
               onClick={() => {
-                 setView('REFERRALS');
+                 router.push('/app/referrals');
                  onCloseMobile();
               }}
               className="w-full bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 flex items-center justify-between group transition-colors relative overflow-hidden"
@@ -306,12 +306,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
         </div>
       </div>
     </aside>
-
-    <OwnerReferralModal 
-       isOpen={isReferralModalOpen} 
-       onClose={() => setIsReferralModalOpen(false)} 
-       ownerReferralLink={ownerLink} 
-    />
     </>
   );
 };
