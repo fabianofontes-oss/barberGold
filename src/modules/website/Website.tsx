@@ -21,6 +21,8 @@ const CLASSIC_PALETTE = {
 export const Website = () => {
   const { shopProfile, shopSettings, services, staff, products, setView } = useBarber();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [serviceCatFilter, setServiceCatFilter] = useState('ALL');
+  const [productCatFilter, setProductCatFilter] = useState('ALL');
   const config = shopSettings.website;
 
   const handleBookNow = () => {
@@ -241,8 +243,7 @@ export const Website = () => {
 
   // --- SECTIONS OMITTED FOR BREVITY AS THEY ARE MOSTLY CONTENT RENDERING (Kept Identical logic, wrapped in SectionWrapper) ---
   const ServiceSection: React.FC<{ visualIndex: number }> = ({ visualIndex }) => {
-     const [catFilter, setCatFilter] = useState('ALL');
-     const filteredServices = services.filter(s => catFilter === 'ALL' || (s.category || 'Geral') === catFilter);
+     const filteredServices = services.filter(s => serviceCatFilter === 'ALL' || (s.category || 'Geral') === serviceCatFilter);
      const styles = getSectionTheme(visualIndex);
      const cardBg = isLightMode ? '#18181b' : styles.cardBg;
      const cardText = isLightMode ? '#ffffff' : styles.cardText;
@@ -255,7 +256,7 @@ export const Website = () => {
               <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-sm">Nossos Serviços</h2>
               <p className="opacity-80 max-w-xl mx-auto font-medium">Técnicas clássicas e modernas para garantir o seu melhor visual.</p>
            </div>
-           <CategoryFilter items={services} current={catFilter} onChange={setCatFilter} textColor={styles.text} />
+           <CategoryFilter items={services} current={serviceCatFilter} onChange={setServiceCatFilter} textColor={styles.text} />
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredServices.map(service => (
                  <div key={service.id} className="group p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border" 
@@ -282,8 +283,7 @@ export const Website = () => {
   };
 
   const ProductSection: React.FC<{ visualIndex: number }> = ({ visualIndex }) => {
-     const [catFilter, setCatFilter] = useState('ALL');
-     const filteredProducts = products.filter(p => catFilter === 'ALL' || (p.category || 'Geral') === catFilter);
+     const filteredProducts = products.filter(p => productCatFilter === 'ALL' || (p.category || 'Geral') === productCatFilter);
      const styles = getSectionTheme(visualIndex);
      const cardBg = isLightMode ? '#18181b' : styles.cardBg;
      const cardText = isLightMode ? '#ffffff' : styles.cardText;
@@ -293,7 +293,7 @@ export const Website = () => {
      return (
         <SectionWrapper id="products" styles={styles}>
            <div className="text-center mb-10"><h2 className="text-3xl md:text-4xl font-bold mb-4">Produtos Premium</h2><p className="opacity-80 max-w-xl mx-auto font-medium">Leve o cuidado profissional para casa.</p></div>
-           <CategoryFilter items={products} current={catFilter} onChange={setCatFilter} textColor={styles.text} />
+           <CategoryFilter items={products} current={productCatFilter} onChange={setProductCatFilter} textColor={styles.text} />
            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">{filteredProducts.map(product => (<div key={product.id} className="overflow-hidden group border" style={{ borderRadius: radius, backgroundColor: cardBg, borderColor: styles.borderColor || 'transparent', boxShadow: styles.shadow }}><div className="aspect-square relative overflow-hidden bg-white">{product.image ? (<img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />) : (<div className="w-full h-full flex items-center justify-center opacity-50"><ShoppingBag className="w-8 h-8 text-zinc-400" /></div>)}<div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><button onClick={handleBookNow} className="text-xs font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform shadow-lg px-4 py-2 uppercase" style={{ backgroundColor: btnBg, color: btnText, borderRadius: isClassic ? '4px' : radius }}>Comprar</button></div></div><div className="p-4 text-center"><h4 className="font-bold mb-1 truncate group-hover:text-amber-500 transition-colors" style={{color: cardText}}>{product.name}</h4><span className="font-bold opacity-80" style={{color: cardText}}>${product.price}</span></div></div>))}</div>
         </SectionWrapper>
      );
