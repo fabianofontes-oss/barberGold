@@ -151,19 +151,6 @@ export const SERVICES: Service[] = [
 
 export const MOCK_STAFF: StaffMember[] = [
   {
-    id: 'super1',
-    name: 'Super Admin',
-    role: 'SUPER_ADMIN',
-    email: 'super@barberflow.com',
-    // password removido - usar Supabase Auth
-    commissionModel: CompensationModel.OWNER,
-    serviceCommissionRate: 0,
-    productCommissionRate: 0,
-    rentalFee: 0,
-    paymentFrequency: 'WEEKLY',
-    workSchedule: []
-  },
-  {
     id: 's1',
     name: 'Alex Owner',
     role: 'OWNER',
