@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // Script para configurar o banco de dados
 // Execute com: node setup-database.js
 
@@ -5,8 +6,40 @@ const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
 
-const supabaseUrl = 'https://yitrspfqpakpygfytduz.supabase.co';
-const serviceRoleKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpdHJzcGZxcGFrcHlnZnl0ZHV6Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTg0OTA5OSwiZXhwIjoyMDgxNDI1MDk5fQ.5V3ex99XlHONmgPW-4M2YzwTFt4QzYIo1QZfUwZ0DRU';
+// Tentar carregar variáveis de ambiente de .env.local ou .env
+function loadEnv() {
+  const envFiles = ['.env.local', '.env'];
+
+  for (const file of envFiles) {
+    const envPath = path.join(__dirname, file);
+    if (fs.existsSync(envPath)) {
+      console.log(`📄 Carregando variáveis de ambiente de ${file}...`);
+      const content = fs.readFileSync(envPath, 'utf8');
+      content.split('\n').forEach(line => {
+        const match = line.match(/^([^=]+)=(.*)$/);
+        if (match) {
+          const key = match[1].trim();
+          const value = match[2].trim().replace(/^["']|["']$/g, '');
+          if (!process.env[key]) {
+            process.env[key] = value;
+          }
+        }
+      });
+    }
+  }
+}
+
+loadEnv();
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://yitrspfqpakpygfytduz.supabase.co';
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!serviceRoleKey) {
+  console.error('❌ ERRO CRÍTICO: SUPABASE_SERVICE_ROLE_KEY não encontrada.');
+  console.error('Por favor, defina a variável de ambiente SUPABASE_SERVICE_ROLE_KEY em .env.local ou exporte-a no terminal.');
+  console.error('Exemplo: export SUPABASE_SERVICE_ROLE_KEY=seu_service_role_key');
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, serviceRoleKey);
 
@@ -16,7 +49,10 @@ async function setupDatabase() {
   try {
     // Ler o schema SQL
     const schemaPath = path.join(__dirname, 'supabase', 'schema-complete.sql');
-    const schema = fs.readFileSync(schemaPath, 'utf8');
+    if (!fs.existsSync(schemaPath)) {
+        throw new Error(`Arquivo de schema não encontrado: ${schemaPath}`);
+    }
+    // const schema = fs.readFileSync(schemaPath, 'utf8'); // Unused
     
     console.log('📝 Schema carregado, executando no banco...');
     
@@ -28,7 +64,7 @@ async function setupDatabase() {
 
     // Vamos criar um usuário de teste
     console.log('👤 Criando usuário de teste...');
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+    const { error: authError } = await supabase.auth.admin.createUser({
       email: 'admin@barbergold.com',
       password: 'Admin123!',
       email_confirm: true
@@ -54,6 +90,7 @@ async function setupDatabase() {
 
   } catch (error) {
     console.error('❌ Erro:', error.message);
+    process.exit(1);
   }
 }
 
