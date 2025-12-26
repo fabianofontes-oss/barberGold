@@ -2,9 +2,9 @@
 
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
-import { OwnerReferralModal } from '@/modules/settings/modals/OwnerReferralModal';
 import { 
   LayoutDashboard, 
   CalendarDays, 
@@ -43,32 +43,30 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
-  const { currentView, setView, currentUser, staff, switchUser, shopProfile, logout, shopSettings } = useBarber();
+  const router = useRouter();
+  const { currentUser, logout, shopProfile } = useBarber();
   const { canUseFeature } = useFeatureGate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isReferralModalOpen, setIsReferralModalOpen] = useState(false);
 
   // Validação de segurança
   if (!currentUser) {
     return null;
   }
 
-  const NavItem = ({ view, icon: Icon, label, disabled = false, className = '' }: { view: ViewState; icon: any; label: string; disabled?: boolean; className?: string }) => (
+  const NavItem = ({ href, icon: Icon, label, disabled = false, className = '' }: { href: string; icon: any; label: string; disabled?: boolean; className?: string }) => (
     <button
       onClick={() => {
         if (!disabled) {
-          setView(view);
+          router.push(href);
           onCloseMobile();
         }
       }}
       disabled={disabled}
       className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
-        currentView === view 
-          ? 'bg-amber-500 text-zinc-990 font-semibold shadow-lg shadow-amber-500/20' 
-          : disabled ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100'
+        disabled ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100'
       } ${className}`}
     >
-      <Icon className={`w-5 h-5 ${currentView === view ? 'text-zinc-950' : disabled ? 'text-zinc-600' : 'text-zinc-400 group-hover:text-zinc-100'}`} />
+      <Icon className={`w-5 h-5 ${disabled ? 'text-zinc-600' : 'text-zinc-400 group-hover:text-zinc-100'}`} />
       <span>{label}</span>
     </button>
   );
