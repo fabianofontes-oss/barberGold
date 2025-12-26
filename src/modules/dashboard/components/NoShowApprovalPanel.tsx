@@ -8,7 +8,9 @@ import { AlertTriangle, Check, X, User, Scissors, Clock, Bell } from 'lucide-rea
 
 export const NoShowApprovalPanel: React.FC = () => {
   const { appointments, updateAppointmentStatus, staff, currentUser } = useBarber();
-  
+
+  if (!currentUser) return null;
+
   const isOwner = currentUser.role === 'OWNER';
   
   // Só mostra para o dono

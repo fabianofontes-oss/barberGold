@@ -26,7 +26,9 @@ const PAYMENT_LABELS: Record<string, string> = {
 
 export const RegisterClosureModal: React.FC<RegisterClosureModalProps> = ({ isOpen, onClose }) => {
   const { sales, closeRegister, currentUser, shopSettings } = useBarber();
-  
+
+  if (!currentUser) return null;
+
   // Calculate Totals for Today
   const today = new Date();
   const todaysSales = sales.filter(s => isSameDay(s.date, today));
