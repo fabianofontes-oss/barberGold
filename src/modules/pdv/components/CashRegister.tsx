@@ -24,7 +24,9 @@ interface CashRegisterProps {
 
 export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) => {
   const { currentUser, sales } = useBarber();
-  
+
+  if (!currentUser) return null;
+
   // Cash register state (would be in context in production)
   const [registerStatus, setRegisterStatus] = useState<'CLOSED' | 'OPEN'>('CLOSED');
   const [openingAmount, setOpeningAmount] = useState<number>(0);
