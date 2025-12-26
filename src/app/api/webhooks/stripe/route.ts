@@ -81,7 +81,7 @@ export async function POST(req: Request) {
 
                     if (error) {
                         console.error('❌ Erro ao atualizar tenant:', error);
-                        return new NextResponse(`Database Error: ${error.message}`, { status: 500 });
+                        return new NextResponse('Internal Server Error', { status: 500 });
                     }
                     
                     console.log(`✅ Nova assinatura iniciada: ${subscriptionId} (${isTrialing ? 'TRIAL' : 'ACTIVE'})`);
