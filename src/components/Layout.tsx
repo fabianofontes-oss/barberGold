@@ -29,8 +29,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
              </>
           )}
         </div>
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-zinc-300 hover:bg-zinc-800 rounded-lg">
-          {isMobileMenuOpen ? <X /> : <Menu />}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 text-zinc-300 hover:bg-zinc-800 rounded-lg"
+          aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-sidebar"
+        >
+          {isMobileMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
       </div>
 
