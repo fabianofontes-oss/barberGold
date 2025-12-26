@@ -35,10 +35,28 @@ export async function middleware(request: NextRequest) {
   }
 
   // Verificar autenticação para rotas protegidas
-  const token = request.cookies.get('sb-yitrspfqpakpygfytduz-auth-token')
+  // Otimização: Tenta identificar o cookie de auth antes de chamar o updateSession
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  let token = null
+
+  if (supabaseUrl) {
+    // Extrair project ref da URL do Supabase (ex: https://<project-ref>.supabase.co)
+    const projectRef = supabaseUrl.match(/https?:\/\/([^.]+)\.supabase\.co/)?.[1]
+    if (projectRef) {
+      const cookieName = `sb-${projectRef}-auth-token`
+      token = request.cookies.get(cookieName)
+    }
+  }
   
-  if (!token && pathname.startsWith('/app')) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  // Se conseguimos determinar o nome do cookie e ele não existe, redireciona
+  // Se não conseguimos determinar (ex: localhost ou custom domain), deixa o updateSession lidar
+  if (supabaseUrl && !token && pathname.startsWith('/app')) {
+    // Só redireciona se tivermos certeza que deveria ter o cookie
+    // Para isso, verificamos se o padrão de URL do Supabase foi reconhecido
+    const isStandardSupabaseUrl = supabaseUrl.includes('.supabase.co')
+    if (isStandardSupabaseUrl) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
   }
 
   return await updateSession(request)
