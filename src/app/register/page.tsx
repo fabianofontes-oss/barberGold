@@ -16,6 +16,7 @@ function RegisterForm() {
 
     // Form State
     const [fullname, setFullname] = useState('');
+    const [shopSlug, setShopSlug] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -44,16 +45,31 @@ function RegisterForm() {
         }
 
         try {
-            // Gerar slug automaticamente a partir do nome
-            const autoSlug = fullname
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-                .replace(/[^a-z0-9\s-]/g, '') // Remove caracteres especiais
-                .replace(/\s+/g, '-') // Substitui espaços por hífens
-                .replace(/-+/g, '-') // Remove hífens duplicados
-                .substring(0, 30) // Limita tamanho
-                + '-' + Math.floor(Math.random() * 10000); // Adiciona número aleatório
+            // Usar slug escolhido pelo usuário ou gerar automaticamente
+            let finalSlug = shopSlug.trim();
+            
+            if (!finalSlug) {
+                // Se não preencheu, gera automaticamente a partir do nome
+                finalSlug = fullname
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                    .replace(/[^a-z0-9\s-]/g, '') // Remove caracteres especiais
+                    .replace(/\s+/g, '-') // Substitui espaços por hífens
+                    .replace(/-+/g, '-') // Remove hífens duplicados
+                    .substring(0, 30) // Limita tamanho
+                    + '-' + Math.floor(Math.random() * 10000); // Adiciona número aleatório
+            } else {
+                // Limpa o slug escolhido pelo usuário
+                finalSlug = finalSlug
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9-]/g, '')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '') // Remove hífens no início/fim
+                    .substring(0, 30);
+            }
 
             const { error: authError } = await supabase.auth.signUp({
                 email,
@@ -61,7 +77,7 @@ function RegisterForm() {
                 options: {
                     data: {
                         full_name: fullname,
-                        slug: autoSlug,
+                        slug: finalSlug,
                         plan: 'FREE', // SEMPRE FREE - Sistema gratuito
                     }
                 }
@@ -186,6 +202,23 @@ function RegisterForm() {
                                 disabled={loading}
                                 className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
+                        </label>
+
+                        {/* Shop Slug */}
+                        <label className="flex flex-col gap-2">
+                            <span className="text-white text-sm font-medium leading-normal">Nome da sua Barbearia (URL)</span>
+                            <div className="flex items-center gap-2 w-full rounded-lg border border-[#695430] bg-[#342a18] focus-within:border-[#f79f08] focus-within:ring-2 focus-within:ring-[#f79f08]/50 h-12 px-4 transition-all duration-200">
+                                <input
+                                    type="text"
+                                    value={shopSlug}
+                                    onChange={(e) => setShopSlug(e.target.value)}
+                                    placeholder="barbearia-joao"
+                                    disabled={loading}
+                                    className="flex-1 bg-transparent text-white focus:outline-none placeholder:text-[#ccb58f]/50 text-base font-normal disabled:opacity-50"
+                                />
+                                <span className="text-[#ccb58f]/50 text-sm whitespace-nowrap">.barber.gold</span>
+                            </div>
+                            <p className="text-xs text-[#ccb58f]/50">Escolha um nome único para sua barbearia (opcional)</p>
                         </label>
 
                         {/* Email Address */}
