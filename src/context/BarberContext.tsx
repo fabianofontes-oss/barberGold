@@ -249,6 +249,88 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const referralSlice = useReferralSlice();
   const referrals = referralSlice.referrals;
 
+  // Carregar dados reais do Supabase
+  useEffect(() => {
+    async function loadUserData() {
+      try {
+        const supabase = createClient();
+        
+        // 1. Verificar sessão
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          console.warn('⚠️ Sem sessão ativa');
+          setLoading(false);
+          return;
+        }
+
+        // 2. Buscar profile
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('user_id', session.user.id)
+          .eq('is_active', true)
+          .single();
+
+        if (profileError) {
+          console.error('❌ Erro ao buscar profile:', profileError);
+          setLoading(false);
+          return;
+        }
+
+        if (profile) {
+          console.log('✅ Profile carregado:', profile.name);
+          
+          // 3. Mapear para StaffMember
+          const mappedUser: StaffMember = {
+            id: profile.id,
+            name: profile.name,
+            role: profile.role,
+            email: profile.email || '',
+            phone: profile.phone || '',
+            commissionModel: profile.commission_model || 'PERCENTAGE',
+            serviceCommissionRate: Number(profile.commission_rate) || 50,
+            productCommissionRate: Number(profile.commission_rate) || 50,
+            rentalFee: 0,
+            paymentFrequency: 'WEEKLY',
+            workSchedule: profile.work_schedule || []
+          };
+          
+          setCurrentUser(mappedUser);
+          setIsAuthenticated(true);
+
+          // 4. Buscar tenant
+          const { data: tenant } = await supabase
+            .from('tenants')
+            .select('*')
+            .eq('id', profile.tenant_id)
+            .single();
+
+          if (tenant) {
+            console.log('✅ Tenant carregado:', tenant.name);
+            setShopProfile({
+              name: tenant.name,
+              slug: tenant.slug,
+              logo: tenant.logo_url || '',
+              address: tenant.address || '',
+              phone: tenant.phone || '',
+              whatsapp: tenant.whatsapp || '',
+              instagram: tenant.instagram || '',
+              operatingHours: [] // TODO: mapear do tenant.settings
+            });
+          }
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error('❌ Erro ao carregar dados:', error);
+        setLoading(false);
+      }
+    }
+
+    loadUserData();
+  }, []);
+
   const tenantPlanSlice = useTenantPlanSlice({
     currentTenantId,
     setCurrentTenantId,
@@ -661,9 +743,29 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const deleteMarketingCampaign = (id: string) => setMarketingCampaigns(prev => prev.filter(c => c.id !== id));
   const updateGlobalSettings = (s: any) => setGlobalSettings(prev => ({ ...prev, ...s }));
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-zinc-950">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto mb-4"></div>
+          <p className="text-white">Carregando seus dados...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Validação de autenticação
+  if (!loading && !currentUser) {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/login';
+    }
+    return null;
+  }
+
   return (
     <BarberContext.Provider value={{
-      isAuthenticated, currentUser, shopProfile, currentView, appointments, queue, clients, products, services, sales, staff, commissionPlans, expenses, staffPayments, shopSettings, todayRevenue, inventory, suppliers, supplyTransactions, categories, registerClosures, reviews, tenants, tickets, globalInvoices, integrations, referrals, landingPageConfig, saasPlans: tenantPlanSlice.saasPlans, marketingCampaigns, globalSettings, currentTenantId: tenantPlanSlice.currentTenantId, currentTenantStatus: tenantPlanSlice.currentTenantStatus, currentTenantPlanId: tenantPlanSlice.currentTenantPlanId, isImpersonating: tenantPlanSlice.isImpersonating, activeReviewAppointmentId,
+      isAuthenticated, loading, currentUser, shopProfile, currentView, appointments, queue, clients, products, services, sales, staff, commissionPlans, expenses, staffPayments, shopSettings, todayRevenue, inventory, suppliers, supplyTransactions, categories, registerClosures, reviews, tenants, tickets, globalInvoices, integrations, referrals, landingPageConfig, saasPlans: tenantPlanSlice.saasPlans, marketingCampaigns, globalSettings, currentTenantId: tenantPlanSlice.currentTenantId, currentTenantStatus: tenantPlanSlice.currentTenantStatus, currentTenantPlanId: tenantPlanSlice.currentTenantPlanId, isImpersonating: tenantPlanSlice.isImpersonating, activeReviewAppointmentId,
       login, logout, switchUser, updateShopProfile, setView: handleSetView, addAppointment, updateAppointmentStatus, joinQueue, leaveQueue, processSale, submitReview, addLateTip, addClient, updateClient, updateService, addService, deleteService, updateProduct, addProduct, deleteProduct, addStaff, updateStaff, addCommissionPlan, deleteCommissionPlan, addExpense, removeExpense, addStaffPayment, closeRegister, updateShopSettings, addInventoryItem, updateInventoryItem, deleteInventoryItem, adjustInventoryStock, restockInventoryItem, restockProduct, addSupplier, updateSupplier, deleteSupplier, addCategory, deleteCategory, getAvailableSlots, addTenant, updateTenantStatus, 
       updateTenantPlan, // EXPOSED
       deleteTenant, impersonateTenant, exitImpersonation, resolveTicket, markInvoicePaid, updateIntegration, updateLandingPageConfig, addReferralSource, updateReferralSource, deleteReferralSource, addSaasPlan, updateSaasPlan, addMarketingCampaign, deleteMarketingCampaign, updateGlobalSettings

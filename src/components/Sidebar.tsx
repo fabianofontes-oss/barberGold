@@ -48,6 +48,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isReferralModalOpen, setIsReferralModalOpen] = useState(false);
 
+  // Validação de segurança
+  if (!currentUser) {
+    return null;
+  }
+
   const NavItem = ({ view, icon: Icon, label, disabled = false, className = '' }: { view: ViewState; icon: any; label: string; disabled?: boolean; className?: string }) => (
     <button
       onClick={() => {
