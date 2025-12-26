@@ -7,6 +7,10 @@ import { useSaasV2 } from './SaasV2Context';
 import { useTenantPlanSlice } from './slices/tenantPlanSlice';
 import { useReferralSlice } from './slices/referralSlice';
 import { createClient } from '@/lib/supabase/client';
+import { useAppointments } from '@/modules/appointments';
+import { useServices } from '@/modules/services/hooks/useServices';
+import { useProducts } from '@/modules/products/hooks/useProducts';
+import { useSales } from '@/modules/sales/hooks/useSales';
 
 // --- LOCALSTORAGE HELPERS ---
 const STORAGE_KEY = 'barberflow_data';
@@ -249,7 +253,85 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const referralSlice = useReferralSlice();
   const referrals = referralSlice.referrals;
 
-  // Carregar dados reais do Supabase
+  // Carregar dados reais do Supabase usando hooks
+  const { appointments: realAppointments, loading: appointmentsLoading } = useAppointments();
+  const { services: realServices, loading: servicesLoading } = useServices();
+  const { products: realProducts, loading: productsLoading } = useProducts();
+  const { sales: realSales, loading: salesLoading } = useSales();
+
+  // Atualizar state quando dados reais chegarem
+  useEffect(() => {
+    if (!appointmentsLoading && realAppointments.length > 0) {
+      // Mapear appointments do Supabase para o formato do Context
+      const mappedAppointments: Appointment[] = realAppointments.map((appt: any) => ({
+        id: appt.id,
+        clientId: appt.client_id,
+        clientName: appt.client_name || 'Cliente',
+        staffId: appt.staff_id,
+        staffName: appt.staff_name || 'Barbeiro',
+        serviceId: appt.service_id,
+        serviceName: appt.service_name || 'Serviço',
+        date: new Date(appt.scheduled_at),
+        price: Number(appt.price),
+        status: appt.status as AppointmentStatus,
+        notes: appt.notes || '',
+        recurrence: RecurrenceType.NONE
+      }));
+      setAppointments(mappedAppointments);
+      console.log('✅ Appointments carregados do Supabase:', mappedAppointments.length);
+    }
+  }, [appointmentsLoading, realAppointments]);
+
+  useEffect(() => {
+    if (!servicesLoading && realServices.length > 0) {
+      const mappedServices: Service[] = realServices.map((svc: any) => ({
+        id: svc.id,
+        name: svc.name,
+        price: Number(svc.price),
+        durationMinutes: svc.duration_minutes,
+        category: svc.category,
+        type: 'SERVICE' as const
+      }));
+      setServices(mappedServices);
+      console.log('✅ Services carregados do Supabase:', mappedServices.length);
+    }
+  }, [servicesLoading, realServices]);
+
+  useEffect(() => {
+    if (!productsLoading && realProducts.length > 0) {
+      const mappedProducts: Product[] = realProducts.map((prod: any) => ({
+        id: prod.id,
+        name: prod.name,
+        price: Number(prod.price),
+        costPrice: Number(prod.cost_price),
+        stock: prod.stock,
+        image: prod.image_url,
+        category: prod.category,
+        type: 'PRODUCT' as const
+      }));
+      setProducts(mappedProducts);
+      console.log('✅ Products carregados do Supabase:', mappedProducts.length);
+    }
+  }, [productsLoading, realProducts]);
+
+  useEffect(() => {
+    if (!salesLoading && realSales.length > 0) {
+      const mappedSales: Sale[] = realSales.map((sale: any) => ({
+        id: sale.id,
+        clientId: sale.client_id,
+        staffId: sale.staff_id,
+        items: [], // TODO: carregar sale_items
+        total: Number(sale.total),
+        date: new Date(sale.created_at),
+        method: sale.payment_method as PaymentMethod,
+        tip: Number(sale.tip)
+      }));
+      setSales(mappedSales);
+      console.log('✅ Sales carregadas do Supabase:', mappedSales.length);
+    }
+  }, [salesLoading, realSales]);
+
+  // Carregar dados reais do Supabase - User e Tenant
   useEffect(() => {
     async function loadUserData() {
       try {
