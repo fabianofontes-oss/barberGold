@@ -20,7 +20,7 @@ export async function createTenantAndProfile(formData: {
 
     // Verificar se o slug já existe
     const { data: existingStore } = await supabase
-      .from('stores')
+      .from('tenants')
       .select('id')
       .eq('slug', formData.shopSlug)
       .single();
@@ -31,7 +31,7 @@ export async function createTenantAndProfile(formData: {
 
     // Criar a loja/tenant
     const { data: store, error: storeError } = await supabase
-      .from('stores')
+      .from('tenants')
       .insert({
         name: formData.shopName,
         slug: formData.shopSlug,
@@ -50,11 +50,11 @@ export async function createTenantAndProfile(formData: {
       throw storeError;
     }
 
-    // Criar o perfil do dono como staff
+    // Criar o perfil do dono
     const { error: staffError } = await supabase
-      .from('staff')
+      .from('profiles')
       .insert({
-        store_id: store.id,
+        tenant_id: store.id,
         user_id: user.id,
         name: formData.displayName,
         role: 'OWNER',
@@ -83,7 +83,7 @@ export async function createTenantAndProfile(formData: {
       .insert(
         defaultServices.map(service => ({
           ...service,
-          store_id: store.id,
+          tenant_id: store.id,
           is_active: true
         }))
       );

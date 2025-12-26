@@ -7,19 +7,25 @@ import { revalidatePath } from 'next/cache';
 
 const repository = new ClientsRepository();
 
-async function getStoreId() {
+async function getTenantId() {
   const supabase = await createSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Unauthorized');
   
-  // Por enquanto usando um store_id fixo para MVP
-  // TODO: Buscar store_id do usuário logado
-  return 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
+  // Buscar tenant_id do profile do usuário
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('tenant_id')
+    .eq('user_id', user.id)
+    .single();
+  
+  if (!profile?.tenant_id) throw new Error('Tenant not found');
+  return profile.tenant_id;
 }
 
 export async function createClient(data: ClientFormData) {
   try {
-    const storeId = await getStoreId();
+    const storeId = await getTenantId();
     const validated = clientSchema.parse(data);
     
     // Verificar se telefone já existe
@@ -40,7 +46,7 @@ export async function createClient(data: ClientFormData) {
 
 export async function updateClient(id: string, data: ClientFormData) {
   try {
-    const storeId = await getStoreId();
+    const storeId = await getTenantId();
     const validated = clientSchema.parse(data);
     
     // Verificar se telefone já existe (excluindo o próprio cliente)
@@ -63,7 +69,7 @@ export async function updateClient(id: string, data: ClientFormData) {
 
 export async function deleteClient(id: string) {
   try {
-    const storeId = await getStoreId();
+    const storeId = await getTenantId();
     await repository.delete(id, storeId);
     revalidatePath('/clients');
     
@@ -76,7 +82,7 @@ export async function deleteClient(id: string) {
 
 export async function getClients(filters?: { search?: string; tags?: string[] }) {
   try {
-    const storeId = await getStoreId();
+    const storeId = await getTenantId();
     const clients = await repository.list(storeId, filters);
     return { success: true, data: clients };
   } catch (error) {
@@ -87,7 +93,7 @@ export async function getClients(filters?: { search?: string; tags?: string[] })
 
 export async function getClientById(id: string) {
   try {
-    const storeId = await getStoreId();
+    const storeId = await getTenantId();
     const client = await repository.getById(id, storeId);
     return { success: true, data: client };
   } catch (error) {
@@ -98,7 +104,7 @@ export async function getClientById(id: string) {
 
 export async function getClientStats() {
   try {
-    const storeId = await getStoreId();
+    const storeId = await getTenantId();
     const stats = await repository.getStats(storeId);
     return { success: true, data: stats };
   } catch (error) {
