@@ -7,14 +7,15 @@ import { type NextRequest } from 'next/server';
  * 
  * Fluxo:
  * 1. OAuth (Google): Supabase redireciona para cá com ?code=...
- * 2. Password Reset: Supabase redireciona para cá com ?code=... e ?next=...
+ * 2. Password Reset: Supabase redireciona para cá com ?code=... e type=recovery
  * 3. Exchange code por sessão
  * 4. Redireciona para destino final
  */
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
-  const next = requestUrl.searchParams.get('next') || '/app/dashboard';
+  const type = requestUrl.searchParams.get('type');
+  const next = requestUrl.searchParams.get('next');
 
   // Se não houver code, redireciona para login com erro
   if (!code) {
@@ -31,6 +32,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL(`/login?error=${encodeURIComponent(error.message)}`, requestUrl.origin));
   }
 
-  // Sucesso: redireciona para o destino (dashboard ou página de reset de senha)
-  return NextResponse.redirect(new URL(next, requestUrl.origin));
+  // Se for recuperação de senha, redireciona para página de reset
+  if (type === 'recovery') {
+    return NextResponse.redirect(new URL('/reset-password', requestUrl.origin));
+  }
+
+  // Senão, redireciona para o destino especificado ou dashboard
+  const destination = next || '/app/dashboard';
+  return NextResponse.redirect(new URL(destination, requestUrl.origin));
 }
