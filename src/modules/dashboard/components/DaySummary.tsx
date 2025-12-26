@@ -18,6 +18,8 @@ interface DaySummaryProps {
 export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, activeClientsCount = 0 }) => {
   const { appointments, currentUser } = useBarber();
 
+  if (!currentUser) return null;
+
   const isOwner = currentUser.role === 'OWNER';
 
   // Filtrar agendamentos de hoje

@@ -8,6 +8,8 @@ import { differenceInDays } from 'date-fns';
 export const InactiveClients: React.FC = () => {
   const { clients, currentUser } = useBarber();
 
+  if (!currentUser) return null;
+
   const isOwner = currentUser.role === 'OWNER';
 
   // Filtrar clientes que não voltam há 30+ dias

@@ -7,7 +7,9 @@ import { format } from 'date-fns';
 
 export const BarberRanking: React.FC = () => {
   const { staff, sales, currentUser } = useBarber();
-  
+
+  if (!currentUser) return null;
+
   const isOwner = currentUser.role === 'OWNER';
 
   // Calcular faturamento de hoje por barbeiro
