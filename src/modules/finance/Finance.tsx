@@ -44,6 +44,8 @@ export const Finance = () => {
   const [activeContext, setActiveContext] = useState<'BUSINESS' | 'PERSONAL'>('BUSINESS');
   const [dateFilter, setDateFilter] = useState<'TODAY' | 'WEEK' | 'MONTH' | 'ALL'>('MONTH'); // NEW: Date Filter
   
+  if (!currentUser) return null;
+  
   const isOwner = currentUser.role === 'OWNER';
   const hasAdvancedReports = canUseFeature('ADVANCED_REPORTS');
   const isFreePlan = currentTenantPlanId === 'FREE';

@@ -14,6 +14,8 @@ export const ReferralDashboard: React.FC = () => {
   const [isOwnerModalOpen, setIsOwnerModalOpen] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
 
+  if (!currentUser) return null;
+
   const config = shopSettings.referralConfig || {
     enabled: true,
     ownerReferralCode: 'CODE',

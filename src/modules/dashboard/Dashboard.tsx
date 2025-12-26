@@ -38,6 +38,9 @@ import { AppointmentStatus, CompensationModel } from '@/types';
 
 export const Dashboard = () => {
   const { setView, currentUser, sales, appointments, clients, shopSettings, currentTenantPlanId } = useBarber();
+
+  if (!currentUser) return null;
+
   const { 
     todayRevenue, 
     dailyGoal, 

@@ -47,17 +47,14 @@ export const Clients = () => {
   // VIEW MODE
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'PORTFOLIO' | 'HISTORY'>('PORTFOLIO');
+  const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
+  const [noteText, setNoteText] = useState('');
 
   // Validação de segurança
   if (!currentUser) return null;
 
   const isOwner = currentUser.role === 'OWNER';
-  const [activeTab, setActiveTab] = useState<'PORTFOLIO' | 'HISTORY'>(isOwner ? 'PORTFOLIO' : 'PORTFOLIO');
-  
-  // Detail Modal State
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-  const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
-  const [noteText, setNoteText] = useState('');
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;

@@ -24,6 +24,8 @@ export const Settings = () => {
     appointments
   } = useBarber();
   
+  if (!currentUser) return null;
+  
   const isOwner = currentUser.role === 'OWNER';
   
   // Tab State
