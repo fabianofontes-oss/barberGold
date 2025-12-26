@@ -45,6 +45,12 @@ export const Clients = () => {
   const [newDependentStaffId, setNewDependentStaffId] = useState('');
 
   // VIEW MODE
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  // Validação de segurança
+  if (!currentUser) return null;
+
   const isOwner = currentUser.role === 'OWNER';
   const [activeTab, setActiveTab] = useState<'PORTFOLIO' | 'HISTORY'>(isOwner ? 'PORTFOLIO' : 'PORTFOLIO');
   

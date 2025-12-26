@@ -80,6 +80,8 @@ export const Agenda = () => {
   const [recurrence, setRecurrence] = useState<RecurrenceType>(RecurrenceType.NONE);
   const [recurrenceEndDate, setRecurrenceEndDate] = useState(format(addMonths(new Date(), 1), 'yyyy-MM-dd'));
 
+  if (!currentUser) return null;
+
   const isOwner = currentUser.role === 'OWNER';
   const dates = Array.from({ length: 7 }, (_, i) => addDays(startOfToday(), i));
 
