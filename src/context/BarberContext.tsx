@@ -6,6 +6,7 @@ import { addDays, addWeeks, addMonths, isAfter, areIntervalsOverlapping, addMinu
 import { useSaasV2 } from './SaasV2Context';
 import { useTenantPlanSlice } from './slices/tenantPlanSlice';
 import { useReferralSlice } from './slices/referralSlice';
+import { createClient } from '@/lib/supabase/client';
 
 // --- LOCALSTORAGE HELPERS ---
 const STORAGE_KEY = 'barberflow_data';
@@ -61,7 +62,8 @@ const INITIAL_GLOBAL_SETTINGS: GlobalSettings = {
 interface BarberContextType {
   // State
   isAuthenticated: boolean; // NEW: Auth State
-  currentUser: StaffMember; // Who is logged in?
+  loading: boolean; // Loading state para dados do Supabase
+  currentUser: StaffMember | null; // Who is logged in? (null se não autenticado)
   shopProfile: ShopProfile;
   currentView: ViewState;
   appointments: Appointment[];
@@ -195,8 +197,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const { currentTenantId, setCurrentTenantId, getTenantById } = useSaasV2();
   // ... (keep existing state setup) ...
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [staff, setStaff] = useState<StaffMember[]>(MOCK_STAFF);
-  const [currentUser, setCurrentUser] = useState<StaffMember>(MOCK_STAFF[0]); 
+  const [loading, setLoading] = useState(true);
+  const [staff, setStaff] = useState<StaffMember[]>([]);
+  const [currentUser, setCurrentUser] = useState<StaffMember | null>(null); 
   const [currentView, setView] = useState<ViewState>('SAAS_LANDING'); 
   const [activeReviewAppointmentId, setActiveReviewAppointmentId] = useState<string | undefined>();
   const [shopProfile, setShopProfile] = useState<ShopProfile>({
