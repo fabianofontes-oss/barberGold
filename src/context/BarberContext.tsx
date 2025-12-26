@@ -743,25 +743,25 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const deleteMarketingCampaign = (id: string) => setMarketingCampaigns(prev => prev.filter(c => c.id !== id));
   const updateGlobalSettings = (s: any) => setGlobalSettings(prev => ({ ...prev, ...s }));
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-zinc-950">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto mb-4"></div>
-          <p className="text-white">Carregando seus dados...</p>
+  // Loading state - apenas para rotas protegidas
+  // Não bloqueia rotas públicas (landing, login, register)
+  if (loading && typeof window !== 'undefined') {
+    const isPublicRoute = ['/login', '/register', '/forgot-password', '/reset-password', '/'].includes(window.location.pathname);
+    
+    if (!isPublicRoute) {
+      return (
+        <div className="flex items-center justify-center min-h-screen bg-zinc-950">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto mb-4"></div>
+            <p className="text-white">Carregando seus dados...</p>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
-  // Validação de autenticação
-  if (!loading && !currentUser) {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/login';
-    }
-    return null;
-  }
+  // NÃO redireciona automaticamente - deixa middleware e AuthGuard fazerem isso
+  // Apenas retorna null se não autenticado em rotas protegidas
 
   return (
     <BarberContext.Provider value={{
