@@ -2,6 +2,7 @@
 
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useBarber } from '@/context/BarberContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { DailyGoalWidget } from '@/components/widgets/DailyGoalWidget';
@@ -37,7 +38,8 @@ import { format } from 'date-fns';
 import { AppointmentStatus, CompensationModel } from '@/types';
 
 export const Dashboard = () => {
-  const { setView, currentUser, sales, appointments, clients, shopSettings, currentTenantPlanId } = useBarber();
+  const router = useRouter();
+  const { currentUser, sales, appointments, clients, shopSettings, currentTenantPlanId } = useBarber();
 
   if (!currentUser) return null;
 
@@ -74,9 +76,9 @@ export const Dashboard = () => {
   // --- ACTIONS ---
   const sendSurvey = (apptId: string) => {
      // Simulate sending link (In real app: API call)
-     // For Demo: Switch view to simulate user clicking the link
+     // For Demo: Navigate to tips review page
      if (confirm('Simular envio de link e abrir Pesquisa como cliente?')) {
-        setView('TIPS_REVIEW', { appointmentId: apptId });
+        router.push(`/app/tips-review?appointmentId=${apptId}`);
      }
   };
 
@@ -225,7 +227,7 @@ export const Dashboard = () => {
                         </div>
                         {isOwner && (
                            <button 
-                              onClick={() => setView('SETTINGS')} 
+                              onClick={() => router.push('/app/settings')} 
                               className="text-xs font-bold text-amber-500 hover:underline"
                            >
                               Restock
@@ -302,7 +304,7 @@ export const Dashboard = () => {
                 <h4 className="font-medium text-white text-lg">{(isOwner ? nextAppointment : myNextAppointment)!.clientName}</h4>
                 <p className="text-zinc-500 text-sm mt-1 mb-3">Does not want much off the top.</p>
                 <button 
-                  onClick={() => setView('PDV')}
+                  onClick={() => router.push('/app/pdv')}
                   className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-medium rounded-lg transition-colors"
                 >
                   Check In / Checkout
@@ -315,7 +317,7 @@ export const Dashboard = () => {
             )}
             
             <button 
-              onClick={() => setView('AGENDA')}
+              onClick={() => router.push('/app/agenda')}
               className="w-full mt-4 flex items-center justify-center gap-2 text-amber-500 hover:text-amber-400 text-sm font-medium transition-colors"
             >
               View Full Schedule <ArrowRight className="w-4 h-4" />
@@ -327,7 +329,7 @@ export const Dashboard = () => {
             <h3 className="font-bold text-xl mb-2">Quick Sale</h3>
             <p className="text-zinc-900/80 text-sm mb-4">Walk-in client purchasing product?</p>
             <button 
-              onClick={() => setView('PDV')}
+              onClick={() => router.push('/app/pdv')}
               className="w-full bg-white/90 hover:bg-white text-zinc-900 font-bold py-3 rounded-xl transition-all shadow-lg"
             >
               Open Register
