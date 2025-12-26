@@ -1,33 +1,54 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { Trophy, TrendingUp, Medal } from 'lucide-react';
-import { format } from 'date-fns';
+import { startOfDay, endOfDay } from 'date-fns';
 
 export const BarberRanking: React.FC = () => {
   const { staff, sales, currentUser } = useBarber();
   
   const isOwner = currentUser.role === 'OWNER';
 
-  // Calcular faturamento de hoje por barbeiro
-  const today = format(new Date(), 'yyyy-MM-dd');
-  
-  const barberStats = staff.map(barber => {
-    const barberSalesToday = sales.filter(
-      s => s.staffId === barber.id && format(s.date, 'yyyy-MM-dd') === today
-    );
-    const totalRevenue = barberSalesToday.reduce((sum, s) => sum + s.total, 0);
-    const salesCount = barberSalesToday.length;
-    
-    return {
-      id: barber.id,
-      name: barber.name,
-      avatar: barber.avatar,
-      revenue: totalRevenue,
-      salesCount
-    };
-  }).sort((a, b) => b.revenue - a.revenue);
+  // Optimization: Memoize the calculation to prevent expensive re-computations on every render.
+  // Complexity reduced from O(Staff * Sales) to O(Sales + Staff).
+  const barberStats = useMemo(() => {
+    // 1. Define time range for "today" once
+    const now = new Date();
+    const start = startOfDay(now);
+    const end = endOfDay(now);
+
+    // 2. Filter sales for today ONCE (O(Sales))
+    // Using timestamp comparison is faster than string formatting
+    const todaySales = sales.filter(s => {
+       const date = new Date(s.date);
+       return date >= start && date <= end;
+    });
+
+    // 3. Aggregate by staff (O(TodaySales))
+    const salesByStaff = new Map<string, typeof sales>();
+    todaySales.forEach(s => {
+      if (!salesByStaff.has(s.staffId)) {
+        salesByStaff.set(s.staffId, []);
+      }
+      salesByStaff.get(s.staffId)!.push(s);
+    });
+
+    // 4. Map staff to results (O(Staff))
+    return staff.map(barber => {
+      const barberSales = salesByStaff.get(barber.id) || [];
+      const totalRevenue = barberSales.reduce((sum, s) => sum + s.total, 0);
+      const salesCount = barberSales.length;
+
+      return {
+        id: barber.id,
+        name: barber.name,
+        avatar: barber.avatar,
+        revenue: totalRevenue,
+        salesCount
+      };
+    }).sort((a, b) => b.revenue - a.revenue);
+  }, [sales, staff]);
 
   const getMedalColor = (index: number) => {
     if (index === 0) return 'text-amber-400';
