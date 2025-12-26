@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { Scissors, Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
+import { validateSlug } from '@/lib/validation/reserved-slugs';
 
 function RegisterForm() {
     const searchParams = useSearchParams();
@@ -42,6 +43,16 @@ function RegisterForm() {
             setError('Você deve aceitar os Termos de Serviço.');
             setLoading(false);
             return;
+        }
+
+        // Validar slug se foi preenchido
+        if (shopSlug.trim()) {
+            const slugValidation = validateSlug(shopSlug);
+            if (!slugValidation.valid) {
+                setError(slugValidation.error || 'Nome inválido');
+                setLoading(false);
+                return;
+            }
         }
 
         try {
