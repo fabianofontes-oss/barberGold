@@ -178,7 +178,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                  {/* MY_PLAN moved to footer */}
                  <NavItem view="SETTINGS" icon={Settings} label={isOwner ? "Settings" : "My Profile"} />
                  
-                 {isOwner && hasPremiumWebsite && (
+                 {isOwner && (
                     <NavItem view="WEBSITE_EDITOR" icon={Globe} label="Website & Brand" />
                  )}
                </div>
@@ -189,8 +189,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
 
       <div className="absolute bottom-0 w-full bg-zinc-900 border-t border-zinc-800">
         
-        {/* PLAN PROMO BLOCK (OWNER ONLY - PURPLE/VIOLET) */}
-        {isOwner && !isSuperAdmin && (
+        {/* PLAN PROMO BLOCK - OCULTO (Sistema gratuito) */}
+        {/* {isOwner && !isSuperAdmin && (
            <button
               onClick={() => {
                  setView('MY_PLAN');
@@ -210,7 +210,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                  </div>
               </div>
            </button>
-        )}
+        )} */}
 
         {/* REFERRAL PROMO BLOCK (OWNER ONLY - FULL WIDTH GREEN) */}
         {isOwner && !isSuperAdmin && (

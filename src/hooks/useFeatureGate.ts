@@ -19,9 +19,12 @@
    }, [planId]);
  
    const canUseFeature = (feature: SaasFeatureKey): boolean => {
-     // Se não há tenant selecionado (demo/standalone), libera tudo
-     if (!currentTenant) return true;
-     return hasFeature({ planId }, feature);
+     // ⚡ OVERRIDE: Sistema 100% gratuito - Todas funcionalidades liberadas
+     return true;
+     
+     // Código original comentado (para reverter no futuro se necessário):
+     // if (!currentTenant) return true;
+     // return hasFeature({ planId }, feature);
    };
  
    return {

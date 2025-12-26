@@ -188,39 +188,6 @@ function RegisterForm() {
                             />
                         </label>
 
-                        {/* Barbershop Slug */}
-                        {shopSlug && (
-                            <label className="flex flex-col gap-2">
-                                <span className="text-white text-sm font-medium leading-normal">URL da sua Barbearia</span>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-[#ccb58f]/50 text-sm">barber.gold/</span>
-                                    <input
-                                        type="text"
-                                        value={shopSlug}
-                                        onChange={(e) => setShopSlug(e.target.value)}
-                                        disabled={loading}
-                                        className="flex-1 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#f79f08]/30 bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
-                                    />
-                                </div>
-                                <p className="text-xs text-[#ccb58f]/50">Reservado da página inicial</p>
-                            </label>
-                        )}
-
-                        {/* Selected Plan */}
-                        {selectedPlan && (
-                            <div className="flex flex-col gap-2">
-                                <span className="text-white text-sm font-medium leading-normal">Plano Selecionado</span>
-                                <div className="px-4 h-12 flex items-center bg-[#f79f08]/10 border border-[#f79f08]/30 rounded-lg">
-                                    <span className="text-[#f79f08] font-bold capitalize">Plano {selectedPlan}</span>
-                                    <span className="text-[#ccb58f] text-sm ml-2">
-                                        {selectedPlan === 'start' && '- R$ 89/mês'}
-                                        {selectedPlan === 'pro' && '- R$ 149/mês'}
-                                        {selectedPlan === 'empire' && '- R$ 299/mês'}
-                                    </span>
-                                </div>
-                            </div>
-                        )}
-
                         {/* Email Address */}
                         <label className="flex flex-col gap-2">
                             <span className="text-white text-sm font-medium leading-normal">Email</span>
@@ -317,7 +284,7 @@ function RegisterForm() {
                                     <Loader2 className="animate-spin h-5 w-5 mr-2" />
                                     Processando...
                                 </>
-                            ) : 'Criar Conta'}
+                            ) : 'Começar Grátis'}
                         </button>
 
                     </form>
