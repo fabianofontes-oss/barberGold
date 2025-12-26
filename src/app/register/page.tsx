@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
@@ -9,8 +8,6 @@ import { Scissors, Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
 import { validateSlug } from '@/lib/validation/reserved-slugs';
 
 function RegisterForm() {
-    const searchParams = useSearchParams();
-    const router = useRouter();
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
