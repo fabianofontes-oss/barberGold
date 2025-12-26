@@ -7,8 +7,7 @@
 UPDATE public.tenants 
 SET 
     plan_id = 'FREE',
-    status = 'ACTIVE',
-    trial_ends_at = NULL  -- Remove data de trial (sistema gratuito não tem trial)
+    status = 'ACTIVE'
 WHERE plan_id IS NULL OR plan_id != 'FREE';
 
 -- PASSO 2: Alterar defaults da tabela tenants para sempre criar como FREE
@@ -24,7 +23,6 @@ SELECT
     slug,
     plan_id,
     status,
-    trial_ends_at,
     created_at
 FROM public.tenants
 ORDER BY created_at DESC;
