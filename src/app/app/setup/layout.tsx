@@ -32,7 +32,7 @@ export default async function SetupLayout({
     .single();
 
   // Se já tem profile completo, redireciona para dashboard
-  if (profile && profile.display_name && profile.role) {
+  if (profile && profile.name && profile.role) {
     redirect('/app/dashboard');
   }
 

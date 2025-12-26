@@ -69,7 +69,7 @@ export async function getCurrentProfile(): Promise<CurrentProfileResult | null> 
     userId: profile.user_id,
     tenantId: profile.tenant_id,
     role: profile.role as UserProfile['role'],
-    displayName: profile.display_name,
+    displayName: profile.name, // Campo correto é 'name', não 'display_name'
     email: profile.email,
     phone: profile.phone,
     isActive: profile.is_active,
