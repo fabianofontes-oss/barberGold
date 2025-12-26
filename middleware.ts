@@ -10,8 +10,9 @@ export async function middleware(request: NextRequest) {
   const subdomain = hostname.split('.')[0]
   
   // Lista de domínios principais (não são tenants)
-  const mainDomains = ['barber', 'localhost:3000', 'localhost', 'barber-gold-alpha', 'www']
-  const isMainDomain = mainDomains.includes(subdomain) || hostname === 'localhost:3000' || hostname.startsWith('localhost')
+  // barber.gold é o domínio principal da plataforma
+  const mainDomains = ['barber', 'www']
+  const isMainDomain = mainDomains.includes(subdomain) || hostname === 'barber.gold' || hostname === 'www.barber.gold'
   
   // Se não é o domínio principal, é um tenant (barbearia)
   if (!isMainDomain && subdomain && !pathname.startsWith('/api')) {
