@@ -11,6 +11,8 @@ import { useAppointments } from '@/modules/appointments';
 import { useServices } from '@/modules/services/hooks/useServices';
 import { useProducts } from '@/modules/products/hooks/useProducts';
 import { useSales } from '@/modules/sales/hooks/useSales';
+import { useClients } from '@/modules/clients/hooks/useClients';
+import { useStaff } from '@/modules/staff/hooks/useStaff';
 
 // --- LOCALSTORAGE HELPERS ---
 const STORAGE_KEY = 'barberflow_data';
@@ -258,6 +260,8 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const { services: realServices, loading: servicesLoading } = useServices();
   const { products: realProducts, loading: productsLoading } = useProducts();
   const { sales: realSales, loading: salesLoading } = useSales();
+  const { clients: realClients, loading: clientsLoading } = useClients();
+  const { staff: realStaff, loading: staffLoading } = useStaff();
 
   // Atualizar state quando dados reais chegarem
   useEffect(() => {
@@ -313,6 +317,51 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       console.log('✅ Products carregados do Supabase:', mappedProducts.length);
     }
   }, [productsLoading, realProducts]);
+
+  useEffect(() => {
+    if (!clientsLoading && realClients.length > 0) {
+      const mappedClients: Client[] = realClients.map((client: any) => ({
+        id: client.id,
+        name: client.name,
+        phone: client.phone || '',
+        email: client.email || '',
+        birthDate: client.birth_date || '',
+        lastVisit: client.last_visit ? new Date(client.last_visit) : undefined,
+        totalVisits: client.total_visits || 0,
+        totalSpent: Number(client.total_spent) || 0,
+        loyaltyPoints: client.loyalty_points || 0,
+        tags: client.tags || [],
+        notes: client.notes || '',
+        preferences: client.preferences || {}
+      }));
+      setClients(mappedClients);
+      console.log('✅ Clients carregados do Supabase:', mappedClients.length);
+    }
+  }, [clientsLoading, realClients]);
+
+  useEffect(() => {
+    if (!staffLoading && realStaff.length > 0) {
+      const mappedStaff: StaffMember[] = realStaff.map((member: any) => ({
+        id: member.id,
+        name: member.name,
+        email: member.email,
+        phone: member.phone || '',
+        role: member.role as 'OWNER' | 'BARBER' | 'RECEPTIONIST' | 'SUPER_ADMIN',
+        avatar: member.avatar_url || '',
+        serviceCommissionRate: member.service_commission_rate || 50,
+        productCommissionRate: member.product_commission_rate || 20,
+        workSchedule: Array.from({ length: 7 }, (_, i) => ({
+          dayIndex: i,
+          isActive: i !== 0,
+          startTime: '09:00',
+          endTime: i === 6 ? '14:00' : '20:00',
+          breaks: []
+        }))
+      }));
+      setStaff(mappedStaff);
+      console.log('✅ Staff carregado do Supabase:', mappedStaff.length);
+    }
+  }, [staffLoading, realStaff]);
 
   useEffect(() => {
     if (!salesLoading && realSales.length > 0) {
