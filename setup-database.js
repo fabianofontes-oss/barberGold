@@ -1,12 +1,43 @@
 // Script para configurar o banco de dados
 // Execute com: node setup-database.js
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
 
-const supabaseUrl = 'https://yitrspfqpakpygfytduz.supabase.co';
-const serviceRoleKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpdHJzcGZxcGFrcHlnZnl0ZHV6Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTg0OTA5OSwiZXhwIjoyMDgxNDI1MDk5fQ.5V3ex99XlHONmgPW-4M2YzwTFt4QzYIo1QZfUwZ0DRU';
+// Helper para ler variáveis de ambiente de arquivo
+function loadEnv(filename) {
+  try {
+    const envPath = path.join(__dirname, filename);
+    if (fs.existsSync(envPath)) {
+      const content = fs.readFileSync(envPath, 'utf8');
+      const vars = {};
+      content.split('\n').forEach(line => {
+        const match = line.match(/^([^=]+)=(.*)$/);
+        if (match) {
+          const key = match[1].trim();
+          const value = match[2].trim().replace(/^["']|["']$/g, ''); // Remove quotes
+          vars[key] = value;
+        }
+      });
+      return vars;
+    }
+  } catch (e) {
+    // Ignore errors
+  }
+  return {};
+}
+
+const envVars = { ...loadEnv('.env'), ...loadEnv('.env.local') };
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || envVars.NEXT_PUBLIC_SUPABASE_URL;
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || envVars.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !serviceRoleKey) {
+  console.error('❌ Erro: Variáveis de ambiente não encontradas.');
+  console.error('Certifique-se de que NEXT_PUBLIC_SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY estão definidas em .env ou .env.local');
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, serviceRoleKey);
 
@@ -22,7 +53,17 @@ async function setupDatabase() {
     
     // Para executar SQL direto, você precisa fazer via Dashboard do Supabase
     console.log('\n⚠️  IMPORTANTE:');
-    console.log('1. Acesse: https://supabase.com/dashboard/project/yitrspfqpakpygfytduz/sql/new');
+
+    // Extrair ID do projeto da URL se possível para mostrar o link correto
+    let projectId = 'seu-projeto';
+    try {
+        const urlObj = new URL(supabaseUrl);
+        projectId = urlObj.hostname.split('.')[0];
+    } catch (e) {
+        // Fallback
+    }
+
+    console.log(`1. Acesse: https://supabase.com/dashboard/project/${projectId}/sql/new`);
     console.log('2. Cole o conteúdo do arquivo: supabase/schema-complete.sql');
     console.log('3. Clique em "Run" para executar\n');
 
