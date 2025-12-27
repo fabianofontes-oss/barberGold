@@ -337,6 +337,42 @@ export interface ShopSettings {
     inStore: PaymentMethod[];
     online: PaymentMethod[];
   };
+  gatewayConfig?: {
+    mercadoPago?: {
+      enabled: boolean;
+      publicKey: string;
+      accessToken: string;
+    };
+    pagSeguro?: {
+      enabled: boolean;
+      email: string;
+      token: string;
+    };
+    stripe?: {
+      enabled: boolean;
+      publishableKey: string;
+      secretKey: string;
+    };
+  };
+  pixConfig?: {
+    keyType: 'CPF' | 'CNPJ' | 'EMAIL' | 'PHONE' | 'RANDOM';
+    key: string;
+    beneficiaryName: string;
+  };
+  installmentConfig?: {
+    maxInstallments: number;
+    minInstallmentValue: number;
+    chargeInterest: boolean;
+    interestRate: number;
+  };
+  bankAccount?: {
+    bank: string;
+    accountType: 'CHECKING' | 'SAVINGS' | 'PAYMENT';
+    agency: string;
+    account: string;
+    accountHolder: string;
+    holderDocument: string;
+  };
   website: WebsiteConfig;
   referralConfig?: {
     enabled: boolean;
