@@ -28,9 +28,7 @@ export const Settings = () => {
   } = useBarber();
   const { t, currency, formatCurrency } = useI18n();
   
-  if (!currentUser) return null;
-  
-  const isOwner = currentUser.role === 'OWNER';
+  const isOwner = currentUser?.role === 'OWNER';
   
   // Tab State
   const [activeTab, setActiveTab] = useState<'SHOP' | 'TEAM' | 'PAYMENTS' | 'COMMISSIONS' | 'MY_PROFILE' | 'REFERRAL'>('SHOP');
@@ -51,10 +49,14 @@ export const Settings = () => {
   const [editingStaff, setEditingStaff] = useState<StaffMember | null>(null);
 
   // My Profile State (Staff View)
-  const [myProfileForm, setMyProfileForm] = useState<StaffMember>(currentUser);
+  const [myProfileForm, setMyProfileForm] = useState<StaffMember | null>(currentUser);
   
   // Update local form when currentUser changes
   useEffect(() => {
+     if (!currentUser) {
+        setMyProfileForm(null);
+        return;
+     }
      // Ensure legacy compatibility for breaks
      const safeSchedule = currentUser.workSchedule?.map(day => ({
         ...day,
@@ -62,6 +64,8 @@ export const Settings = () => {
      })) || [];
      setMyProfileForm({ ...currentUser, workSchedule: safeSchedule });
   }, [currentUser]);
+
+  if (!currentUser || !myProfileForm) return null;
 
   const openEditStaff = (member: StaffMember) => {
     setEditingStaff(member);
