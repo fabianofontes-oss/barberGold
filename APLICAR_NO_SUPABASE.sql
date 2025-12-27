@@ -83,6 +83,18 @@ ALTER TABLE suppliers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE inventory ENABLE ROW LEVEL SECURITY;
 ALTER TABLE supply_transactions ENABLE ROW LEVEL SECURITY;
 
+-- Remover policies existentes (se houver)
+DROP POLICY IF EXISTS "Users can view commission plans from their tenant" ON commission_plans;
+DROP POLICY IF EXISTS "Owners can manage commission plans" ON commission_plans;
+DROP POLICY IF EXISTS "Users can view categories from their tenant" ON categories;
+DROP POLICY IF EXISTS "Owners can manage categories" ON categories;
+DROP POLICY IF EXISTS "Users can view suppliers from their tenant" ON suppliers;
+DROP POLICY IF EXISTS "Owners can manage suppliers" ON suppliers;
+DROP POLICY IF EXISTS "Users can view inventory from their tenant" ON inventory;
+DROP POLICY IF EXISTS "Staff can manage inventory" ON inventory;
+DROP POLICY IF EXISTS "Users can view supply transactions from their tenant" ON supply_transactions;
+DROP POLICY IF EXISTS "Staff can create supply transactions" ON supply_transactions;
+
 -- Policies para commission_plans
 CREATE POLICY "Users can view commission plans from their tenant"
   ON commission_plans FOR SELECT
