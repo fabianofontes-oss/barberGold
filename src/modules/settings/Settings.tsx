@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { StaffModal } from './modals/StaffModal';
+import { QRCodeSVG } from 'qrcode.react';
+import { generatePixPayload } from '@/lib/pix/generatePixPayload';
 import { CommissionPlanModal } from './modals/CommissionPlanModal';
 import { ReferralSettingsPanel } from './ReferralSettingsPanel'; 
 import { ImageUpload } from '@/components/shared/ImageUpload';
