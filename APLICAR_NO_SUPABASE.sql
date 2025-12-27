@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS suppliers (
 CREATE TABLE IF NOT EXISTS inventory (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
-  product_id UUID REFERENCES products(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   sku TEXT,
   current_stock INTEGER NOT NULL DEFAULT 0,
@@ -57,6 +56,7 @@ CREATE TABLE IF NOT EXISTS inventory (
   cost_price DECIMAL(10,2),
   supplier_id UUID REFERENCES suppliers(id) ON DELETE SET NULL,
   last_restock_date TIMESTAMPTZ,
+  notes TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
