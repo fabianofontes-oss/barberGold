@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Database } from '@/types/supabase';
+import { Database } from '@/lib/database.types';
 
 // Types do Banco
 export type ClientDB = Database['public']['Tables']['clients']['Row'];
