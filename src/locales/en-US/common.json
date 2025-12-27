@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "BarberGold",
+    "tagline": "Management System for Barbershops"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "calendar": "Calendar",
+    "clients": "Clients",
+    "services": "Services",
+    "team": "Team",
+    "reports": "Reports",
+    "settings": "Settings"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish"
+  },
+  "currency": {
+    "symbol": "$",
+    "code": "USD",
+    "format": "{symbol}{value}"
+  },
+  "date": {
+    "format": "MM/dd/yyyy",
+    "timeFormat": "hh:mm a"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Payments",
+  "methods": {
+    "cash": "Cash",
+    "credit_card": "Credit Card",
+    "debit_card": "Debit Card",
+    "pix": "Bank Transfer",
+    "google_pay": "Google Pay",
+    "apple_pay": "Apple Pay",
+    "mercado_pago": "Mercado Pago",
+    "pagseguro": "PagSeguro",
+    "infinite_pay": "InfinitePay",
+    "stone": "Stone",
+    "other": "Other"
+  },
+  "gateways": {
+    "mercado_pago": "Mercado Pago",
+    "pagseguro": "PagSeguro",
+    "stripe": "Stripe",
+    "infinitepay": "InfinitePay",
+    "stone": "Stone"
+  },
+  "pix": {
+    "title": "Transfer Configuration",
+    "keyType": "Key Type",
+    "key": "Key",
+    "beneficiary": "Beneficiary Name",
+    "qrCode": "QR Code",
+    "copyCode": "Copy Code"
+  },
+  "installments": {
+    "title": "Installments",
+    "max": "Maximum Installments",
+    "minValue": "Minimum Installment Value",
+    "interest": "Charge Interest",
+    "interestRate": "Interest Rate (%)"
+  },
+  "bankAccount": {
+    "title": "Bank Account",
+    "bank": "Bank",
+    "accountType": "Account Type",
+    "agency": "Branch",
+    "account": "Account",
+    "holder": "Account Holder",
+    "document": "SSN/EIN"
+  }
+}
