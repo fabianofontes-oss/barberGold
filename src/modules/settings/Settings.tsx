@@ -1739,11 +1739,11 @@ export const Settings = () => {
                <div className="flex items-center justify-between gap-4 mb-4 relative z-10">
                   <div>
                      <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                       <ThumbsUp className="w-5 h-5 text-amber-500" /> Quality Assurance & Tips
+                       <ThumbsUp className="w-5 h-5 text-amber-500" /> Garantia de Qualidade e Gorjetas
                      </h3>
                      <p className="text-zinc-400 text-sm mt-1 max-w-xl">
-                        Automatically send survey links to clients after appointments.
-                        <br/><span className="text-xs text-zinc-500">Collects feedback (1-5 stars) and suggests a late tip for good service.</span>
+                        Envie automaticamente links de pesquisa para clientes após atendimentos.
+                        <br/><span className="text-xs text-zinc-500">Coleta feedback (1-5 estrelas) e sugere gorjeta para bom serviço.</span>
                      </p>
                   </div>
                   
@@ -1761,12 +1761,12 @@ export const Settings = () => {
                {shopSettings.enableTipsReview && (
                   <div className="mt-4 bg-zinc-950/50 rounded-lg p-4 text-xs text-zinc-400 border border-zinc-800 flex gap-4">
                      <div className="flex-1">
-                        <span className="font-bold text-white block mb-1">Flow:</span>
-                        1. Service Completed {'>'} 2. &quot;Send Link&quot; button appears in Dashboard {'>'} 3. Client rates (Stars) {'>'} 4. If Good {'>'} 5. Ask for Tip.
+                        <span className="font-bold text-white block mb-1">Fluxo:</span>
+                        1. Serviço Concluído {'>'} 2. Botão &quot;Enviar Link&quot; aparece no Painel {'>'} 3. Cliente avalia (Estrelas) {'>'} 4. Se Bom {'>'} 5. Pedir Gorjeta.
                      </div>
                      <div className="flex-1 border-l border-zinc-800 pl-4">
-                        <span className="font-bold text-white block mb-1">Impact:</span>
-                        Increases staff earnings and catches bad experiences privately before they hit Google Reviews.
+                        <span className="font-bold text-white block mb-1">Impacto:</span>
+                        Aumenta ganhos da equipe e captura experiências ruins privadamente antes de chegarem ao Google.
                      </div>
                   </div>
                )}
@@ -1775,10 +1775,10 @@ export const Settings = () => {
             {/* QUEUE DISTRIBUTION RULE */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                 <UserMinus className="w-5 h-5 text-amber-500" /> Walk-in Distribution Logic
+                 <UserMinus className="w-5 h-5 text-amber-500" /> Lógica de Distribuição de Clientes Sem Agendamento
                </h3>
                <p className="text-zinc-400 text-sm mb-6">
-                  How should the system automatically assign or recommend staff for Walk-in clients (new/anonymous)?
+                  Como o sistema deve atribuir ou recomendar automaticamente profissionais para clientes sem agendamento (novos/anônimos)?
                </p>
 
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1790,7 +1790,7 @@ export const Settings = () => {
                         <span className={`font-bold ${shopSettings.queueDistributionRule === 'FAIRNESS' ? 'text-amber-500' : 'text-white'}`}>FAIRNESS (Rodízio)</span>
                         {shopSettings.queueDistributionRule === 'FAIRNESS' && <Zap className="w-4 h-4 text-amber-500" />}
                      </div>
-                     <p className="text-xs text-zinc-400">Prioritizes staff with FEWEST cuts today. Balances the workload so everyone eats.</p>
+                     <p className="text-xs text-zinc-400">Prioriza profissional com MENOS cortes hoje. Equilibra a carga de trabalho para todos ganharem.</p>
                   </button>
 
                   <button 
@@ -1798,10 +1798,10 @@ export const Settings = () => {
                      className={`p-4 rounded-xl border flex flex-col gap-2 transition-all text-left ${shopSettings.queueDistributionRule === 'SPEED' ? 'bg-zinc-800 border-emerald-500 ring-1 ring-emerald-500/50' : 'bg-zinc-950 border-zinc-800 hover:border-zinc-700'}`}
                   >
                      <div className="flex justify-between w-full">
-                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'SPEED' ? 'text-emerald-500' : 'text-white'}`}>SPEED (Fastest)</span>
+                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'SPEED' ? 'text-emerald-500' : 'text-white'}`}>VELOCIDADE (Mais Rápido)</span>
                         {shopSettings.queueDistributionRule === 'SPEED' && <Zap className="w-4 h-4 text-emerald-500" />}
                      </div>
-                     <p className="text-xs text-zinc-400">Prioritizes staff who is FREE FIRST. Minimizes customer wait time above all.</p>
+                     <p className="text-xs text-zinc-400">Prioriza profissional LIVRE PRIMEIRO. Minimiza tempo de espera do cliente acima de tudo.</p>
                   </button>
 
                   <button 
@@ -1812,7 +1812,7 @@ export const Settings = () => {
                         <span className={`font-bold ${shopSettings.queueDistributionRule === 'MANUAL' ? 'text-blue-500' : 'text-white'}`}>MANUAL</span>
                         {shopSettings.queueDistributionRule === 'MANUAL' && <Zap className="w-4 h-4 text-blue-500" />}
                      </div>
-                     <p className="text-xs text-zinc-400">No auto-recommendation. Receptionist chooses based on feeling/situation.</p>
+                     <p className="text-xs text-zinc-400">Sem recomendação automática. Recepcionista escolhe baseado na situação.</p>
                   </button>
                </div>
             </div>
@@ -1822,11 +1822,11 @@ export const Settings = () => {
                <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
                   <div>
                      <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                       <Scale className="w-5 h-5 text-amber-500" /> Discount Liability Rule (Quem paga o prejuízo?)
+                       <Scale className="w-5 h-5 text-amber-500" /> Regra de Responsabilidade por Desconto (Quem paga o prejuízo?)
                      </h3>
                      <p className="text-zinc-400 text-sm mt-1 max-w-2xl">
-                        When you give a discount (Birthday, Loyalty, etc), who earns less?
-                        <br/><span className="text-xs text-zinc-500">Defines how staff commission is calculated on discounted sales.</span>
+                        Quando você dá um desconto (Aniversário, Fidelidade, etc), quem ganha menos?
+                        <br/><span className="text-xs text-zinc-500">Define como a comissão da equipe é calculada em vendas com desconto.</span>
                      </p>
                   </div>
 
@@ -1839,8 +1839,8 @@ export const Settings = () => {
                            : 'text-zinc-500 hover:text-zinc-300'
                         }`}
                      >
-                        <span>SHARED (Split)</span>
-                        <span className="text-[9px] opacity-60 font-normal">Commission on Net Price</span>
+                        <span>COMPARTILHADO (Dividido)</span>
+                        <span className="text-[9px] opacity-60 font-normal">Comissão sobre Preço Líquido</span>
                      </button>
                      <button 
                         onClick={() => updateShopSettings({ discountAllocation: 'SHOP_ABSORBS' })}
@@ -1850,21 +1850,21 @@ export const Settings = () => {
                            : 'text-zinc-500 hover:text-zinc-300'
                         }`}
                      >
-                        <span>SHOP ABSORBS</span>
-                        <span className="text-[9px] opacity-60 font-normal">Commission on Full Price</span>
+                        <span>LOJA ABSORVE</span>
+                        <span className="text-[9px] opacity-60 font-normal">Comissão sobre Preço Cheio</span>
                      </button>
                   </div>
                </div>
                
                {/* Explanation Visual */}
                <div className="mt-4 bg-zinc-950/50 rounded-lg p-3 text-xs text-zinc-400 border border-zinc-800/50">
-                  <span className="font-bold text-amber-500">Example:</span> $50 Service with $10 Discount ($40 Paid). Staff has 50% commission.
+                  <span className="font-bold text-amber-500">Exemplo:</span> Serviço de R$ 50 com R$ 10 de Desconto (R$ 40 Pago). Profissional tem 50% de comissão.
                   <ul className="list-disc list-inside mt-1 space-y-1">
                      <li className={shopSettings.discountAllocation === 'SHARED' ? 'text-white font-bold' : ''}>
-                        <b>Shared:</b> Staff gets 50% of $40 = <span className="text-white">$20.00</span>. (Both lose $5).
+                        <b>Compartilhado:</b> Profissional recebe 50% de R$ 40 = <span className="text-white">R$ 20,00</span>. (Ambos perdem R$ 5).
                      </li>
                      <li className={shopSettings.discountAllocation === 'SHOP_ABSORBS' ? 'text-white font-bold' : ''}>
-                        <b>Shop Absorbs:</b> Staff gets 50% of $50 = <span className="text-white">$25.00</span>. (Shop loses full $10).
+                        <b>Loja Absorve:</b> Profissional recebe 50% de R$ 50 = <span className="text-white">R$ 25,00</span>. (Loja perde R$ 10 completos).
                      </li>
                   </ul>
                </div>
@@ -1873,7 +1873,7 @@ export const Settings = () => {
             {/* GROWTH & MARKETING RULES */}
             <div>
                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                 <TrendingUp className="w-5 h-5 text-amber-500" /> Marketing & Loyalty
+                 <TrendingUp className="w-5 h-5 text-amber-500" /> Marketing e Fidelidade
                </h3>
                
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
