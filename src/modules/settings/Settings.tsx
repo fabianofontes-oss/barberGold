@@ -874,11 +874,329 @@ export const Settings = () => {
                      <div className="text-sm">
                         <p className="text-amber-200 font-bold mb-1">Importante sobre Integrações</p>
                         <p className="text-amber-300/80 text-xs">
-                           Para aceitar pagamentos online (Cartão, PIX, etc), você precisará configurar uma integração com gateway de pagamento 
-                           (Mercado Pago, PagSeguro, Stripe, etc). Entre em contato com o suporte para ativar.
+                           Configure abaixo suas integrações de pagamento para aceitar pagamentos online.
                         </p>
                      </div>
                   </div>
+               </div>
+            </div>
+
+            {/* GATEWAY INTEGRATIONS */}
+            <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
+               <div className="mb-6">
+                  <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
+                    <Zap className="w-6 h-6 text-amber-500" /> Integrações de Gateway
+                  </h3>
+                  <p className="text-zinc-400">
+                     Configure suas credenciais de API para processar pagamentos online.
+                  </p>
+               </div>
+
+               <div className="space-y-4">
+                  {/* MERCADO PAGO */}
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
+                     <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                           <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                              <Wallet className="w-5 h-5 text-blue-500" />
+                           </div>
+                           <div>
+                              <h4 className="font-bold text-white">Mercado Pago</h4>
+                              <p className="text-xs text-zinc-500">Gateway de pagamento da América Latina</p>
+                           </div>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                           <input type="checkbox" className="sr-only peer" />
+                           <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                        </label>
+                     </div>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Public Key</label>
+                           <input 
+                              type="text" 
+                              placeholder="APP_USR-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-blue-500 outline-none"
+                           />
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Access Token</label>
+                           <input 
+                              type="password" 
+                              placeholder="APP_USR-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-blue-500 outline-none"
+                           />
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* PAGSEGURO */}
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
+                     <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                           <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                              <Wallet className="w-5 h-5 text-emerald-500" />
+                           </div>
+                           <div>
+                              <h4 className="font-bold text-white">PagSeguro</h4>
+                              <p className="text-xs text-zinc-500">Gateway do UOL para pagamentos</p>
+                           </div>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                           <input type="checkbox" className="sr-only peer" />
+                           <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                        </label>
+                     </div>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Email</label>
+                           <input 
+                              type="email" 
+                              placeholder="seu-email@pagseguro.com.br"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-emerald-500 outline-none"
+                           />
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Token</label>
+                           <input 
+                              type="password" 
+                              placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-emerald-500 outline-none"
+                           />
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* STRIPE */}
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
+                     <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                           <div className="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                              <Wallet className="w-5 h-5 text-purple-500" />
+                           </div>
+                           <div>
+                              <h4 className="font-bold text-white">Stripe</h4>
+                              <p className="text-xs text-zinc-500">Gateway internacional de pagamentos</p>
+                           </div>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                           <input type="checkbox" className="sr-only peer" />
+                           <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-500"></div>
+                        </label>
+                     </div>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Publishable Key</label>
+                           <input 
+                              type="text" 
+                              placeholder="pk_live_xxxxxxxxxxxxxxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-purple-500 outline-none"
+                           />
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Secret Key</label>
+                           <input 
+                              type="password" 
+                              placeholder="sk_live_xxxxxxxxxxxxxxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-purple-500 outline-none"
+                           />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            {/* PIX CONFIGURATION */}
+            <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
+               <div className="mb-6">
+                  <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
+                    <Smartphone className="w-6 h-6 text-emerald-500" /> Configuração PIX
+                  </h3>
+                  <p className="text-zinc-400">
+                     Configure sua chave PIX para receber pagamentos instantâneos.
+                  </p>
+               </div>
+
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                     <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Tipo de Chave</label>
+                        <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none">
+                           <option>CPF/CNPJ</option>
+                           <option>E-mail</option>
+                           <option>Telefone</option>
+                           <option>Chave Aleatória</option>
+                        </select>
+                     </div>
+                     <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Chave PIX</label>
+                        <input 
+                           type="text" 
+                           placeholder="Digite sua chave PIX"
+                           className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
+                        />
+                     </div>
+                     <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome do Beneficiário</label>
+                        <input 
+                           type="text" 
+                           placeholder="Nome completo ou Razão Social"
+                           className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
+                        />
+                     </div>
+                  </div>
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5 flex flex-col items-center justify-center">
+                     <div className="w-48 h-48 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <p className="text-zinc-400 text-xs">QR Code PIX</p>
+                     </div>
+                     <button className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-lg transition-all">
+                        <Copy className="w-4 h-4" /> Copiar Código PIX
+                     </button>
+                  </div>
+               </div>
+            </div>
+
+            {/* PAYMENT SETTINGS */}
+            <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
+               <div className="mb-6">
+                  <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
+                    <CreditCard className="w-6 h-6 text-amber-500" /> Configurações de Parcelamento
+                  </h3>
+                  <p className="text-zinc-400">
+                     Defina as regras de parcelamento para cartão de crédito.
+                  </p>
+               </div>
+
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                     <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Parcelas Máximas</label>
+                        <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none">
+                           <option>1x (À vista)</option>
+                           <option>2x</option>
+                           <option>3x</option>
+                           <option>4x</option>
+                           <option>6x</option>
+                           <option>12x</option>
+                        </select>
+                     </div>
+                     <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Valor Mínimo por Parcela</label>
+                        <div className="flex items-center gap-2">
+                           <span className="text-zinc-400 font-bold">R$</span>
+                           <input 
+                              type="number" 
+                              placeholder="50.00"
+                              step="0.01"
+                              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                           />
+                        </div>
+                     </div>
+                     <div className="flex items-center justify-between p-4 bg-zinc-950/50 border border-zinc-800 rounded-lg">
+                        <div>
+                           <p className="text-white font-bold text-sm">Juros de Parcelamento</p>
+                           <p className="text-xs text-zinc-500">Cobrar juros nas parcelas</p>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                           <input type="checkbox" className="sr-only peer" />
+                           <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                        </label>
+                     </div>
+                  </div>
+                  <div className="space-y-4">
+                     <div>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Taxa de Juros (% ao mês)</label>
+                        <div className="flex items-center gap-2">
+                           <input 
+                              type="number" 
+                              placeholder="2.99"
+                              step="0.01"
+                              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                           />
+                           <span className="text-zinc-400 font-bold">%</span>
+                        </div>
+                     </div>
+                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                        <p className="text-blue-200 font-bold text-sm mb-1">Exemplo de Parcelamento</p>
+                        <p className="text-blue-300/80 text-xs">
+                           Compra de R$ 100,00 em 3x = R$ 33,33 + juros
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            {/* BANK ACCOUNT */}
+            <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
+               <div className="mb-6">
+                  <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
+                    <Briefcase className="w-6 h-6 text-amber-500" /> Conta para Recebimento
+                  </h3>
+                  <p className="text-zinc-400">
+                     Configure a conta bancária onde deseja receber os pagamentos.
+                  </p>
+               </div>
+
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Banco</label>
+                     <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none">
+                        <option>Selecione o banco</option>
+                        <option>001 - Banco do Brasil</option>
+                        <option>104 - Caixa Econômica</option>
+                        <option>237 - Bradesco</option>
+                        <option>341 - Itaú</option>
+                        <option>033 - Santander</option>
+                        <option>260 - Nubank</option>
+                        <option>077 - Inter</option>
+                     </select>
+                  </div>
+                  <div>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Tipo de Conta</label>
+                     <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none">
+                        <option>Conta Corrente</option>
+                        <option>Conta Poupança</option>
+                        <option>Conta Pagamento</option>
+                     </select>
+                  </div>
+                  <div>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Agência</label>
+                     <input 
+                        type="text" 
+                        placeholder="0001"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                     />
+                  </div>
+                  <div>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Conta</label>
+                     <input 
+                        type="text" 
+                        placeholder="12345-6"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                     />
+                  </div>
+                  <div className="md:col-span-2">
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Titular da Conta</label>
+                     <input 
+                        type="text" 
+                        placeholder="Nome completo do titular"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                     />
+                  </div>
+                  <div className="md:col-span-2">
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CPF/CNPJ do Titular</label>
+                     <input 
+                        type="text" 
+                        placeholder="000.000.000-00"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                     />
+                  </div>
+               </div>
+
+               <div className="mt-6 flex justify-end">
+                  <button className="flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold rounded-lg transition-all">
+                     <Save className="w-4 h-4" /> Salvar Configurações
+                  </button>
                </div>
             </div>
           </div>
