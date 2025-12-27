@@ -1187,6 +1187,158 @@ export const Settings = () => {
                         </div>
                      </div>
                   </div>
+
+                  {/* INFINITEPAY */}
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
+                     <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                           <div className="w-10 h-10 bg-orange-500/10 rounded-lg flex items-center justify-center">
+                              <Wallet className="w-5 h-5 text-orange-500" />
+                           </div>
+                           <div>
+                              <h4 className="font-bold text-white">InfinitePay</h4>
+                              <p className="text-xs text-zinc-500">Maquininha e gateway brasileiro</p>
+                           </div>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                           <input 
+                              type="checkbox" 
+                              checked={shopSettings.gatewayConfig?.infinitePay?.enabled ?? false}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    infinitePay: {
+                                       ...shopSettings.gatewayConfig?.infinitePay,
+                                       enabled: e.target.checked,
+                                       apiKey: shopSettings.gatewayConfig?.infinitePay?.apiKey || '',
+                                       appKey: shopSettings.gatewayConfig?.infinitePay?.appKey || ''
+                                    }
+                                 }
+                              })}
+                              className="sr-only peer" 
+                           />
+                           <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                        </label>
+                     </div>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">API Key</label>
+                           <input 
+                              type="text" 
+                              value={shopSettings.gatewayConfig?.infinitePay?.apiKey || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    infinitePay: {
+                                       ...shopSettings.gatewayConfig?.infinitePay,
+                                       enabled: shopSettings.gatewayConfig?.infinitePay?.enabled ?? false,
+                                       apiKey: e.target.value,
+                                       appKey: shopSettings.gatewayConfig?.infinitePay?.appKey || ''
+                                    }
+                                 }
+                              })}
+                              placeholder="inf_api_xxxxxxxxxxxxxxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-orange-500 outline-none"
+                           />
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">App Key</label>
+                           <input 
+                              type="password" 
+                              value={shopSettings.gatewayConfig?.infinitePay?.appKey || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    infinitePay: {
+                                       ...shopSettings.gatewayConfig?.infinitePay,
+                                       enabled: shopSettings.gatewayConfig?.infinitePay?.enabled ?? false,
+                                       apiKey: shopSettings.gatewayConfig?.infinitePay?.apiKey || '',
+                                       appKey: e.target.value
+                                    }
+                                 }
+                              })}
+                              placeholder="inf_app_xxxxxxxxxxxxxxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-orange-500 outline-none"
+                           />
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* STONE */}
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
+                     <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                           <div className="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center">
+                              <Wallet className="w-5 h-5 text-green-500" />
+                           </div>
+                           <div>
+                              <h4 className="font-bold text-white">Stone</h4>
+                              <p className="text-xs text-zinc-500">Maquininha e gateway Stone</p>
+                           </div>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                           <input 
+                              type="checkbox" 
+                              checked={shopSettings.gatewayConfig?.stone?.enabled ?? false}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    stone: {
+                                       ...shopSettings.gatewayConfig?.stone,
+                                       enabled: e.target.checked,
+                                       stoneCode: shopSettings.gatewayConfig?.stone?.stoneCode || '',
+                                       apiKey: shopSettings.gatewayConfig?.stone?.apiKey || ''
+                                    }
+                                 }
+                              })}
+                              className="sr-only peer" 
+                           />
+                           <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                        </label>
+                     </div>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Stone Code</label>
+                           <input 
+                              type="text" 
+                              value={shopSettings.gatewayConfig?.stone?.stoneCode || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    stone: {
+                                       ...shopSettings.gatewayConfig?.stone,
+                                       enabled: shopSettings.gatewayConfig?.stone?.enabled ?? false,
+                                       stoneCode: e.target.value,
+                                       apiKey: shopSettings.gatewayConfig?.stone?.apiKey || ''
+                                    }
+                                 }
+                              })}
+                              placeholder="stone_xxxxxxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-green-500 outline-none"
+                           />
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">API Key</label>
+                           <input 
+                              type="password" 
+                              value={shopSettings.gatewayConfig?.stone?.apiKey || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    stone: {
+                                       ...shopSettings.gatewayConfig?.stone,
+                                       enabled: shopSettings.gatewayConfig?.stone?.enabled ?? false,
+                                       stoneCode: shopSettings.gatewayConfig?.stone?.stoneCode || '',
+                                       apiKey: e.target.value
+                                    }
+                                 }
+                              })}
+                              placeholder="sk_xxxxxxxxxxxxxxxxxxxxxxxx"
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-green-500 outline-none"
+                           />
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
 
