@@ -294,27 +294,27 @@ export const Settings = () => {
              {/* Basic Info Card */}
              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                   <Store className="w-5 h-5 text-amber-500" /> Basic Information
+                   <Store className="w-5 h-5 text-amber-500" /> Informações Básicas
                 </h3>
                 
                 {/* LOGO UPLOAD SECTION */}
                 <div className="mb-6 border-b border-zinc-800 pb-6">
                    <ImageUpload 
-                      label="Barbershop Logo" 
+                      label="Logo da Barbearia" 
                       value={shopProfile.logo} 
                       onChange={(val) => updateShopProfile({ ...shopProfile, logo: val })} 
-                      placeholder="Upload your brand logo (PNG/JPG)"
+                      placeholder="Envie o logo da sua marca (PNG/JPG)"
                       className="w-full max-w-xs"
                    />
                    <p className="text-[10px] text-zinc-500 mt-2">
-                      This logo will replace the &quot;BarberFlow&quot; text in the sidebar, mobile header, and website.
+                      Este logo substituirá o texto &quot;BarberFlow&quot; na barra lateral, cabeçalho mobile e website.
                    </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                    <div className="space-y-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Barbershop Name</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome da Barbearia</label>
                          <input 
                             type="text" 
                             value={shopProfile.name}
@@ -323,7 +323,7 @@ export const Settings = () => {
                          />
                       </div>
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Address</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Endereço</label>
                          <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
                             <MapPin className="w-4 h-4 text-zinc-500" />
                             <input 
@@ -337,7 +337,7 @@ export const Settings = () => {
                    </div>
                    <div className="space-y-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Phone / Contact</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Telefone / Contato</label>
                          <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
                             <Phone className="w-4 h-4 text-zinc-500" />
                             <input 
@@ -432,7 +432,7 @@ export const Settings = () => {
              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <div className="flex justify-between items-center mb-4">
                    <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-amber-500" /> Opening Hours
+                      <Clock className="w-5 h-5 text-amber-500" /> Horário de Funcionamento
                    </h3>
                    <button 
                       onClick={copyMondayToWeekdays}
