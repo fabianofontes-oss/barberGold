@@ -482,7 +482,7 @@ export const Settings = () => {
         {/* --- TEAM TAB --- */}
         {activeTab === 'TEAM' && isOwner && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
-             {staff.map(member => {
+             {staff.filter(member => member.role !== 'SUPER_ADMIN').map(member => {
                 const metrics = calculateStaffMetrics(member.id, member.workSchedule || []);
                 return (
                    <div key={member.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-all group">
