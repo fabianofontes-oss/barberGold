@@ -26,7 +26,7 @@ export const Settings = () => {
     deleteCommissionPlan, updateShopSettings, updateShopProfile, updateStaff,
     appointments
   } = useBarber();
-  const { t, formatCurrency } = useI18n();
+  const { t, currency, formatCurrency } = useI18n();
   
   if (!currentUser) return null;
   
@@ -529,7 +529,7 @@ export const Settings = () => {
                          </div>
                          <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800">
                             <span className="block text-xs text-zinc-500 mb-1">Receita Est. (7d)</span>
-                            <span className="text-emerald-500 font-bold">${metrics.totalRevenue.toFixed(0)}</span>
+                            <span className="text-emerald-500 font-bold">{formatCurrency(metrics.totalRevenue)}</span>
                          </div>
                       </div>
 
@@ -589,12 +589,12 @@ export const Settings = () => {
                     </div>
                     <div className="flex items-center gap-4 text-sm text-zinc-400 mb-4">
                        <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> {myProfileForm.phone}</span>
-                       <span className="flex items-center gap-1"><Wallet className="w-3 h-3" /> {myProfileForm.serviceCommissionRate}% Commission</span>
+                       <span className="flex items-center gap-1"><Wallet className="w-3 h-3" /> {myProfileForm.serviceCommissionRate}% {t('settings.myProfile.commissionLabel')}</span>
                     </div>
                     <div className="flex gap-2">
                        <input 
                           type="text" 
-                          placeholder="Photo URL..." 
+                          placeholder={t('settings.myProfile.photoUrlPlaceholder')} 
                           value={myProfileForm.avatar || ''} 
                           onChange={(e) => setMyProfileForm({...myProfileForm, avatar: e.target.value})}
                           className="bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-white w-full max-w-sm focus:border-amber-500 outline-none"
@@ -605,7 +605,7 @@ export const Settings = () => {
                     onClick={handleSaveMyProfile}
                     className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 px-8 rounded-xl flex items-center gap-2 shadow-lg shadow-amber-500/20 transition-all self-end md:self-center"
                  >
-                    <Save className="w-5 h-5" /> Save Changes
+                    <Save className="w-5 h-5" /> {t('settings.myProfile.saveChangesButton')}
                  </button>
               </div>
 
@@ -615,9 +615,9 @@ export const Settings = () => {
                      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                         <div className="flex items-center justify-between mb-4">
                            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                              <CalendarClock className="w-5 h-5 text-amber-500" /> Weekly Schedule
+                              <CalendarClock className="w-5 h-5 text-amber-500" /> {t('settings.myProfile.weeklyScheduleTitle')}
                            </h3>
-                           <span className="text-xs text-zinc-500">Set your availability & breaks</span>
+                           <span className="text-xs text-zinc-500">{t('settings.myProfile.weeklyScheduleHint')}</span>
                         </div>
                         
                         <div className="space-y-3">
@@ -651,7 +651,7 @@ export const Settings = () => {
                                     <div className="flex items-center gap-2">
                                        {day.isActive && (
                                           <button type="button" onClick={() => addBreak(idx)} className="text-[10px] bg-zinc-800 text-zinc-300 px-2 py-1 rounded hover:text-white flex items-center gap-1">
-                                             <Plus className="w-3 h-3" /> Break
+                                             <Plus className="w-3 h-3" /> {t('settings.myProfile.breakButton')}
                                           </button>
                                        )}
                                        <button 
@@ -659,7 +659,7 @@ export const Settings = () => {
                                           onClick={() => updateMySchedule(idx, 'isActive', !day.isActive)}
                                           className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase transition-all ${day.isActive ? 'bg-zinc-800 text-zinc-400 hover:text-white' : 'bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20'}`}
                                        >
-                                          {day.isActive ? 'Off' : 'Work'}
+                                          {day.isActive ? t('settings.myProfile.toggleOff') : t('settings.myProfile.toggleWork')}
                                        </button>
                                     </div>
                                  </div>
@@ -678,9 +678,9 @@ export const Settings = () => {
                                                    onChange={(e) => updateBreak(idx, blk.id, 'type', e.target.value)}
                                                    className="bg-zinc-900 border border-zinc-800 rounded-lg py-1 pl-7 pr-2 text-zinc-300 text-xs focus:border-amber-500 outline-none w-24"
                                                 >
-                                                   <option value="LUNCH">Lunch</option>
-                                                   <option value="COFFEE">Coffee</option>
-                                                   <option value="OTHER">Away</option>
+                                                   <option value="LUNCH">{t('settings.myProfile.breakTypes.lunch')}</option>
+                                                   <option value="COFFEE">{t('settings.myProfile.breakTypes.coffee')}</option>
+                                                   <option value="OTHER">{t('settings.myProfile.breakTypes.away')}</option>
                                                 </select>
                                              </div>
                                              <input type="time" value={blk.startTime} onChange={(e) => updateBreak(idx, blk.id, 'startTime', e.target.value)} className="bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-white text-xs focus:border-amber-500 outline-none" />
@@ -700,16 +700,16 @@ export const Settings = () => {
                      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                         <div className="flex items-center justify-between mb-4">
                            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                              <Coffee className="w-5 h-5 text-amber-500" /> Work Rhythm & Buffer
+                              <Coffee className="w-5 h-5 text-amber-500" /> {t('settings.myProfile.workRhythmTitle')}
                            </h3>
                         </div>
                         <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800 mb-4">
                            <p className="text-xs text-zinc-400 mb-3">
-                              Define your automatic buffer preferences. We&apos;ll suggest breaks in the agenda.
+                              {t('settings.myProfile.workRhythmDescription')}
                            </p>
                            <div className="grid grid-cols-2 gap-4">
                               <div>
-                                 <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Clients per Cycle</label>
+                                 <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.myProfile.clientsPerCycleLabel')}</label>
                                  <div className="flex items-center gap-2">
                                     <Users className="w-4 h-4 text-zinc-600" />
                                     <input 
@@ -722,7 +722,7 @@ export const Settings = () => {
                                  </div>
                               </div>
                               <div>
-                                 <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Break Duration (Min)</label>
+                                 <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.myProfile.breakDurationLabel')}</label>
                                  <div className="flex items-center gap-2">
                                     <Timer className="w-4 h-4 text-zinc-600" />
                                     <input 
@@ -1860,13 +1860,13 @@ export const Settings = () => {
                
                {/* Explanation Visual */}
                <div className="mt-4 bg-zinc-950/50 rounded-lg p-3 text-xs text-zinc-400 border border-zinc-800/50">
-                  <span className="font-bold text-amber-500">Exemplo:</span> Serviço de R$ 50 com R$ 10 de Desconto (R$ 40 Pago). Profissional tem 50% de comissão.
+                  <span className="font-bold text-amber-500">{t('settings.commissions.discountAllocationExampleLabel')}:</span> {t('settings.commissions.discountAllocationExampleIntro', { servicePrice: formatCurrency(50), discount: formatCurrency(10), paid: formatCurrency(40), rate: 50 })}
                   <ul className="list-disc list-inside mt-1 space-y-1">
                      <li className={shopSettings.discountAllocation === 'SHARED' ? 'text-white font-bold' : ''}>
-                        <b>Compartilhado:</b> Profissional recebe 50% de R$ 40 = <span className="text-white">R$ 20,00</span>. (Ambos perdem R$ 5).
+                        <b>{t('settings.commissions.discountAllocationSharedLabel')}:</b> {t('settings.commissions.discountAllocationSharedPrefix', { rate: 50, paid: formatCurrency(40) })} <span className="text-white">{formatCurrency(20)}</span>. {t('settings.commissions.discountAllocationSharedSuffix', { loss: formatCurrency(5) })}
                      </li>
                      <li className={shopSettings.discountAllocation === 'SHOP_ABSORBS' ? 'text-white font-bold' : ''}>
-                        <b>Loja Absorve:</b> Profissional recebe 50% de R$ 50 = <span className="text-white">R$ 25,00</span>. (Loja perde R$ 10 completos).
+                        <b>{t('settings.commissions.discountAllocationShopAbsorbsLabel')}:</b> {t('settings.commissions.discountAllocationShopAbsorbsPrefix', { rate: 50, servicePrice: formatCurrency(50) })} <span className="text-white">{formatCurrency(25)}</span>. {t('settings.commissions.discountAllocationShopAbsorbsSuffix', { discount: formatCurrency(10) })}
                      </li>
                   </ul>
                </div>
@@ -1884,12 +1884,12 @@ export const Settings = () => {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                            <Target className="w-4 h-4 text-emerald-500" />
-                           <h4 className="font-bold text-white">Daily Revenue Goal</h4>
+                           <h4 className="font-bold text-white">{t('settings.marketing.dailyRevenueGoalTitle')}</h4>
                         </div>
-                        <p className="text-xs text-zinc-500">Team target for Dashboard.</p>
+                        <p className="text-xs text-zinc-500">{t('settings.marketing.dailyRevenueGoalDescription')}</p>
                       </div>
                       <div className="flex items-center gap-2">
-                         <span className="text-zinc-400 font-bold">$</span>
+                         <span className="text-zinc-400 font-bold">{currency.symbol}</span>
                          <input 
                             type="number" 
                             value={shopSettings.dailyRevenueGoal}
@@ -1904,9 +1904,9 @@ export const Settings = () => {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                            <Link className="w-4 h-4 text-amber-500" />
-                           <h4 className="font-bold text-white">Client Fidelity Lock</h4>
+                           <h4 className="font-bold text-white">{t('settings.marketing.clientFidelityLockTitle')}</h4>
                         </div>
-                        <p className="text-xs text-zinc-500">Consecutive visits to secure client.</p>
+                        <p className="text-xs text-zinc-500">{t('settings.marketing.clientFidelityLockDescription')}</p>
                       </div>
                       <div className="flex items-center gap-2">
                          <input 
@@ -1917,7 +1917,7 @@ export const Settings = () => {
                             onChange={(e) => updateShopSettings({ fidelityThreshold: Number(e.target.value) })}
                             className="w-16 bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white font-bold focus:border-amber-500 outline-none text-center"
                          />
-                         <span className="text-xs font-bold text-zinc-500">visits</span>
+                         <span className="text-xs font-bold text-zinc-500">{t('settings.marketing.visitsLabel')}</span>
                       </div>
                   </div>
                </div>
@@ -1928,9 +1928,9 @@ export const Settings = () => {
                      <div>
                        <div className="flex items-center gap-2 mb-1">
                           <CalendarClock className="w-4 h-4 text-zinc-400" />
-                          <h4 className="font-bold text-white">Win-Back Campaign</h4>
-                       </div>
-                       <p className="text-xs text-zinc-500">Auto 5% discount for clients away for {shopSettings.winBackDays}+ days.</p>
+                          <h4 className="font-bold text-white">{t('settings.marketing.winBackCampaignTitle')}</h4>
+                        </div>
+                       <p className="text-xs text-zinc-500">{t('settings.marketing.winBackCampaignDescription', { days: shopSettings.winBackDays })}</p>
                      </div>
                      <div className="flex items-center">
                         <input 
@@ -1947,9 +1947,9 @@ export const Settings = () => {
                      <div>
                        <div className="flex items-center gap-2 mb-1">
                           <Gift className="w-4 h-4 text-zinc-400" />
-                          <h4 className="font-bold text-white">Birthday Special</h4>
-                       </div>
-                       <p className="text-xs text-zinc-500">Auto 5% discount on client&apos;s birthday.</p>
+                          <h4 className="font-bold text-white">{t('settings.marketing.birthdaySpecialTitle')}</h4>
+                        </div>
+                       <p className="text-xs text-zinc-500">{t('settings.marketing.birthdaySpecialDescription')}</p>
                      </div>
                      <div className="flex items-center">
                         <input 
@@ -1965,13 +1965,13 @@ export const Settings = () => {
                   <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-center justify-between">
                      <div>
                        <div className="flex items-center gap-2 mb-1">
-                          <Star className="w-4 h-4 text-zinc-400" />
-                          <h4 className="font-bold text-white">Loyalty Club (10x1)</h4>
-                       </div>
-                       <p className="text-xs text-zinc-500">10 stamps = Reward. +2 stamps for complete profile.</p>
-                     </div>
-                     <div className="flex items-center">
-                        <input 
+                         <Star className="w-4 h-4 text-zinc-400" />
+                         <h4 className="font-bold text-white">{t('settings.marketing.loyaltyClubTitle')}</h4>
+                      </div>
+                      <p className="text-xs text-zinc-500">{t('settings.marketing.loyaltyClubDescription')}</p>
+                    </div>
+                    <div className="flex items-center">
+                       <input 
                            type="checkbox" 
                            checked={shopSettings.enableLoyaltyCard}
                            onChange={(e) => updateShopSettings({ enableLoyaltyCard: e.target.checked })}
@@ -1984,19 +1984,19 @@ export const Settings = () => {
                   <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-center justify-between">
                      <div>
                        <div className="flex items-center gap-2 mb-1">
-                          <Share2 className="w-4 h-4 text-zinc-400" />
-                          <h4 className="font-bold text-white">Referral System</h4>
-                       </div>
-                       <p className="text-xs text-zinc-500">Referrer gets 1 stamp when friend cuts for first time.</p>
-                     </div>
-                     <div className="flex items-center">
-                        <input 
+                         <Share2 className="w-4 h-4 text-zinc-400" />
+                         <h4 className="font-bold text-white">{t('settings.marketing.referralSystemTitle')}</h4>
+                      </div>
+                      <p className="text-xs text-zinc-500">{t('settings.marketing.referralSystemDescription')}</p>
+                    </div>
+                    <div className="flex items-center">
+                       <input 
                            type="checkbox" 
                            checked={shopSettings.enableReferralSystem}
                            onChange={(e) => updateShopSettings({ enableReferralSystem: e.target.checked })}
                            className="w-5 h-5 accent-amber-500"
                         />
-                     </div>
+{{ ... }
                   </div>
                </div>
 
