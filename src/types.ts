@@ -353,6 +353,16 @@ export interface ShopSettings {
       publishableKey: string;
       secretKey: string;
     };
+    infinitePay?: {
+      enabled: boolean;
+      apiKey: string;
+      appKey: string;
+    };
+    stone?: {
+      enabled: boolean;
+      stoneCode: string;
+      apiKey: string;
+    };
   };
   pixConfig?: {
     keyType: 'CPF' | 'CNPJ' | 'EMAIL' | 'PHONE' | 'RANDOM';
