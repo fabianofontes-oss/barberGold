@@ -351,7 +351,7 @@ export const Finance = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <LayoutDashboard className="w-4 h-4" /> Overview
+                  <LayoutDashboard className="w-4 h-4" /> Visão Geral
                 </button>
                 {!isFreePlan && (
                   <button
@@ -362,7 +362,7 @@ export const Finance = () => {
                         : 'border-transparent text-zinc-500 hover:text-zinc-300'
                     }`}
                   >
-                    <Receipt className="w-4 h-4" /> Costs & Expenses
+                    <Receipt className="w-4 h-4" /> Custos e Despesas
                   </button>
                 )}
              </>
@@ -377,7 +377,7 @@ export const Finance = () => {
                    : 'border-transparent text-zinc-500 hover:text-zinc-300'
                }`}
              >
-               <Users className="w-4 h-4" /> {isOwner ? 'Team Payouts' : 'My Payouts'}
+               <Users className="w-4 h-4" /> {isOwner ? 'Pagamentos da Equipe' : 'Meus Pagamentos'}
              </button>
           )}
         </div>
@@ -414,19 +414,19 @@ export const Finance = () => {
                       <div>
                           <h3 className="text-xl font-bold text-white flex items-center gap-2">
                             {remainingToBreakEven > 0 ? <AlertTriangle className="text-amber-500" /> : <CheckCircle2 className="text-emerald-500" />}
-                            Shop Profitability ({dateFilter})
+                            Lucratividade da Loja ({dateFilter})
                           </h3>
                           <p className="text-zinc-400 text-sm mt-1">
                             {remainingToBreakEven > 0 
-                              ? `House needs $${remainingToBreakEven.toFixed(2)} more to cover period expenses.` 
-                              : "Shop is covering all costs! Surplus covers payouts & profit."}
+                              ? `A casa precisa de $${remainingToBreakEven.toFixed(2)} a mais para cobrir as despesas do período.` 
+                              : "A loja está cobrindo todos os custos! O excedente cobre pagamentos e lucro."}
                           </p>
                       </div>
                       <div className="text-right">
                           <span className={`text-2xl font-bold ${remainingToBreakEven > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
                             {breakEvenPercent.toFixed(0)}%
                           </span>
-                          <span className="text-zinc-500 text-sm block">Cost Coverage</span>
+                          <span className="text-zinc-500 text-sm block">Cobertura de Custos</span>
                       </div>
                     </div>
                     
@@ -447,25 +447,25 @@ export const Finance = () => {
                          <div className="flex items-center justify-between mb-6 border-b border-zinc-800 pb-4">
                             <div className="flex items-center gap-2">
                                <Landmark className="w-6 h-6 text-amber-500" />
-                               <h3 className="text-xl font-bold text-white">Net Cash Flow ({dateFilter})</h3>
+                               <h3 className="text-xl font-bold text-white">Fluxo de Caixa Líquido ({dateFilter})</h3>
                             </div>
-                            <span className="text-xs text-zinc-500">What&apos;s actually in the drawer</span>
+                            <span className="text-xs text-zinc-500">O que realmente está no caixa</span>
                          </div>
                          <div className="space-y-3">
                             <div className="flex justify-between items-center text-sm">
-                               <span className="text-zinc-400">Total Revenue (Services + Product + Tips)</span>
+                               <span className="text-zinc-400">Receita Total (Serviços + Produtos + Gorjetas)</span>
                                <span className="text-white font-bold">${totalCashIn.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
-                               <span className="text-zinc-400 flex items-center gap-1"><TrendingDown className="w-3 h-3" /> Shop Expenses</span>
+                               <span className="text-zinc-400 flex items-center gap-1"><TrendingDown className="w-3 h-3" /> Despesas da Loja</span>
                                <span className="text-red-400">-${totalBizExpenses.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
-                               <span className="text-zinc-400 flex items-center gap-1"><Users className="w-3 h-3" /> Staff Payouts (Paid Out)</span>
+                               <span className="text-zinc-400 flex items-center gap-1"><Users className="w-3 h-3" /> Pagamentos da Equipe (Pagos)</span>
                                <span className="text-red-400">-${totalPayoutsMadePeriod.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center pt-4 border-t border-zinc-800 mt-2">
-                               <span className="text-lg font-bold text-white">Net Cash Balance</span>
+                               <span className="text-lg font-bold text-white">Saldo de Caixa Líquido</span>
                                <span className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-emerald-400' : 'text-red-500'}`}>
                                   ${netCashFlow.toFixed(2)}
                                </span>
@@ -476,19 +476,19 @@ export const Finance = () => {
                       <>
                          <div className="flex items-center gap-2 mb-6 border-b border-indigo-500/20 pb-4">
                             <Wallet className="w-6 h-6 text-indigo-500" />
-                            <h3 className="text-xl font-bold text-white">Personal Wealth ({dateFilter})</h3>
+                            <h3 className="text-xl font-bold text-white">Patrimônio Pessoal ({dateFilter})</h3>
                          </div>
                          <div className="space-y-3">
                             <div className="flex justify-between items-center text-sm">
-                               <span className="text-zinc-400">Available from Shop (Net Cash)</span>
+                               <span className="text-zinc-400">Disponível da Loja (Caixa Líquido)</span>
                                <span className="text-emerald-400 font-bold">${netCashFlow.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
-                               <span className="text-zinc-400">Personal Expenses</span>
+                               <span className="text-zinc-400">Despesas Pessoais</span>
                                <span className="text-red-400">-${totalPersonalExpenses.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center pt-4 border-t border-zinc-800 mt-2">
-                               <span className="text-lg font-bold text-white">Your Pocket</span>
+                               <span className="text-lg font-bold text-white">Seu Bolso</span>
                                <span className={`text-2xl font-bold ${personalBalance >= 0 ? 'text-indigo-400' : 'text-red-500'}`}>
                                   ${personalBalance.toFixed(2)}
                                </span>
@@ -515,12 +515,12 @@ export const Finance = () => {
               <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                  <div className="flex items-center gap-2 mb-2">
                     <HandCoins className="w-5 h-5 text-amber-500" />
-                    <span className="text-sm font-medium text-zinc-400">Total Revenue</span>
+                    <span className="text-sm font-medium text-zinc-400">Receita Total</span>
                   </div>
                   <p className="text-2xl font-bold text-white">
                      ${totalRevenue.toFixed(2)}
                   </p>
-                  <span className="text-[10px] text-zinc-500">Gross Sales</span>
+                  <span className="text-[10px] text-zinc-500">Vendas Brutas</span>
               </div>
 
               {!isFreePlan && (
@@ -528,7 +528,7 @@ export const Finance = () => {
                   <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                     <div className="flex items-center gap-2 mb-2">
                         <Lock className="w-5 h-5 text-blue-500" />
-                        <span className="text-sm font-medium text-zinc-400">Fixed Overhead</span>
+                        <span className="text-sm font-medium text-zinc-400">Custos Fixos</span>
                       </div>
                       <p className="text-2xl font-bold text-white">${activeContext === 'BUSINESS' ? fixedBizExpenses.toFixed(2) : totalPersonalExpenses.toFixed(2)}</p>
                   </div>
@@ -536,7 +536,7 @@ export const Finance = () => {
                   <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                     <div className="flex items-center gap-2 mb-2">
                         <Activity className="w-5 h-5 text-orange-500" />
-                        <span className="text-sm font-medium text-zinc-400">Variable Costs</span>
+                        <span className="text-sm font-medium text-zinc-400">Custos Variáveis</span>
                       </div>
                       <p className="text-2xl font-bold text-white">${activeContext === 'BUSINESS' ? variableBizExpenses.toFixed(2) : '0.00'}</p>
                   </div>
@@ -549,7 +549,7 @@ export const Finance = () => {
               <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                  <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-lg text-white flex items-center gap-2">
-                       <PieChart className="w-5 h-5 text-amber-500" /> Cash Drawer Composition
+                       <PieChart className="w-5 h-5 text-amber-500" /> Composição do Caixa
                     </h3>
                     
                     {/* CLOSE REGISTER BUTTON (Feature Toggle Check) */}
@@ -558,7 +558,7 @@ export const Finance = () => {
                           onClick={() => setIsClosureModalOpen(true)}
                           className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 hover:text-white text-zinc-300 text-xs font-bold py-2 px-4 rounded-lg transition-colors border border-zinc-700"
                        >
-                          <Calculator className="w-4 h-4" /> Close Register
+                          <Calculator className="w-4 h-4" /> Fechar Caixa
                        </button>
                     )}
                  </div>
@@ -570,7 +570,7 @@ export const Finance = () => {
                           <Banknote className="w-5 h-5 text-emerald-500" />
                        </div>
                        <div>
-                          <p className="text-xs text-zinc-500 uppercase font-bold">Cash</p>
+                          <p className="text-xs text-zinc-500 uppercase font-bold">Dinheiro</p>
                           <p className="text-lg font-bold text-white">${(salesByMethod[PaymentMethod.CASH] || 0).toFixed(2)}</p>
                        </div>
                     </div>
@@ -580,7 +580,7 @@ export const Finance = () => {
                           <CreditCard className="w-5 h-5 text-blue-500" />
                        </div>
                        <div>
-                          <p className="text-xs text-zinc-500 uppercase font-bold">Credit/Debit</p>
+                          <p className="text-xs text-zinc-500 uppercase font-bold">Crédito/Débito</p>
                           <p className="text-lg font-bold text-white">${((salesByMethod[PaymentMethod.CREDIT_CARD] || 0) + (salesByMethod[PaymentMethod.DEBIT_CARD] || 0)).toFixed(2)}</p>
                        </div>
                     </div>
@@ -626,9 +626,9 @@ export const Finance = () => {
             
             {/* Expense List Header */}
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg text-white">Expense History ({dateFilter})</h3>
+              <h3 className="font-bold text-lg text-white">Histórico de Despesas ({dateFilter})</h3>
               <button onClick={openNewExpenseModal} className="text-sm bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-lg text-white font-medium transition-colors flex items-center gap-2">
-                 <TrendingDown className="w-4 h-4 text-red-500" /> Add Custom
+                 <TrendingDown className="w-4 h-4 text-red-500" /> Adicionar Personalizada
               </button>
             </div>
 
@@ -636,7 +636,7 @@ export const Finance = () => {
                {(activeContext === 'BUSINESS' ? businessExpensesList : personalExpensesList).length === 0 ? (
                   <div className="text-center text-zinc-500 py-10 bg-zinc-900 border border-zinc-800 rounded-xl">
                     <TrendingDown className="w-10 h-10 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">No expenses recorded for this period.</p>
+                    <p className="text-sm">Nenhuma despesa registrada para este período.</p>
                   </div>
                ) : (
                   (activeContext === 'BUSINESS' ? businessExpensesList : personalExpensesList).map(exp => (
@@ -708,21 +708,21 @@ export const Finance = () => {
                         {/* Financial Stats Grid */}
                         <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4 border-t md:border-t-0 md:border-l border-zinc-800 pt-4 md:pt-0 md:pl-6">
                            <div>
-                              <p className="text-xs text-zinc-500 mb-1">Period Earnings</p>
+                              <p className="text-xs text-zinc-500 mb-1">Ganhos do Período</p>
                               <p className="font-bold text-white">${stat.periodEarnings.toFixed(2)}</p>
-                              {stat.periodTips > 0 && <span className="text-[10px] text-amber-500">+ ${stat.periodTips} tips</span>}
+                              {stat.periodTips > 0 && <span className="text-[10px] text-amber-500">+ ${stat.periodTips} gorjetas</span>}
                            </div>
                            <div>
-                              <p className="text-xs text-zinc-500 mb-1">Paid (Lifetime)</p>
+                              <p className="text-xs text-zinc-500 mb-1">Pago (Total)</p>
                               <p className="font-bold text-red-400">-${stat.totalPaidOut.toFixed(2)}</p>
                            </div>
                            <div className="md:col-span-2">
-                              <p className="text-xs text-zinc-400 mb-1 font-bold uppercase tracking-wider">Payable Balance (Net)</p>
+                              <p className="text-xs text-zinc-400 mb-1 font-bold uppercase tracking-wider">Saldo a Pagar (Líquido)</p>
                               <p className={`font-bold text-2xl ${stat.netPayable <= 0 ? 'text-zinc-500' : 'text-emerald-400'}`}>
                                  ${stat.netPayable.toFixed(2)}
                               </p>
                               {stat.netPayable <= 0 && (
-                                 <span className="text-[10px] text-zinc-600 block">Nothing to pay right now</span>
+                                 <span className="text-[10px] text-zinc-600 block">Nada a pagar no momento</span>
                               )}
                            </div>
                         </div>
@@ -735,7 +735,7 @@ export const Finance = () => {
                                 disabled={stat.netPayable <= 0}
                                 className="w-full md:w-auto flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-950 font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-emerald-500/20"
                               >
-                                 <HandCoins className="w-5 h-5" /> Pay / Advance
+                                 <HandCoins className="w-5 h-5" /> Pagar / Adiantar
                               </button>
                            </div>
                         )}
@@ -760,7 +760,7 @@ export const Finance = () => {
           <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-sm p-6 shadow-2xl">
             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               {isSystemExpense ? <Crown className="text-amber-500" /> : (newExpense.context === 'BUSINESS' ? <Briefcase className="w-5 h-5" /> : <Home className="w-5 h-5" />)}
-              {isSystemExpense ? 'Confirm Subscription' : (newExpense.context === 'BUSINESS' ? 'Shop Expense' : 'Personal Expense')}
+              {isSystemExpense ? 'Confirmar Assinatura' : (newExpense.context === 'BUSINESS' ? 'Despesa da Loja' : 'Despesa Pessoal')}
             </h3>
             
             {!isSystemExpense && (
@@ -784,12 +784,12 @@ export const Finance = () => {
 
             <form onSubmit={handleCreateExpense} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-zinc-400 mb-1.5">Description</label>
+                <label className="block text-xs font-medium text-zinc-400 mb-1.5">Descrição</label>
                 <input 
                   required 
                   type="text" 
                   disabled={isSystemExpense}
-                  placeholder="e.g. Electric Bill" 
+                  placeholder="ex: Conta de Luz" 
                   value={newExpense.title} 
                   onChange={e => setNewExpense({...newExpense, title: e.target.value})} 
                   className={`w-full border rounded-lg py-2 px-3 text-white focus:outline-none ${isSystemExpense ? 'bg-zinc-900 border-amber-500/50 text-amber-500 font-bold' : 'bg-zinc-950 border-zinc-800 focus:border-amber-500'}`}
