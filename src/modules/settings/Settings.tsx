@@ -1425,12 +1425,41 @@ export const Settings = () => {
                      </div>
                   </div>
                   <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5 flex flex-col items-center justify-center">
-                     <div className="w-48 h-48 bg-white rounded-lg flex items-center justify-center mb-4">
-                        <p className="text-zinc-400 text-xs">QR Code PIX</p>
-                     </div>
-                     <button className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-lg transition-all">
-                        <Copy className="w-4 h-4" /> Copiar Código PIX
-                     </button>
+                     {shopSettings.pixConfig?.key && shopSettings.pixConfig?.beneficiaryName ? (
+                        <>
+                           <div className="w-48 h-48 bg-white rounded-lg flex items-center justify-center mb-4 p-2">
+                              <QRCodeSVG 
+                                 value={generatePixPayload({
+                                    pixKey: shopSettings.pixConfig.key,
+                                    beneficiaryName: shopSettings.pixConfig.beneficiaryName,
+                                    city: shopProfile.address?.split(',')[1]?.trim() || 'SAO PAULO'
+                                 })}
+                                 size={176}
+                                 level="M"
+                              />
+                           </div>
+                           <button 
+                              onClick={() => {
+                                 const payload = generatePixPayload({
+                                    pixKey: shopSettings.pixConfig!.key,
+                                    beneficiaryName: shopSettings.pixConfig!.beneficiaryName,
+                                    city: shopProfile.address?.split(',')[1]?.trim() || 'SAO PAULO'
+                                 });
+                                 navigator.clipboard.writeText(payload);
+                                 alert('Código PIX copiado! Cole no app do seu banco.');
+                              }}
+                              className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-lg transition-all"
+                           >
+                              <Copy className="w-4 h-4" /> Copiar Código PIX
+                           </button>
+                        </>
+                     ) : (
+                        <div className="text-center py-12">
+                           <Smartphone className="w-12 h-12 text-zinc-700 mx-auto mb-3" />
+                           <p className="text-zinc-500 text-sm font-bold">Configure sua chave PIX</p>
+                           <p className="text-zinc-600 text-xs">Preencha os campos ao lado para gerar o QR Code</p>
+                        </div>
+                     )}
                   </div>
                </div>
             </div>
