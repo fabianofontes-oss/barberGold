@@ -150,6 +150,12 @@ CREATE POLICY "Staff can create supply transactions"
   WITH CHECK (tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid()));
 
 -- Índices para performance
+DROP INDEX IF EXISTS idx_commission_plans_tenant;
+DROP INDEX IF EXISTS idx_categories_tenant;
+DROP INDEX IF EXISTS idx_suppliers_tenant;
+DROP INDEX IF EXISTS idx_inventory_tenant;
+DROP INDEX IF EXISTS idx_supply_transactions_tenant;
+
 CREATE INDEX idx_commission_plans_tenant ON commission_plans(tenant_id);
 CREATE INDEX idx_categories_tenant ON categories(tenant_id);
 CREATE INDEX idx_suppliers_tenant ON suppliers(tenant_id);
