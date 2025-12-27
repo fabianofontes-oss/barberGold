@@ -9,6 +9,11 @@ export const WebsiteEditor = () => {
   const [activeTab, setActiveTab] = useState<'CONTENT' | 'LAYOUT' | 'THEME' | 'DOMAIN'>('CONTENT');
   const [copied, setCopied] = useState(false);
   
+  // Theme State
+  const [selectedPrimaryColor, setSelectedPrimaryColor] = useState('#09090b');
+  const [selectedAccentColor, setSelectedAccentColor] = useState('#f59e0b');
+  const [selectedTemplate, setSelectedTemplate] = useState('Classic Dark');
+  
   const slug = shopProfile.slug || shopProfile.name.toLowerCase().replace(/\s+/g, '-');
   const siteUrl = `https://barber.app/${slug}`;
 
@@ -19,7 +24,12 @@ export const WebsiteEditor = () => {
   };
 
   const handleSave = () => {
-     alert('Site atualizado com sucesso!');
+     console.log('Salvando configurações:', {
+        primaryColor: selectedPrimaryColor,
+        accentColor: selectedAccentColor,
+        template: selectedTemplate
+     });
+     alert(`✅ Site atualizado!\n\nTema: ${selectedTemplate}\nCor Primária: ${selectedPrimaryColor}\nCor Destaque: ${selectedAccentColor}`);
   };
 
   return (
@@ -125,7 +135,18 @@ export const WebsiteEditor = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Cor Primária</label>
                            <div className="flex gap-2">
                               {['#09090b', '#022c22', '#2e1065', '#0f172a', '#083344'].map(color => (
-                                 <button key={color} className="w-10 h-10 rounded-lg border-2 border-zinc-700 hover:border-amber-500 transition-all" style={{ backgroundColor: color }} />
+                                 <button 
+                                    key={color} 
+                                    onClick={() => setSelectedPrimaryColor(color)}
+                                    className={`w-10 h-10 rounded-lg border-2 transition-all relative ${
+                                       selectedPrimaryColor === color ? 'border-amber-500 ring-2 ring-amber-500/50' : 'border-zinc-700 hover:border-amber-500'
+                                    }`} 
+                                    style={{ backgroundColor: color }}
+                                 >
+                                    {selectedPrimaryColor === color && (
+                                       <Check className="w-5 h-5 text-white absolute inset-0 m-auto" />
+                                    )}
+                                 </button>
                               ))}
                            </div>
                         </div>
@@ -133,7 +154,18 @@ export const WebsiteEditor = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Cor de Destaque</label>
                            <div className="flex gap-2">
                               {['#f59e0b', '#10b981', '#a855f7', '#0ea5e9', '#ec4899'].map(color => (
-                                 <button key={color} className="w-10 h-10 rounded-lg border-2 border-zinc-700 hover:border-white transition-all" style={{ backgroundColor: color }} />
+                                 <button 
+                                    key={color} 
+                                    onClick={() => setSelectedAccentColor(color)}
+                                    className={`w-10 h-10 rounded-lg border-2 transition-all relative ${
+                                       selectedAccentColor === color ? 'border-white ring-2 ring-white/50' : 'border-zinc-700 hover:border-white'
+                                    }`} 
+                                    style={{ backgroundColor: color }}
+                                 >
+                                    {selectedAccentColor === color && (
+                                       <Check className="w-5 h-5 text-white absolute inset-0 m-auto" />
+                                    )}
+                                 </button>
                               ))}
                            </div>
                         </div>
@@ -143,10 +175,35 @@ export const WebsiteEditor = () => {
                   <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                      <h3 className="text-lg font-bold text-white mb-4">Templates Prontos</h3>
                      <div className="grid grid-cols-3 gap-4">
-                        {['Classic Dark', 'Minimal Light', 'Bold Gold'].map((template, idx) => (
-                           <button key={template} className={`p-4 rounded-xl border transition-all text-center ${idx === 0 ? 'border-amber-500 bg-amber-500/10' : 'border-zinc-800 hover:border-zinc-700'}`}>
-                              <div className="w-full h-16 bg-zinc-800 rounded-lg mb-2"></div>
-                              <span className="text-xs font-medium text-zinc-300">{template}</span>
+                        {[
+                           { name: 'Classic Dark', primary: '#09090b', accent: '#f59e0b' },
+                           { name: 'Minimal Light', primary: '#f9fafb', accent: '#10b981' },
+                           { name: 'Bold Gold', primary: '#1c1917', accent: '#fbbf24' }
+                        ].map((template) => (
+                           <button 
+                              key={template.name} 
+                              onClick={() => {
+                                 setSelectedTemplate(template.name);
+                                 setSelectedPrimaryColor(template.primary);
+                                 setSelectedAccentColor(template.accent);
+                              }}
+                              className={`p-4 rounded-xl border transition-all text-center ${
+                                 selectedTemplate === template.name 
+                                    ? 'border-amber-500 bg-amber-500/10 ring-2 ring-amber-500/30' 
+                                    : 'border-zinc-800 hover:border-zinc-700'
+                              }`}
+                           >
+                              <div className="w-full h-16 rounded-lg mb-2 flex gap-1">
+                                 <div className="flex-1 rounded" style={{ backgroundColor: template.primary }}></div>
+                                 <div className="w-4 rounded" style={{ backgroundColor: template.accent }}></div>
+                              </div>
+                              <span className="text-xs font-medium text-zinc-300">{template.name}</span>
+                              {selectedTemplate === template.name && (
+                                 <div className="mt-2 flex items-center justify-center gap-1 text-amber-500">
+                                    <Check className="w-3 h-3" />
+                                    <span className="text-[10px] font-bold">ATIVO</span>
+                                 </div>
+                              )}
                            </button>
                         ))}
                      </div>
