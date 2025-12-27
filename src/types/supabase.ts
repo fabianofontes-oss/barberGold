@@ -33,7 +33,7 @@ export type Database = {
       clients: {
         Row: {
           id: string;
-          store_id: string;
+          tenant_id: string;
           name: string;
           phone: string;
           email: string | null;
@@ -47,7 +47,7 @@ export type Database = {
         };
         Insert: {
           id?: string;
-          store_id: string;
+          tenant_id: string;
           name: string;
           phone: string;
           email?: string | null;
@@ -61,7 +61,7 @@ export type Database = {
         };
         Update: {
           id?: string;
-          store_id?: string;
+          tenant_id?: string;
           name?: string;
           phone?: string;
           email?: string | null;
@@ -130,7 +130,7 @@ export type Database = {
       services: {
         Row: {
           id: string;
-          store_id: string;
+          tenant_id: string;
           name: string;
           description: string | null;
           price: number;
@@ -142,7 +142,7 @@ export type Database = {
         };
         Insert: {
           id?: string;
-          store_id: string;
+          tenant_id: string;
           name: string;
           description?: string | null;
           price: number;
@@ -154,7 +154,7 @@ export type Database = {
         };
         Update: {
           id?: string;
-          store_id?: string;
+          tenant_id?: string;
           name?: string;
           description?: string | null;
           price?: number;
