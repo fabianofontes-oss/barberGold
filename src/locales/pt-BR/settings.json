@@ -9,6 +9,13 @@
       "configurePaymentGatewayFirst": "Configure um gateway de pagamento primeiro na seção \"Integrações de Gateway\" abaixo."
     },
     "templates": {
+      "communicationAlertsTitle": "Comunicação e alertas",
+      "cycle1StandardReturnTitle": "Ciclo 1: Retorno padrão",
+      "cycle2WinBackRiskTitle": "Ciclo 2: Reativação (risco)",
+      "triggerAfterLabel": "Disparar após",
+      "daysLabel": "dias",
+      "visualOrangeToRedHint": "Visual: Laranja (próximo) → Texto vermelho (atrasado)",
+      "messageTemplateStandardLabel": "Modelo de mensagem (Padrão)",
       "criticalVisualRedBackground": "Visual: Fundo vermelho (crítico)",
       "messageTemplateWinBackLabel": "Modelo de mensagem (Reativação)",
       "variablesHint": "Variáveis: {name}, {days}, {booking_link}"

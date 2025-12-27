@@ -9,6 +9,13 @@
       "configurePaymentGatewayFirst": "Configure a payment gateway first in the \"Gateway Integrations\" section below."
     },
     "templates": {
+      "communicationAlertsTitle": "Communication & alerts",
+      "cycle1StandardReturnTitle": "Cycle 1: Standard return",
+      "cycle2WinBackRiskTitle": "Cycle 2: Win-back (risk)",
+      "triggerAfterLabel": "Trigger after",
+      "daysLabel": "days",
+      "visualOrangeToRedHint": "Visual: Orange (approaching) → Red text (overdue)",
+      "messageTemplateStandardLabel": "Message template (Standard)",
       "criticalVisualRedBackground": "Visual: Red background (critical)",
       "messageTemplateWinBackLabel": "Message template (Win-back)",
       "variablesHint": "Variables: {name}, {days}, {booking_link}"
