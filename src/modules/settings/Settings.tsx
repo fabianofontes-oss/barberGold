@@ -29,7 +29,7 @@ export const Settings = () => {
   const isOwner = currentUser.role === 'OWNER';
   
   // Tab State
-  const [activeTab, setActiveTab] = useState<'SHOP' | 'TEAM' | 'COMMISSIONS' | 'MY_PROFILE' | 'REFERRAL'>('SHOP');
+  const [activeTab, setActiveTab] = useState<'SHOP' | 'TEAM' | 'PAYMENTS' | 'COMMISSIONS' | 'MY_PROFILE' | 'REFERRAL'>('SHOP');
   
   // Payment Config Sub-tab
   // Set default tab based on role
@@ -224,6 +224,16 @@ export const Settings = () => {
                   }`}
                 >
                   <Users className="w-4 h-4" /> Team
+                </button>
+                <button
+                  onClick={() => setActiveTab('PAYMENTS')}
+                  className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
+                    activeTab === 'PAYMENTS' 
+                      ? 'border-amber-500 text-white' 
+                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                  }`}
+                >
+                  <Wallet className="w-4 h-4" /> Pagamentos
                 </button>
                 <button
                   onClick={() => setActiveTab('COMMISSIONS')}
@@ -771,8 +781,8 @@ export const Settings = () => {
                )}
             </div>
 
-            {/* PAYMENT METHODS CONFIGURATION */}
-            <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
+            {/* QUEUE DISTRIBUTION RULE */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                <div className="mb-6">
                   <h3 className="text-white font-bold text-lg flex items-center gap-2 mb-2">
                     <Wallet className="w-5 h-5 text-amber-500" /> Métodos de Pagamento
