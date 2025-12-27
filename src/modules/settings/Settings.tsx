@@ -1138,17 +1138,37 @@ export const Settings = () => {
                   <div className="space-y-4">
                      <div>
                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Tipo de Chave</label>
-                        <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none">
-                           <option>CPF/CNPJ</option>
-                           <option>E-mail</option>
-                           <option>Telefone</option>
-                           <option>Chave Aleatória</option>
+                        <select 
+                           value={shopSettings.pixConfig?.keyType || 'CPF'}
+                           onChange={(e) => updateShopSettings({
+                              pixConfig: {
+                                 ...shopSettings.pixConfig,
+                                 keyType: e.target.value as any,
+                                 key: shopSettings.pixConfig?.key || '',
+                                 beneficiaryName: shopSettings.pixConfig?.beneficiaryName || ''
+                              }
+                           })}
+                           className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
+                        >
+                           <option value="CPF">CPF/CNPJ</option>
+                           <option value="EMAIL">E-mail</option>
+                           <option value="PHONE">Telefone</option>
+                           <option value="RANDOM">Chave Aleatória</option>
                         </select>
                      </div>
                      <div>
                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Chave PIX</label>
                         <input 
                            type="text" 
+                           value={shopSettings.pixConfig?.key || ''}
+                           onChange={(e) => updateShopSettings({
+                              pixConfig: {
+                                 ...shopSettings.pixConfig,
+                                 keyType: shopSettings.pixConfig?.keyType || 'CPF',
+                                 key: e.target.value,
+                                 beneficiaryName: shopSettings.pixConfig?.beneficiaryName || ''
+                              }
+                           })}
                            placeholder="Digite sua chave PIX"
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
                         />
@@ -1157,6 +1177,15 @@ export const Settings = () => {
                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome do Beneficiário</label>
                         <input 
                            type="text" 
+                           value={shopSettings.pixConfig?.beneficiaryName || ''}
+                           onChange={(e) => updateShopSettings({
+                              pixConfig: {
+                                 ...shopSettings.pixConfig,
+                                 keyType: shopSettings.pixConfig?.keyType || 'CPF',
+                                 key: shopSettings.pixConfig?.key || '',
+                                 beneficiaryName: e.target.value
+                              }
+                           })}
                            placeholder="Nome completo ou Razão Social"
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
                         />
