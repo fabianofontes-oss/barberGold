@@ -789,6 +789,18 @@ export const Settings = () => {
                               isConfigured = !!(shopSettings.gatewayConfig?.pagSeguro?.enabled && 
                                                shopSettings.gatewayConfig?.pagSeguro?.email && 
                                                shopSettings.gatewayConfig?.pagSeguro?.token);
+                           } else if (method.gateway === 'stripe') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.stripe?.enabled && 
+                                               shopSettings.gatewayConfig?.stripe?.publishableKey && 
+                                               shopSettings.gatewayConfig?.stripe?.secretKey);
+                           } else if (method.gateway === 'infinitePay') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.infinitePay?.enabled && 
+                                               shopSettings.gatewayConfig?.infinitePay?.apiKey && 
+                                               shopSettings.gatewayConfig?.infinitePay?.appKey);
+                           } else if (method.gateway === 'stone') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.stone?.enabled && 
+                                               shopSettings.gatewayConfig?.stone?.stoneCode && 
+                                               shopSettings.gatewayConfig?.stone?.apiKey);
                            } else if (method.value === PaymentMethod.PIX) {
                               isConfigured = !!(shopSettings.pixConfig?.key && shopSettings.pixConfig?.beneficiaryName);
                            }
