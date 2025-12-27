@@ -4,7 +4,7 @@ import { ClientDB, ClientInsert, ClientUpdate, ClientWithStats } from './types';
 export class ClientsRepository {
   private supabase = createClient();
 
-  async list(storeId: string, filters?: { search?: string; tags?: string[] }) {
+  async list(tenantId: string, filters?: { search?: string; tags?: string[] }) {
     let query = this.supabase
       .from('clients')
       .select(`
@@ -16,7 +16,7 @@ export class ClientsRepository {
           total_amount
         )
       `)
-      .eq('store_id', storeId)
+      .eq('tenant_id', tenantId)
       .order('created_at', { ascending: false });
 
     if (filters?.search) {
@@ -47,19 +47,19 @@ export class ClientsRepository {
     return clientsWithStats;
   }
 
-  async getById(id: string, storeId: string): Promise<ClientDB | null> {
+  async getById(id: string, tenantId: string): Promise<ClientDB | null> {
     const { data, error } = await this.supabase
       .from('clients')
       .select('*')
       .eq('id', id)
-      .eq('store_id', storeId)
+      .eq('tenant_id', tenantId)
       .single();
 
     if (error) throw error;
     return data;
   }
 
-  async create(client: any, storeId: string): Promise<ClientDB> {
+  async create(client: any, tenantId: string): Promise<ClientDB> {
     const { data, error } = await this.supabase
       .from('clients')
       .insert({
@@ -68,10 +68,10 @@ export class ClientsRepository {
         email: client.email || null,
         birth_date: client.birthDate || null,
         document: client.document || null,
-        preferred_staff_id: client.preferredStaffId || null,
-        tags: client.tags || null,
+        tags: client.tags || [],
         notes: client.notes || null,
-        store_id: storeId,
+        preferred_staff_id: client.preferredStaffId || null,
+        tenant_id: tenantId,
       })
       .select()
       .single();
@@ -80,12 +80,12 @@ export class ClientsRepository {
     return data;
   }
 
-  async update(id: string, updates: ClientUpdate, storeId: string): Promise<ClientDB> {
+  async update(id: string, updates: ClientUpdate, tenantId: string): Promise<ClientDB> {
     const { data, error } = await this.supabase
       .from('clients')
       .update(updates)
       .eq('id', id)
-      .eq('store_id', storeId)
+      .eq('tenant_id', tenantId)
       .select()
       .single();
 
@@ -93,22 +93,22 @@ export class ClientsRepository {
     return data;
   }
 
-  async delete(id: string, storeId: string): Promise<void> {
+  async delete(id: string, tenantId: string): Promise<void> {
     const { error } = await this.supabase
       .from('clients')
       .delete()
       .eq('id', id)
-      .eq('store_id', storeId);
+      .eq('tenant_id', tenantId);
 
     if (error) throw error;
   }
 
-  async checkPhoneExists(phone: string, storeId: string, excludeId?: string): Promise<boolean> {
+  async checkPhoneExists(phone: string, tenantId: string, excludeId?: string): Promise<boolean> {
     let query = this.supabase
       .from('clients')
       .select('id')
       .eq('phone', phone)
-      .eq('store_id', storeId);
+      .eq('tenant_id', tenantId);
 
     if (excludeId) {
       query = query.neq('id', excludeId);
@@ -118,11 +118,11 @@ export class ClientsRepository {
     return (data?.length || 0) > 0;
   }
 
-  async getStats(storeId: string) {
-    const { data, error } = await this.supabase
+  async getStats(tenantId: string) {
+    const { data: clients, error } = await this.supabase
       .from('clients')
-      .select('created_at')
-      .eq('store_id', storeId);
+      .select('*')
+      .eq('tenant_id', tenantId);
 
     if (error) throw error;
 
@@ -130,11 +130,11 @@ export class ClientsRepository {
     const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 
-    const thisMonthCount = data.filter(c => new Date(c.created_at) >= thisMonth).length;
-    const lastMonthCount = data.filter(c => new Date(c.created_at) >= lastMonth && new Date(c.created_at) < thisMonth).length;
+    const thisMonthCount = clients?.filter((c: ClientDB) => new Date(c.created_at) >= thisMonth).length || 0;
+    const lastMonthCount = clients?.filter((c: ClientDB) => new Date(c.created_at) >= lastMonth && new Date(c.created_at) < thisMonth).length || 0;
 
     return {
-      total: data.length,
+      total: clients?.length || 0,
       thisMonth: thisMonthCount,
       lastMonth: lastMonthCount,
       growth: lastMonthCount > 0 ? ((thisMonthCount - lastMonthCount) / lastMonthCount) * 100 : 0
