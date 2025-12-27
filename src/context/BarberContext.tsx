@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, ReactNode, PropsWithChildren, useEffect } from 'react';
-import { Appointment, Client, Product, Service, Sale, ViewState, AppointmentStatus, PaymentMethod, CartItem, RecurrenceType, StaffMember, CommissionPlan, Expense, ShopSettings, StaffPayment, ShopProfile, DaySchedule, InventoryItem, Supplier, SupplyTransaction, Category, CategoryType, RegisterClosure, QueueItem, Review, Tenant, SupportTicket, GlobalInvoice, Integration, ReferralSource, LandingPageConfig, MarketingCampaign, GlobalSettings, SaasV2TenantStatus, SaasV2PlanId, SaasPlan, SaasPlanId } from '@/types';
+import { Appointment, Client, Product, Service, Sale, ViewState, AppointmentStatus, PaymentMethod, CartItem, RecurrenceType, StaffMember, CommissionPlan, Expense, ShopSettings, StaffPayment, ShopProfile, DaySchedule, InventoryItem, Supplier, SupplyTransaction, Category, CategoryType, RegisterClosure, QueueItem, Review, Tenant, SupportTicket, GlobalInvoice, Integration, ReferralSource, LandingPageConfig, MarketingCampaign, GlobalSettings, SaasV2TenantStatus, SaasV2PlanId, SaasPlan, SaasPlanId, CompensationModel } from '@/types';
 import { PRODUCTS, SERVICES } from '@/constants';
 import { addDays, addWeeks, addMonths, isAfter, areIntervalsOverlapping, addMinutes, set, getDay, isSameDay } from 'date-fns';
 import { useSaasV2 } from './SaasV2Context';
@@ -358,7 +358,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         avatar: member.avatar_url || '',
         serviceCommissionRate: member.service_commission_rate || 50,
         productCommissionRate: member.product_commission_rate || 20,
-        commissionModel: 'PERCENTAGE' as const,
+        commissionModel: CompensationModel.PERCENTAGE,
         rentalFee: 0,
         paymentFrequency: 'WEEKLY' as const,
         workSchedule: Array.from({ length: 7 }, (_, i) => ({
