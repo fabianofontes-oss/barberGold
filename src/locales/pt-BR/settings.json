@@ -1,0 +1,111 @@
+{
+  "settings": {
+    "alerts": {
+      "profileUpdatedSuccessfully": "Perfil atualizado com sucesso!",
+      "instagramLinkCopied": "Link copiado! Cole no seu Instagram.",
+      "bookingLinkCopied": "Link de agendamento copiado!",
+      "pixCodeCopied": "Código PIX copiado! Cole no app do seu banco.",
+      "configureGatewayFirst": "Configure o gateway {gateway} primeiro na seção \"Integrações de Gateway\" abaixo.",
+      "configurePaymentGatewayFirst": "Configure um gateway de pagamento primeiro na seção \"Integrações de Gateway\" abaixo."
+    },
+    "templates": {
+      "criticalVisualRedBackground": "Visual: Fundo vermelho (crítico)",
+      "messageTemplateWinBackLabel": "Modelo de mensagem (Reativação)",
+      "variablesHint": "Variáveis: {name}, {days}, {booking_link}"
+    },
+    "commissionPlans": {
+      "structuresTitle": "Estruturas de comissão",
+      "noDescription": "Sem descrição",
+      "serviceCommissionLabel": "Comissão de serviço",
+      "productCommissionLabel": "Comissão de produto",
+      "fixedRentLabel": "Aluguel fixo",
+      "removePlanButton": "Remover plano",
+      "createNewPlanButton": "Criar novo plano",
+      "modal": {
+        "title": "Criar plano de comissão",
+        "planNameLabel": "Nome do plano",
+        "planNamePlaceholder": "ex: Barbeiro Master",
+        "modelTypeLabel": "Tipo de modelo",
+        "percentageSplitButton": "Divisão percentual",
+        "chairRentalButton": "Aluguel de cadeira",
+        "serviceCommissionRateLabel": "Comissão de serviço (%)",
+        "productCommissionRateLabel": "Comissão de produto (%)",
+        "fixedRentalFeeLabel": "Taxa de aluguel fixa",
+        "savePlanButton": "Salvar plano"
+      }
+    },
+    "services": {
+      "modal": {
+        "editTitle": "Editar serviço",
+        "newTitle": "Novo serviço",
+        "nameLabel": "Nome",
+        "categoryLabel": "Categoria",
+        "categoryPlaceholder": "-- Selecione uma categoria --",
+        "noCategoriesFound": "Nenhuma categoria encontrada. Adicione em Configurações.",
+        "priceLabel": "Preço",
+        "durationLabel": "Duração (min)",
+        "saveChangesButton": "Salvar alterações",
+        "createButton": "Criar"
+      }
+    },
+    "suppliers": {
+      "modal": {
+        "newTitle": "Novo fornecedor",
+        "companyNameLabel": "Nome da empresa",
+        "contactPersonLabel": "Contato",
+        "phoneLabel": "Telefone",
+        "categoryLabel": "Categoria",
+        "categoryPlaceholder": "-- Selecione uma categoria --",
+        "noCategoriesDefined": "Nenhuma categoria definida.",
+        "addSupplierButton": "Adicionar fornecedor"
+      }
+    },
+    "products": {
+      "modal": {
+        "editTitle": "Editar produto",
+        "newTitle": "Novo produto",
+        "nameLabel": "Nome",
+        "categoryLabel": "Categoria",
+        "categoryPlaceholder": "-- Selecione uma categoria --",
+        "noCategoriesFound": "Nenhuma categoria encontrada. Adicione em Configurações.",
+        "priceLabel": "Preço",
+        "costLabel": "Custo",
+        "profitSimulatorTitle": "Simulador de lucro",
+        "estimatedCommissionLabel": "Comissão estimada (20%)",
+        "netProfitLabel": "Lucro líquido",
+        "marginLabel": "Margem",
+        "stockLabel": "Estoque",
+        "productImageLabel": "Imagem do produto",
+        "saveChangesButton": "Salvar alterações",
+        "createButton": "Criar",
+        "totalStockLabel": "Estoque total",
+        "basePriceLabel": "Preço base",
+        "variantStockLabel": "Est."
+      }
+    },
+    "inventory": {
+      "modal": {
+        "editTitle": "Editar insumo",
+        "newTitle": "Novo insumo",
+        "itemNameLabel": "Nome do item",
+        "categoryLabel": "Categoria",
+        "categoryPlaceholder": "-- Selecione --",
+        "noCategories": "Sem categorias.",
+        "supplierLabel": "Fornecedor",
+        "supplierPlaceholder": "-- Selecione --",
+        "unitTypeLabel": "Tipo de unidade",
+        "unitType": {
+          "unit": "Unidade",
+          "litre": "Litro",
+          "box": "Caixa",
+          "pack": "Pacote"
+        },
+        "currentQuantityLabel": "Qtd. atual",
+        "minStockLabel": "Estoque mínimo",
+        "costPerUnitLabel": "Custo por unidade",
+        "createItemButton": "Criar item",
+        "saveChangesButton": "Salvar alterações"
+      }
+    }
+  }
+}
