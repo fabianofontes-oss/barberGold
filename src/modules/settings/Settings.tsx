@@ -765,24 +765,44 @@ export const Settings = () => {
                      
                      <div className="space-y-2">
                         {[
-                           { value: PaymentMethod.CASH, label: 'Dinheiro', icon: Banknote },
-                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard },
-                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard },
-                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone },
-                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone },
-                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone },
-                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet },
-                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet },
-                           { value: PaymentMethod.INFINITE_PAY, label: 'InfinitePay', icon: Wallet },
-                           { value: PaymentMethod.STONE, label: 'Stone', icon: Wallet },
+                           { value: PaymentMethod.CASH, label: 'Dinheiro', icon: Banknote, requiresGateway: false },
+                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard, requiresGateway: false },
+                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard, requiresGateway: false },
+                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone, requiresGateway: false },
+                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone, requiresGateway: true },
+                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone, requiresGateway: true },
+                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
+                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet, requiresGateway: true, gateway: 'pagSeguro' },
+                           { value: PaymentMethod.INFINITE_PAY, label: 'InfinitePay', icon: Wallet, requiresGateway: true },
+                           { value: PaymentMethod.STONE, label: 'Stone', icon: Wallet, requiresGateway: true },
                         ].map(method => {
                            const Icon = method.icon;
                            const isEnabled = shopSettings.paymentSettings?.inStore?.includes(method.value) ?? false;
+                           
+                           // Validar se gateway está configurado
+                           let isConfigured = true;
+                           if (method.gateway === 'mercadoPago') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.mercadoPago?.enabled && 
+                                               shopSettings.gatewayConfig?.mercadoPago?.publicKey && 
+                                               shopSettings.gatewayConfig?.mercadoPago?.accessToken);
+                           } else if (method.gateway === 'pagSeguro') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.pagSeguro?.enabled && 
+                                               shopSettings.gatewayConfig?.pagSeguro?.email && 
+                                               shopSettings.gatewayConfig?.pagSeguro?.token);
+                           } else if (method.value === PaymentMethod.PIX) {
+                              isConfigured = !!(shopSettings.pixConfig?.key && shopSettings.pixConfig?.beneficiaryName);
+                           }
+                           
+                           const canEnable = !method.requiresGateway || isConfigured;
                            
                            return (
                               <button
                                  key={method.value}
                                  onClick={() => {
+                                    if (!canEnable) {
+                                       alert(`Configure o gateway ${method.label} primeiro na seção "Integrações de Gateway" abaixo.`);
+                                       return;
+                                    }
                                     const current = shopSettings.paymentSettings?.inStore || [];
                                     const updated = isEnabled 
                                        ? current.filter(m => m !== method.value)
@@ -796,16 +816,24 @@ export const Settings = () => {
                                     });
                                  }}
                                  className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
-                                    isEnabled 
+                                    isEnabled && canEnable
                                        ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400' 
+                                       : !canEnable
+                                       ? 'bg-zinc-900 border-zinc-800 text-zinc-600 opacity-50 cursor-not-allowed'
                                        : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:border-zinc-700'
                                  }`}
+                                 disabled={!canEnable}
                               >
                                  <div className="flex items-center gap-3">
                                     <Icon className="w-4 h-4" />
                                     <span className="text-sm font-medium">{method.label}</span>
                                  </div>
-                                 {isEnabled && <Zap className="w-4 h-4 text-emerald-500" />}
+                                 <div className="flex items-center gap-2">
+                                    {!canEnable && (
+                                       <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">Não Configurado</span>
+                                    )}
+                                    {isEnabled && canEnable && <Zap className="w-4 h-4 text-emerald-500" />}
+                                 </div>
                               </button>
                            );
                         })}
