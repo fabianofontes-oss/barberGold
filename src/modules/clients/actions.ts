@@ -25,16 +25,16 @@ async function getTenantId() {
 
 export async function createClient(data: ClientFormData) {
   try {
-    const storeId = await getTenantId();
+    const tenantId = await getTenantId();
     const validated = clientSchema.parse(data);
     
     // Verificar se telefone já existe
-    const phoneExists = await repository.checkPhoneExists(validated.phone, storeId);
+    const phoneExists = await repository.checkPhoneExists(validated.phone, tenantId);
     if (phoneExists) {
       return { success: false, error: 'Telefone já cadastrado' };
     }
     
-    const client = await repository.create(validated, storeId);
+    const client = await repository.create(validated, tenantId);
     revalidatePath('/clients');
     
     return { success: true, data: client };
@@ -46,18 +46,18 @@ export async function createClient(data: ClientFormData) {
 
 export async function updateClient(id: string, data: ClientFormData) {
   try {
-    const storeId = await getTenantId();
+    const tenantId = await getTenantId();
     const validated = clientSchema.parse(data);
     
     // Verificar se telefone já existe (excluindo o próprio cliente)
     if (validated.phone) {
-      const phoneExists = await repository.checkPhoneExists(validated.phone, storeId, id);
+      const phoneExists = await repository.checkPhoneExists(validated.phone, tenantId, id);
       if (phoneExists) {
         return { success: false, error: 'Telefone já cadastrado' };
       }
     }
     
-    const client = await repository.update(id, validated, storeId);
+    const client = await repository.update(id, validated, tenantId);
     revalidatePath('/clients');
     
     return { success: true, data: client };
@@ -69,8 +69,8 @@ export async function updateClient(id: string, data: ClientFormData) {
 
 export async function deleteClient(id: string) {
   try {
-    const storeId = await getTenantId();
-    await repository.delete(id, storeId);
+    const tenantId = await getTenantId();
+    await repository.delete(id, tenantId);
     revalidatePath('/clients');
     
     return { success: true };
@@ -82,8 +82,8 @@ export async function deleteClient(id: string) {
 
 export async function getClients(filters?: { search?: string; tags?: string[] }) {
   try {
-    const storeId = await getTenantId();
-    const clients = await repository.list(storeId, filters);
+    const tenantId = await getTenantId();
+    const clients = await repository.list(tenantId, filters);
     return { success: true, data: clients };
   } catch (error) {
     console.error('Error fetching clients:', error);
@@ -93,8 +93,8 @@ export async function getClients(filters?: { search?: string; tags?: string[] })
 
 export async function getClientById(id: string) {
   try {
-    const storeId = await getTenantId();
-    const client = await repository.getById(id, storeId);
+    const tenantId = await getTenantId();
+    const client = await repository.getById(id, tenantId);
     return { success: true, data: client };
   } catch (error) {
     console.error('Error fetching client:', error);
@@ -104,8 +104,8 @@ export async function getClientById(id: string) {
 
 export async function getClientStats() {
   try {
-    const storeId = await getTenantId();
-    const stats = await repository.getStats(storeId);
+    const tenantId = await getTenantId();
+    const stats = await repository.getStats(tenantId);
     return { success: true, data: stats };
   } catch (error) {
     console.error('Error fetching client stats:', error);

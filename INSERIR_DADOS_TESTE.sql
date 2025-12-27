@@ -6,33 +6,31 @@
 -- Obter IDs necessários
 DO $$
 DECLARE
-    v_store_id UUID;
     v_tenant_id UUID;
+    v_profile_id UUID;
 BEGIN
-    -- Pegar a primeira store existente
-    SELECT id INTO v_store_id FROM stores LIMIT 1;
+    -- Pegar o primeiro tenant existente
+    SELECT id INTO v_tenant_id FROM tenants LIMIT 1;
     
-    -- Se não houver store, criar um erro
-    IF v_store_id IS NULL THEN
-        RAISE EXCEPTION 'Nenhuma store encontrada. Faça login no sistema primeiro.';
-    END IF;
-    
-    -- Pegar o tenant_id da primeira categoria existente ou usar o store_id
-    SELECT tenant_id INTO v_tenant_id FROM categories LIMIT 1;
+    -- Se não houver tenant, criar um tenant de teste
     IF v_tenant_id IS NULL THEN
-        v_tenant_id := v_store_id; -- Usar store_id como tenant_id se não houver
+        INSERT INTO tenants (name, slug, subscription_status)
+        VALUES ('Barbearia Teste', 'barbearia-teste', 'ACTIVE')
+        RETURNING id INTO v_tenant_id;
+        
+        RAISE NOTICE 'Tenant de teste criado: %', v_tenant_id;
     END IF;
 
     -- Inserir Serviços
-    INSERT INTO services (id, store_id, name, price, duration_minutes, category, is_active) VALUES
-    (gen_random_uuid(), v_store_id, 'Corte de Cabelo', 35.00, 30, 'CORTE', true),
-    (gen_random_uuid(), v_store_id, 'Barba', 25.00, 20, 'BARBA', true),
-    (gen_random_uuid(), v_store_id, 'Corte + Barba', 50.00, 45, 'COMBO', true),
-    (gen_random_uuid(), v_store_id, 'Nevou', 45.00, 40, 'CORTE', true),
-    (gen_random_uuid(), v_store_id, 'Pigmentação', 60.00, 60, 'TRATAMENTO', true),
-    (gen_random_uuid(), v_store_id, 'Platinado', 120.00, 90, 'COLORAÇÃO', true),
-    (gen_random_uuid(), v_store_id, 'Sobrancelha', 15.00, 15, 'OUTROS', true),
-    (gen_random_uuid(), v_store_id, 'Relaxamento', 80.00, 60, 'TRATAMENTO', true)
+    INSERT INTO services (id, tenant_id, name, price, duration_minutes, category, is_active) VALUES
+    (gen_random_uuid(), v_tenant_id, 'Corte de Cabelo', 35.00, 30, 'CORTE', true),
+    (gen_random_uuid(), v_tenant_id, 'Barba', 25.00, 20, 'BARBA', true),
+    (gen_random_uuid(), v_tenant_id, 'Corte + Barba', 50.00, 45, 'COMBO', true),
+    (gen_random_uuid(), v_tenant_id, 'Nevou', 45.00, 40, 'CORTE', true),
+    (gen_random_uuid(), v_tenant_id, 'Pigmentação', 60.00, 60, 'TRATAMENTO', true),
+    (gen_random_uuid(), v_tenant_id, 'Platinado', 120.00, 90, 'COLORAÇÃO', true),
+    (gen_random_uuid(), v_tenant_id, 'Sobrancelha', 15.00, 15, 'OUTROS', true),
+    (gen_random_uuid(), v_tenant_id, 'Relaxamento', 80.00, 60, 'TRATAMENTO', true)
     ON CONFLICT DO NOTHING;
 
     -- Inserir Produtos (caso tenha tabela products)
