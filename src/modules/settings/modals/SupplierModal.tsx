@@ -71,13 +71,13 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({ isOpen, onClose })
                  ))}
               </select>
               {supplierCategories.length === 0 && (
-                 <p className="text-[10px] text-red-500 mt-1">No categories defined.</p>
+                 <p className="text-[10px] text-red-500 mt-1">Nenhuma categoria definida.</p>
               )}
            </div>
 
            <div className="flex gap-3 pt-4">
-              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancel</button>
-              <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2 rounded-lg">Add Supplier</button>
+              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancelar</button>
+              <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2 rounded-lg">Adicionar Fornecedor</button>
            </div>
         </form>
       </div>

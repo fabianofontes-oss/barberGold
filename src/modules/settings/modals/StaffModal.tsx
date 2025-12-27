@@ -249,19 +249,19 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                    </div>
 
                    <div className="bg-zinc-800/50 p-4 rounded-xl border border-dashed border-zinc-700">
-                      <label className="block text-xs font-bold text-white mb-2">Apply Commission Plan</label>
+                      <label className="block text-xs font-bold text-white mb-2">Aplicar Plano de Comissão</label>
                       <select onChange={(e) => applyPlanToStaff(e.target.value)} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-3 px-3 text-zinc-300 focus:border-amber-500 outline-none text-sm">
-                         <option value="">-- Select a Plan --</option>
+                         <option value="">-- Selecione um Plano --</option>
                          {commissionPlans.map(p => (<option key={p.id} value={p.id}>{p.name}</option>))}
                       </select>
                    </div>
                    <div className="grid grid-cols-2 gap-3">
                       <div>
-                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Service Comm. %</label>
+                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Comissão de Serviço %</label>
                          <input type="number" min="0" max="100" value={newStaff.serviceCommissionRate} onChange={e => setNewStaff({...newStaff, serviceCommissionRate: Number(e.target.value)})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                       </div>
                       <div>
-                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Product Comm. %</label>
+                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Comissão de Produto %</label>
                          <input type="number" min="0" max="100" value={newStaff.productCommissionRate} onChange={e => setNewStaff({...newStaff, productCommissionRate: Number(e.target.value)})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                       </div>
                    </div>
@@ -274,8 +274,8 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
               <div className="space-y-4">
                  <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800 mb-4">
                     <p className="text-sm text-zinc-400">
-                       Select the services <b>{newStaff.name || 'this staff member'}</b> is qualified to perform. 
-                       Unchecked services will not appear in their booking options.
+                       Selecione os serviços que <b>{newStaff.name || 'este profissional'}</b> está qualificado para realizar. 
+                       Serviços desmarcados não aparecerão nas opções de agendamento.
                     </p>
                  </div>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -306,8 +306,8 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
               <div className="space-y-4">
                  <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800 mb-4">
                     <p className="text-sm text-zinc-400">
-                       Define working hours and <span className="text-amber-500 font-bold">Planned Breaks</span>.
-                       <br/><span className="text-xs text-zinc-500">Breaks like Lunch or Coffee will be auto-blocked in the online agenda.</span>
+                       Defina o horário de trabalho e <span className="text-amber-500 font-bold">Pausas Planejadas</span>.
+                       <br/><span className="text-xs text-zinc-500">Pausas como Almoço ou Café serão bloqueadas automaticamente na agenda online.</span>
                     </p>
                  </div>
                  
@@ -346,7 +346,7 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                                       onClick={() => addBreak(idx)}
                                       className="text-[10px] bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-1 rounded flex items-center gap-1 transition-colors"
                                    >
-                                      <Plus className="w-3 h-3" /> Break
+                                      <Plus className="w-3 h-3" /> Pausa
                                    </button>
                                 )}
                                 <button 
@@ -354,7 +354,7 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                                    onClick={() => updateDaySchedule(idx, 'isActive', !day.isActive)}
                                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${day.isActive ? 'text-zinc-500 hover:text-white' : 'bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20'}`}
                                 >
-                                   {day.isActive ? 'Off' : 'On'}
+                                   {day.isActive ? 'Desativar' : 'Ativar'}
                                 </button>
                              </div>
                           </div>
@@ -374,9 +374,9 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                                             onChange={(e) => updateBreak(idx, blk.id, 'type', e.target.value)}
                                             className="bg-zinc-950 border border-zinc-800 rounded-lg py-1 pl-7 pr-2 text-zinc-300 text-xs focus:border-amber-500 outline-none w-24"
                                          >
-                                            <option value="LUNCH">Lunch</option>
-                                            <option value="COFFEE">Coffee</option>
-                                            <option value="OTHER">Away</option>
+                                            <option value="LUNCH">Almoço</option>
+                                            <option value="COFFEE">Café</option>
+                                            <option value="OTHER">Fora</option>
                                          </select>
                                       </div>
 
@@ -412,9 +412,9 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
            )}
 
            <div className="fixed bottom-0 left-0 w-full p-4 bg-zinc-950/90 border-t border-zinc-800 md:static md:bg-transparent md:border-0 md:p-0 flex gap-3 mt-6">
-             <button type="button" onClick={onClose} className="flex-1 py-4 md:py-3 text-zinc-500 hover:text-white font-medium">Cancel</button>
+             <button type="button" onClick={onClose} className="flex-1 py-4 md:py-3 text-zinc-500 hover:text-white font-medium">Cancelar</button>
              <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-4 md:py-3 rounded-xl shadow-lg shadow-amber-500/20">
-               {staffToEdit ? 'Update Member' : 'Save Member'}
+               {staffToEdit ? 'Atualizar Membro' : 'Salvar Membro'}
              </button>
            </div>
         </form>

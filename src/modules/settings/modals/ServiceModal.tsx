@@ -89,14 +89,14 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose, ser
                  <input required type="number" value={newService.price} onChange={e => setNewService({...newService, price: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
               </div>
               <div className="flex-1">
-                 <label className="block text-xs font-medium text-zinc-400 mb-1.5">Duration (min)</label>
+                 <label className="block text-xs font-medium text-zinc-400 mb-1.5">Duração (min)</label>
                  <input required type="number" value={newService.durationMinutes} onChange={e => setNewService({...newService, durationMinutes: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
               </div>
            </div>
            <div className="flex gap-3 pt-2">
-              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancel</button>
+              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancelar</button>
               <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2 rounded-lg">
-                {serviceToEdit ? 'Save Changes' : 'Create'}
+                {serviceToEdit ? 'Salvar Alterações' : 'Criar'}
               </button>
            </div>
         </form>

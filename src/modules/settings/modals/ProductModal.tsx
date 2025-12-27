@@ -258,9 +258,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
            />
 
            <div className="flex gap-3 pt-2">
-              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancel</button>
+              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancelar</button>
               <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2 rounded-lg">
-                {productToEdit ? 'Save Changes' : 'Create'}
+                {productToEdit ? 'Salvar Alterações' : 'Criar'}
               </button>
            </div>
         </form>

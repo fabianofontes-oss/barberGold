@@ -179,9 +179,9 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({ isOpen, onClose,
            </div>
 
            <div className="flex gap-3 pt-4">
-              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancel</button>
+              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancelar</button>
               <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2 rounded-lg">
-                {itemToEdit ? 'Save Changes' : 'Create Item'}
+                {itemToEdit ? 'Salvar Alterações' : 'Criar Item'}
               </button>
            </div>
         </form>
