@@ -816,7 +816,7 @@ export const Settings = () => {
                                  key={method.value}
                                  onClick={() => {
                                     if (!canEnable) {
-                                       alert(`Configure o gateway ${method.label} primeiro na seção "Integrações de Gateway" abaixo.`);
+                                       alert(t('settings.alerts.configureGatewayFirst', { gateway: method.label }));
                                        return;
                                     }
                                     const current = shopSettings.paymentSettings?.inStore || [];
@@ -909,7 +909,7 @@ export const Settings = () => {
                                  key={method.value}
                                  onClick={() => {
                                     if (!canEnable) {
-                                       alert(`Configure um gateway de pagamento primeiro na seção "Integrações de Gateway" abaixo.`);
+                                       alert(t('settings.alerts.configurePaymentGatewayFirst'));
                                        return;
                                     }
                                     const current = shopSettings.paymentSettings?.online || [];
@@ -2003,61 +2003,61 @@ export const Settings = () => {
                {/* Communication & Alerts Config */}
                <div className="mt-6">
                   <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                    <MessageSquare className="w-5 h-5 text-amber-500" /> Communication & Alerts
+                    <MessageSquare className="w-5 h-5 text-amber-500" /> {t('settings.templates.communicationAlertsTitle')}
                   </h3>
                   
                   <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-6">
                      {/* Standard Return Cycle */}
                      <div className="flex flex-col md:flex-row gap-6 border-b border-zinc-800 pb-6">
                         <div className="flex-1">
-                           <h4 className="font-bold text-white mb-2">Cycle 1: Standard Return</h4>
+                           <h4 className="font-bold text-white mb-2">{t('settings.templates.cycle1StandardReturnTitle')}</h4>
                            <div className="flex items-center gap-2 mb-3">
-                              <span className="text-sm text-zinc-400">Trigger after</span>
+                              <span className="text-sm text-zinc-400">{t('settings.templates.triggerAfterLabel')}</span>
                               <input 
                                 type="number" 
                                 value={shopSettings.returnReminderDays}
                                 onChange={(e) => updateShopSettings({ returnReminderDays: Number(e.target.value) })}
                                 className="w-16 bg-zinc-950 border border-zinc-800 rounded-lg py-1 px-2 text-white text-center font-bold text-sm focus:border-amber-500 outline-none"
                               />
-                              <span className="text-sm text-zinc-400">days</span>
+                              <span className="text-sm text-zinc-400">{t('settings.templates.daysLabel')}</span>
                            </div>
-                           <p className="text-xs text-amber-500 mb-2">Visual: Orange (approaching) &rarr; Red text (overdue)</p>
+                           <p className="text-xs text-amber-500 mb-2">{t('settings.templates.visualOrangeToRedHint')}</p>
                         </div>
                         <div className="flex-[2]">
-                           <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Message Template (Standard)</label>
+                           <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">{t('settings.templates.messageTemplateStandardLabel')}</label>
                            <textarea 
                               value={shopSettings.messageTemplateOverdue}
                               onChange={(e) => updateShopSettings({ messageTemplateOverdue: e.target.value })}
                               className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-sm text-zinc-300 focus:border-amber-500 outline-none h-24 resize-none"
                            />
-                           <p className="text-[10px] text-zinc-600 mt-1">Variables: {'{name}'}, {'{days}'}, {'{booking_link}'}</p>
+                           <p className="text-[10px] text-zinc-600 mt-1">{t('settings.templates.variablesHint', { name: '{name}', days: '{days}', booking_link: '{booking_link}' })}</p>
                         </div>
                      </div>
 
                      {/* Win-Back Cycle */}
                      <div className="flex flex-col md:flex-row gap-6">
                         <div className="flex-1">
-                           <h4 className="font-bold text-white mb-2">Cycle 2: Win-Back (Risk)</h4>
+                           <h4 className="font-bold text-white mb-2">{t('settings.templates.cycle2WinBackRiskTitle')}</h4>
                            <div className="flex items-center gap-2 mb-3">
-                              <span className="text-sm text-zinc-400">Trigger after</span>
+                              <span className="text-sm text-zinc-400">{t('settings.templates.triggerAfterLabel')}</span>
                               <input 
                                 type="number" 
                                 value={shopSettings.winBackDays}
                                 onChange={(e) => updateShopSettings({ winBackDays: Number(e.target.value) })}
                                 className="w-16 bg-zinc-950 border border-zinc-800 rounded-lg py-1 px-2 text-white text-center font-bold text-sm focus:border-amber-500 outline-none"
                               />
-                              <span className="text-sm text-zinc-400">days</span>
+                              <span className="text-sm text-zinc-400">{t('settings.templates.daysLabel')}</span>
                            </div>
-                           <p className="text-xs text-red-500 mb-2">Visual: Red Background (Critical)</p>
+                           <p className="text-xs text-red-500 mb-2">{t('settings.templates.criticalVisualRedBackground')}</p>
                         </div>
                         <div className="flex-[2]">
-                           <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Message Template (Win-Back)</label>
+                           <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">{t('settings.templates.messageTemplateWinBackLabel')}</label>
                            <textarea 
                               value={shopSettings.messageTemplateWinBack}
                               onChange={(e) => updateShopSettings({ messageTemplateWinBack: e.target.value })}
                               className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-sm text-zinc-300 focus:border-amber-500 outline-none h-24 resize-none"
                            />
-                           <p className="text-[10px] text-zinc-600 mt-1">Variables: {'{name}'}, {'{days}'}, {'{booking_link}'}</p>
+                           <p className="text-[10px] text-zinc-600 mt-1">{t('settings.templates.variablesHint', { name: '{name}', days: '{days}', booking_link: '{booking_link}' })}</p>
                         </div>
                      </div>
 
