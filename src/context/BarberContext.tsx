@@ -388,6 +388,34 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
     }
   }, [salesLoading, realSales]);
 
+  useEffect(() => {
+    if (!inventoryLoading && realInventory.length > 0) {
+      setInventory(realInventory as InventoryItem[]);
+      console.log('✅ Inventory carregado do Supabase:', realInventory.length);
+    }
+  }, [inventoryLoading, realInventory]);
+
+  useEffect(() => {
+    if (!suppliersLoading && realSuppliers.length > 0) {
+      setSuppliers(realSuppliers as Supplier[]);
+      console.log('✅ Suppliers carregados do Supabase:', realSuppliers.length);
+    }
+  }, [suppliersLoading, realSuppliers]);
+
+  useEffect(() => {
+    if (!categoriesLoading && realCategories.length > 0) {
+      setCategories(realCategories as Category[]);
+      console.log('✅ Categories carregadas do Supabase:', realCategories.length);
+    }
+  }, [categoriesLoading, realCategories]);
+
+  useEffect(() => {
+    if (!commissionPlansLoading && realCommissionPlans.length > 0) {
+      setCommissionPlans(realCommissionPlans as CommissionPlan[]);
+      console.log('✅ Commission Plans carregados do Supabase:', realCommissionPlans.length);
+    }
+  }, [commissionPlansLoading, realCommissionPlans]);
+
   // Carregar dados reais do Supabase - User e Tenant
   useEffect(() => {
     async function loadUserData() {
