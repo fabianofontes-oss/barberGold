@@ -37,7 +37,7 @@ export const WebsiteEditor = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
          <div>
             <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-               <Globe className="w-8 h-8 text-amber-500" /> Website Editor
+               <Globe className="w-8 h-8 text-amber-500" /> Editor de Website
             </h1>
             <p className="text-zinc-400 text-sm max-w-2xl">
                Personalize seu site de agendamento e atraia mais clientes.
@@ -84,7 +84,7 @@ export const WebsiteEditor = () => {
             {activeTab === 'CONTENT' && (
                <div className="space-y-6 animate-fade-in">
                   <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                     <h3 className="text-lg font-bold text-white mb-4">Hero Section</h3>
+                     <h3 className="text-lg font-bold text-white mb-4">Seção Principal</h3>
                      <div className="space-y-4">
                         <div>
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Título Principal</label>

@@ -198,10 +198,10 @@ export const WebsiteBuilder = () => {
        <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
              <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-2">
-                <Globe className="w-8 h-8 text-amber-500" /> Website & Brand
+                <Globe className="w-8 h-8 text-amber-500" /> Website e Marca
              </h2>
              <p className="text-zinc-400">
-                Customize your digital storefront. This is what your customers see before they book.
+                Personalize sua vitrine digital. É isso que seus clientes veem antes de agendar.
              </p>
           </div>
           <div className="flex gap-2">
@@ -209,13 +209,13 @@ export const WebsiteBuilder = () => {
                 onClick={handlePreview}
                 className="bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all border border-zinc-700"
              >
-                <Eye className="w-4 h-4" /> Live Preview
+                <Eye className="w-4 h-4" /> Visualização ao Vivo
              </button>
              <button 
                 onClick={handleSave}
                 className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-all"
              >
-                <Save className="w-4 h-4" /> Publish Changes
+                <Save className="w-4 h-4" /> Publicar Alterações
              </button>
           </div>
        </div>
@@ -636,7 +636,7 @@ export const WebsiteBuilder = () => {
                             <div>
                                <div className="flex justify-between items-center mb-2">
                                   <label className="block text-xs font-bold text-white uppercase flex items-center gap-2">
-                                     Custom Domain <span className="bg-amber-500 text-zinc-900 text-[9px] px-1.5 rounded font-bold">PRO</span>
+                                     Domínio Personalizado <span className="bg-amber-500 text-zinc-900 text-[9px] px-1.5 rounded font-bold">PRO</span>
                                   </label>
                                </div>
                                <div className="flex items-center gap-3 bg-zinc-900 p-4 rounded-xl border border-zinc-800">
@@ -740,8 +740,8 @@ export const WebsiteBuilder = () => {
                 </div>
                 
                 <div className="mt-6 text-center">
-                   <p className="text-xs text-zinc-500 font-bold uppercase tracking-wider mb-2">Instant Preview</p>
-                   <p className="text-[10px] text-zinc-600 max-w-[200px]">Changes appear here in real-time. Click &quot;Live Preview&quot; to see full desktop version.</p>
+                   <p className="text-xs text-zinc-500 font-bold uppercase tracking-wider mb-2">Visualização Instantânea</p>
+                   <p className="text-[10px] text-zinc-600 max-w-[200px]">Alterações aparecem aqui em tempo real. Clique em &quot;Visualização ao Vivo&quot; para ver a versão completa.</p>
                 </div>
              </div>
           </div>

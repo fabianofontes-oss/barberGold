@@ -196,9 +196,9 @@ export const Settings = () => {
   return (
     <div className="h-full flex flex-col animate-fade-in">
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-white mb-2">{isOwner ? 'Settings' : 'My Profile'}</h2>
+        <h2 className="text-3xl font-bold text-white mb-2">{isOwner ? 'Configurações' : 'Meu Perfil'}</h2>
         <p className="text-zinc-400">
-           {isOwner ? 'Manage shop details, team members, and business rules.' : 'Manage your schedule and preferences.'}
+           {isOwner ? 'Gerencie detalhes da barbearia, equipe e regras de negócio.' : 'Gerencie sua agenda e preferências.'}
         </p>
       </div>
 
@@ -215,7 +215,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Store className="w-4 h-4" /> Shop Profile
+                  <Store className="w-4 h-4" /> Perfil da Loja
                 </button>
                  <button
                   onClick={() => setActiveTab('TEAM')}
@@ -225,7 +225,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Users className="w-4 h-4" /> Team
+                  <Users className="w-4 h-4" /> Equipe
                 </button>
                 <button
                   onClick={() => setActiveTab('PAYMENTS')}
@@ -245,7 +245,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Briefcase className="w-4 h-4" /> Rules & Growth
+                  <Briefcase className="w-4 h-4" /> Regras e Crescimento
                 </button>
                 <button
                   onClick={() => setActiveTab('REFERRAL')}
@@ -269,7 +269,7 @@ export const Settings = () => {
                   : 'border-transparent text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              <User className="w-4 h-4" /> My Profile
+              <User className="w-4 h-4" /> Meu Perfil
             </button>
         </div>
         
@@ -281,7 +281,7 @@ export const Settings = () => {
             }}
             className="mb-2 flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold rounded-lg transition-all"
           >
-            <Plus className="w-4 h-4" /> New {activeTab === 'TEAM' ? 'Staff' : 'Plan'}
+            <Plus className="w-4 h-4" /> Novo {activeTab === 'TEAM' ? 'Membro' : 'Plano'}
           </button>
         )}
       </div>
