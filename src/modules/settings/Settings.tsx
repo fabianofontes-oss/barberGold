@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
+import { useI18n } from '@/hooks/useI18n';
 import { StaffModal } from './modals/StaffModal';
 import { QRCodeSVG } from 'qrcode.react';
 import { generatePixPayload } from '@/lib/pix/generatePixPayload';
@@ -25,6 +26,7 @@ export const Settings = () => {
     deleteCommissionPlan, updateShopSettings, updateShopProfile, updateStaff,
     appointments
   } = useBarber();
+  const { t, formatCurrency } = useI18n();
   
   if (!currentUser) return null;
   
@@ -73,7 +75,7 @@ export const Settings = () => {
 
   const handleSaveMyProfile = () => {
      updateStaff(myProfileForm);
-     alert('Profile Updated Successfully!');
+     alert(t('settings.alerts.profileUpdatedSuccessfully'));
   };
 
   const updateMySchedule = (dayIndex: number, field: keyof DaySchedule, value: any) => {
