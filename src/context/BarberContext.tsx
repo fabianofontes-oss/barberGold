@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, ReactNode, PropsWithChildren, useEffect } from 'react';
 import { Appointment, Client, Product, Service, Sale, ViewState, AppointmentStatus, PaymentMethod, CartItem, RecurrenceType, StaffMember, CommissionPlan, Expense, ShopSettings, StaffPayment, ShopProfile, DaySchedule, InventoryItem, Supplier, SupplyTransaction, Category, CategoryType, RegisterClosure, QueueItem, Review, Tenant, SupportTicket, GlobalInvoice, Integration, ReferralSource, LandingPageConfig, MarketingCampaign, GlobalSettings, SaasV2TenantStatus, SaasV2PlanId, SaasPlan, SaasPlanId } from '@/types';
-import { MOCK_APPOINTMENTS, MOCK_CLIENTS, PRODUCTS, SERVICES, MOCK_STAFF, MOCK_PLANS, MOCK_INVENTORY, MOCK_SUPPLIERS, MOCK_SUPPLY_TRANSACTIONS, MOCK_CATEGORIES, MOCK_TENANTS, MOCK_TICKETS, MOCK_INVOICES, MOCK_INTEGRATIONS } from '@/constants';
+import { PRODUCTS, SERVICES } from '@/constants';
 import { addDays, addWeeks, addMonths, isAfter, areIntervalsOverlapping, addMinutes, set, getDay, isSameDay } from 'date-fns';
 import { useSaasV2 } from './SaasV2Context';
 import { useTenantPlanSlice } from './slices/tenantPlanSlice';
@@ -13,6 +13,10 @@ import { useProducts } from '@/modules/products/hooks/useProducts';
 import { useSales } from '@/modules/sales/hooks/useSales';
 import { useClients } from '@/modules/clients/hooks/useClients';
 import { useStaff } from '@/modules/staff/hooks/useStaff';
+import { useInventory } from '@/modules/inventory/hooks/useInventory';
+import { useSuppliers } from '@/modules/suppliers/hooks/useSuppliers';
+import { useCategories } from '@/modules/categories/hooks/useCategories';
+import { useCommissionPlans } from '@/modules/commission/hooks/useCommissionPlans';
 
 // --- LOCALSTORAGE HELPERS ---
 const STORAGE_KEY = 'barberflow_data';
@@ -226,27 +230,27 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   });
 
   // Data State
-  const [appointments, setAppointments] = useState<Appointment[]>(MOCK_APPOINTMENTS);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [queue, setQueue] = useState<QueueItem[]>([]);
-  const [clients, setClients] = useState<Client[]>(MOCK_CLIENTS);
+  const [clients, setClients] = useState<Client[]>([]);
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
   const [services, setServices] = useState<Service[]>(SERVICES);
   const [sales, setSales] = useState<Sale[]>([]);
-  const [commissionPlans, setCommissionPlans] = useState<CommissionPlan[]>(MOCK_PLANS);
+  const [commissionPlans, setCommissionPlans] = useState<CommissionPlan[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [staffPayments, setStaffPayments] = useState<StaffPayment[]>([]);
-  const [inventory, setInventory] = useState<InventoryItem[]>(MOCK_INVENTORY);
-  const [suppliers, setSuppliers] = useState<Supplier[]>(MOCK_SUPPLIERS);
-  const [supplyTransactions, setSupplyTransactions] = useState<SupplyTransaction[]>(MOCK_SUPPLY_TRANSACTIONS);
-  const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [supplyTransactions, setSupplyTransactions] = useState<SupplyTransaction[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [registerClosures, setRegisterClosures] = useState<RegisterClosure[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
 
-  // SUPER ADMIN STATE
-  const [tenants, setTenants] = useState<Tenant[]>(MOCK_TENANTS);
-  const [tickets, setTickets] = useState<SupportTicket[]>(MOCK_TICKETS);
-  const [globalInvoices, setGlobalInvoices] = useState<GlobalInvoice[]>(MOCK_INVOICES);
-  const [integrations, setIntegrations] = useState<Integration[]>(MOCK_INTEGRATIONS);
+  // SUPER ADMIN STATE (mantido vazio - não usado em produção)
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [tickets, setTickets] = useState<SupportTicket[]>([]);
+  const [globalInvoices, setGlobalInvoices] = useState<GlobalInvoice[]>([]);
+  const [integrations, setIntegrations] = useState<Integration[]>([]);
   
   // NEW: Office God State
   const [marketingCampaigns, setMarketingCampaigns] = useState<MarketingCampaign[]>(INITIAL_CAMPAIGNS);
@@ -262,6 +266,10 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const { sales: realSales, loading: salesLoading } = useSales();
   const { clients: realClients, loading: clientsLoading } = useClients();
   const { staff: realStaff, loading: staffLoading } = useStaff();
+  const { inventory: realInventory, loading: inventoryLoading } = useInventory();
+  const { suppliers: realSuppliers, loading: suppliersLoading } = useSuppliers();
+  const { categories: realCategories, loading: categoriesLoading } = useCategories();
+  const { commissionPlans: realCommissionPlans, loading: commissionPlansLoading } = useCommissionPlans();
 
   // Atualizar state quando dados reais chegarem
   useEffect(() => {
