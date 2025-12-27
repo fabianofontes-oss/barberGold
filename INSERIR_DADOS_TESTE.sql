@@ -8,12 +8,12 @@ DO $$
 DECLARE
     v_tenant_id UUID;
 BEGIN
-    -- Pegar o primeiro tenant ativo
-    SELECT id INTO v_tenant_id FROM tenants WHERE subscription_status = 'ACTIVE' LIMIT 1;
+    -- Pegar o primeiro tenant existente
+    SELECT id INTO v_tenant_id FROM tenants LIMIT 1;
     
-    -- Se não houver tenant, usar um ID fixo (ajuste conforme necessário)
+    -- Se não houver tenant, criar um erro
     IF v_tenant_id IS NULL THEN
-        v_tenant_id := 'SEU_TENANT_ID_AQUI'; -- Substitua pelo seu tenant_id real
+        RAISE EXCEPTION 'Nenhum tenant encontrado. Crie um tenant primeiro.';
     END IF;
 
     -- Inserir Serviços
