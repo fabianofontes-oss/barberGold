@@ -1217,13 +1217,25 @@ export const Settings = () => {
                   <div className="space-y-4">
                      <div>
                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Parcelas Máximas</label>
-                        <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none">
-                           <option>1x (À vista)</option>
-                           <option>2x</option>
-                           <option>3x</option>
-                           <option>4x</option>
-                           <option>6x</option>
-                           <option>12x</option>
+                        <select 
+                           value={shopSettings.installmentConfig?.maxInstallments || 1}
+                           onChange={(e) => updateShopSettings({
+                              installmentConfig: {
+                                 ...shopSettings.installmentConfig,
+                                 maxInstallments: Number(e.target.value),
+                                 minInstallmentValue: shopSettings.installmentConfig?.minInstallmentValue || 50,
+                                 chargeInterest: shopSettings.installmentConfig?.chargeInterest || false,
+                                 interestRate: shopSettings.installmentConfig?.interestRate || 0
+                              }
+                           })}
+                           className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                        >
+                           <option value={1}>1x (À vista)</option>
+                           <option value={2}>2x</option>
+                           <option value={3}>3x</option>
+                           <option value={4}>4x</option>
+                           <option value={6}>6x</option>
+                           <option value={12}>12x</option>
                         </select>
                      </div>
                      <div>
@@ -1232,6 +1244,16 @@ export const Settings = () => {
                            <span className="text-zinc-400 font-bold">R$</span>
                            <input 
                               type="number" 
+                              value={shopSettings.installmentConfig?.minInstallmentValue || 50}
+                              onChange={(e) => updateShopSettings({
+                                 installmentConfig: {
+                                    ...shopSettings.installmentConfig,
+                                    maxInstallments: shopSettings.installmentConfig?.maxInstallments || 1,
+                                    minInstallmentValue: Number(e.target.value),
+                                    chargeInterest: shopSettings.installmentConfig?.chargeInterest || false,
+                                    interestRate: shopSettings.installmentConfig?.interestRate || 0
+                                 }
+                              })}
                               placeholder="50.00"
                               step="0.01"
                               className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
@@ -1244,7 +1266,20 @@ export const Settings = () => {
                            <p className="text-xs text-zinc-500">Cobrar juros nas parcelas</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
-                           <input type="checkbox" className="sr-only peer" />
+                           <input 
+                              type="checkbox" 
+                              checked={shopSettings.installmentConfig?.chargeInterest || false}
+                              onChange={(e) => updateShopSettings({
+                                 installmentConfig: {
+                                    ...shopSettings.installmentConfig,
+                                    maxInstallments: shopSettings.installmentConfig?.maxInstallments || 1,
+                                    minInstallmentValue: shopSettings.installmentConfig?.minInstallmentValue || 50,
+                                    chargeInterest: e.target.checked,
+                                    interestRate: shopSettings.installmentConfig?.interestRate || 0
+                                 }
+                              })}
+                              className="sr-only peer" 
+                           />
                            <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
                         </label>
                      </div>
@@ -1255,6 +1290,16 @@ export const Settings = () => {
                         <div className="flex items-center gap-2">
                            <input 
                               type="number" 
+                              value={shopSettings.installmentConfig?.interestRate || 0}
+                              onChange={(e) => updateShopSettings({
+                                 installmentConfig: {
+                                    ...shopSettings.installmentConfig,
+                                    maxInstallments: shopSettings.installmentConfig?.maxInstallments || 1,
+                                    minInstallmentValue: shopSettings.installmentConfig?.minInstallmentValue || 50,
+                                    chargeInterest: shopSettings.installmentConfig?.chargeInterest || false,
+                                    interestRate: Number(e.target.value)
+                                 }
+                              })}
                               placeholder="2.99"
                               step="0.01"
                               className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
