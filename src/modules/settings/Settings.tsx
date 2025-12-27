@@ -850,21 +850,52 @@ export const Settings = () => {
                      
                      <div className="space-y-2">
                         {[
-                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard },
-                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard },
-                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone },
-                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone },
-                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone },
-                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet },
-                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet },
+                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard, requiresGateway: true, gateway: 'any' },
+                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard, requiresGateway: true, gateway: 'any' },
+                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone, requiresGateway: false },
+                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
+                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
+                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
+                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet, requiresGateway: true, gateway: 'pagSeguro' },
                         ].map(method => {
                            const Icon = method.icon;
                            const isEnabled = shopSettings.paymentSettings?.online?.includes(method.value) ?? false;
+                           
+                           // Validar se gateway está configurado
+                           let isConfigured = true;
+                           if (method.gateway === 'mercadoPago') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.mercadoPago?.enabled && 
+                                               shopSettings.gatewayConfig?.mercadoPago?.publicKey && 
+                                               shopSettings.gatewayConfig?.mercadoPago?.accessToken);
+                           } else if (method.gateway === 'pagSeguro') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.pagSeguro?.enabled && 
+                                               shopSettings.gatewayConfig?.pagSeguro?.email && 
+                                               shopSettings.gatewayConfig?.pagSeguro?.token);
+                           } else if (method.gateway === 'stripe') {
+                              isConfigured = !!(shopSettings.gatewayConfig?.stripe?.enabled && 
+                                               shopSettings.gatewayConfig?.stripe?.publishableKey && 
+                                               shopSettings.gatewayConfig?.stripe?.secretKey);
+                           } else if (method.gateway === 'any') {
+                              // Cartão requer pelo menos um gateway configurado
+                              isConfigured = !!(
+                                 (shopSettings.gatewayConfig?.mercadoPago?.enabled && shopSettings.gatewayConfig?.mercadoPago?.publicKey) ||
+                                 (shopSettings.gatewayConfig?.pagSeguro?.enabled && shopSettings.gatewayConfig?.pagSeguro?.email) ||
+                                 (shopSettings.gatewayConfig?.stripe?.enabled && shopSettings.gatewayConfig?.stripe?.publishableKey)
+                              );
+                           } else if (method.value === PaymentMethod.PIX) {
+                              isConfigured = !!(shopSettings.pixConfig?.key && shopSettings.pixConfig?.beneficiaryName);
+                           }
+                           
+                           const canEnable = !method.requiresGateway || isConfigured;
                            
                            return (
                               <button
                                  key={method.value}
                                  onClick={() => {
+                                    if (!canEnable) {
+                                       alert(`Configure um gateway de pagamento primeiro na seção "Integrações de Gateway" abaixo.`);
+                                       return;
+                                    }
                                     const current = shopSettings.paymentSettings?.online || [];
                                     const updated = isEnabled 
                                        ? current.filter(m => m !== method.value)
@@ -878,16 +909,24 @@ export const Settings = () => {
                                     });
                                  }}
                                  className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
-                                    isEnabled 
+                                    isEnabled && canEnable
                                        ? 'bg-blue-500/10 border-blue-500/50 text-blue-400' 
+                                       : !canEnable
+                                       ? 'bg-zinc-900 border-zinc-800 text-zinc-600 opacity-50 cursor-not-allowed'
                                        : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:border-zinc-700'
                                  }`}
+                                 disabled={!canEnable}
                               >
                                  <div className="flex items-center gap-3">
                                     <Icon className="w-4 h-4" />
                                     <span className="text-sm font-medium">{method.label}</span>
                                  </div>
-                                 {isEnabled && <Zap className="w-4 h-4 text-blue-500" />}
+                                 <div className="flex items-center gap-2">
+                                    {!canEnable && (
+                                       <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">Não Configurado</span>
+                                    )}
+                                    {isEnabled && canEnable && <Zap className="w-4 h-4 text-blue-500" />}
+                                 </div>
                               </button>
                            );
                         })}
