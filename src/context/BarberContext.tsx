@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, ReactNode, PropsWithChildren, useEffect } from 'react';
 import { Appointment, Client, Product, Service, Sale, ViewState, AppointmentStatus, PaymentMethod, CartItem, RecurrenceType, StaffMember, CommissionPlan, Expense, ShopSettings, StaffPayment, ShopProfile, DaySchedule, InventoryItem, Supplier, SupplyTransaction, Category, CategoryType, RegisterClosure, QueueItem, Review, Tenant, SupportTicket, GlobalInvoice, Integration, ReferralSource, LandingPageConfig, MarketingCampaign, GlobalSettings, SaasV2TenantStatus, SaasV2PlanId, SaasPlan, SaasPlanId, CompensationModel } from '@/types';
-import { PRODUCTS, SERVICES } from '@/constants';
+// Removido imports de mocks
 import { addDays, addWeeks, addMonths, isAfter, areIntervalsOverlapping, addMinutes, set, getDay, isSameDay } from 'date-fns';
 import { useSaasV2 } from './SaasV2Context';
 import { useTenantPlanSlice } from './slices/tenantPlanSlice';
@@ -233,8 +233,8 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
-  const [products, setProducts] = useState<Product[]>(PRODUCTS);
-  const [services, setServices] = useState<Service[]>(SERVICES);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [sales, setSales] = useState<Sale[]>([]);
   const [commissionPlans, setCommissionPlans] = useState<CommissionPlan[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
