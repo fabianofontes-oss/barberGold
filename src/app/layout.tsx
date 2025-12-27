@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "O melhor sistema para barbearias. Agenda online, controle financeiro e comissões automáticas.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
