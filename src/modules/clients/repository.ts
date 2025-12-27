@@ -4,7 +4,7 @@ import { ClientDB, ClientInsert, ClientUpdate, ClientWithStats } from './types';
 export class ClientsRepository {
   private supabase = createClient();
 
-  async list(tenantId: string, filters?: { search?: string; tags?: string[] }) {
+  async list(storeId: string, filters?: { search?: string; tags?: string[] }) {
     let query = this.supabase
       .from('clients')
       .select(`
@@ -16,7 +16,7 @@ export class ClientsRepository {
           total_amount
         )
       `)
-      .eq('tenant_id', tenantId)
+      .eq('store_id', storeId)
       .order('created_at', { ascending: false });
 
     if (filters?.search) {
@@ -47,19 +47,19 @@ export class ClientsRepository {
     return clientsWithStats;
   }
 
-  async getById(id: string, tenantId: string): Promise<ClientDB | null> {
+  async getById(id: string, storeId: string): Promise<ClientDB | null> {
     const { data, error } = await this.supabase
       .from('clients')
       .select('*')
       .eq('id', id)
-      .eq('tenant_id', tenantId)
+      .eq('store_id', storeId)
       .single();
 
     if (error) throw error;
     return data;
   }
 
-  async create(client: any, tenantId: string): Promise<ClientDB> {
+  async create(client: any, storeId: string): Promise<ClientDB> {
     const { data, error } = await this.supabase
       .from('clients')
       .insert({
@@ -71,7 +71,7 @@ export class ClientsRepository {
         tags: client.tags || [],
         notes: client.notes || null,
         preferred_staff_id: client.preferredStaffId || null,
-        tenant_id: tenantId,
+        store_id: storeId,
       })
       .select()
       .single();
@@ -80,12 +80,12 @@ export class ClientsRepository {
     return data;
   }
 
-  async update(id: string, updates: ClientUpdate, tenantId: string): Promise<ClientDB> {
+  async update(id: string, updates: ClientUpdate, storeId: string): Promise<ClientDB> {
     const { data, error } = await this.supabase
       .from('clients')
       .update(updates)
       .eq('id', id)
-      .eq('tenant_id', tenantId)
+      .eq('store_id', storeId)
       .select()
       .single();
 
@@ -93,22 +93,22 @@ export class ClientsRepository {
     return data;
   }
 
-  async delete(id: string, tenantId: string): Promise<void> {
+  async delete(id: string, storeId: string): Promise<void> {
     const { error } = await this.supabase
       .from('clients')
       .delete()
       .eq('id', id)
-      .eq('tenant_id', tenantId);
+      .eq('store_id', storeId);
 
     if (error) throw error;
   }
 
-  async checkPhoneExists(phone: string, tenantId: string, excludeId?: string): Promise<boolean> {
+  async checkPhoneExists(phone: string, storeId: string, excludeId?: string): Promise<boolean> {
     let query = this.supabase
       .from('clients')
       .select('id')
       .eq('phone', phone)
-      .eq('tenant_id', tenantId);
+      .eq('store_id', storeId);
 
     if (excludeId) {
       query = query.neq('id', excludeId);
@@ -118,11 +118,11 @@ export class ClientsRepository {
     return (data?.length || 0) > 0;
   }
 
-  async getStats(tenantId: string) {
+  async getStats(storeId: string) {
     const { data: clients, error } = await this.supabase
       .from('clients')
       .select('*')
-      .eq('tenant_id', tenantId);
+      .eq('store_id', storeId);
 
     if (error) throw error;
 
