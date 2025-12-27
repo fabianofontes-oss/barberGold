@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Plus, Trash2, Layers } from 'lucide-react';
 import { useBarber } from '@/context/BarberContext';
+import { useI18n } from '@/hooks/useI18n';
 import { Product, ProductVariant } from '@/types';
 import { ImageUpload } from '@/components/shared/ImageUpload';
 
@@ -14,6 +15,7 @@ interface ProductModalProps {
 
 export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, productToEdit }) => {
   const { addProduct, updateProduct, categories } = useBarber();
+  const { t, currency, formatCurrency } = useI18n();
   const [newProduct, setNewProduct] = useState({ name: '', price: '', costPrice: '', stock: '', image: '', category: '' });
   const [hasVariants, setHasVariants] = useState(false);
   const [variants, setVariants] = useState<ProductVariant[]>([]);
@@ -94,27 +96,27 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
       <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-sm p-6 shadow-2xl animate-fade-in overflow-y-auto max-h-[90vh]">
-        <h3 className="text-xl font-bold text-white mb-4">{productToEdit ? 'Edit Product' : 'New Product'}</h3>
+        <h3 className="text-xl font-bold text-white mb-4">{productToEdit ? t('settings.products.modal.editTitle') : t('settings.products.modal.newTitle')}</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
            <div>
-              <label className="block text-xs font-medium text-zinc-400 mb-1.5">Name</label>
+              <label className="block text-xs font-medium text-zinc-400 mb-1.5">{t('settings.products.modal.nameLabel')}</label>
               <input required type="text" value={newProduct.name} onChange={e => setNewProduct({...newProduct, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
            </div>
            
            <div>
-              <label className="block text-xs font-medium text-zinc-400 mb-1.5">Category</label>
+              <label className="block text-xs font-medium text-zinc-400 mb-1.5">{t('settings.products.modal.categoryLabel')}</label>
               <select 
                 value={newProduct.category} 
                 onChange={e => setNewProduct({...newProduct, category: e.target.value})} 
                 className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
               >
-                 <option value="">-- Select Category --</option>
+                 <option value="">{t('settings.products.modal.categoryPlaceholder')}</option>
                  {productCategories.map(c => (
                     <option key={c.id} value={c.name}>{c.name}</option>
                  ))}
               </select>
               {productCategories.length === 0 && (
-                 <p className="text-[10px] text-red-500 mt-1">No categories found. Please add them in Settings.</p>
+                 <p className="text-[10px] text-red-500 mt-1">{t('settings.products.modal.noCategoriesFound')}</p>
               )}
            </div>
 
@@ -122,8 +124,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
            <div className="flex items-center justify-between p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
               <div className="flex items-center gap-2">
                  <Layers className="w-4 h-4 text-purple-500" />
-                 <span className="text-sm text-white font-medium">Variações</span>
-                 <span className="text-[10px] text-zinc-500">(tamanhos, volumes)</span>
+                 <span className="text-sm text-white font-medium">{t('settings.products.modal.variantsToggleLabel')}</span>
+                 <span className="text-[10px] text-zinc-500">{t('settings.products.modal.variantsToggleHint')}</span>
               </div>
               <button
                  type="button"
@@ -137,7 +139,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
            {/* Variações Section */}
            {hasVariants && (
               <div className="space-y-3 p-3 bg-zinc-950 border border-purple-500/30 rounded-lg">
-                 <p className="text-xs text-purple-400 font-bold">Variações do Produto</p>
+                 <p className="text-xs text-purple-400 font-bold">{t('settings.products.modal.variantsSectionTitle')}</p>
                  
                  {/* Lista de variações */}
                  {variants.length > 0 && (
@@ -145,8 +147,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
                        {variants.map((v, i) => (
                           <div key={v.id} className="flex items-center gap-2 p-2 bg-zinc-900 rounded-lg">
                              <span className="flex-1 text-sm text-white font-medium">{v.name}</span>
-                             <span className="text-xs text-zinc-400">R$ {v.price}</span>
-                             <span className="text-xs text-zinc-500">Est: {v.stock}</span>
+                             <span className="text-xs text-zinc-400">{formatCurrency(v.price)}</span>
+                             <span className="text-xs text-zinc-500">{t('settings.products.modal.variantStockLabel')}: {v.stock}</span>
                              <button
                                 type="button"
                                 onClick={() => setVariants(variants.filter((_, idx) => idx !== i))}
@@ -163,28 +165,28 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
                  <div className="flex gap-2">
                     <input
                        type="text"
-                       placeholder="Nome (ex: 100ml)"
+                       placeholder={t('settings.products.modal.variantNamePlaceholder')}
                        value={newVariant.name}
                        onChange={(e) => setNewVariant({ ...newVariant, name: e.target.value })}
                        className="flex-1 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
                     />
                     <input
                        type="number"
-                       placeholder="Preço"
+                       placeholder={t('settings.products.modal.variantPricePlaceholder')}
                        value={newVariant.price}
                        onChange={(e) => setNewVariant({ ...newVariant, price: e.target.value })}
                        className="w-20 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
                     />
                     <input
                        type="number"
-                       placeholder="Custo"
+                       placeholder={t('settings.products.modal.variantCostPlaceholder')}
                        value={newVariant.costPrice}
                        onChange={(e) => setNewVariant({ ...newVariant, costPrice: e.target.value })}
                        className="w-20 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
                     />
                     <input
                        type="number"
-                       placeholder="Est."
+                       placeholder={t('settings.products.modal.variantStockPlaceholder')}
                        value={newVariant.stock}
                        onChange={(e) => setNewVariant({ ...newVariant, stock: e.target.value })}
                        className="w-16 bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-white outline-none focus:border-purple-500"
@@ -209,7 +211,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
                     </button>
                  </div>
                  <p className="text-[10px] text-zinc-500">
-                    Estoque total: {variants.reduce((sum, v) => sum + v.stock, 0)} | Preço base: R$ {variants.length > 0 ? Math.min(...variants.map(v => v.price)) : 0}
+                   {t('settings.products.modal.totalStockLabel')}: {variants.reduce((sum, v) => sum + v.stock, 0)} | {t('settings.products.modal.basePriceLabel')}: {formatCurrency(variants.length > 0 ? Math.min(...variants.map(v => v.price)) : 0)}
                  </p>
               </div>
            )}
@@ -218,11 +220,11 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
            <>
            <div className="flex gap-3">
               <div className="flex-1">
-                 <label className="block text-xs font-medium text-zinc-400 mb-1.5">Price</label>
+                 <label className="block text-xs font-medium text-zinc-400 mb-1.5">{t('settings.products.modal.priceLabel')} ({currency.symbol})</label>
                  <input required type="number" value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
               </div>
               <div className="flex-1">
-                 <label className="block text-xs font-medium text-zinc-400 mb-1.5">Cost</label>
+                 <label className="block text-xs font-medium text-zinc-400 mb-1.5">{t('settings.products.modal.costLabel')} ({currency.symbol})</label>
                  <input required type="number" value={newProduct.costPrice} onChange={e => setNewProduct({...newProduct, costPrice: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
               </div>
            </div>
@@ -231,36 +233,36 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
            <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800">
               <div className="flex items-center gap-2 mb-2">
                  <TrendingUp className="w-4 h-4 text-emerald-500" />
-                 <span className="text-xs font-bold text-zinc-400">Profit Simulator</span>
+                 <span className="text-xs font-bold text-zinc-400">{t('settings.products.modal.profitSimulatorTitle')}</span>
               </div>
               <div className="flex justify-between items-center text-xs mb-1">
-                 <span className="text-zinc-500">Est. Commission (20%)</span>
-                 <span className="text-red-400">-${(Number(newProduct.price) * 0.20).toFixed(2)}</span>
+                 <span className="text-zinc-500">{t('settings.products.modal.estimatedCommissionLabel')}</span>
+                 <span className="text-red-400">-{formatCurrency((Number(newProduct.price) || 0) * 0.20)}</span>
               </div>
               <div className="flex justify-between items-center border-t border-zinc-800 pt-2 mt-1">
-                 <span className="text-zinc-300">Net Profit</span>
-                 <span className={`font-bold ${profit > 0 ? 'text-emerald-500' : 'text-red-500'}`}>${profit.toFixed(2)}</span>
+                 <span className="text-zinc-300">{t('settings.products.modal.netProfitLabel')}</span>
+                 <span className={`font-bold ${profit > 0 ? 'text-emerald-500' : 'text-red-500'}`}>{formatCurrency(profit)}</span>
               </div>
-              <div className="text-[10px] text-right text-zinc-500 mt-1">Margin: {margin.toFixed(1)}%</div>
+              <div className="text-[10px] text-right text-zinc-500 mt-1">{t('settings.products.modal.marginLabel')}: {margin.toFixed(1)}%</div>
            </div>
 
            <div>
-              <label className="block text-xs font-medium text-zinc-400 mb-1.5">Stock</label>
+              <label className="block text-xs font-medium text-zinc-400 mb-1.5">{t('settings.products.modal.stockLabel')}</label>
               <input required type="number" value={newProduct.stock} onChange={e => setNewProduct({...newProduct, stock: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
            </div>
            </>
            )}
            
            <ImageUpload 
-              label="Product Image" 
+              label={t('settings.products.modal.productImageLabel')} 
               value={newProduct.image} 
               onChange={(val) => setNewProduct({...newProduct, image: val})} 
            />
 
            <div className="flex gap-3 pt-2">
-              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">Cancelar</button>
+              <button type="button" onClick={onClose} className="flex-1 py-2 text-zinc-500 hover:text-white">{t('common.cancel')}</button>
               <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2 rounded-lg">
-                {productToEdit ? 'Salvar Alterações' : 'Criar'}
+                {productToEdit ? t('settings.products.modal.saveChangesButton') : t('settings.products.modal.createButton')}
               </button>
            </div>
         </form>
