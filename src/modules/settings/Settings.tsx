@@ -906,7 +906,22 @@ export const Settings = () => {
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
-                           <input type="checkbox" className="sr-only peer" />
+                           <input 
+                              type="checkbox" 
+                              checked={shopSettings.gatewayConfig?.mercadoPago?.enabled ?? false}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    mercadoPago: {
+                                       ...shopSettings.gatewayConfig?.mercadoPago,
+                                       enabled: e.target.checked,
+                                       publicKey: shopSettings.gatewayConfig?.mercadoPago?.publicKey || '',
+                                       accessToken: shopSettings.gatewayConfig?.mercadoPago?.accessToken || ''
+                                    }
+                                 }
+                              })}
+                              className="sr-only peer" 
+                           />
                            <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
                         </label>
                      </div>
@@ -915,6 +930,18 @@ export const Settings = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Public Key</label>
                            <input 
                               type="text" 
+                              value={shopSettings.gatewayConfig?.mercadoPago?.publicKey || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    mercadoPago: {
+                                       ...shopSettings.gatewayConfig?.mercadoPago,
+                                       enabled: shopSettings.gatewayConfig?.mercadoPago?.enabled ?? false,
+                                       publicKey: e.target.value,
+                                       accessToken: shopSettings.gatewayConfig?.mercadoPago?.accessToken || ''
+                                    }
+                                 }
+                              })}
                               placeholder="APP_USR-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-blue-500 outline-none"
                            />
@@ -923,6 +950,18 @@ export const Settings = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Access Token</label>
                            <input 
                               type="password" 
+                              value={shopSettings.gatewayConfig?.mercadoPago?.accessToken || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    mercadoPago: {
+                                       ...shopSettings.gatewayConfig?.mercadoPago,
+                                       enabled: shopSettings.gatewayConfig?.mercadoPago?.enabled ?? false,
+                                       publicKey: shopSettings.gatewayConfig?.mercadoPago?.publicKey || '',
+                                       accessToken: e.target.value
+                                    }
+                                 }
+                              })}
                               placeholder="APP_USR-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-blue-500 outline-none"
                            />
