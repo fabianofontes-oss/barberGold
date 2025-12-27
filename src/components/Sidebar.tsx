@@ -44,7 +44,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
   const router = useRouter();
-  const { currentUser, logout, shopProfile, staff, switchUser, shopSettings } = useBarber();
+  const { currentUser, logout, shopProfile, shopSettings } = useBarber();
   const { canUseFeature } = useFeatureGate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -259,10 +259,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
             <ChevronUp className={`w-4 h-4 text-zinc-500 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
           </button>
           
-          {/* User Switcher Dropdown */}
+          {/* User Menu Dropdown */}
           {isUserMenuOpen && (
             <div className="absolute bottom-full left-0 w-full mb-2 bg-zinc-950 border border-zinc-800 rounded-xl shadow-xl overflow-hidden animate-fade-in z-50">
-               
                <div className="max-h-48 overflow-y-auto">
                   {/* LOGOUT OPTION */}
                   <button
@@ -277,29 +276,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                         <p className="text-[10px] opacity-70">Logout</p>
                      </div>
                   </button>
-
-                  <div className="p-2 bg-zinc-900 border-y border-zinc-800 text-[9px] text-zinc-500 font-bold uppercase tracking-wider text-center mt-1">
-                     Demo Quick Switch
-                  </div>
-
-                  {staff.map(s => (
-                     <button
-                        key={s.id}
-                        onClick={() => {
-                           switchUser(s.id);
-                           setIsUserMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 p-3 hover:bg-zinc-900 text-left transition-colors ${s.id === currentUser.id ? 'bg-zinc-900 border-l-2 border-amber-500' : ''}`}
-                     >
-                        <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400">
-                           {s.name.charAt(0)}
-                        </div>
-                        <div>
-                           <p className={`text-sm font-medium ${s.id === currentUser.id ? 'text-white' : 'text-zinc-400'}`}>{s.name}</p>
-                           <p className="text-[10px] text-zinc-600">{s.role.replace('_', ' ')}</p>
-                        </div>
-                     </button>
-                  ))}
                </div>
             </div>
           )}
