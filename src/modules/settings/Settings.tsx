@@ -1996,6 +1996,7 @@ export const Settings = () => {
                            onChange={(e) => updateShopSettings({ enableReferralSystem: e.target.checked })}
                            className="w-5 h-5 accent-amber-500"
                         />
+                    </div>
                   </div>
                </div>
 
