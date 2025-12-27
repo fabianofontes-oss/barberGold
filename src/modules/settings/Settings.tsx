@@ -409,7 +409,7 @@ export const Settings = () => {
                    <button
                       onClick={() => {
                          navigator.clipboard.writeText(`${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`);
-                         alert('Link copiado! Cole no seu Instagram.');
+                         alert(t('settings.alerts.instagramLinkCopied'));
                       }}
                       className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold rounded-xl transition-all"
                    >
@@ -419,7 +419,7 @@ export const Settings = () => {
                       onClick={() => {
                          const link = `${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`;
                          navigator.clipboard.writeText(link);
-                         alert('Link de agendamento copiado!');
+                         alert(t('settings.alerts.bookingLinkCopied'));
                       }}
                       className="flex items-center gap-2 px-4 py-2.5 bg-zinc-700 hover:bg-zinc-600 text-white font-bold rounded-xl transition-all"
                    >
