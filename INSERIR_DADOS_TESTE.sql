@@ -47,15 +47,13 @@ BEGIN
         ON CONFLICT DO NOTHING;
     END IF;
 
-    -- Inserir Categorias
+    -- Inserir Categorias (apenas SERVICE e PRODUCT)
     INSERT INTO categories (id, tenant_id, name, type, color, icon) VALUES
     (gen_random_uuid(), v_tenant_id, 'Cortes', 'SERVICE', '#3B82F6', 'scissors'),
     (gen_random_uuid(), v_tenant_id, 'Barba', 'SERVICE', '#10B981', 'razor'),
     (gen_random_uuid(), v_tenant_id, 'Combos', 'SERVICE', '#F59E0B', 'package'),
     (gen_random_uuid(), v_tenant_id, 'Produtos de Cabelo', 'PRODUCT', '#8B5CF6', 'bottle'),
-    (gen_random_uuid(), v_tenant_id, 'Produtos de Barba', 'PRODUCT', '#EF4444', 'droplet'),
-    (gen_random_uuid(), v_tenant_id, 'Despesas Fixas', 'EXPENSE', '#6B7280', 'home'),
-    (gen_random_uuid(), v_tenant_id, 'Despesas Variáveis', 'EXPENSE', '#F97316', 'trending-up')
+    (gen_random_uuid(), v_tenant_id, 'Produtos de Barba', 'PRODUCT', '#EF4444', 'droplet')
     ON CONFLICT DO NOTHING;
 
     -- Inserir Plano de Comissão Padrão
