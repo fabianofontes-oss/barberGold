@@ -191,7 +191,7 @@ export const Settings = () => {
      };
   };
 
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
   return (
     <div className="h-full flex flex-col animate-fade-in">
@@ -438,7 +438,7 @@ export const Settings = () => {
                       onClick={copyMondayToWeekdays}
                       className="text-xs text-amber-500 hover:text-amber-400 font-bold flex items-center gap-1"
                    >
-                      <Copy className="w-3 h-3" /> Copy Mon to Fri
+                      <Copy className="w-3 h-3" /> Copiar Seg para Sex
                    </button>
                 </div>
                 
@@ -469,7 +469,7 @@ export const Settings = () => {
                                   />
                                </>
                             ) : (
-                               <span className="text-sm text-zinc-500 font-medium italic">Closed</span>
+                               <span className="text-sm text-zinc-500 font-medium italic">Fechado</span>
                             )}
                          </div>
 
@@ -522,18 +522,18 @@ export const Settings = () => {
 
                       <div className="grid grid-cols-2 gap-3 mb-4">
                          <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800">
-                            <span className="block text-xs text-zinc-500 mb-1">Commission</span>
+                            <span className="block text-xs text-zinc-500 mb-1">Comissão</span>
                             <span className="text-white font-bold">{member.serviceCommissionRate}% / {member.productCommissionRate}%</span>
                          </div>
                          <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800">
-                            <span className="block text-xs text-zinc-500 mb-1">Est. Revenue (7d)</span>
+                            <span className="block text-xs text-zinc-500 mb-1">Receita Est. (7d)</span>
                             <span className="text-emerald-500 font-bold">${metrics.totalRevenue.toFixed(0)}</span>
                          </div>
                       </div>
 
                       <div className="space-y-2">
                          <div className="flex justify-between text-xs text-zinc-400">
-                            <span>Occupancy ({metrics.weeklyAvailableHours.toFixed(1)}h avail)</span>
+                            <span>Ocupação ({metrics.weeklyAvailableHours.toFixed(1)}h disponível)</span>
                             <span>{metrics.occupancyRate.toFixed(0)}%</span>
                          </div>
                          <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
@@ -551,7 +551,7 @@ export const Settings = () => {
                 <div className="bg-zinc-900 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform">
                    <Plus className="w-6 h-6" />
                 </div>
-                <span className="font-bold">Add Team Member</span>
+                <span className="font-bold">Adicionar Membro da Equipe</span>
              </button>
           </div>
         )}
