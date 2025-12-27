@@ -106,7 +106,7 @@ export const Dashboard = () => {
              <h2 className="text-3xl font-bold text-white mb-2">Dashboard</h2>
              {!isOwner && <span className="bg-zinc-800 text-zinc-400 text-xs px-2 py-1 rounded font-bold uppercase">Staff View</span>}
            </div>
-           <p className="text-zinc-400">Welcome back, <b>{currentUser.name}</b>. Here&apos;s what&apos;s happening today.</p>
+           <p className="text-zinc-400">Bem-vindo de volta, <b>{currentUser.name}</b>. Veja o que está acontecendo hoje.</p>
         </div>
       </div>
 
@@ -131,30 +131,30 @@ export const Dashboard = () => {
       {!isOwner && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard 
-            title="My Est. Earnings" 
+            title="Meus Ganhos Est." 
             value={`$${estimatedCommission.toFixed(2)}`} 
-            sub="Today's Commission"
+            sub="Comissão de Hoje"
             icon={Wallet}
             color="bg-emerald-500"
           />
           <StatCard 
-            title="My Appointments" 
+            title="Meus Agendamentos" 
             value={myAppointmentsToday.length} 
-            sub={`${myCompletedCount} completed`}
+            sub={`${myCompletedCount} concluídos`}
             icon={CalendarCheck}
             color="bg-blue-500"
           />
           <StatCard 
-            title="Loyal Portfolio" 
+            title="Portfólio Fiel" 
             value={myLoyalCount} 
-            sub={myLoyalCount > 5 ? "You're a Pro!" : "Keep building!"}
+            sub={myLoyalCount > 5 ? "Você é um Pro!" : "Continue construindo!"}
             icon={ShieldCheck}
             color="bg-purple-500"
           />
           <StatCard 
-            title="Next Client" 
+            title="Próximo Cliente" 
             value={myNextAppointment ? format(myNextAppointment.date, 'HH:mm') : '-'} 
-            sub={myNextAppointment?.clientName || 'Free'}
+            sub={myNextAppointment?.clientName || 'Livre'}
             icon={Users}
             color="bg-amber-500"
           />
@@ -166,7 +166,7 @@ export const Dashboard = () => {
         {/* Chart Section - Only meaningful for Owner or maybe personal history for barber later */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-6">{isOwner ? 'Shop Revenue Overview' : 'Shop Performance'}</h3>
+            <h3 className="text-lg font-semibold text-white mb-6">{isOwner ? 'Visão Geral da Receita' : 'Desempenho da Loja'}</h3>
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={chartData}>
@@ -213,7 +213,7 @@ export const Dashboard = () => {
             <div className="bg-zinc-900 border border-red-500/20 rounded-2xl p-6">
                <div className="flex items-center gap-2 mb-4">
                   <AlertTriangle className="w-5 h-5 text-red-500" />
-                  <h3 className="text-lg font-bold text-white">Low Stock Alert</h3>
+                  <h3 className="text-lg font-bold text-white">Alerta de Estoque Baixo</h3>
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {lowStockProducts.map(p => (
@@ -222,7 +222,7 @@ export const Dashboard = () => {
                            {p.image && <img src={p.image} className="w-8 h-8 rounded-lg object-cover" />}
                            <div>
                               <p className="text-sm font-bold text-zinc-200">{p.name}</p>
-                              <p className="text-xs text-zinc-500">Only {p.stock} left</p>
+                              <p className="text-xs text-zinc-500">Apenas {p.stock} restante</p>
                            </div>
                         </div>
                         {isOwner && (
@@ -230,7 +230,7 @@ export const Dashboard = () => {
                               onClick={() => router.push('/app/settings')} 
                               className="text-xs font-bold text-amber-500 hover:underline"
                            >
-                              Restock
+                              Reabastecer
                            </button>
                         )}
                      </div>
@@ -258,11 +258,11 @@ export const Dashboard = () => {
           {shopSettings.enableTipsReview && (
              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                   <MessageSquare className="w-5 h-5 text-emerald-500" /> Feedback Queue
+                   <MessageSquare className="w-5 h-5 text-emerald-500" /> Fila de Feedback
                 </h3>
                 <div className="space-y-3">
                    {todaysAppointments.filter(a => a.status === AppointmentStatus.COMPLETED).length === 0 ? (
-                      <p className="text-zinc-500 text-sm">No completed appointments yet.</p>
+                      <p className="text-zinc-500 text-sm">Nenhum agendamento concluído ainda.</p>
                    ) : (
                       todaysAppointments
                          .filter(a => a.status === AppointmentStatus.COMPLETED)
@@ -271,12 +271,12 @@ export const Dashboard = () => {
                             <div key={appt.id} className="flex justify-between items-center bg-zinc-950 p-3 rounded-xl border border-zinc-800">
                                <div>
                                   <p className="text-sm font-bold text-white">{appt.clientName}</p>
-                                  <p className="text-xs text-zinc-500">Finished at {format(appt.date, 'HH:mm')}</p>
+                                  <p className="text-xs text-zinc-500">Finalizado às {format(appt.date, 'HH:mm')}</p>
                                </div>
                                <button 
                                   onClick={() => sendSurvey(appt.id)}
                                   className="text-xs bg-zinc-800 hover:bg-zinc-700 text-amber-500 font-bold px-2 py-1.5 rounded flex items-center gap-1 transition-colors"
-                                  title="Send Survey Link"
+                                  title="Enviar Link de Pesquisa"
                                >
                                   <Send className="w-3 h-3" /> Link
                                </button>
@@ -289,7 +289,7 @@ export const Dashboard = () => {
 
           {/* Up Next Card */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Up Next</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Próximo</h3>
             
             {(isOwner ? nextAppointment : myNextAppointment) ? (
               <div className="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
@@ -307,12 +307,12 @@ export const Dashboard = () => {
                   onClick={() => router.push('/app/pdv')}
                   className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-medium rounded-lg transition-colors"
                 >
-                  Check In / Checkout
+                  Check-in / Finalizar
                 </button>
               </div>
             ) : (
               <div className="text-center py-8 text-zinc-500">
-                <p>No more appointments today.</p>
+                <p>Sem mais agendamentos hoje.</p>
               </div>
             )}
             
@@ -320,19 +320,19 @@ export const Dashboard = () => {
               onClick={() => router.push('/app/agenda')}
               className="w-full mt-4 flex items-center justify-center gap-2 text-amber-500 hover:text-amber-400 text-sm font-medium transition-colors"
             >
-              View Full Schedule <ArrowRight className="w-4 h-4" />
+              Ver Agenda Completa <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 
           {/* Quick Actions */}
           <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-zinc-950">
-            <h3 className="font-bold text-xl mb-2">Quick Sale</h3>
-            <p className="text-zinc-900/80 text-sm mb-4">Walk-in client purchasing product?</p>
+            <h3 className="font-bold text-xl mb-2">Venda Rápida</h3>
+            <p className="text-zinc-900/80 text-sm mb-4">Cliente sem agendamento comprando produto?</p>
             <button 
               onClick={() => router.push('/app/pdv')}
               className="w-full bg-white/90 hover:bg-white text-zinc-900 font-bold py-3 rounded-xl transition-all shadow-lg"
             >
-              Open Register
+              Abrir Caixa
             </button>
           </div>
         </div>
