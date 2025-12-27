@@ -390,6 +390,24 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
 
           if (tenant) {
             console.log('✅ Tenant carregado:', tenant.name);
+            
+            // Mapear operatingHours do tenant.settings ou usar padrão
+            let operatingHours = Array.from({ length: 7 }, (_, i) => ({
+              dayIndex: i,
+              isActive: i !== 0, // Domingo fechado por padrão
+              startTime: '09:00',
+              endTime: i === 6 ? '14:00' : '20:00',
+              breaks: []
+            }));
+            
+            // Se tenant.settings tem operatingHours, usar eles
+            if (tenant.settings && typeof tenant.settings === 'object') {
+              const settings = tenant.settings as any;
+              if (settings.operatingHours && Array.isArray(settings.operatingHours)) {
+                operatingHours = settings.operatingHours;
+              }
+            }
+            
             setShopProfile({
               name: tenant.name,
               slug: tenant.slug,
@@ -398,7 +416,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
               phone: tenant.phone || '',
               whatsapp: tenant.whatsapp || '',
               instagram: tenant.instagram || '',
-              operatingHours: [] // TODO: mapear do tenant.settings
+              operatingHours
             });
           }
         }
@@ -567,7 +585,50 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   };
 
   // ... (keep other actions) ...
-  const updateShopProfile = (profile: ShopProfile) => setShopProfile(profile);
+  const updateShopProfile = async (profile: ShopProfile) => {
+    setShopProfile(profile);
+    
+    // Persistir no Supabase
+    try {
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) return;
+      
+      const { data: userProfile } = await supabase
+        .from('profiles')
+        .select('tenant_id')
+        .eq('user_id', session.user.id)
+        .single();
+      
+      if (!userProfile?.tenant_id) return;
+      
+      // Atualizar tenant com novos dados
+      const { error } = await supabase
+        .from('tenants')
+        .update({
+          name: profile.name,
+          slug: profile.slug,
+          logo_url: profile.logo,
+          address: profile.address,
+          phone: profile.phone,
+          whatsapp: profile.whatsapp,
+          instagram: profile.instagram,
+          settings: {
+            operatingHours: profile.operatingHours
+          }
+        })
+        .eq('id', userProfile.tenant_id);
+      
+      if (error) {
+        console.error('❌ Erro ao atualizar tenant:', error);
+      } else {
+        console.log('✅ Tenant atualizado no Supabase');
+      }
+    } catch (error) {
+      console.error('❌ Erro ao persistir shopProfile:', error);
+    }
+  };
   const handleSetView = (view: ViewState, params?: any) => {
      if (view === 'TIPS_REVIEW' && params?.appointmentId) setActiveReviewAppointmentId(params.appointmentId);
      setView(view);
