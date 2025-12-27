@@ -1446,7 +1446,7 @@ export const Settings = () => {
                                     city: shopProfile.address?.split(',')[1]?.trim() || 'SAO PAULO'
                                  });
                                  navigator.clipboard.writeText(payload);
-                                 alert('Código PIX copiado! Cole no app do seu banco.');
+                                 alert(t('settings.alerts.pixCodeCopied'));
                               }}
                               className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-lg transition-all"
                            >
@@ -2067,14 +2067,14 @@ export const Settings = () => {
             
             {/* Commission Plans */}
             <div>
-              <h3 className="text-white font-bold text-lg mb-4">Commission Structures</h3>
+              <h3 className="text-white font-bold text-lg mb-4">{t('settings.commissionPlans.structuresTitle')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {commissionPlans.map(plan => (
                    <div key={plan.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 relative group hover:border-amber-500/50 transition-colors">
                       <div className="flex justify-between items-start mb-4">
                          <div>
                            <h4 className="font-bold text-white text-lg">{plan.name}</h4>
-                           <p className="text-zinc-500 text-sm mt-1 h-10">{plan.description || 'No description'}</p>
+                           <p className="text-zinc-500 text-sm mt-1 h-10">{plan.description || t('settings.commissionPlans.noDescription')}</p>
                          </div>
                          <div className="bg-zinc-800 p-2 rounded-lg">
                            {plan.model === 'PERCENTAGE' ? <Percent className="w-5 h-5 text-emerald-500" /> : <Wallet className="w-5 h-5 text-blue-500" />}
@@ -2083,27 +2083,27 @@ export const Settings = () => {
 
                       <div className="space-y-3 bg-zinc-950 p-4 rounded-lg border border-zinc-800">
                          <div className="flex justify-between text-sm">
-                           <span className="text-zinc-400">Service Commission</span>
+                           <span className="text-zinc-400">{t('settings.commissionPlans.serviceCommissionLabel')}</span>
                            <span className="text-white font-bold">{plan.serviceRate}%</span>
                          </div>
                          <div className="flex justify-between text-sm">
-                           <span className="text-zinc-400">Product Commission</span>
+                           <span className="text-zinc-400">{t('settings.commissionPlans.productCommissionLabel')}</span>
                            <span className="text-white font-bold">{plan.productRate}%</span>
                          </div>
                          {plan.model === 'CHAIR_RENTAL' && (
                            <div className="flex justify-between text-sm pt-2 border-t border-zinc-800 mt-2">
-                             <span className="text-zinc-400">Fixed Rent</span>
-                             <span className="text-amber-500 font-bold">${plan.rentalFee}</span>
+                             <span className="text-zinc-400">{t('settings.commissionPlans.fixedRentLabel')}</span>
+                             <span className="text-amber-500 font-bold">{formatCurrency(plan.rentalFee)}</span>
                            </div>
                          )}
                       </div>
-                      <button onClick={() => deleteCommissionPlan(plan.id)} className="text-xs text-red-500 mt-4 hover:underline">Remove Plan</button>
+                      <button onClick={() => deleteCommissionPlan(plan.id)} className="text-xs text-red-500 mt-4 hover:underline">{t('settings.commissionPlans.removePlanButton')}</button>
                    </div>
                 ))}
                 
                 <button onClick={() => setIsPlanModalOpen(true)} className="border-2 border-dashed border-zinc-800 rounded-xl p-6 flex flex-col items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all min-h-[250px]">
                    <Plus className="w-10 h-10 mb-2" />
-                   <span className="font-bold">Create New Plan</span>
+                   <span className="font-bold">{t('settings.commissionPlans.createNewPlanButton')}</span>
                 </button>
               </div>
             </div>
