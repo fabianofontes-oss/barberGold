@@ -249,9 +249,9 @@ export const PointOfSale = () => {
         <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/30">
           <ShoppingBag className="w-10 h-10 text-zinc-950" />
         </div>
-        <h2 className="text-3xl font-bold text-white mb-2">Sale Completed!</h2>
-        <p className="text-zinc-400">Transaction recorded successfully.</p>
-        {tipAmount > 0 && <p className="text-amber-500 font-bold mt-2">+ ${tipAmount.toFixed(2)} Tip for Barber</p>}
+        <h2 className="text-3xl font-bold text-white mb-2">Venda Concluída!</h2>
+        <p className="text-zinc-400">Transação registrada com sucesso.</p>
+        {tipAmount > 0 && <p className="text-amber-500 font-bold mt-2">+ ${tipAmount.toFixed(2)} Gorjeta para o Profissional</p>}
       </div>
     );
   }
@@ -267,7 +267,7 @@ export const PointOfSale = () => {
         <div className={`flex-col h-full ${mobileView === 'CART' ? 'hidden lg:flex' : 'flex'}`}>
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-3xl font-bold text-white">Point of Sale</h2>
+              <h2 className="text-3xl font-bold text-white">Ponto de Venda</h2>
               <button
                 onClick={() => setIsCashRegisterOpen(true)}
                 className="flex items-center gap-2 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-300 text-sm font-bold transition-all"
@@ -279,7 +279,7 @@ export const PointOfSale = () => {
               <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
               <input 
                 type="text"
-                placeholder="Search services or products..."
+                placeholder="Buscar serviços ou produtos..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
@@ -433,7 +433,7 @@ export const PointOfSale = () => {
                        onChange={(e) => setSelectedClientId(e.target.value)}
                        className={`flex-1 bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-amber-500 ${!selectedClientId ? 'text-zinc-500 border-red-500/30' : 'text-zinc-300'}`}
                      >
-                       <option value="" disabled>Client (Required)</option>
+                       <option value="" disabled>Cliente (Obrigatório)</option>
                        {clients.map(c => (
                          <option key={c.id} value={c.id}>{c.name}</option>
                        ))}
@@ -441,7 +441,7 @@ export const PointOfSale = () => {
                      <button 
                         onClick={() => setIsClientModalOpen(true)}
                         className="bg-zinc-800 hover:bg-zinc-700 text-white p-2 rounded-lg transition-colors border border-zinc-700"
-                        title="Quick Add Client"
+                        title="Adicionar Cliente Rápido"
                      >
                         <UserPlus className="w-4 h-4" />
                      </button>
@@ -455,7 +455,7 @@ export const PointOfSale = () => {
                     onChange={(e) => setSelectedStaffId(e.target.value)}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm text-zinc-300 focus:outline-none focus:border-amber-500"
                   >
-                    <option value="" disabled>Staff...</option>
+                    <option value="" disabled>Funcionário...</option>
                     {staff.map(s => (
                       <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
@@ -467,8 +467,8 @@ export const PointOfSale = () => {
             {selectedClient && (
               <div className="bg-zinc-950 rounded-lg p-3 border border-zinc-800">
                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs text-zinc-400">Loyalty Status</span>
-                    <span className="text-xs font-bold text-amber-500">{selectedClient.loyaltyPoints || 0}/10 Stamps</span>
+                    <span className="text-xs text-zinc-400">Status de Fidelidade</span>
+                    <span className="text-xs font-bold text-amber-500">{selectedClient.loyaltyPoints || 0}/10 Selos</span>
                  </div>
                  
                  {/* Redeem Button */}
@@ -477,7 +477,7 @@ export const PointOfSale = () => {
                      onClick={redeemLoyalty}
                      className="w-full mt-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-900 text-xs font-bold py-1.5 rounded animate-pulse"
                    >
-                      Redeem Free Cut Reward
+                      Resgatar Recompensa de Corte Grátis
                    </button>
                  )}
 
@@ -485,9 +485,9 @@ export const PointOfSale = () => {
                  {activeDiscount && (
                    <div className="mt-2 bg-emerald-500/10 border border-emerald-500/20 p-2 rounded flex justify-between items-center">
                       <span className="text-xs font-bold text-emerald-400">
-                         {activeDiscount.type === 'BIRTHDAY' ? '🎂 Birthday Deal' : 
-                          activeDiscount.type === 'WINBACK' ? '👋 Win-Back Promo' : 
-                          activeDiscount.type === 'CLUB_CREDIT' ? '👑 Crédito do Clube' : '🏆 Reward Claimed'}
+                         {activeDiscount.type === 'BIRTHDAY' ? '🎂 Promoção de Aniversário' : 
+                          activeDiscount.type === 'WINBACK' ? '👋 Promo Retorno' : 
+                          activeDiscount.type === 'CLUB_CREDIT' ? '👑 Crédito do Clube' : '🏆 Recompensa Resgatada'}
                       </span>
                       <button onClick={() => { setActiveDiscount(null); setClubCreditApplied(false); }} className="text-zinc-500 hover:text-white">
                          <Trash2 className="w-3 h-3" />

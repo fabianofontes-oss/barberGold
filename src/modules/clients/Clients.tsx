@@ -191,7 +191,7 @@ export const Clients = () => {
             onClick={() => setIsModalOpen(true)}
             className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
           >
-            <UserPlus className="w-5 h-5" /> Add Client
+            <UserPlus className="w-5 h-5" /> Adicionar Cliente
           </button>
         </div>
       </div>
@@ -209,7 +209,7 @@ export const Clients = () => {
         <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
-          placeholder={canViewContacts ? "Search by name or phone..." : "Search by name..."}
+          placeholder={canViewContacts ? "Buscar por nome ou telefone..." : "Buscar por nome..."}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
@@ -305,8 +305,8 @@ export const Clients = () => {
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Full Name *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Phone Number *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
               <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
