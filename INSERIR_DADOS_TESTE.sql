@@ -17,7 +17,7 @@ BEGIN
     END IF;
 
     -- Inserir Serviços
-    INSERT INTO services (id, tenant_id, name, price, duration_minutes, category, is_active) VALUES
+    INSERT INTO services (id, store_id, name, price, duration_minutes, category, is_active) VALUES
     (gen_random_uuid(), v_tenant_id, 'Corte de Cabelo', 35.00, 30, 'CORTE', true),
     (gen_random_uuid(), v_tenant_id, 'Barba', 25.00, 20, 'BARBA', true),
     (gen_random_uuid(), v_tenant_id, 'Corte + Barba', 50.00, 45, 'COMBO', true),
@@ -30,7 +30,7 @@ BEGIN
 
     -- Inserir Produtos (caso tenha tabela products)
     IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'products') THEN
-        INSERT INTO products (id, tenant_id, name, price, cost_price, stock, category, is_active) VALUES
+        INSERT INTO products (id, store_id, name, price, cost_price, stock, category, is_active) VALUES
         (gen_random_uuid(), v_tenant_id, 'Pomada Matte', 45.00, 20.00, 10, 'POMADA', true),
         (gen_random_uuid(), v_tenant_id, 'Gel Cola', 35.00, 15.00, 15, 'GEL', true),
         (gen_random_uuid(), v_tenant_id, 'Shampoo Barba', 28.00, 12.00, 20, 'SHAMPOO', true),
@@ -41,7 +41,7 @@ BEGIN
     END IF;
 
     -- Inserir Categorias
-    INSERT INTO categories (id, tenant_id, name, type, color, icon) VALUES
+    INSERT INTO categories (id, store_id, name, type, color, icon) VALUES
     (gen_random_uuid(), v_tenant_id, 'Cortes', 'SERVICE', '#3B82F6', 'scissors'),
     (gen_random_uuid(), v_tenant_id, 'Barba', 'SERVICE', '#10B981', 'razor'),
     (gen_random_uuid(), v_tenant_id, 'Combos', 'SERVICE', '#F59E0B', 'package'),
@@ -52,14 +52,14 @@ BEGIN
     ON CONFLICT DO NOTHING;
 
     -- Inserir Plano de Comissão Padrão
-    INSERT INTO commission_plans (id, tenant_id, name, description, service_rate, product_rate, is_default) VALUES
+    INSERT INTO commission_plans (id, store_id, name, description, service_rate, product_rate, is_default) VALUES
     (gen_random_uuid(), v_tenant_id, 'Plano Padrão', 'Comissão padrão para barbeiros', 50.00, 20.00, true),
     (gen_random_uuid(), v_tenant_id, 'Plano Premium', 'Para barbeiros experientes', 60.00, 25.00, false),
     (gen_random_uuid(), v_tenant_id, 'Plano Junior', 'Para barbeiros iniciantes', 40.00, 15.00, false)
     ON CONFLICT DO NOTHING;
 
     -- Inserir Fornecedores
-    INSERT INTO suppliers (id, tenant_id, name, contact_name, email, phone, address) VALUES
+    INSERT INTO suppliers (id, store_id, name, contact_name, email, phone, address) VALUES
     (gen_random_uuid(), v_tenant_id, 'Distribuidora Barber Pro', 'João Silva', 'contato@barberpro.com', '(11) 98765-4321', 'Rua dos Barbeiros, 123'),
     (gen_random_uuid(), v_tenant_id, 'Fornecedor Nacional', 'Maria Santos', 'vendas@nacional.com', '(11) 91234-5678', 'Av. Comercial, 456'),
     (gen_random_uuid(), v_tenant_id, 'Produtos Premium', 'Carlos Oliveira', 'premium@produtos.com', '(11) 99876-5432', 'Rua Premium, 789')
