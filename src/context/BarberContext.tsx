@@ -273,7 +273,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
 
   // Atualizar state quando dados reais chegarem
   useEffect(() => {
-    if (!appointmentsLoading && realAppointments.length > 0) {
+    if (!appointmentsLoading) {
       // Mapear appointments do Supabase para o formato do Context
       const mappedAppointments: Appointment[] = realAppointments.map((appt: any) => ({
         id: appt.id,
@@ -295,7 +295,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   }, [appointmentsLoading, realAppointments]);
 
   useEffect(() => {
-    if (!servicesLoading && realServices.length > 0) {
+    if (!servicesLoading) {
       const mappedServices: Service[] = realServices.map((svc: any) => ({
         id: svc.id,
         name: svc.name,
@@ -310,7 +310,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   }, [servicesLoading, realServices]);
 
   useEffect(() => {
-    if (!productsLoading && realProducts.length > 0) {
+    if (!productsLoading) {
       const mappedProducts: Product[] = realProducts.map((prod: any) => ({
         id: prod.id,
         name: prod.name,
@@ -327,7 +327,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   }, [productsLoading, realProducts]);
 
   useEffect(() => {
-    if (!clientsLoading && realClients.length > 0) {
+    if (!clientsLoading) {
       const mappedClients: Client[] = realClients.map((client: any) => ({
         id: client.id,
         name: client.name,
@@ -348,7 +348,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   }, [clientsLoading, realClients]);
 
   useEffect(() => {
-    if (!staffLoading && realStaff.length > 0) {
+    if (!staffLoading) {
       const mappedStaff: StaffMember[] = realStaff.map((member: any) => ({
         id: member.id,
         name: member.name,
@@ -375,7 +375,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   }, [staffLoading, realStaff]);
 
   useEffect(() => {
-    if (!salesLoading && realSales.length > 0) {
+    if (!salesLoading) {
       const mappedSales: Sale[] = realSales.map((sale: any) => ({
         id: sale.id,
         clientId: sale.client_id,
@@ -392,28 +392,28 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   }, [salesLoading, realSales]);
 
   useEffect(() => {
-    if (!inventoryLoading && realInventory.length > 0) {
+    if (!inventoryLoading) {
       setInventory(realInventory as InventoryItem[]);
       console.log('✅ Inventory carregado do Supabase:', realInventory.length);
     }
   }, [inventoryLoading, realInventory]);
 
   useEffect(() => {
-    if (!suppliersLoading && realSuppliers.length > 0) {
+    if (!suppliersLoading) {
       setSuppliers(realSuppliers as Supplier[]);
       console.log('✅ Suppliers carregados do Supabase:', realSuppliers.length);
     }
   }, [suppliersLoading, realSuppliers]);
 
   useEffect(() => {
-    if (!categoriesLoading && realCategories.length > 0) {
+    if (!categoriesLoading) {
       setCategories(realCategories as Category[]);
       console.log('✅ Categories carregadas do Supabase:', realCategories.length);
     }
   }, [categoriesLoading, realCategories]);
 
   useEffect(() => {
-    if (!commissionPlansLoading && realCommissionPlans.length > 0) {
+    if (!commissionPlansLoading) {
       setCommissionPlans(realCommissionPlans as CommissionPlan[]);
       console.log('✅ Commission Plans carregados do Supabase:', realCommissionPlans.length);
     }
