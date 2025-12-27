@@ -13,7 +13,7 @@ import {
   Store, MapPin, Instagram, Clock,
   Scale, Plus, Wallet, Zap, Copy,
   Save, Coffee, Timer, Link, UserMinus, ThumbsUp,
-  Utensils, DoorOpen, Trash2, Handshake
+  Utensils, DoorOpen, Trash2, Handshake, CreditCard, Smartphone, Banknote
 } from 'lucide-react';
 import { StaffMember, DaySchedule, AppointmentStatus, PaymentMethod, BreakTime } from '@/types';
 
