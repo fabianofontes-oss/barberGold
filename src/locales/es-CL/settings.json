@@ -1,0 +1,111 @@
+{
+  "settings": {
+    "alerts": {
+      "profileUpdatedSuccessfully": "Profile updated successfully!",
+      "instagramLinkCopied": "Link copied! Paste it on your Instagram.",
+      "bookingLinkCopied": "Booking link copied!",
+      "pixCodeCopied": "PIX code copied! Paste it in your bank app.",
+      "configureGatewayFirst": "Configure the {gateway} gateway first in the \"Gateway Integrations\" section below.",
+      "configurePaymentGatewayFirst": "Configure a payment gateway first in the \"Gateway Integrations\" section below."
+    },
+    "templates": {
+      "criticalVisualRedBackground": "Visual: Red background (critical)",
+      "messageTemplateWinBackLabel": "Message template (Win-back)",
+      "variablesHint": "Variables: {name}, {days}, {booking_link}"
+    },
+    "commissionPlans": {
+      "structuresTitle": "Commission structures",
+      "noDescription": "No description",
+      "serviceCommissionLabel": "Service commission",
+      "productCommissionLabel": "Product commission",
+      "fixedRentLabel": "Fixed rent",
+      "removePlanButton": "Remove plan",
+      "createNewPlanButton": "Create new plan",
+      "modal": {
+        "title": "Create commission plan",
+        "planNameLabel": "Plan name",
+        "planNamePlaceholder": "e.g. Master Barber",
+        "modelTypeLabel": "Model type",
+        "percentageSplitButton": "Percentage split",
+        "chairRentalButton": "Chair rental",
+        "serviceCommissionRateLabel": "Service comm. (%)",
+        "productCommissionRateLabel": "Product comm. (%)",
+        "fixedRentalFeeLabel": "Fixed rental fee",
+        "savePlanButton": "Save plan"
+      }
+    },
+    "services": {
+      "modal": {
+        "editTitle": "Edit service",
+        "newTitle": "New service",
+        "nameLabel": "Name",
+        "categoryLabel": "Category",
+        "categoryPlaceholder": "-- Select category --",
+        "noCategoriesFound": "No categories found. Please add them in Settings.",
+        "priceLabel": "Price",
+        "durationLabel": "Duration (min)",
+        "saveChangesButton": "Save changes",
+        "createButton": "Create"
+      }
+    },
+    "suppliers": {
+      "modal": {
+        "newTitle": "New supplier",
+        "companyNameLabel": "Company name",
+        "contactPersonLabel": "Contact person",
+        "phoneLabel": "Phone",
+        "categoryLabel": "Category",
+        "categoryPlaceholder": "-- Select category --",
+        "noCategoriesDefined": "No categories defined.",
+        "addSupplierButton": "Add supplier"
+      }
+    },
+    "products": {
+      "modal": {
+        "editTitle": "Edit product",
+        "newTitle": "New product",
+        "nameLabel": "Name",
+        "categoryLabel": "Category",
+        "categoryPlaceholder": "-- Select category --",
+        "noCategoriesFound": "No categories found. Please add them in Settings.",
+        "priceLabel": "Price",
+        "costLabel": "Cost",
+        "profitSimulatorTitle": "Profit simulator",
+        "estimatedCommissionLabel": "Est. commission (20%)",
+        "netProfitLabel": "Net profit",
+        "marginLabel": "Margin",
+        "stockLabel": "Stock",
+        "productImageLabel": "Product image",
+        "saveChangesButton": "Save changes",
+        "createButton": "Create",
+        "totalStockLabel": "Total stock",
+        "basePriceLabel": "Base price",
+        "variantStockLabel": "Qty"
+      }
+    },
+    "inventory": {
+      "modal": {
+        "editTitle": "Edit supply item",
+        "newTitle": "New supply item",
+        "itemNameLabel": "Item name",
+        "categoryLabel": "Category",
+        "categoryPlaceholder": "-- Select --",
+        "noCategories": "No categories.",
+        "supplierLabel": "Supplier",
+        "supplierPlaceholder": "-- Select --",
+        "unitTypeLabel": "Unit type",
+        "unitType": {
+          "unit": "Unit",
+          "litre": "Litre",
+          "box": "Box",
+          "pack": "Pack"
+        },
+        "currentQuantityLabel": "Current qty",
+        "minStockLabel": "Min stock",
+        "costPerUnitLabel": "Cost per unit",
+        "createItemButton": "Create item",
+        "saveChangesButton": "Save changes"
+      }
+    }
+  }
+}
