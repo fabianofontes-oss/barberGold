@@ -1331,29 +1331,69 @@ export const Settings = () => {
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Banco</label>
-                     <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none">
-                        <option>Selecione o banco</option>
-                        <option>001 - Banco do Brasil</option>
-                        <option>104 - Caixa Econômica</option>
-                        <option>237 - Bradesco</option>
-                        <option>341 - Itaú</option>
-                        <option>033 - Santander</option>
-                        <option>260 - Nubank</option>
-                        <option>077 - Inter</option>
+                     <select 
+                        value={shopSettings.bankAccount?.bank || ''}
+                        onChange={(e) => updateShopSettings({
+                           bankAccount: {
+                              ...shopSettings.bankAccount,
+                              bank: e.target.value,
+                              accountType: shopSettings.bankAccount?.accountType || 'CHECKING',
+                              agency: shopSettings.bankAccount?.agency || '',
+                              account: shopSettings.bankAccount?.account || '',
+                              accountHolder: shopSettings.bankAccount?.accountHolder || '',
+                              holderDocument: shopSettings.bankAccount?.holderDocument || ''
+                           }
+                        })}
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                     >
+                        <option value="">Selecione o banco</option>
+                        <option value="001">001 - Banco do Brasil</option>
+                        <option value="104">104 - Caixa Econômica</option>
+                        <option value="237">237 - Bradesco</option>
+                        <option value="341">341 - Itaú</option>
+                        <option value="033">033 - Santander</option>
+                        <option value="260">260 - Nubank</option>
+                        <option value="077">077 - Inter</option>
                      </select>
                   </div>
                   <div>
                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Tipo de Conta</label>
-                     <select className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none">
-                        <option>Conta Corrente</option>
-                        <option>Conta Poupança</option>
-                        <option>Conta Pagamento</option>
+                     <select 
+                        value={shopSettings.bankAccount?.accountType || 'CHECKING'}
+                        onChange={(e) => updateShopSettings({
+                           bankAccount: {
+                              ...shopSettings.bankAccount,
+                              bank: shopSettings.bankAccount?.bank || '',
+                              accountType: e.target.value as any,
+                              agency: shopSettings.bankAccount?.agency || '',
+                              account: shopSettings.bankAccount?.account || '',
+                              accountHolder: shopSettings.bankAccount?.accountHolder || '',
+                              holderDocument: shopSettings.bankAccount?.holderDocument || ''
+                           }
+                        })}
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                     >
+                        <option value="CHECKING">Conta Corrente</option>
+                        <option value="SAVINGS">Conta Poupança</option>
+                        <option value="PAYMENT">Conta Pagamento</option>
                      </select>
                   </div>
                   <div>
                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Agência</label>
                      <input 
                         type="text" 
+                        value={shopSettings.bankAccount?.agency || ''}
+                        onChange={(e) => updateShopSettings({
+                           bankAccount: {
+                              ...shopSettings.bankAccount,
+                              bank: shopSettings.bankAccount?.bank || '',
+                              accountType: shopSettings.bankAccount?.accountType || 'CHECKING',
+                              agency: e.target.value,
+                              account: shopSettings.bankAccount?.account || '',
+                              accountHolder: shopSettings.bankAccount?.accountHolder || '',
+                              holderDocument: shopSettings.bankAccount?.holderDocument || ''
+                           }
+                        })}
                         placeholder="0001"
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                      />
@@ -1362,6 +1402,18 @@ export const Settings = () => {
                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Conta</label>
                      <input 
                         type="text" 
+                        value={shopSettings.bankAccount?.account || ''}
+                        onChange={(e) => updateShopSettings({
+                           bankAccount: {
+                              ...shopSettings.bankAccount,
+                              bank: shopSettings.bankAccount?.bank || '',
+                              accountType: shopSettings.bankAccount?.accountType || 'CHECKING',
+                              agency: shopSettings.bankAccount?.agency || '',
+                              account: e.target.value,
+                              accountHolder: shopSettings.bankAccount?.accountHolder || '',
+                              holderDocument: shopSettings.bankAccount?.holderDocument || ''
+                           }
+                        })}
                         placeholder="12345-6"
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                      />
@@ -1370,6 +1422,18 @@ export const Settings = () => {
                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Titular da Conta</label>
                      <input 
                         type="text" 
+                        value={shopSettings.bankAccount?.accountHolder || ''}
+                        onChange={(e) => updateShopSettings({
+                           bankAccount: {
+                              ...shopSettings.bankAccount,
+                              bank: shopSettings.bankAccount?.bank || '',
+                              accountType: shopSettings.bankAccount?.accountType || 'CHECKING',
+                              agency: shopSettings.bankAccount?.agency || '',
+                              account: shopSettings.bankAccount?.account || '',
+                              accountHolder: e.target.value,
+                              holderDocument: shopSettings.bankAccount?.holderDocument || ''
+                           }
+                        })}
                         placeholder="Nome completo do titular"
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                      />
@@ -1378,6 +1442,18 @@ export const Settings = () => {
                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CPF/CNPJ do Titular</label>
                      <input 
                         type="text" 
+                        value={shopSettings.bankAccount?.holderDocument || ''}
+                        onChange={(e) => updateShopSettings({
+                           bankAccount: {
+                              ...shopSettings.bankAccount,
+                              bank: shopSettings.bankAccount?.bank || '',
+                              accountType: shopSettings.bankAccount?.accountType || 'CHECKING',
+                              agency: shopSettings.bankAccount?.agency || '',
+                              account: shopSettings.bankAccount?.account || '',
+                              accountHolder: shopSettings.bankAccount?.accountHolder || '',
+                              holderDocument: e.target.value
+                           }
+                        })}
                         placeholder="000.000.000-00"
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                      />
