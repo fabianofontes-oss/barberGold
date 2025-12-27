@@ -771,6 +771,145 @@ export const Settings = () => {
                )}
             </div>
 
+            {/* PAYMENT METHODS CONFIGURATION */}
+            <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
+               <div className="mb-6">
+                  <h3 className="text-white font-bold text-lg flex items-center gap-2 mb-2">
+                    <Wallet className="w-5 h-5 text-amber-500" /> Métodos de Pagamento
+                  </h3>
+                  <p className="text-zinc-400 text-sm">
+                     Configure quais métodos de pagamento sua barbearia aceita na loja física e no agendamento online.
+                  </p>
+               </div>
+
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* IN-STORE PAYMENTS */}
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
+                     <div className="flex items-center gap-2 mb-4">
+                        <Store className="w-5 h-5 text-emerald-500" />
+                        <h4 className="font-bold text-white">Pagamentos na Loja (PDV)</h4>
+                     </div>
+                     <p className="text-xs text-zinc-500 mb-4">Métodos aceitos no caixa físico e atendimento presencial.</p>
+                     
+                     <div className="space-y-2">
+                        {[
+                           { value: PaymentMethod.CASH, label: 'Dinheiro', icon: Banknote },
+                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard },
+                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard },
+                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone },
+                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone },
+                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone },
+                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet },
+                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet },
+                           { value: PaymentMethod.INFINITE_PAY, label: 'InfinitePay', icon: Wallet },
+                           { value: PaymentMethod.STONE, label: 'Stone', icon: Wallet },
+                        ].map(method => {
+                           const Icon = method.icon;
+                           const isEnabled = shopSettings.paymentSettings?.inStore?.includes(method.value) ?? false;
+                           
+                           return (
+                              <button
+                                 key={method.value}
+                                 onClick={() => {
+                                    const current = shopSettings.paymentSettings?.inStore || [];
+                                    const updated = isEnabled 
+                                       ? current.filter(m => m !== method.value)
+                                       : [...current, method.value];
+                                    updateShopSettings({ 
+                                       paymentSettings: { 
+                                          ...shopSettings.paymentSettings,
+                                          inStore: updated,
+                                          online: shopSettings.paymentSettings?.online || []
+                                       } 
+                                    });
+                                 }}
+                                 className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
+                                    isEnabled 
+                                       ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400' 
+                                       : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:border-zinc-700'
+                                 }`}
+                              >
+                                 <div className="flex items-center gap-3">
+                                    <Icon className="w-4 h-4" />
+                                    <span className="text-sm font-medium">{method.label}</span>
+                                 </div>
+                                 {isEnabled && <Zap className="w-4 h-4 text-emerald-500" />}
+                              </button>
+                           );
+                        })}
+                     </div>
+                  </div>
+
+                  {/* ONLINE PAYMENTS */}
+                  <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
+                     <div className="flex items-center gap-2 mb-4">
+                        <Smartphone className="w-5 h-5 text-blue-500" />
+                        <h4 className="font-bold text-white">Pagamentos Online</h4>
+                     </div>
+                     <p className="text-xs text-zinc-500 mb-4">Métodos aceitos no agendamento online pelo site/app.</p>
+                     
+                     <div className="space-y-2">
+                        {[
+                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard },
+                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard },
+                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone },
+                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone },
+                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone },
+                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet },
+                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet },
+                        ].map(method => {
+                           const Icon = method.icon;
+                           const isEnabled = shopSettings.paymentSettings?.online?.includes(method.value) ?? false;
+                           
+                           return (
+                              <button
+                                 key={method.value}
+                                 onClick={() => {
+                                    const current = shopSettings.paymentSettings?.online || [];
+                                    const updated = isEnabled 
+                                       ? current.filter(m => m !== method.value)
+                                       : [...current, method.value];
+                                    updateShopSettings({ 
+                                       paymentSettings: { 
+                                          ...shopSettings.paymentSettings,
+                                          inStore: shopSettings.paymentSettings?.inStore || [],
+                                          online: updated
+                                       } 
+                                    });
+                                 }}
+                                 className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
+                                    isEnabled 
+                                       ? 'bg-blue-500/10 border-blue-500/50 text-blue-400' 
+                                       : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:border-zinc-700'
+                                 }`}
+                              >
+                                 <div className="flex items-center gap-3">
+                                    <Icon className="w-4 h-4" />
+                                    <span className="text-sm font-medium">{method.label}</span>
+                                 </div>
+                                 {isEnabled && <Zap className="w-4 h-4 text-blue-500" />}
+                              </button>
+                           );
+                        })}
+                     </div>
+                  </div>
+               </div>
+
+               {/* INFO BOX */}
+               <div className="mt-6 bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+                  <div className="flex gap-3">
+                     <Wallet className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                     <div className="text-sm">
+                        <p className="text-amber-200 font-bold mb-1">Importante sobre Integrações</p>
+                        <p className="text-amber-300/80 text-xs">
+                           Para aceitar pagamentos online (Cartão, PIX, etc), você precisará configurar uma integração com gateway de pagamento 
+                           (Mercado Pago, PagSeguro, Stripe, etc). Entre em contato com o suporte para ativar.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
             {/* QUEUE DISTRIBUTION RULE */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
