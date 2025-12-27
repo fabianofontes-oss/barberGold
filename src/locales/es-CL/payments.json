@@ -1,0 +1,47 @@
+{
+  "title": "Pagos",
+  "methods": {
+    "cash": "Efectivo",
+    "credit_card": "Tarjeta de Crédito",
+    "debit_card": "Tarjeta de Débito",
+    "pix": "Transferencia",
+    "google_pay": "Google Pay",
+    "apple_pay": "Apple Pay",
+    "mercado_pago": "Mercado Pago",
+    "pagseguro": "PagSeguro",
+    "infinite_pay": "InfinitePay",
+    "stone": "Stone",
+    "other": "Otro"
+  },
+  "gateways": {
+    "mercado_pago": "Mercado Pago",
+    "pagseguro": "PagSeguro",
+    "stripe": "Stripe",
+    "infinitepay": "InfinitePay",
+    "stone": "Stone"
+  },
+  "pix": {
+    "title": "Configuración de Transferencia",
+    "keyType": "Tipo de Clave",
+    "key": "Clave",
+    "beneficiary": "Nombre del Beneficiario",
+    "qrCode": "Código QR",
+    "copyCode": "Copiar Código"
+  },
+  "installments": {
+    "title": "Cuotas",
+    "max": "Máximo de Cuotas",
+    "minValue": "Valor Mínimo de Cuota",
+    "interest": "Cobrar Interés",
+    "interestRate": "Tasa de Interés (%)"
+  },
+  "bankAccount": {
+    "title": "Cuenta Bancaria",
+    "bank": "Banco",
+    "accountType": "Tipo de Cuenta",
+    "agency": "Sucursal",
+    "account": "Cuenta",
+    "holder": "Titular",
+    "document": "RUT"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Pagamentos",
+  "methods": {
+    "cash": "Dinheiro",
+    "credit_card": "Cartão de Crédito",
+    "debit_card": "Cartão de Débito",
+    "pix": "PIX",
+    "google_pay": "Google Pay",
+    "apple_pay": "Apple Pay",
+    "mercado_pago": "Mercado Pago",
+    "pagseguro": "PagSeguro",
+    "infinite_pay": "InfinitePay",
+    "stone": "Stone",
+    "other": "Outro"
+  },
+  "gateways": {
+    "mercado_pago": "Mercado Pago",
+    "pagseguro": "PagSeguro",
+    "stripe": "Stripe",
+    "infinitepay": "InfinitePay",
+    "stone": "Stone"
+  },
+  "pix": {
+    "title": "Configuração PIX",
+    "keyType": "Tipo de Chave",
+    "key": "Chave PIX",
+    "beneficiary": "Nome do Beneficiário",
+    "qrCode": "QR Code PIX",
+    "copyCode": "Copiar Código PIX"
+  },
+  "installments": {
+    "title": "Parcelamento",
+    "max": "Máximo de Parcelas",
+    "minValue": "Valor Mínimo da Parcela",
+    "interest": "Cobrar Juros",
+    "interestRate": "Taxa de Juros (%)"
+  },
+  "bankAccount": {
+    "title": "Conta Bancária",
+    "bank": "Banco",
+    "accountType": "Tipo de Conta",
+    "agency": "Agência",
+    "account": "Conta",
+    "holder": "Titular",
+    "document": "CPF/CNPJ"
+  }
+}

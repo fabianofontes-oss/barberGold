@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "BarberGold",
+    "tagline": "Sistema de Gestão para Barbearias"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "calendar": "Agenda",
+    "clients": "Clientes",
+    "services": "Serviços",
+    "team": "Equipe",
+    "reports": "Relatórios",
+    "settings": "Configurações"
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "finish": "Finalizar"
+  },
+  "currency": {
+    "symbol": "R$",
+    "code": "BRL",
+    "format": "{symbol} {value}"
+  },
+  "date": {
+    "format": "dd/MM/yyyy",
+    "timeFormat": "HH:mm"
+  }
+}

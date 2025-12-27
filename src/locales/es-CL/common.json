@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "BarberGold",
+    "tagline": "Sistema de Gestión para Barberías"
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "calendar": "Agenda",
+    "clients": "Clientes",
+    "services": "Servicios",
+    "team": "Equipo",
+    "reports": "Informes",
+    "settings": "Configuración"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "finish": "Finalizar"
+  },
+  "currency": {
+    "symbol": "$",
+    "code": "CLP",
+    "format": "{symbol}{value}"
+  },
+  "date": {
+    "format": "dd/MM/yyyy",
+    "timeFormat": "HH:mm"
+  }
+}
