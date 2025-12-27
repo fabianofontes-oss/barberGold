@@ -982,7 +982,22 @@ export const Settings = () => {
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
-                           <input type="checkbox" className="sr-only peer" />
+                           <input 
+                              type="checkbox" 
+                              checked={shopSettings.gatewayConfig?.pagSeguro?.enabled ?? false}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    pagSeguro: {
+                                       ...shopSettings.gatewayConfig?.pagSeguro,
+                                       enabled: e.target.checked,
+                                       email: shopSettings.gatewayConfig?.pagSeguro?.email || '',
+                                       token: shopSettings.gatewayConfig?.pagSeguro?.token || ''
+                                    }
+                                 }
+                              })}
+                              className="sr-only peer" 
+                           />
                            <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                         </label>
                      </div>
@@ -991,6 +1006,18 @@ export const Settings = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Email</label>
                            <input 
                               type="email" 
+                              value={shopSettings.gatewayConfig?.pagSeguro?.email || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    pagSeguro: {
+                                       ...shopSettings.gatewayConfig?.pagSeguro,
+                                       enabled: shopSettings.gatewayConfig?.pagSeguro?.enabled ?? false,
+                                       email: e.target.value,
+                                       token: shopSettings.gatewayConfig?.pagSeguro?.token || ''
+                                    }
+                                 }
+                              })}
                               placeholder="seu-email@pagseguro.com.br"
                               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-emerald-500 outline-none"
                            />
@@ -999,6 +1026,18 @@ export const Settings = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Token</label>
                            <input 
                               type="password" 
+                              value={shopSettings.gatewayConfig?.pagSeguro?.token || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    pagSeguro: {
+                                       ...shopSettings.gatewayConfig?.pagSeguro,
+                                       enabled: shopSettings.gatewayConfig?.pagSeguro?.enabled ?? false,
+                                       email: shopSettings.gatewayConfig?.pagSeguro?.email || '',
+                                       token: e.target.value
+                                    }
+                                 }
+                              })}
                               placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-emerald-500 outline-none"
                            />
@@ -1019,7 +1058,22 @@ export const Settings = () => {
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
-                           <input type="checkbox" className="sr-only peer" />
+                           <input 
+                              type="checkbox" 
+                              checked={shopSettings.gatewayConfig?.stripe?.enabled ?? false}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    stripe: {
+                                       ...shopSettings.gatewayConfig?.stripe,
+                                       enabled: e.target.checked,
+                                       publishableKey: shopSettings.gatewayConfig?.stripe?.publishableKey || '',
+                                       secretKey: shopSettings.gatewayConfig?.stripe?.secretKey || ''
+                                    }
+                                 }
+                              })}
+                              className="sr-only peer" 
+                           />
                            <div className="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-500"></div>
                         </label>
                      </div>
@@ -1028,6 +1082,18 @@ export const Settings = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Publishable Key</label>
                            <input 
                               type="text" 
+                              value={shopSettings.gatewayConfig?.stripe?.publishableKey || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    stripe: {
+                                       ...shopSettings.gatewayConfig?.stripe,
+                                       enabled: shopSettings.gatewayConfig?.stripe?.enabled ?? false,
+                                       publishableKey: e.target.value,
+                                       secretKey: shopSettings.gatewayConfig?.stripe?.secretKey || ''
+                                    }
+                                 }
+                              })}
                               placeholder="pk_live_xxxxxxxxxxxxxxxxxxxxxxxx"
                               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-purple-500 outline-none"
                            />
@@ -1036,6 +1102,18 @@ export const Settings = () => {
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Secret Key</label>
                            <input 
                               type="password" 
+                              value={shopSettings.gatewayConfig?.stripe?.secretKey || ''}
+                              onChange={(e) => updateShopSettings({
+                                 gatewayConfig: {
+                                    ...shopSettings.gatewayConfig,
+                                    stripe: {
+                                       ...shopSettings.gatewayConfig?.stripe,
+                                       enabled: shopSettings.gatewayConfig?.stripe?.enabled ?? false,
+                                       publishableKey: shopSettings.gatewayConfig?.stripe?.publishableKey || '',
+                                       secretKey: e.target.value
+                                    }
+                                 }
+                              })}
                               placeholder="sk_live_xxxxxxxxxxxxxxxxxxxxxxxx"
                               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-2 px-3 text-white text-sm focus:border-purple-500 outline-none"
                            />
