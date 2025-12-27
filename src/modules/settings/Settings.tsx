@@ -769,12 +769,12 @@ export const Settings = () => {
                            { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard, requiresGateway: false },
                            { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard, requiresGateway: false },
                            { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone, requiresGateway: false },
-                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone, requiresGateway: true },
-                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone, requiresGateway: true },
+                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
+                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
                            { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
                            { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet, requiresGateway: true, gateway: 'pagSeguro' },
-                           { value: PaymentMethod.INFINITE_PAY, label: 'InfinitePay', icon: Wallet, requiresGateway: true },
-                           { value: PaymentMethod.STONE, label: 'Stone', icon: Wallet, requiresGateway: true },
+                           { value: PaymentMethod.INFINITE_PAY, label: 'InfinitePay', icon: Wallet, requiresGateway: true, gateway: 'infinitePay' },
+                           { value: PaymentMethod.STONE, label: 'Stone', icon: Wallet, requiresGateway: true, gateway: 'stone' },
                         ].map(method => {
                            const Icon = method.icon;
                            const isEnabled = shopSettings.paymentSettings?.inStore?.includes(method.value) ?? false;
