@@ -1,5 +1,23 @@
 {
   "settings": {
+    "header": {
+      "titleOwner": "Configurações",
+      "titleStaff": "Meu Perfil",
+      "descriptionOwner": "Gerencie detalhes da barbearia, equipe e regras de negócio.",
+      "descriptionStaff": "Gerencie sua agenda e preferências."
+    },
+    "tabs": {
+      "shop": "Perfil da Loja",
+      "team": "Equipe",
+      "payments": "Pagamentos",
+      "commissions": "Regras e Crescimento",
+      "referral": "Indicações",
+      "myProfile": "Meu Perfil"
+    },
+    "actions": {
+      "newMember": "Novo membro",
+      "newPlan": "Novo plano"
+    },
     "alerts": {
       "profileUpdatedSuccessfully": "Perfil atualizado com sucesso!",
       "instagramLinkCopied": "Link copiado! Cole no seu Instagram.",
