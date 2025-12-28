@@ -763,7 +763,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const updateAppointmentStatus = async (id: string, status: AppointmentStatus) => {
     try {
       const { updateAppointmentStatus: updateAction } = await import('@/modules/appointments/actions');
-      await updateAction(id, status);
+      await updateAction(id, status as any);
       setAppointments(prev => prev.map(a => a.id === id ? { ...a, status } : a));
       console.log('✅ Status atualizado');
     } catch (error) {
@@ -1011,7 +1011,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         date: e.date,
         description: e.description,
         supplierId: e.supplierId,
-        paymentMethod: e.paymentMethod,
+        paymentMethod: e.paymentMethod
       });
       setExpenses(prev => [...prev, { ...e, id: savedExpense.id }]);
       console.log('✅ Despesa salva');
