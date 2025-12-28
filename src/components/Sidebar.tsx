@@ -85,7 +85,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
 
   return (
     <>
-    <aside className={`
+    <aside
+      id="mobile-sidebar"
+      className={`
       fixed inset-y-0 left-0 z-40 w-64 bg-zinc-900 border-r border-zinc-800 transform transition-transform duration-300 ease-in-out md:translate-x-0 md:relative md:block
       ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}
     `}>
