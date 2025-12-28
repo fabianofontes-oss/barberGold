@@ -4,6 +4,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useBarber } from '@/context/BarberContext';
+import { useI18n } from '@/hooks/useI18n';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { DailyGoalWidget } from '@/components/widgets/DailyGoalWidget';
 import { PlanSummaryCard } from './PlanSummaryCard';
@@ -40,9 +41,7 @@ import { AppointmentStatus, CompensationModel } from '@/types';
 export const Dashboard = () => {
   const router = useRouter();
   const { currentUser, sales, appointments, clients, shopSettings, currentTenantPlanId } = useBarber();
-
-  if (!currentUser) return null;
-
+  const { t, formatCurrency } = useI18n();
   const { 
     todayRevenue, 
     dailyGoal, 
@@ -53,6 +52,8 @@ export const Dashboard = () => {
     lowStockProducts, 
     chartData 
   } = useDashboardStats();
+
+  if (!currentUser) return null;
 
   const isOwner = currentUser.role === 'OWNER';
 
@@ -103,10 +104,10 @@ export const Dashboard = () => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
            <div className="flex items-center gap-3">
-             <h2 className="text-3xl font-bold text-white mb-2">Dashboard</h2>
-             {!isOwner && <span className="bg-zinc-800 text-zinc-400 text-xs px-2 py-1 rounded font-bold uppercase">Staff View</span>}
+             <h2 className="text-3xl font-bold text-white mb-2">{t('dashboard.title')}</h2>
+             {!isOwner && <span className="bg-zinc-800 text-zinc-400 text-xs px-2 py-1 rounded font-bold uppercase">{t('dashboard.staffView')}</span>}
            </div>
-           <p className="text-zinc-400">Bem-vindo de volta, <b>{currentUser.name}</b>. Veja o que está acontecendo hoje.</p>
+           <p className="text-zinc-400">{t('dashboard.welcome', { name: currentUser.name })}</p>
         </div>
       </div>
 
@@ -131,30 +132,30 @@ export const Dashboard = () => {
       {!isOwner && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard 
-            title="Meus Ganhos Est." 
-            value={`$${estimatedCommission.toFixed(2)}`} 
-            sub="Comissão de Hoje"
+            title={t('dashboard.stats.myEstimatedEarnings')} 
+            value={formatCurrency(estimatedCommission)} 
+            sub={t('dashboard.stats.todayCommission')}
             icon={Wallet}
             color="bg-emerald-500"
           />
           <StatCard 
-            title="Meus Agendamentos" 
+            title={t('dashboard.stats.myAppointments')} 
             value={myAppointmentsToday.length} 
-            sub={`${myCompletedCount} concluídos`}
+            sub={t('dashboard.stats.completed', { count: myCompletedCount })}
             icon={CalendarCheck}
             color="bg-blue-500"
           />
           <StatCard 
-            title="Portfólio Fiel" 
+            title={t('dashboard.stats.loyalPortfolio')} 
             value={myLoyalCount} 
-            sub={myLoyalCount > 5 ? "Você é um Pro!" : "Continue construindo!"}
+            sub={myLoyalCount > 5 ? t('dashboard.stats.youAreAPro') : t('dashboard.stats.keepBuilding')}
             icon={ShieldCheck}
             color="bg-purple-500"
           />
           <StatCard 
-            title="Próximo Cliente" 
+            title={t('dashboard.stats.nextClient')} 
             value={myNextAppointment ? format(myNextAppointment.date, 'HH:mm') : '-'} 
-            sub={myNextAppointment?.clientName || 'Livre'}
+            sub={myNextAppointment?.clientName || t('common.available')}
             icon={Users}
             color="bg-amber-500"
           />
@@ -166,7 +167,7 @@ export const Dashboard = () => {
         {/* Chart Section - Only meaningful for Owner or maybe personal history for barber later */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-6">{isOwner ? 'Visão Geral da Receita' : 'Desempenho da Loja'}</h3>
+            <h3 className="text-lg font-semibold text-white mb-6">{isOwner ? t('dashboard.chart.revenueOverTime') : t('dashboard.chart.revenueOverTime')}</h3>
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={chartData}>
@@ -213,7 +214,7 @@ export const Dashboard = () => {
             <div className="bg-zinc-900 border border-red-500/20 rounded-2xl p-6">
                <div className="flex items-center gap-2 mb-4">
                   <AlertTriangle className="w-5 h-5 text-red-500" />
-                  <h3 className="text-lg font-bold text-white">Alerta de Estoque Baixo</h3>
+                  <h3 className="text-lg font-bold text-white">{t('dashboard.stats.lowStock')}</h3>
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {lowStockProducts.map(p => (
@@ -222,7 +223,7 @@ export const Dashboard = () => {
                            {p.image && <img src={p.image} className="w-8 h-8 rounded-lg object-cover" />}
                            <div>
                               <p className="text-sm font-bold text-zinc-200">{p.name}</p>
-                              <p className="text-xs text-zinc-500">Apenas {p.stock} restante</p>
+                              <p className="text-xs text-zinc-500">{p.stock} {t('common.units')}</p>
                            </div>
                         </div>
                         {isOwner && (
@@ -230,7 +231,7 @@ export const Dashboard = () => {
                               onClick={() => router.push('/app/settings')} 
                               className="text-xs font-bold text-amber-500 hover:underline"
                            >
-                              Reabastecer
+                              {t('catalog.inventory.addStock')}
                            </button>
                         )}
                      </div>

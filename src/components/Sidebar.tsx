@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useBarber } from '@/context/BarberContext';
+import { useI18n } from '@/hooks/useI18n';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { 
   LayoutDashboard, 
@@ -46,6 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
   const router = useRouter();
   const { currentUser, logout, shopProfile, shopSettings } = useBarber();
   const { canUseFeature } = useFeatureGate();
+  const { t } = useI18n();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   // Validação de segurança
@@ -95,8 +97,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                    <Shield className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                   <h1 className="font-bold text-xl text-white leading-none">Escritório Central</h1>
-                   <p className="text-xs text-indigo-400 mt-1 font-bold">Modo Deus</p>
+                   <h1 className="font-bold text-xl text-white leading-none">{t('sidebar.centralOffice')}</h1>
+                   <p className="text-xs text-indigo-400 mt-1 font-bold">{t('sidebar.godMode')}</p>
                 </div>
              </div>
           ) : shopProfile.logo ? (
@@ -108,7 +110,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                </div>
                <div>
                  <h1 className="font-bold text-xl text-white leading-none truncate max-w-[150px]">{shopProfile.name}</h1>
-                 <p className="text-xs text-zinc-500 mt-1">Premium Mgmt.</p>
+                 <p className="text-xs text-zinc-500 mt-1">{t('app.premiumMgmt')}</p>
                </div>
              </>
           )}
@@ -118,10 +120,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
           {/* SUPER ADMIN MENU (GOD MODE) */}
           {isSuperAdmin ? (
              <>
-               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Centro de Comando</p>
-               <NavItem href="/app/super-admin" icon={Activity} label="Monitor ao Vivo" />
-               <NavItem href="/app/super-admin" icon={Users} label="Barbearias" />
-               <NavItem href="/app/super-admin" icon={Layers} label="Planos e Recursos" />
+               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">{t('sidebar.commandCenter')}</p>
+               <NavItem href="/app/super-admin" icon={Activity} label={t('sidebar.liveMonitor')} />
+               <NavItem href="/app/super-admin" icon={Users} label={t('sidebar.barbershops')} />
+               <NavItem href="/app/super-admin" icon={Layers} label={t('sidebar.plansAndFeatures')} />
                
                {/* Office God V2 Button */}
                <div className="mx-4 my-2 pt-2 border-t border-zinc-800">
@@ -134,55 +136,55 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                   >
                     <div className="flex items-center gap-2">
                        <Zap className="w-4 h-4" />
-                       <span>Escritório Deus V2</span>
+                       <span>{t('sidebar.godOfficeV2')}</span>
                     </div>
-                    <span className="text-[9px] bg-violet-500 text-white px-1.5 py-0.5 rounded uppercase font-bold">Beta</span>
+                    <span className="text-[9px] bg-violet-500 text-white px-1.5 py-0.5 rounded uppercase font-bold">{t('sidebar.beta')}</span>
                   </button>
                </div>
 
-               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Operações</p>
-               <NavItem href="/app/super-admin" icon={Handshake} label="Programa de Parceiros" />
-               <NavItem href="/app/super-admin" icon={Megaphone} label="Central de Marketing" />
-               <NavItem href="/app/super-admin" icon={Globe} label="CMS do Site Público" />
-               <NavItem href="/app/super-admin" icon={LifeBuoy} label="Suporte" />
-               <NavItem href="/app/super-admin" icon={Receipt} label="Faturamento Global" />
+               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">{t('sidebar.operations')}</p>
+               <NavItem href="/app/super-admin" icon={Handshake} label={t('sidebar.partnerProgram')} />
+               <NavItem href="/app/super-admin" icon={Megaphone} label={t('sidebar.marketingCenter')} />
+               <NavItem href="/app/super-admin" icon={Globe} label={t('sidebar.publicSiteCMS')} />
+               <NavItem href="/app/super-admin" icon={LifeBuoy} label={t('sidebar.support')} />
+               <NavItem href="/app/super-admin" icon={Receipt} label={t('sidebar.globalBilling')} />
                
-               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Ecossistema</p>
-               <NavItem href="/app/super-admin" icon={Puzzle} label="Loja de Apps / Add-ons" />
+               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">{t('sidebar.ecosystem')}</p>
+               <NavItem href="/app/super-admin" icon={Puzzle} label={t('sidebar.appStore')} />
                
-               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">Infraestrutura</p>
-               <NavItem href="/app/super-admin" icon={Server} label="Operações de Sistema" />
+               <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">{t('sidebar.infrastructure')}</p>
+               <NavItem href="/app/super-admin" icon={Server} label={t('sidebar.systemOps')} />
                
                <div className="my-2 border-t border-zinc-800 opacity-50"></div>
-               <NavItem href="/app/super-admin" icon={Settings} label="Configurações Globais" />
+               <NavItem href="/app/super-admin" icon={Settings} label={t('sidebar.globalSettings')} />
              </>
           ) : (
              /* STANDARD BARBERSHOP MENU */
              <>
-               <NavItem href="/app/dashboard" icon={LayoutDashboard} label="Painel" />
-               <NavItem href="/app/agenda" icon={CalendarDays} label="Agenda" />
-               <NavItem href="/app/pdv" icon={ShoppingCart} label="Ponto de Venda" />
-               <NavItem href="/app/clients" icon={Users} label="Clientes" /> 
+               <NavItem href="/app/dashboard" icon={LayoutDashboard} label={t('navigation.panel')} />
+               <NavItem href="/app/agenda" icon={CalendarDays} label={t('navigation.calendar')} />
+               <NavItem href="/app/pdv" icon={ShoppingCart} label={t('navigation.pointOfSale')} />
+               <NavItem href="/app/clients" icon={Users} label={t('navigation.clients')} /> 
                
                {(isOwner) && (
-                  <NavItem href="/app/catalog" icon={PackageSearch} label="Catálogo" />
+                  <NavItem href="/app/catalog" icon={PackageSearch} label={t('navigation.catalog')} />
                )}
 
-               <NavItem href="/app/finance" icon={DollarSign} label={isOwner ? "Financeiro" : "Meus Ganhos"} />
+               <NavItem href="/app/finance" icon={DollarSign} label={isOwner ? t('navigation.finance') : t('navigation.myEarnings')} />
                
                {isOwner && (
                   <>
-                     <NavItem href="/app/barber-club" icon={Crown} label="Barber Club™" className="text-purple-500 font-bold" />
-                     <NavItem href="/app/smart-pricing" icon={LineChart} label="Precificação Dinâmica" className="text-emerald-500 font-bold" />
+                     <NavItem href="/app/barber-club" icon={Crown} label={t('navigation.barberClub')} className="text-purple-500 font-bold" />
+                     <NavItem href="/app/smart-pricing" icon={LineChart} label={t('navigation.dynamicPricing')} className="text-emerald-500 font-bold" />
                   </>
                )}
 
                <div className="pt-4 mt-4 border-t border-zinc-800">
                  {/* MY_PLAN moved to footer */}
-                 <NavItem href="/app/settings" icon={Settings} label={isOwner ? "Configurações" : "Meu Perfil"} />
+                 <NavItem href="/app/settings" icon={Settings} label={isOwner ? t('navigation.settings') : t('navigation.myProfile')} />
                  
                  {isOwner && (
-                    <NavItem href="/app/website" icon={Globe} label="Website e Marca" />
+                    <NavItem href="/app/website" icon={Globe} label={t('navigation.websiteAndBrand')} />
                  )}
                </div>
              </>
@@ -231,8 +233,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                     <Banknote className="w-4 h-4" />
                  </div>
                  <div className="text-left">
-                    <p className="font-bold text-xs leading-none mb-0.5">Indicações</p>
-                    <p className="text-[10px] text-emerald-100 font-medium">Ganhe Dinheiro</p>
+                    <p className="font-bold text-xs leading-none mb-0.5">{t('navigation.referrals')}</p>
+                    <p className="text-[10px] text-emerald-100 font-medium">{t('navigation.earnMoney')}</p>
                  </div>
               </div>
            </button>
@@ -272,8 +274,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                         <LogOut className="w-4 h-4" />
                      </div>
                      <div>
-                        <p className="text-sm font-bold">Sair</p>
-                        <p className="text-[10px] opacity-70">Logout</p>
+                        <p className="text-sm font-bold">{t('sidebar.logout')}</p>
+                        <p className="text-[10px] opacity-70">{t('sidebar.logout')}</p>
                      </div>
                   </button>
                </div>
