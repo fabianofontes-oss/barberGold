@@ -5,6 +5,7 @@
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // Helper para ler variáveis de ambiente de arquivo
 function loadEnv(filename) {
@@ -32,6 +33,11 @@ function loadEnv(filename) {
 const envVars = { ...loadEnv('.env'), ...loadEnv('.env.local') };
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || envVars.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || envVars.SUPABASE_SERVICE_ROLE_KEY;
+
+// Configurações do admin
+const adminEmail = process.env.ADMIN_EMAIL || envVars.ADMIN_EMAIL || 'admin@barbergold.com';
+// Gera senha aleatória se não fornecida
+const adminPassword = process.env.ADMIN_PASSWORD || envVars.ADMIN_PASSWORD || crypto.randomBytes(12).toString('hex');
 
 if (!supabaseUrl || !serviceRoleKey) {
   console.error('❌ Erro: Variáveis de ambiente não encontradas.');
@@ -70,8 +76,8 @@ async function setupDatabase() {
     // Vamos criar um usuário de teste
     console.log('👤 Criando usuário de teste...');
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-      email: 'admin@barbergold.com',
-      password: 'Admin123!',
+      email: adminEmail,
+      password: adminPassword,
       email_confirm: true
     });
 
@@ -83,8 +89,9 @@ async function setupDatabase() {
       }
     } else {
       console.log('✅ Usuário criado com sucesso!');
-      console.log('   Email: admin@barbergold.com');
-      console.log('   Senha: Admin123!');
+      console.log(`   Email: ${adminEmail}`);
+      console.log(`   Senha: ${adminPassword}`);
+      console.log('   ⚠️  GUARDE ESTA SENHA! Ela foi gerada automaticamente.');
     }
 
     console.log('\n🎉 Setup concluído!');
