@@ -3,6 +3,63 @@
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
+export async function getClients(filters?: { search?: string; tags?: string[] }) {
+  try {
+    const supabase = await createSupabaseClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return { success: false, error: 'Não autenticado' };
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
+
+    if (!profile?.store_id) return { success: false, error: 'Store não encontrada' };
+
+    let query = supabase
+      .from('clients')
+      .select('*')
+      .eq('store_id', profile.store_id)
+      .order('name');
+
+    if (filters?.search) {
+      query = query.ilike('name', `%${filters.search}%`);
+    }
+
+    const { data: clients, error } = await query;
+
+    if (error) throw error;
+
+    return { success: true, data: clients || [] };
+  } catch (error) {
+    console.error('Erro ao buscar clientes:', error);
+    return { success: false, error: 'Erro ao buscar clientes' };
+  }
+}
+
+export async function getClientStats(clientId: string) {
+  try {
+    const supabase = await createSupabaseClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return { success: false, error: 'Não autenticado' };
+
+    // Por enquanto retorna stats vazias - implementar depois
+    return { 
+      success: true, 
+      data: {
+        totalVisits: 0,
+        totalSpent: 0,
+        lastVisit: null,
+        averageTicket: 0
+      }
+    };
+  } catch (error) {
+    console.error('Erro ao buscar stats do cliente:', error);
+    return { success: false, error: 'Erro ao buscar estatísticas' };
+  }
+}
+
 export async function createClientAction(data: {
   name: string;
   phone?: string;
