@@ -1515,7 +1515,7 @@ export const Settings = () => {
                      <div>
                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Valor Mínimo por Parcela</label>
                         <div className="flex items-center gap-2">
-                           <span className="text-zinc-400 font-bold">R$</span>
+                           <span className="text-zinc-400 font-bold">{currency.symbol}</span>
                            <input 
                               type="number" 
                               value={shopSettings.installmentConfig?.minInstallmentValue || 50}
@@ -1582,9 +1582,9 @@ export const Settings = () => {
                         </div>
                      </div>
                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                        <p className="text-blue-200 font-bold text-sm mb-1">Exemplo de Parcelamento</p>
+                        <p className="text-blue-200 font-bold text-sm mb-1">{t('settings.payments.installmentsExampleTitle')}</p>
                         <p className="text-blue-300/80 text-xs">
-                           Compra de R$ 100,00 em 3x = R$ 33,33 + juros
+                           {t('settings.payments.installmentsExampleDescription', { total: formatCurrency(100), installments: 3, installmentValue: formatCurrency(100 / 3) })}
                         </p>
                      </div>
                   </div>

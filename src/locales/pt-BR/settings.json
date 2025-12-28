@@ -41,6 +41,10 @@
         "savePlanButton": "Salvar plano"
       }
     },
+    "payments": {
+      "installmentsExampleTitle": "Exemplo de parcelamento",
+      "installmentsExampleDescription": "Compra de {total} em {installments}x = {installmentValue} + juros"
+    },
     "services": {
       "modal": {
         "editTitle": "Editar serviço",
