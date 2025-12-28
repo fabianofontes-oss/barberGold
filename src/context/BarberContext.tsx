@@ -774,44 +774,70 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   };
   const joinQueue = (item: any) => setQueue(prev => [...prev, { ...item, id: Math.random().toString(36).substr(2, 9), arrivalTime: new Date() }]);
   const leaveQueue = (id: string) => setQueue(prev => prev.filter(i => i.id !== id));
-  const processSale = (items: CartItem[], clientId: string | null, staffId: string, method: PaymentMethod, discountReason?: string, tip: number = 0) => {
-     const total = items.reduce((sum, item) => sum + (item.price * (item.qty || 1)), 0);
-     
-     // Registra a venda
-     setSales(prev => [...prev, { 
-        id: Math.random().toString(36).substr(2, 9), 
-        clientId, 
-        staffId, 
-        items, 
-        total, 
-        tip, 
-        date: new Date(), 
-        method, 
-        discountApplied: discountReason 
-     }]);
-     
-     // Atualiza cliente: totalSpent, lastVisit e loyaltyPoints
-     if (clientId) {
+  const processSale = async (items: CartItem[], clientId: string | null, staffId: string, method: PaymentMethod, discountReason?: string, tip: number = 0) => {
+    try {
+      const { createSale } = await import('@/modules/sales/actions');
+      const total = items.reduce((sum, item) => sum + (item.price * (item.qty || 1)), 0);
+      
+      const saleItems = items.map(item => ({
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        price: item.price,
+        qty: item.qty || 1,
+      }));
+      
+      const savedSale = await createSale({
+        clientId: clientId || undefined,
+        staffId,
+        items: saleItems,
+        total,
+        method,
+        tip,
+        discountApplied: discountReason,
+      });
+      
+      const newSale: Sale = {
+        id: savedSale.id,
+        clientId: clientId || undefined,
+        staffId,
+        items,
+        total,
+        tip,
+        date: new Date(savedSale.created_at),
+        method,
+        discountApplied: discountReason,
+      };
+      
+      setSales(prev => [newSale, ...prev]);
+      
+      if (clientId) {
         setClients(prev => prev.map(client => {
-           if (client.id !== clientId) return client;
-           const hasService = items.some(i => i.type === 'SERVICE');
-           return {
-              ...client,
-              totalSpent: client.totalSpent + total,
-              lastVisit: new Date(),
-              loyaltyPoints: hasService ? (client.loyaltyPoints || 0) + 1 : client.loyaltyPoints
-           };
+          if (client.id !== clientId) return client;
+          const hasService = items.some(i => i.type === 'SERVICE');
+          return {
+            ...client,
+            totalSpent: client.totalSpent + total,
+            lastVisit: new Date(),
+            loyaltyPoints: hasService ? (client.loyaltyPoints || 0) + 1 : client.loyaltyPoints
+          };
         }));
-     }
-     
-     // Deduz estoque dos produtos vendidos
-     items.filter(i => i.type === 'PRODUCT').forEach(item => {
+      }
+      
+      items.filter(i => i.type === 'PRODUCT').forEach(item => {
         const qty = item.qty || 1;
         setProducts(prev => prev.map(product => {
-           if (product.id !== item.id) return product;
-           return { ...product, stock: Math.max(0, product.stock - qty) };
+          if (product.id !== item.id) return product;
+          return { ...product, stock: Math.max(0, product.stock - qty) };
         }));
-     });
+      });
+      
+      console.log('✅ Venda processada');
+    } catch (error) {
+      console.error('❌ Erro ao processar venda:', error);
+      alert('Erro ao processar venda');
+      throw error;
+    }
   };
   const submitReview = (review: any) => setReviews(prev => [...prev, { ...review, id: Math.random().toString(36).substr(2, 9), date: new Date() }]);
   const addLateTip = (appointmentId: string, amount: number, method: PaymentMethod) => {
@@ -831,12 +857,65 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         discountApplied: undefined
      }]);
   };
-  const addClient = (client: any) => {
-     const id = Math.random().toString(36).substr(2, 9);
-     setClients(prev => [{ ...client, id, totalSpent: 0, loyaltyPoints: 0, referralCode: 'NEW', profileCompleted: true }, ...prev]);
-     return id;
+  const addClient = async (client: Omit<Client, 'id' | 'totalSpent' | 'lastVisit' | 'loyaltyPoints' | 'referralCode' | 'profileCompleted'> & { referrerCode?: string }) => {
+    try {
+      const { createClientAction } = await import('@/modules/clients/actions');
+      
+      const savedClient = await createClientAction({
+        name: client.name,
+        phone: client.phone,
+        email: client.email,
+        birthDate: client.birthDate,
+        notes: client.notes,
+        tags: client.tags,
+      });
+      
+      const newClient: Client = {
+        id: savedClient.id,
+        name: savedClient.name,
+        phone: savedClient.phone || '',
+        email: savedClient.email || '',
+        birthDate: savedClient.birth_date || '',
+        lastVisit: savedClient.last_visit ? new Date(savedClient.last_visit) : undefined,
+        totalVisits: savedClient.total_visits || 0,
+        totalSpent: Number(savedClient.total_spent) || 0,
+        loyaltyPoints: savedClient.loyalty_points || 0,
+        tags: savedClient.tags || [],
+        notes: savedClient.notes || '',
+        referralCode: 'NEW',
+        profileCompleted: true,
+      };
+      
+      setClients(prev => [newClient, ...prev]);
+      console.log('✅ Cliente criado');
+      return savedClient.id;
+    } catch (error) {
+      console.error('❌ Erro ao criar cliente:', error);
+      alert('Erro ao salvar cliente');
+      throw error;
+    }
   };
-  const updateClient = (c: Client) => setClients(prev => prev.map(cl => cl.id === c.id ? c : cl));
+
+  const updateClient = async (client: Client) => {
+    try {
+      const { updateClientAction } = await import('@/modules/clients/actions');
+      
+      await updateClientAction(client.id, {
+        name: client.name,
+        phone: client.phone,
+        email: client.email,
+        birthDate: client.birthDate,
+        notes: client.notes,
+        tags: client.tags,
+      });
+      
+      setClients(prev => prev.map(c => c.id === client.id ? client : c));
+      console.log('✅ Cliente atualizado');
+    } catch (error) {
+      console.error('❌ Erro ao atualizar cliente:', error);
+      alert('Erro ao atualizar cliente');
+    }
+  };
   const updateService = (s: Service) => setServices(prev => prev.map(srv => srv.id === s.id ? s : srv));
   const addService = (s: any) => setServices(prev => [...prev, { ...s, id: Math.random().toString(36).substr(2, 9), type: 'SERVICE' }]);
   const deleteService = (id: string) => setServices(prev => prev.filter(s => s.id !== id));
