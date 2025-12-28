@@ -392,16 +392,16 @@ export const Catalog = () => {
                        <table className="w-full text-left text-sm text-zinc-400">
                           <thead className="bg-zinc-950 text-zinc-500 uppercase font-bold text-xs">
                              <tr>
-                                <th className="px-6 py-4">Date</th>
-                                <th className="px-6 py-4">Product Name</th>
-                                <th className="px-6 py-4 text-center">Qty Added</th>
-                                <th className="px-6 py-4 text-right">Unit Cost</th>
-                                <th className="px-6 py-4 text-right">Total Spent</th>
+                                <th className="px-6 py-4">Data</th>
+                                <th className="px-6 py-4">Nome do Produto</th>
+                                <th className="px-6 py-4 text-center">Qtd Adicionada</th>
+                                <th className="px-6 py-4 text-right">Custo Unitário</th>
+                                <th className="px-6 py-4 text-right">Total Gasto</th>
                              </tr>
                           </thead>
                           <tbody className="divide-y divide-zinc-800">
                              {supplyTransactions.filter(t => t.itemType === 'PRODUCT').length === 0 ? (
-                                <tr><td colSpan={5} className="px-6 py-8 text-center italic text-zinc-600">No product purchases recorded.</td></tr>
+                                <tr><td colSpan={5} className="px-6 py-8 text-center italic text-zinc-600">Nenhuma compra de produtos registrada.</td></tr>
                              ) : (
                                 supplyTransactions
                                    .filter(t => t.itemType === 'PRODUCT')
@@ -523,7 +523,7 @@ export const Catalog = () => {
                                    onClick={() => adjustInventoryStock(item.id, 1, 'CONSUME')}
                                    className="flex items-center justify-center gap-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 py-2 rounded-lg text-xs font-bold transition-all"
                                 >
-                                   <ArrowDownCircle className="w-3 h-3" /> Consume
+                                   <ArrowDownCircle className="w-3 h-3" /> Consumir
                                 </button>
                              </div>
                           </div>
@@ -539,23 +539,23 @@ export const Catalog = () => {
                        <table className="w-full text-left text-sm text-zinc-400">
                           <thead className="bg-zinc-950 text-zinc-500 uppercase font-bold text-xs">
                              <tr>
-                                <th className="px-6 py-4">Date</th>
-                                <th className="px-6 py-4">Item Name</th>
-                                <th className="px-6 py-4">Supplier</th>
-                                <th className="px-6 py-4 text-center">Qty Added</th>
-                                <th className="px-6 py-4 text-right">Unit Cost</th>
-                                <th className="px-6 py-4 text-right">Total Spent</th>
+                                <th className="px-6 py-4">Data de Entrada</th>
+                                <th className="px-6 py-4">Nome do Item</th>
+                                <th className="px-6 py-4">Fornecedor</th>
+                                <th className="px-6 py-4 text-center">Quantidade Adicionada</th>
+                                <th className="px-6 py-4 text-right">Custo Unitário</th>
+                                <th className="px-6 py-4 text-right">Total Gasto</th>
                              </tr>
                           </thead>
                           <tbody className="divide-y divide-zinc-800">
                              {supplyTransactions.filter(t => t.itemType === 'INVENTORY').length === 0 ? (
-                                <tr><td colSpan={6} className="px-6 py-8 text-center italic text-zinc-600">No purchase history found.</td></tr>
+                                <tr><td colSpan={6} className="px-6 py-8 text-center italic text-zinc-600">Nenhuma compra de produtos registrada.</td></tr>
                              ) : (
                                 supplyTransactions
                                    .filter(t => t.itemType === 'INVENTORY')
                                    .sort((a,b) => b.date.getTime() - a.date.getTime())
                                    .map((t) => {
-                                      const supplierName = suppliers.find(s => s.id === t.supplierId)?.name || 'Unknown Supplier';
+                                      const supplierName = suppliers.find(s => s.id === t.supplierId)?.name || 'Fornecedor Desconhecido';
                                       return (
                                          <tr key={t.id} className="hover:bg-zinc-800/50 transition-colors">
                                             <td className="px-6 py-4 font-mono text-xs">{format(t.date, 'dd/MM/yyyy HH:mm')}</td>
