@@ -18,6 +18,30 @@
       "newMember": "Novo membro",
       "newPlan": "Novo plano"
     },
+    "shop": {
+      "basicInfoTitle": "Informações básicas",
+      "logoLabel": "Logo da barbearia",
+      "logoPlaceholder": "Envie o logo da sua marca (PNG/JPG)",
+      "logoHelperText": "Este logo substituirá o texto BarberFlow na barra lateral, cabeçalho mobile e website.",
+      "shopNameLabel": "Nome da barbearia",
+      "addressLabel": "Endereço",
+      "phoneLabel": "Telefone / contato",
+      "instagramLabel": "Instagram",
+      "whatsappLabel": "WhatsApp",
+      "shareTitle": "Compartilhar sua barbearia",
+      "shareDescription": "Divulgue sua barbearia nas redes sociais e atraia mais clientes!",
+      "share": {
+        "whatsappMessage": "Conheça a {shopName}! Agende seu horário: {bookingUrl}",
+        "whatsappButton": "WhatsApp",
+        "facebookQuote": "Conheça a {shopName}! Agende seu horário online.",
+        "facebookButton": "Facebook",
+        "copyInstagramButton": "Copiar para Instagram",
+        "copyLinkButton": "Copiar link"
+      },
+      "operatingHoursTitle": "Horário de funcionamento",
+      "copyMonToFriButton": "Copiar seg para sex",
+      "closedLabel": "Fechado"
+    },
     "alerts": {
       "profileUpdatedSuccessfully": "Perfil atualizado com sucesso!",
       "instagramLinkCopied": "Link copiado! Cole no seu Instagram.",

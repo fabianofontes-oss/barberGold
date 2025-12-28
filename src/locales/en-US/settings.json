@@ -18,6 +18,30 @@
       "newMember": "New member",
       "newPlan": "New plan"
     },
+    "shop": {
+      "basicInfoTitle": "Basic information",
+      "logoLabel": "Shop logo",
+      "logoPlaceholder": "Upload your brand logo (PNG/JPG)",
+      "logoHelperText": "This logo will replace the BarberFlow text in the sidebar, mobile header and website.",
+      "shopNameLabel": "Shop name",
+      "addressLabel": "Address",
+      "phoneLabel": "Phone / contact",
+      "instagramLabel": "Instagram",
+      "whatsappLabel": "WhatsApp",
+      "shareTitle": "Share your barbershop",
+      "shareDescription": "Promote your barbershop on social media and attract more clients!",
+      "share": {
+        "whatsappMessage": "Check out {shopName}! Book your appointment: {bookingUrl}",
+        "whatsappButton": "WhatsApp",
+        "facebookQuote": "Check out {shopName}! Book online.",
+        "facebookButton": "Facebook",
+        "copyInstagramButton": "Copy for Instagram",
+        "copyLinkButton": "Copy link"
+      },
+      "operatingHoursTitle": "Operating hours",
+      "copyMonToFriButton": "Copy Mon to Fri",
+      "closedLabel": "Closed"
+    },
     "alerts": {
       "profileUpdatedSuccessfully": "Profile updated successfully!",
       "instagramLinkCopied": "Link copied! Paste it on your Instagram.",
