@@ -4,14 +4,14 @@ import { createClient } from '@/lib/supabase/server';
 import { BusinessType, PackageLevel, OnboardingStats } from '@/types/onboarding';
 
 interface ProcessOnboardingParams {
-  tenantId: string;
+  storeId: string;
   businessType: BusinessType;
   packageLevel: PackageLevel;
   selectedServiceIds?: string[];
 }
 
 export async function processOnboarding(params: ProcessOnboardingParams): Promise<{ success: boolean; stats?: OnboardingStats; error?: string }> {
-  const { tenantId, businessType, packageLevel, selectedServiceIds } = params;
+  const { storeId, businessType, packageLevel, selectedServiceIds } = params;
   
   const supabase = await createClient();
 
@@ -53,7 +53,7 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
       const { data: newCat, error: catError } = await supabase
         .from('service_categories')
         .insert({
-          tenant_id: tenantId,
+          store_id: storeId,
           template_id: catTemplate.id,
           name: catTemplate.name,
           icon: catTemplate.icon,
@@ -80,7 +80,7 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
       const { data: newService, error: serviceError } = await supabase
         .from('services')
         .insert({
-          tenant_id: tenantId,
+          store_id: storeId,
           category_id: categoryMap[template.category_id],
           template_id: template.id,
           type: template.type,
