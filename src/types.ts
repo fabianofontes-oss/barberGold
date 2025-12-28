@@ -399,7 +399,10 @@ export interface ShopProfile {
   slug?: string;
   customDomain?: string;
   logo?: string;
+  cep?: string;
   address: string;
+  city?: string;
+  state?: string;
   phone: string;
   whatsapp: string;
   instagram?: string;

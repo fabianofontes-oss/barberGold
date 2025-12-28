@@ -9,6 +9,8 @@ import { generatePixPayload } from '@/lib/pix/generatePixPayload';
 import { CommissionPlanModal } from './modals/CommissionPlanModal';
 import { ReferralSettingsPanel } from './ReferralSettingsPanel'; 
 import { ImageUpload } from '@/components/shared/ImageUpload';
+import { MaskedInput } from '@/components/shared/MaskedInput';
+import { ViaCepResponse } from '@/lib/masks';
 import { 
   Users, User, Phone, 
   Briefcase, TrendingUp, Percent, Edit2, CalendarClock, 
@@ -323,68 +325,114 @@ export const Settings = () => {
                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div className="space-y-4">
+                <div className="space-y-4">
+                   {/* Nome da Barbearia */}
+                   <div>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome da Barbearia</label>
+                      <input 
+                         type="text" 
+                         value={shopProfile.name}
+                         onChange={(e) => updateShopProfile({ ...shopProfile, name: e.target.value })}
+                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                         placeholder="Ex: Barbearia do João"
+                      />
+                   </div>
+
+                   {/* Telefone / Contato */}
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.shopNameLabel')}</label>
-                         <input 
-                            type="text" 
-                            value={shopProfile.name}
-                            onChange={(e) => updateShopProfile({ ...shopProfile, name: e.target.value })}
-                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Telefone / Contato</label>
+                         <MaskedInput
+                            type="phone"
+                            value={shopProfile.phone || ''}
+                            onChange={(val) => updateShopProfile({ ...shopProfile, phone: val })}
+                            icon={<Phone className="w-4 h-4" />}
+                            placeholder="(11) 91234-5678"
                          />
                       </div>
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.addressLabel')}</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">WhatsApp</label>
+                         <MaskedInput
+                            type="whatsapp"
+                            value={shopProfile.whatsapp || ''}
+                            onChange={(val) => updateShopProfile({ ...shopProfile, whatsapp: val })}
+                            icon={<MessageSquare className="w-4 h-4" />}
+                            placeholder="(11) 91234-5678"
+                         />
+                      </div>
+                   </div>
+
+                   {/* Instagram */}
+                   <div>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Instagram</label>
+                      <MaskedInput
+                         type="instagram"
+                         value={shopProfile.instagram || ''}
+                         onChange={(val) => updateShopProfile({ ...shopProfile, instagram: val })}
+                         icon={<Instagram className="w-4 h-4" />}
+                         placeholder="seuperfil"
+                      />
+                      <p className="text-[10px] text-zinc-500 mt-1">Digite apenas o nome de usuário, sem @</p>
+                   </div>
+
+                   {/* CEP com busca automática */}
+                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CEP</label>
+                         <MaskedInput
+                            type="cep"
+                            value={shopProfile.cep || ''}
+                            onChange={(val) => updateShopProfile({ ...shopProfile, cep: val })}
+                            onAddressFetched={(address: ViaCepResponse) => {
+                               updateShopProfile({
+                                  ...shopProfile,
+                                  cep: address.cep,
+                                  address: `${address.logradouro}, ${address.bairro}`,
+                                  city: address.localidade,
+                                  state: address.uf
+                               });
+                            }}
+                            icon={<MapPin className="w-4 h-4" />}
+                            placeholder="12345-678"
+                         />
+                      </div>
+                      <div className="md:col-span-2">
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Endereço</label>
                          <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
                             <MapPin className="w-4 h-4 text-zinc-500" />
                             <input 
                                type="text" 
-                               value={shopProfile.address}
+                               value={shopProfile.address || ''}
                                onChange={(e) => updateShopProfile({ ...shopProfile, address: e.target.value })}
                                className="w-full bg-transparent text-white outline-none"
+                               placeholder="Rua, número, bairro"
                             />
                          </div>
                       </div>
                    </div>
-                   <div className="space-y-4">
+
+                   {/* Cidade e Estado */}
+                   <div className="grid grid-cols-2 gap-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.phoneLabel')}</label>
-                         <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
-                            <Phone className="w-4 h-4 text-zinc-500" />
-                            <input 
-                               type="text" 
-                               value={shopProfile.phone}
-                               onChange={(e) => updateShopProfile({ ...shopProfile, phone: e.target.value })}
-                               className="w-full bg-transparent text-white outline-none"
-                            />
-                         </div>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Cidade</label>
+                         <input 
+                            type="text" 
+                            value={shopProfile.city || ''}
+                            onChange={(e) => updateShopProfile({ ...shopProfile, city: e.target.value })}
+                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                            placeholder="São Paulo"
+                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                         <div>
-                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.instagramLabel')}</label>
-                            <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
-                               <Instagram className="w-4 h-4 text-zinc-500" />
-                               <input 
-                                  type="text" 
-                                  value={shopProfile.instagram}
-                                  onChange={(e) => updateShopProfile({ ...shopProfile, instagram: e.target.value })}
-                                  className="w-full bg-transparent text-white outline-none text-sm"
-                               />
-                            </div>
-                         </div>
-                         <div>
-                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.whatsappLabel')}</label>
-                            <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
-                               <MessageSquare className="w-4 h-4 text-zinc-500" />
-                               <input 
-                                  type="text" 
-                                  value={shopProfile.whatsapp}
-                                  onChange={(e) => updateShopProfile({ ...shopProfile, whatsapp: e.target.value })}
-                                  className="w-full bg-transparent text-white outline-none text-sm"
-                               />
-                            </div>
-                         </div>
+                      <div>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Estado</label>
+                         <input 
+                            type="text" 
+                            value={shopProfile.state || ''}
+                            onChange={(e) => updateShopProfile({ ...shopProfile, state: e.target.value })}
+                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                            placeholder="SP"
+                            maxLength={2}
+                         />
                       </div>
                    </div>
                 </div>
