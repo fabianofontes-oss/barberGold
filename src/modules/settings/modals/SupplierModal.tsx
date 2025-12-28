@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useI18n } from '@/hooks/useI18n';
 import { Supplier } from '@/types';
-import { Truck } from 'lucide-react';
+import { Truck, Phone } from 'lucide-react';
+import { MaskedInput } from '@/components/shared/MaskedInput';
 
 interface SupplierModalProps {
   isOpen: boolean;
@@ -56,7 +57,13 @@ export const SupplierModal: React.FC<SupplierModalProps> = ({ isOpen, onClose })
               </div>
               <div>
                  <label className="block text-xs font-medium text-zinc-400 mb-1.5">{t('settings.suppliers.modal.phoneLabel')}</label>
-                 <input required type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"/>
+                 <MaskedInput
+                    type="phone"
+                    value={form.phone}
+                    onChange={(val) => setForm({...form, phone: val})}
+                    icon={<Phone className="w-4 h-4" />}
+                    placeholder="(11) 91234-5678"
+                 />
               </div>
            </div>
 
