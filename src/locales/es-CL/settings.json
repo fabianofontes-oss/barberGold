@@ -1,5 +1,23 @@
 {
   "settings": {
+    "header": {
+      "titleOwner": "Settings",
+      "titleStaff": "My Profile",
+      "descriptionOwner": "Manage barbershop details, team, and business rules.",
+      "descriptionStaff": "Manage your schedule and preferences."
+    },
+    "tabs": {
+      "shop": "Shop Profile",
+      "team": "Team",
+      "payments": "Payments",
+      "commissions": "Rules & Growth",
+      "referral": "Referrals",
+      "myProfile": "My Profile"
+    },
+    "actions": {
+      "newMember": "New member",
+      "newPlan": "New plan"
+    },
     "alerts": {
       "profileUpdatedSuccessfully": "Profile updated successfully!",
       "instagramLinkCopied": "Link copied! Paste it on your Instagram.",
@@ -40,6 +58,10 @@
         "fixedRentalFeeLabel": "Fixed rental fee",
         "savePlanButton": "Save plan"
       }
+    },
+    "payments": {
+      "installmentsExampleTitle": "Installment example",
+      "installmentsExampleDescription": "Purchase of {total} in {installments}x = {installmentValue} + interest"
     },
     "services": {
       "modal": {
