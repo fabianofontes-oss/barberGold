@@ -264,7 +264,7 @@ export const Agenda = () => {
             <div>
                <h2 className="text-2xl md:text-3xl font-bold text-white mb-1 md:mb-2">Agenda</h2>
                <p className="text-zinc-400 text-xs md:text-sm hidden md:block">
-                  {isOwner ? 'Manage shop schedule.' : 'Manage your appointments.'}
+                  {isOwner ? 'Gerencie a agenda da loja.' : 'Gerencie seus agendamentos.'}
                </p>
             </div>
             <div className="flex gap-2">
