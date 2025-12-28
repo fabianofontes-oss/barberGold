@@ -828,8 +828,58 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const updateProduct = (p: Product) => setProducts(prev => prev.map(prod => prod.id === p.id ? p : prod));
   const addProduct = (p: any) => setProducts(prev => [...prev, { ...p, id: Math.random().toString(36).substr(2, 9), type: 'PRODUCT' }]);
   const deleteProduct = (id: string) => setProducts(prev => prev.filter(p => p.id !== id));
-  const addStaff = (s: any) => setStaff(prev => [...prev, { ...s, id: Math.random().toString(36).substr(2, 9) }]);
-  const updateStaff = (s: StaffMember) => setStaff(prev => prev.map(st => st.id === s.id ? s : st));
+  const addStaff = async (s: any) => {
+    try {
+      const { createStaff } = await import('@/modules/staff/actions');
+      await createStaff({
+        name: s.name,
+        role: s.role,
+        phone: s.phone || '',
+        cpf: s.cpf,
+        birthDate: s.birthDate,
+        address: s.address,
+        avatar: s.avatar,
+        commissionModel: (s.commissionModel === 'PERCENTAGE' || s.commissionModel === 'RENTAL') ? s.commissionModel : 'PERCENTAGE',
+        serviceCommissionRate: s.serviceCommissionRate || 50,
+        productCommissionRate: s.productCommissionRate || 20,
+        rentalFee: s.rentalFee || 0,
+        paymentFrequency: s.paymentFrequency || 'WEEKLY',
+        workSchedule: s.workSchedule || [],
+        allowedServices: s.allowedServices || [],
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao criar staff:', error);
+      alert('Erro ao criar membro da equipe');
+    }
+  };
+  
+  const updateStaff = async (s: StaffMember) => {
+    try {
+      const { updateStaff: updateAction } = await import('@/modules/staff/actions');
+      await updateAction({
+        id: s.id,
+        name: s.name,
+        role: s.role,
+        phone: s.phone || '',
+        cpf: s.cpf,
+        birthDate: s.birthDate,
+        address: s.address,
+        avatar: s.avatar,
+        commissionModel: (s.commissionModel === 'PERCENTAGE' || s.commissionModel === 'RENTAL') ? s.commissionModel : 'PERCENTAGE',
+        serviceCommissionRate: s.serviceCommissionRate || 50,
+        productCommissionRate: s.productCommissionRate || 20,
+        rentalFee: s.rentalFee || 0,
+        paymentFrequency: s.paymentFrequency || 'WEEKLY',
+        workSchedule: s.workSchedule || [],
+        allowedServices: s.allowedServices || [],
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao atualizar staff:', error);
+      alert('Erro ao atualizar membro da equipe');
+    }
+  };
   const addCommissionPlan = async (p: any) => {
     try {
       const { createCommissionPlan } = await import('@/modules/commission/actions');
