@@ -306,27 +306,27 @@ export const Settings = () => {
              {/* Basic Info Card */}
              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                   <Store className="w-5 h-5 text-amber-500" /> Informações Básicas
+                   <Store className="w-5 h-5 text-amber-500" /> {t('settings.shop.basicInfoTitle')}
                 </h3>
                 
                 {/* LOGO UPLOAD SECTION */}
                 <div className="mb-6 border-b border-zinc-800 pb-6">
                    <ImageUpload 
-                      label="Logo da Barbearia" 
+                      label={t('settings.shop.logoLabel')} 
                       value={shopProfile.logo} 
                       onChange={(val) => updateShopProfile({ ...shopProfile, logo: val })} 
-                      placeholder="Envie o logo da sua marca (PNG/JPG)"
+                      placeholder={t('settings.shop.logoPlaceholder')}
                       className="w-full max-w-xs"
                    />
                    <p className="text-[10px] text-zinc-500 mt-2">
-                      Este logo substituirá o texto &quot;BarberFlow&quot; na barra lateral, cabeçalho mobile e website.
+                      {t('settings.shop.logoHelperText')}
                    </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                    <div className="space-y-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome da Barbearia</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.shopNameLabel')}</label>
                          <input 
                             type="text" 
                             value={shopProfile.name}
@@ -335,7 +335,7 @@ export const Settings = () => {
                          />
                       </div>
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Endereço</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.addressLabel')}</label>
                          <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
                             <MapPin className="w-4 h-4 text-zinc-500" />
                             <input 
@@ -349,7 +349,7 @@ export const Settings = () => {
                    </div>
                    <div className="space-y-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Telefone / Contato</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.phoneLabel')}</label>
                          <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
                             <Phone className="w-4 h-4 text-zinc-500" />
                             <input 
@@ -362,7 +362,7 @@ export const Settings = () => {
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                          <div>
-                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Instagram</label>
+                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.instagramLabel')}</label>
                             <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
                                <Instagram className="w-4 h-4 text-zinc-500" />
                                <input 
@@ -374,7 +374,7 @@ export const Settings = () => {
                             </div>
                          </div>
                          <div>
-                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">WhatsApp</label>
+                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.shop.whatsappLabel')}</label>
                             <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
                                <MessageSquare className="w-4 h-4 text-zinc-500" />
                                <input 
@@ -391,51 +391,56 @@ export const Settings = () => {
              </div>
 
              {/* Share Your Shop */}
-             <div className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/30 rounded-xl p-6">
-                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                   <Share2 className="w-5 h-5 text-purple-400" /> Compartilhar sua Barbearia
+            <div className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/30 rounded-xl p-6">
+               <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                   <Share2 className="w-5 h-5 text-purple-400" /> {t('settings.shop.shareTitle')}
                 </h3>
                 <p className="text-zinc-400 text-sm mb-4">
-                   Divulgue sua barbearia nas redes sociais e atraia mais clientes!
+                   {t('settings.shop.shareDescription')}
                 </p>
                 <div className="flex flex-wrap gap-3">
                    <button
                       onClick={() => {
-                         const text = `Conheça a ${shopProfile.name}! Agende seu horário: ${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`;
+                         const slug = shopProfile.name.replace(/\s/g, '').toLowerCase();
+                         const bookingUrl = `${window.location.origin}/book/${slug}`;
+                         const text = t('settings.shop.share.whatsappMessage', { shopName: shopProfile.name, bookingUrl });
                          window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
                       }}
                       className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-xl transition-all"
                    >
-                      <MessageSquare className="w-4 h-4" /> WhatsApp
+                      <MessageSquare className="w-4 h-4" /> {t('settings.shop.share.whatsappButton')}
                    </button>
                    <button
                       onClick={() => {
-                         const text = `Conheça a ${shopProfile.name}! Agende seu horário online.`;
-                         const url = `${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`;
+                         const slug = shopProfile.name.replace(/\s/g, '').toLowerCase();
+                         const url = `${window.location.origin}/book/${slug}`;
+                         const text = t('settings.shop.share.facebookQuote', { shopName: shopProfile.name });
                          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
                       }}
                       className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all"
                    >
-                      <Share2 className="w-4 h-4" /> Facebook
+                      <Share2 className="w-4 h-4" /> {t('settings.shop.share.facebookButton')}
                    </button>
                    <button
                       onClick={() => {
-                         navigator.clipboard.writeText(`${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`);
+                         const slug = shopProfile.name.replace(/\s/g, '').toLowerCase();
+                         navigator.clipboard.writeText(`${window.location.origin}/book/${slug}`);
                          alert(t('settings.alerts.instagramLinkCopied'));
                       }}
                       className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold rounded-xl transition-all"
                    >
-                      <Instagram className="w-4 h-4" /> Copiar para Instagram
+                      <Instagram className="w-4 h-4" /> {t('settings.shop.share.copyInstagramButton')}
                    </button>
                    <button
                       onClick={() => {
-                         const link = `${window.location.origin}/book/${shopProfile.name.replace(/\s/g, '').toLowerCase()}`;
+                         const slug = shopProfile.name.replace(/\s/g, '').toLowerCase();
+                         const link = `${window.location.origin}/book/${slug}`;
                          navigator.clipboard.writeText(link);
                          alert(t('settings.alerts.bookingLinkCopied'));
                       }}
                       className="flex items-center gap-2 px-4 py-2.5 bg-zinc-700 hover:bg-zinc-600 text-white font-bold rounded-xl transition-all"
                    >
-                      <Link className="w-4 h-4" /> Copiar Link
+                      <Link className="w-4 h-4" /> {t('settings.shop.share.copyLinkButton')}
                    </button>
                 </div>
              </div>
@@ -444,13 +449,13 @@ export const Settings = () => {
              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <div className="flex justify-between items-center mb-4">
                    <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-amber-500" /> Horário de Funcionamento
+                      <Clock className="w-5 h-5 text-amber-500" /> {t('settings.shop.operatingHoursTitle')}
                    </h3>
                    <button 
                       onClick={copyMondayToWeekdays}
                       className="text-xs text-amber-500 hover:text-amber-400 font-bold flex items-center gap-1"
                    >
-                      <Copy className="w-3 h-3" /> Copiar Seg para Sex
+                      <Copy className="w-3 h-3" /> {t('settings.shop.copyMonToFriButton')}
                    </button>
                 </div>
                 
@@ -481,9 +486,9 @@ export const Settings = () => {
                                   />
                                </>
                             ) : (
-                               <span className="text-sm text-zinc-500 font-medium italic">Fechado</span>
-                            )}
-                         </div>
+                               <span className="text-sm text-zinc-500 font-medium italic">{t('settings.shop.closedLabel')}</span>
+                           )}
+                        </div>
 
                          <div className="flex items-center gap-2">
                             <label className="relative inline-flex items-center cursor-pointer">
