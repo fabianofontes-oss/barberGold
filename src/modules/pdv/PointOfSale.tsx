@@ -683,7 +683,7 @@ export const PointOfSale = () => {
                )}
 
                <div className="flex justify-between items-center pt-2 border-t border-zinc-800">
-                 <span className="text-zinc-300 font-bold">Total Due</span>
+                 <span className="text-zinc-300 font-bold">Total a Pagar</span>
                  <span className="text-3xl font-bold text-white">${grandTotal.toFixed(2)}</span>
                </div>
             </div>
@@ -694,7 +694,7 @@ export const PointOfSale = () => {
                 onClick={() => setCheckoutStep('PAYMENT')}
                 className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-zinc-900 font-bold py-4 rounded-xl transition-all shadow-lg shadow-amber-500/20"
               >
-                {!selectedClientId ? 'Select Client' : (selectedStaffId ? 'Proceed to Payment' : 'Select Staff')}
+                {!selectedClientId ? 'Selecionar Cliente' : (selectedStaffId ? 'Ir para Pagamento' : 'Selecionar Funcionário')}
               </button>
             ) : (
               <div className="space-y-3">
@@ -796,7 +796,7 @@ export const PointOfSale = () => {
                   onClick={() => { setCheckoutStep('CART'); setIsSplitPayment(false); setSplitPayments([]); }}
                   className="w-full mt-2 text-zinc-500 hover:text-white text-sm py-2"
                 >
-                  Back to Cart
+                  Voltar ao Carrinho
                 </button>
               </div>
             )}
@@ -826,12 +826,12 @@ export const PointOfSale = () => {
          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
             <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-sm p-6 shadow-2xl animate-fade-in md:rounded-2xl border-0 md:border md:border-zinc-800 flex flex-col justify-center">
                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl font-bold text-white">Quick Add Client</h3>
+                  <h3 className="text-xl font-bold text-white">Adicionar Cliente Rápido</h3>
                   <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"><X className="w-5 h-5"/></button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-6">
                   <div>
-                     <label className="block text-sm font-bold text-zinc-400 mb-2">Full Name</label>
+                     <label className="block text-sm font-bold text-zinc-400 mb-2">Nome Completo</label>
                      <input 
                         type="text" 
                         required 
@@ -852,7 +852,7 @@ export const PointOfSale = () => {
                      />
                   </div>
                   <button type="submit" className="w-full bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold py-4 rounded-xl flex items-center justify-center gap-2 mt-4 text-lg shadow-lg">
-                     <Save className="w-5 h-5" /> Save Client
+                     <Save className="w-5 h-5" /> Salvar Cliente
                   </button>
                </form>
             </div>
