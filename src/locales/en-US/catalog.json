@@ -1,0 +1,138 @@
+{
+  "catalog": {
+    "title": "Catálogo",
+    "tabs": {
+      "services": "Serviços",
+      "products": "Produtos",
+      "combos": "Combos",
+      "addons": "Adicionais",
+      "categories": "Categorias",
+      "inventory": "Estoque",
+      "suppliers": "Fornecedores"
+    },
+    "services": {
+      "title": "Serviços",
+      "newService": "Novo Serviço",
+      "editService": "Editar Serviço",
+      "noServices": "Nenhum serviço cadastrado",
+      "addFirst": "Adicione seu primeiro serviço",
+      "name": "Nome do Serviço",
+      "price": "Preço",
+      "duration": "Duração",
+      "durationMinutes": "{minutes} min",
+      "category": "Categoria",
+      "description": "Descrição",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "commission": "Comissão",
+      "commissionPercent": "{percent}%"
+    },
+    "products": {
+      "title": "Produtos",
+      "newProduct": "Novo Produto",
+      "editProduct": "Editar Produto",
+      "noProducts": "Nenhum produto cadastrado",
+      "addFirst": "Adicione seu primeiro produto",
+      "name": "Nome do Produto",
+      "price": "Preço de Venda",
+      "cost": "Custo",
+      "stock": "Estoque",
+      "minStock": "Estoque Mínimo",
+      "category": "Categoria",
+      "supplier": "Fornecedor",
+      "barcode": "Código de Barras",
+      "sku": "SKU",
+      "margin": "Margem",
+      "lowStock": "Estoque Baixo",
+      "outOfStock": "Sem Estoque"
+    },
+    "combos": {
+      "title": "Combos",
+      "newCombo": "Novo Combo",
+      "editCombo": "Editar Combo",
+      "noCombos": "Nenhum combo cadastrado",
+      "name": "Nome do Combo",
+      "services": "Serviços inclusos",
+      "originalPrice": "Preço Original",
+      "comboPrice": "Preço do Combo",
+      "discount": "Desconto",
+      "savings": "Economia de {amount}"
+    },
+    "addons": {
+      "title": "Adicionais",
+      "newAddon": "Novo Adicional",
+      "editAddon": "Editar Adicional",
+      "noAddons": "Nenhum adicional cadastrado",
+      "name": "Nome",
+      "price": "Preço",
+      "applicableTo": "Aplicável a",
+      "allServices": "Todos os serviços",
+      "selectedServices": "Serviços selecionados"
+    },
+    "categories": {
+      "title": "Categorias",
+      "newCategory": "Nova Categoria",
+      "editCategory": "Editar Categoria",
+      "noCategories": "Nenhuma categoria cadastrada",
+      "name": "Nome",
+      "type": "Tipo",
+      "serviceCategory": "Categoria de Serviço",
+      "productCategory": "Categoria de Produto",
+      "itemCount": "{count} itens"
+    },
+    "inventory": {
+      "title": "Estoque",
+      "currentStock": "Estoque Atual",
+      "minStock": "Estoque Mínimo",
+      "lowStockAlert": "Alerta de Estoque Baixo",
+      "adjust": "Ajustar Estoque",
+      "addStock": "Adicionar",
+      "removeStock": "Remover",
+      "history": "Histórico de Movimentação",
+      "movement": {
+        "in": "Entrada",
+        "out": "Saída",
+        "adjustment": "Ajuste",
+        "sale": "Venda"
+      }
+    },
+    "suppliers": {
+      "title": "Fornecedores",
+      "newSupplier": "Novo Fornecedor",
+      "editSupplier": "Editar Fornecedor",
+      "noSuppliers": "Nenhum fornecedor cadastrado",
+      "name": "Nome",
+      "contact": "Contato",
+      "phone": "Telefone",
+      "email": "E-mail",
+      "address": "Endereço",
+      "cnpj": "CNPJ",
+      "products": "Produtos fornecidos"
+    },
+    "actions": {
+      "add": "Adicionar",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "duplicate": "Duplicar",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "importProducts": "Importar Produtos",
+      "exportCatalog": "Exportar Catálogo"
+    },
+    "filters": {
+      "all": "Todos",
+      "active": "Ativos",
+      "inactive": "Inativos",
+      "lowStock": "Estoque Baixo",
+      "outOfStock": "Sem Estoque",
+      "byCategory": "Por Categoria"
+    },
+    "toast": {
+      "created": "Criado com sucesso!",
+      "updated": "Atualizado com sucesso!",
+      "deleted": "Excluído com sucesso!",
+      "duplicated": "Duplicado com sucesso!",
+      "stockAdjusted": "Estoque ajustado!"
+    }
+  }
+}

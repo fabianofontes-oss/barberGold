@@ -1,0 +1,133 @@
+{
+  "finance": {
+    "title": "Financeiro",
+    "myEarnings": "Meus Ganhos",
+    "overview": {
+      "title": "Visão Geral",
+      "revenue": "Receita",
+      "expenses": "Despesas",
+      "profit": "Lucro",
+      "profitMargin": "Margem de Lucro",
+      "pendingPayments": "Pagamentos Pendentes",
+      "receivables": "A Receber",
+      "payables": "A Pagar"
+    },
+    "periods": {
+      "today": "Hoje",
+      "yesterday": "Ontem",
+      "thisWeek": "Esta Semana",
+      "lastWeek": "Semana Passada",
+      "thisMonth": "Este Mês",
+      "lastMonth": "Mês Passado",
+      "thisYear": "Este Ano",
+      "custom": "Personalizado"
+    },
+    "transactions": {
+      "title": "Transações",
+      "income": "Receita",
+      "expense": "Despesa",
+      "transfer": "Transferência",
+      "noTransactions": "Nenhuma transação registrada",
+      "addTransaction": "Nova Transação",
+      "type": "Tipo",
+      "category": "Categoria",
+      "description": "Descrição",
+      "amount": "Valor",
+      "date": "Data",
+      "account": "Conta",
+      "status": "Status",
+      "paid": "Pago",
+      "pending": "Pendente",
+      "cancelled": "Cancelado"
+    },
+    "categories": {
+      "income": {
+        "services": "Serviços",
+        "products": "Produtos",
+        "subscriptions": "Assinaturas",
+        "tips": "Gorjetas",
+        "other": "Outros"
+      },
+      "expense": {
+        "rent": "Aluguel",
+        "utilities": "Contas (Água, Luz, etc)",
+        "supplies": "Insumos",
+        "salaries": "Salários",
+        "commissions": "Comissões",
+        "marketing": "Marketing",
+        "maintenance": "Manutenção",
+        "taxes": "Impostos",
+        "other": "Outros"
+      }
+    },
+    "reports": {
+      "title": "Relatórios",
+      "salesReport": "Relatório de Vendas",
+      "expenseReport": "Relatório de Despesas",
+      "profitReport": "Relatório de Lucros",
+      "commissionReport": "Relatório de Comissões",
+      "cashFlowReport": "Fluxo de Caixa",
+      "generate": "Gerar Relatório",
+      "export": "Exportar",
+      "print": "Imprimir"
+    },
+    "commissions": {
+      "title": "Comissões",
+      "myCommissions": "Minhas Comissões",
+      "teamCommissions": "Comissões da Equipe",
+      "pending": "Pendentes",
+      "paid": "Pagas",
+      "total": "Total",
+      "period": "Período",
+      "professional": "Profissional",
+      "services": "Serviços",
+      "products": "Produtos",
+      "rate": "Taxa",
+      "amount": "Valor",
+      "pay": "Pagar",
+      "markAsPaid": "Marcar como Pago"
+    },
+    "goals": {
+      "title": "Metas",
+      "dailyGoal": "Meta Diária",
+      "weeklyGoal": "Meta Semanal",
+      "monthlyGoal": "Meta Mensal",
+      "progress": "Progresso",
+      "reached": "Meta atingida!",
+      "remaining": "Faltam {amount}",
+      "setGoal": "Definir Meta",
+      "editGoal": "Editar Meta"
+    },
+    "accounts": {
+      "title": "Contas",
+      "cashAccount": "Caixa",
+      "bankAccount": "Conta Bancária",
+      "balance": "Saldo",
+      "addAccount": "Adicionar Conta"
+    },
+    "register": {
+      "title": "Fechamento de Caixa",
+      "openRegister": "Abrir Caixa",
+      "closeRegister": "Fechar Caixa",
+      "registerHistory": "Histórico de Caixas",
+      "openedAt": "Aberto em",
+      "closedAt": "Fechado em",
+      "openedBy": "Aberto por",
+      "closedBy": "Fechado por",
+      "openingBalance": "Saldo Inicial",
+      "closingBalance": "Saldo Final",
+      "expectedBalance": "Saldo Esperado",
+      "actualBalance": "Saldo Real",
+      "difference": "Diferença",
+      "notes": "Observações"
+    },
+    "toast": {
+      "transactionCreated": "Transação registrada!",
+      "transactionUpdated": "Transação atualizada!",
+      "transactionDeleted": "Transação excluída!",
+      "commissionPaid": "Comissão paga!",
+      "reportGenerated": "Relatório gerado!",
+      "goalSet": "Meta definida!"
+    }
+  }
+}

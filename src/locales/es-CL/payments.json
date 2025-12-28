@@ -1,17 +1,17 @@
 {
-  "title": "Pagos",
+  "title": "Payments",
   "methods": {
-    "cash": "Efectivo",
-    "credit_card": "Tarjeta de Crédito",
-    "debit_card": "Tarjeta de Débito",
-    "pix": "Transferencia",
+    "cash": "Cash",
+    "credit_card": "Credit Card",
+    "debit_card": "Debit Card",
+    "pix": "Bank Transfer",
     "google_pay": "Google Pay",
     "apple_pay": "Apple Pay",
     "mercado_pago": "Mercado Pago",
     "pagseguro": "PagSeguro",
     "infinite_pay": "InfinitePay",
     "stone": "Stone",
-    "other": "Otro"
+    "other": "Other"
   },
   "gateways": {
     "mercado_pago": "Mercado Pago",
@@ -21,27 +21,27 @@
     "stone": "Stone"
   },
   "pix": {
-    "title": "Configuración de Transferencia",
-    "keyType": "Tipo de Clave",
-    "key": "Clave",
-    "beneficiary": "Nombre del Beneficiario",
-    "qrCode": "Código QR",
-    "copyCode": "Copiar Código"
+    "title": "Transfer Configuration",
+    "keyType": "Key Type",
+    "key": "Key",
+    "beneficiary": "Beneficiary Name",
+    "qrCode": "QR Code",
+    "copyCode": "Copy Code"
   },
   "installments": {
-    "title": "Cuotas",
-    "max": "Máximo de Cuotas",
-    "minValue": "Valor Mínimo de Cuota",
-    "interest": "Cobrar Interés",
-    "interestRate": "Tasa de Interés (%)"
+    "title": "Installments",
+    "max": "Maximum Installments",
+    "minValue": "Minimum Installment Value",
+    "interest": "Charge Interest",
+    "interestRate": "Interest Rate (%)"
   },
   "bankAccount": {
-    "title": "Cuenta Bancaria",
-    "bank": "Banco",
-    "accountType": "Tipo de Cuenta",
-    "agency": "Sucursal",
-    "account": "Cuenta",
-    "holder": "Titular",
-    "document": "RUT"
+    "title": "Bank Account",
+    "bank": "Bank",
+    "accountType": "Account Type",
+    "agency": "Branch",
+    "account": "Account",
+    "holder": "Account Holder",
+    "document": "SSN/EIN"
   }
 }

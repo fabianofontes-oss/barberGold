@@ -1,0 +1,95 @@
+{
+  "agenda": {
+    "title": "Agenda",
+    "newAppointment": "Novo Agendamento",
+    "calendar": "Calendário",
+    "dayView": "Dia",
+    "weekView": "Semana",
+    "monthView": "Mês",
+    "listView": "Lista",
+    "today": "Hoje",
+    "noAppointments": "Nenhum agendamento para este dia",
+    "slots": {
+      "available": "Disponível",
+      "busy": "Ocupado",
+      "blocked": "Bloqueado",
+      "break": "Intervalo"
+    },
+    "appointment": {
+      "title": "Agendamento",
+      "client": "Cliente",
+      "service": "Serviço",
+      "services": "Serviços",
+      "professional": "Profissional",
+      "dateTime": "Data e Hora",
+      "duration": "Duração",
+      "price": "Valor",
+      "notes": "Observações",
+      "status": "Status",
+      "createdAt": "Criado em",
+      "confirmedAt": "Confirmado em"
+    },
+    "status": {
+      "scheduled": "Agendado",
+      "confirmed": "Confirmado",
+      "inProgress": "Em Atendimento",
+      "completed": "Concluído",
+      "cancelled": "Cancelado",
+      "noShow": "Não Compareceu"
+    },
+    "actions": {
+      "confirm": "Confirmar",
+      "start": "Iniciar",
+      "complete": "Concluir",
+      "cancel": "Cancelar",
+      "reschedule": "Reagendar",
+      "markNoShow": "Marcar Não Compareceu",
+      "sendReminder": "Enviar Lembrete",
+      "viewDetails": "Ver Detalhes",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "confirmations": {
+      "cancel": "Tem certeza que deseja cancelar este agendamento?",
+      "noShow": "Marcar como não compareceu?",
+      "delete": "Tem certeza que deseja excluir este agendamento?"
+    },
+    "queue": {
+      "title": "Fila de Espera",
+      "position": "Posição",
+      "waitTime": "Tempo de Espera",
+      "estimatedTime": "Previsão",
+      "addToQueue": "Adicionar à Fila",
+      "removeFromQueue": "Remover da Fila",
+      "noQueue": "Fila vazia",
+      "nextInLine": "Próximo da fila",
+      "callClient": "Chamar Cliente"
+    },
+    "filters": {
+      "all": "Todos",
+      "myAppointments": "Meus Agendamentos",
+      "byProfessional": "Por Profissional",
+      "byService": "Por Serviço",
+      "byStatus": "Por Status"
+    },
+    "form": {
+      "selectClient": "Selecione o cliente",
+      "selectService": "Selecione o serviço",
+      "selectProfessional": "Selecione o profissional",
+      "selectDate": "Selecione a data",
+      "selectTime": "Selecione o horário",
+      "addNotes": "Adicionar observações",
+      "searchClient": "Buscar cliente...",
+      "newClient": "Novo Cliente",
+      "anyProfessional": "Qualquer profissional disponível"
+    },
+    "toast": {
+      "created": "Agendamento criado com sucesso!",
+      "updated": "Agendamento atualizado!",
+      "cancelled": "Agendamento cancelado.",
+      "confirmed": "Agendamento confirmado!",
+      "completed": "Atendimento concluído!",
+      "reminderSent": "Lembrete enviado!"
+    }
+  }
+}

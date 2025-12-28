@@ -1,0 +1,114 @@
+{
+  "clients": {
+    "title": "Clientes",
+    "newClient": "Novo Cliente",
+    "searchPlaceholder": "Buscar por nome, telefone ou e-mail...",
+    "totalClients": "{count} clientes",
+    "noClients": "Nenhum cliente cadastrado",
+    "noResults": "Nenhum cliente encontrado",
+    "addFirst": "Adicione seu primeiro cliente",
+    "client": {
+      "name": "Nome",
+      "phone": "Telefone",
+      "email": "E-mail",
+      "birthdate": "Data de Nascimento",
+      "gender": "Gênero",
+      "male": "Masculino",
+      "female": "Feminino",
+      "other": "Outro",
+      "preferNotToSay": "Prefiro não dizer",
+      "notes": "Observações",
+      "address": "Endereço",
+      "cpf": "CPF",
+      "preferredProfessional": "Profissional Preferido",
+      "anyProfessional": "Sem preferência"
+    },
+    "stats": {
+      "totalVisits": "Total de Visitas",
+      "totalSpent": "Total Gasto",
+      "avgTicket": "Ticket Médio",
+      "lastVisit": "Última Visita",
+      "firstVisit": "Primeira Visita",
+      "daysSinceLastVisit": "Dias desde última visita",
+      "loyaltyPoints": "Pontos de Fidelidade",
+      "referrals": "Indicações"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "new": "Novo",
+      "vip": "VIP",
+      "atRisk": "Em Risco",
+      "loyal": "Fiel"
+    },
+    "tabs": {
+      "info": "Informações",
+      "history": "Histórico",
+      "preferences": "Preferências",
+      "loyalty": "Fidelidade",
+      "notes": "Anotações"
+    },
+    "history": {
+      "title": "Histórico de Atendimentos",
+      "noHistory": "Nenhum atendimento registrado",
+      "services": "Serviços realizados",
+      "products": "Produtos comprados"
+    },
+    "preferences": {
+      "title": "Preferências",
+      "favoriteServices": "Serviços Favoritos",
+      "preferredDays": "Dias Preferidos",
+      "preferredTimes": "Horários Preferidos",
+      "notifications": "Notificações",
+      "smsReminder": "Lembrete por SMS",
+      "whatsappReminder": "Lembrete por WhatsApp",
+      "emailMarketing": "E-mail Marketing"
+    },
+    "loyalty": {
+      "title": "Programa de Fidelidade",
+      "points": "Pontos",
+      "level": "Nível",
+      "nextLevel": "Próximo nível",
+      "pointsToNext": "{points} pontos para o próximo nível",
+      "rewards": "Recompensas disponíveis",
+      "redeemPoints": "Resgatar pontos"
+    },
+    "actions": {
+      "edit": "Editar",
+      "delete": "Excluir",
+      "sendMessage": "Enviar Mensagem",
+      "newAppointment": "Novo Agendamento",
+      "viewHistory": "Ver Histórico",
+      "addNote": "Adicionar Nota",
+      "exportData": "Exportar Dados"
+    },
+    "form": {
+      "title": {
+        "new": "Novo Cliente",
+        "edit": "Editar Cliente"
+      },
+      "namePlaceholder": "Nome completo",
+      "phonePlaceholder": "(00) 00000-0000",
+      "emailPlaceholder": "email@exemplo.com",
+      "notesPlaceholder": "Observações sobre o cliente..."
+    },
+    "toast": {
+      "created": "Cliente cadastrado com sucesso!",
+      "updated": "Cliente atualizado!",
+      "deleted": "Cliente excluído.",
+      "messageSent": "Mensagem enviada!"
+    },
+    "confirmations": {
+      "delete": "Tem certeza que deseja excluir este cliente? Esta ação não pode ser desfeita."
+    },
+    "filters": {
+      "all": "Todos",
+      "active": "Ativos",
+      "inactive": "Inativos",
+      "new": "Novos",
+      "vip": "VIP",
+      "atRisk": "Em Risco",
+      "birthday": "Aniversariantes"
+    }
+  }
+}

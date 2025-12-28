@@ -1,0 +1,111 @@
+{
+  "barberclub": {
+    "title": "Barber Club™",
+    "subtitle": "Programa de Assinaturas",
+    "description": "Crie planos de assinatura e fidelize seus clientes",
+    "tabs": {
+      "dashboard": "Painel",
+      "plans": "Planos",
+      "subscribers": "Assinantes",
+      "credits": "Créditos"
+    },
+    "dashboard": {
+      "title": "Painel do Club",
+      "activeSubscribers": "Assinantes Ativos",
+      "monthlyRevenue": "Receita Mensal",
+      "avgTicket": "Ticket Médio",
+      "churnRate": "Taxa de Cancelamento",
+      "newSubscribers": "Novos Assinantes",
+      "renewals": "Renovações",
+      "cancellations": "Cancelamentos"
+    },
+    "plans": {
+      "title": "Planos de Assinatura",
+      "newPlan": "Novo Plano",
+      "editPlan": "Editar Plano",
+      "noPlans": "Nenhum plano criado",
+      "createFirst": "Crie seu primeiro plano de assinatura",
+      "name": "Nome do Plano",
+      "description": "Descrição",
+      "price": "Valor Mensal",
+      "benefits": "Benefícios",
+      "addBenefit": "Adicionar Benefício",
+      "services": "Serviços Inclusos",
+      "credits": "Créditos Mensais",
+      "discount": "Desconto em Serviços",
+      "discountProducts": "Desconto em Produtos",
+      "priority": "Agendamento Prioritário",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "subscribers": "{count} assinantes"
+    },
+    "subscribers": {
+      "title": "Assinantes",
+      "noSubscribers": "Nenhum assinante ainda",
+      "inviteClients": "Convide seus clientes para assinar",
+      "name": "Nome",
+      "plan": "Plano",
+      "status": "Status",
+      "since": "Assinante desde",
+      "nextBilling": "Próxima cobrança",
+      "credits": "Créditos restantes",
+      "actions": "Ações",
+      "viewDetails": "Ver Detalhes",
+      "cancelSubscription": "Cancelar Assinatura",
+      "pauseSubscription": "Pausar Assinatura",
+      "resumeSubscription": "Retomar Assinatura",
+      "statusLabels": {
+        "active": "Ativo",
+        "paused": "Pausado",
+        "cancelled": "Cancelado",
+        "pending": "Pendente",
+        "expired": "Expirado"
+      }
+    },
+    "credits": {
+      "title": "Créditos",
+      "balance": "Saldo de Créditos",
+      "used": "Utilizados",
+      "remaining": "Restantes",
+      "expires": "Expiram em",
+      "history": "Histórico de Uso",
+      "noCredits": "Sem créditos disponíveis",
+      "addCredits": "Adicionar Créditos",
+      "useCredits": "Usar Créditos",
+      "type": {
+        "monthly": "Mensal",
+        "bonus": "Bônus",
+        "gift": "Presente"
+      }
+    },
+    "actions": {
+      "subscribe": "Assinar",
+      "upgrade": "Fazer Upgrade",
+      "downgrade": "Fazer Downgrade",
+      "cancel": "Cancelar",
+      "renew": "Renovar",
+      "pause": "Pausar",
+      "resume": "Retomar"
+    },
+    "badge": {
+      "member": "Membro Club",
+      "premium": "Premium",
+      "vip": "VIP"
+    },
+    "toast": {
+      "planCreated": "Plano criado com sucesso!",
+      "planUpdated": "Plano atualizado!",
+      "planDeleted": "Plano excluído!",
+      "subscribed": "Assinatura realizada!",
+      "cancelled": "Assinatura cancelada.",
+      "paused": "Assinatura pausada.",
+      "resumed": "Assinatura retomada!",
+      "creditsAdded": "Créditos adicionados!"
+    },
+    "confirmations": {
+      "deletePlan": "Tem certeza que deseja excluir este plano?",
+      "cancelSubscription": "Tem certeza que deseja cancelar esta assinatura?",
+      "pauseSubscription": "Deseja pausar esta assinatura?"
+    }
+  }
+}

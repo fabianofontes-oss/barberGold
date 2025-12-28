@@ -1,40 +1,40 @@
 {
   "app": {
     "name": "BarberGold",
-    "tagline": "Sistema de Gestión para Barberías"
+    "tagline": "Management System for Barbershops"
   },
   "navigation": {
-    "dashboard": "Panel",
-    "calendar": "Agenda",
-    "clients": "Clientes",
-    "services": "Servicios",
-    "team": "Equipo",
-    "reports": "Informes",
-    "settings": "Configuración"
+    "dashboard": "Dashboard",
+    "calendar": "Calendar",
+    "clients": "Clients",
+    "services": "Services",
+    "team": "Team",
+    "reports": "Reports",
+    "settings": "Settings"
   },
   "common": {
-    "save": "Guardar",
-    "cancel": "Cancelar",
-    "delete": "Eliminar",
-    "edit": "Editar",
-    "add": "Agregar",
-    "search": "Buscar",
-    "filter": "Filtrar",
-    "loading": "Cargando...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "loading": "Loading...",
     "error": "Error",
-    "success": "Éxito",
-    "confirm": "Confirmar",
-    "back": "Volver",
-    "next": "Siguiente",
-    "finish": "Finalizar"
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish"
   },
   "currency": {
     "symbol": "$",
-    "code": "CLP",
+    "code": "USD",
     "format": "{symbol}{value}"
   },
   "date": {
-    "format": "dd/MM/yyyy",
-    "timeFormat": "HH:mm"
+    "format": "MM/dd/yyyy",
+    "timeFormat": "hh:mm a"
   }
 }

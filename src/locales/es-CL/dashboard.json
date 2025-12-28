@@ -1,0 +1,80 @@
+{
+  "dashboard": {
+    "title": "Painel",
+    "staffView": "Visão do Colaborador",
+    "welcome": "Bem-vindo de volta, {name}. Veja o que está acontecendo hoje.",
+    "stats": {
+      "myEstimatedEarnings": "Meus Ganhos Est.",
+      "todayCommission": "Comissão de Hoje",
+      "myAppointments": "Meus Agendamentos",
+      "completed": "{count} concluídos",
+      "loyalPortfolio": "Portfólio Fiel",
+      "youAreAPro": "Você é um Pro!",
+      "keepBuilding": "Continue construindo!",
+      "nextClient": "Próximo Cliente",
+      "inMinutes": "em {minutes} min",
+      "noUpcoming": "Sem próximos",
+      "todayRevenue": "Receita de Hoje",
+      "dailyGoal": "Meta Diária",
+      "activeClients": "Clientes Ativos",
+      "appointmentsToday": "Agendamentos Hoje",
+      "lowStock": "Estoque Baixo",
+      "products": "produtos",
+      "pendingApprovals": "Aprovações Pendentes"
+    },
+    "daySummary": {
+      "title": "Resumo do Dia",
+      "revenue": "Receita",
+      "appointments": "Agendamentos",
+      "clients": "Clientes",
+      "avgTicket": "Ticket Médio",
+      "completionRate": "Taxa de Conclusão"
+    },
+    "goalWidget": {
+      "dailyGoal": "Meta Diária",
+      "reached": "Meta alcançada!",
+      "remaining": "{amount} restante",
+      "progress": "{percent}% da meta"
+    },
+    "noShowApproval": {
+      "title": "Aprovações de Não Comparecimento",
+      "description": "Clientes que não compareceram precisam de sua aprovação",
+      "approve": "Aprovar",
+      "reject": "Rejeitar",
+      "viewDetails": "Ver Detalhes"
+    },
+    "birthdayClients": {
+      "title": "Aniversariantes",
+      "todayBirthday": "Aniversário Hoje!",
+      "sendWishes": "Enviar Parabéns",
+      "noBirthdays": "Nenhum aniversariante hoje"
+    },
+    "inactiveClients": {
+      "title": "Clientes Inativos",
+      "lastVisit": "Última visita: {date}",
+      "daysAgo": "há {days} dias",
+      "sendReminder": "Enviar Lembrete",
+      "noInactive": "Todos os clientes estão ativos!"
+    },
+    "ranking": {
+      "title": "Ranking da Equipe",
+      "today": "Hoje",
+      "week": "Semana",
+      "month": "Mês",
+      "services": "serviços",
+      "revenue": "receita"
+    },
+    "actions": {
+      "newAppointment": "Novo Agendamento",
+      "newSale": "Nova Venda",
+      "viewAgenda": "Ver Agenda",
+      "sendSurvey": "Enviar Pesquisa",
+      "confirmSendSurvey": "Simular envio de link e abrir Pesquisa como cliente?"
+    },
+    "chart": {
+      "revenueOverTime": "Receita ao Longo do Tempo",
+      "last7Days": "Últimos 7 dias",
+      "last30Days": "Últimos 30 dias"
+    }
+  }
+}

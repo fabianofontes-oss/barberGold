@@ -19,34 +19,34 @@
       "newPlan": "New plan"
     },
     "shop": {
-      "basicInfoTitle": "Información básica",
-      "logoLabel": "Logo de la barbería",
-      "logoPlaceholder": "Sube el logo de tu marca (PNG/JPG)",
-      "logoHelperText": "Este logo reemplazará el texto BarberFlow en la barra lateral, encabezado móvil y sitio web.",
-      "shopNameLabel": "Nombre de la barbería",
-      "addressLabel": "Dirección",
-      "phoneLabel": "Teléfono / contacto",
+      "basicInfoTitle": "Basic information",
+      "logoLabel": "Shop logo",
+      "logoPlaceholder": "Upload your brand logo (PNG/JPG)",
+      "logoHelperText": "This logo will replace the BarberFlow text in the sidebar, mobile header and website.",
+      "shopNameLabel": "Shop name",
+      "addressLabel": "Address",
+      "phoneLabel": "Phone / contact",
       "instagramLabel": "Instagram",
       "whatsappLabel": "WhatsApp",
-      "shareTitle": "Compartir tu barbería",
-      "shareDescription": "¡Promociona tu barbería en redes sociales y atrae más clientes!",
+      "shareTitle": "Share your barbershop",
+      "shareDescription": "Promote your barbershop on social media and attract more clients!",
       "share": {
-        "whatsappMessage": "¡Conoce {shopName}! Agenda tu hora: {bookingUrl}",
+        "whatsappMessage": "Check out {shopName}! Book your appointment: {bookingUrl}",
         "whatsappButton": "WhatsApp",
-        "facebookQuote": "¡Conoce {shopName}! Agenda online.",
+        "facebookQuote": "Check out {shopName}! Book online.",
         "facebookButton": "Facebook",
-        "copyInstagramButton": "Copiar para Instagram",
-        "copyLinkButton": "Copiar enlace"
+        "copyInstagramButton": "Copy for Instagram",
+        "copyLinkButton": "Copy link"
       },
-      "operatingHoursTitle": "Horario de funcionamiento",
-      "copyMonToFriButton": "Copiar lun a vie",
-      "closedLabel": "Cerrado"
+      "operatingHoursTitle": "Operating hours",
+      "copyMonToFriButton": "Copy Mon to Fri",
+      "closedLabel": "Closed"
     },
     "team": {
-      "commissionLabel": "Comisión",
-      "estimatedRevenueLabel": "Ingresos est. ({days}d)",
-      "occupancyLabel": "Ocupación ({hours}h disponible)",
-      "addMemberButton": "Agregar miembro del equipo"
+      "commissionLabel": "Commission",
+      "estimatedRevenueLabel": "Est. revenue ({days}d)",
+      "occupancyLabel": "Occupancy ({hours}h available)",
+      "addMemberButton": "Add team member"
     },
     "alerts": {
       "profileUpdatedSuccessfully": "Profile updated successfully!",
@@ -90,19 +90,19 @@
       }
     },
     "payments": {
-      "methodsTitle": "Métodos de pago",
-      "methodsDescription": "Configura qué métodos de pago acepta tu barbería en la tienda y en el agendamiento online.",
-      "inStoreTitle": "Pagos en la tienda (POS)",
-      "inStoreDescription": "Métodos aceptados en la caja física y atención presencial.",
-      "onlineTitle": "Pagos online",
-      "onlineDescription": "Métodos aceptados en el agendamiento online por sitio/app.",
-      "notConfiguredBadge": "No configurado",
-      "integrationsInfoTitle": "Importante sobre integraciones",
-      "integrationsInfoDescription": "Configura abajo tus integraciones de pago para aceptar pagos online.",
+      "methodsTitle": "Payment methods",
+      "methodsDescription": "Configure which payment methods your barbershop accepts in-store and online booking.",
+      "inStoreTitle": "In-store payments (POS)",
+      "inStoreDescription": "Methods accepted at the physical checkout and in-person service.",
+      "onlineTitle": "Online payments",
+      "onlineDescription": "Methods accepted on online booking via website/app.",
+      "notConfiguredBadge": "Not configured",
+      "integrationsInfoTitle": "Important about integrations",
+      "integrationsInfoDescription": "Configure your payment integrations below to accept online payments.",
       "methodLabels": {
-        "cash": "Efectivo",
-        "creditCard": "Tarjeta de crédito",
-        "debitCard": "Tarjeta de débito",
+        "cash": "Cash",
+        "creditCard": "Credit card",
+        "debitCard": "Debit card",
         "pix": "PIX",
         "googlePay": "Google Pay",
         "applePay": "Apple Pay",
@@ -111,67 +111,67 @@
         "infinitePay": "InfinitePay",
         "stone": "Stone"
       },
-      "installmentsExampleTitle": "Ejemplo de cuotas",
-      "installmentsExampleDescription": "Compra de {total} en {installments}x = {installmentValue} + intereses",
-      "gatewayTitle": "Integraciones de gateway",
-      "gatewayDescription": "Configura tus credenciales de API para procesar pagos online.",
+      "installmentsExampleTitle": "Installment example",
+      "installmentsExampleDescription": "Purchase of {total} in {installments}x = {installmentValue} + interest",
+      "gatewayTitle": "Gateway integrations",
+      "gatewayDescription": "Configure your API credentials to process online payments.",
       "gateways": {
         "mercadoPago": {
           "name": "Mercado Pago",
-          "description": "Gateway de pago de América Latina"
+          "description": "Latin America payment gateway"
         },
         "pagSeguro": {
           "name": "PagSeguro",
-          "description": "Gateway de pago de UOL"
+          "description": "UOL payment gateway"
         },
         "stripe": {
           "name": "Stripe",
-          "description": "Gateway de pago internacional"
+          "description": "International payment gateway"
         },
         "infinitePay": {
           "name": "InfinitePay",
-          "description": "Máquina y gateway brasileño"
+          "description": "Brazilian card machine and gateway"
         },
         "stone": {
           "name": "Stone",
-          "description": "Máquina y gateway Stone"
+          "description": "Stone card machine and gateway"
         }
       },
       "pix": {
-        "title": "Configuración PIX",
-        "description": "Configura tu clave PIX para recibir pagos instantáneos.",
-        "keyTypeLabel": "Tipo de clave",
+        "title": "PIX Configuration",
+        "description": "Configure your PIX key to receive instant payments.",
+        "keyTypeLabel": "Key type",
         "keyTypes": {
           "cpfCnpj": "CPF/CNPJ",
           "email": "E-mail",
-          "phone": "Teléfono",
-          "random": "Clave aleatoria"
+          "phone": "Phone",
+          "random": "Random key"
         },
-        "keyLabel": "Clave PIX",
-        "keyPlaceholder": "Ingresa tu clave PIX",
-        "beneficiaryLabel": "Nombre del beneficiario",
-        "beneficiaryPlaceholder": "Nombre completo o razón social",
-        "copyButton": "Copiar código PIX",
-        "emptyTitle": "Configura tu clave PIX",
-        "emptyDescription": "Completa los campos para generar el código QR"
+        "keyLabel": "PIX Key",
+        "keyPlaceholder": "Enter your PIX key",
+        "beneficiaryLabel": "Beneficiary name",
+        "beneficiaryPlaceholder": "Full name or company name",
+        "copyButton": "Copy PIX code",
+        "emptyTitle": "Configure your PIX key",
+        "emptyDescription": "Fill in the fields to generate the QR Code"
       },
       "installments": {
-        "title": "Configuración de cuotas",
-        "description": "Define las reglas de cuotas para tarjeta de crédito.",
-        "maxInstallmentsLabel": "Cuotas máximas",
+        "title": "Installment settings",
+        "description": "Set the installment rules for credit card.",
+        "maxInstallmentsLabel": "Max installments",
         "options": {
-          "cash": "1x (Contado)"
+          "cash": "1x (Cash)"
         },
-        "minValueLabel": "Valor mínimo por cuota",
-        "interestTitle": "Intereses de cuotas",
-        "interestDescription": "Cobrar intereses en las cuotas",
-        "interestRateLabel": "Tasa de interés (% mensual)"
+        "minValueLabel": "Minimum value per installment",
+        "interestTitle": "Installment interest",
+        "interestDescription": "Charge interest on installments",
+        "interestRateLabel": "Interest rate (% per month)"
       },
       "bankAccount": {
-        "title": "Cuenta para recepción",
-        "description": "Configura la cuenta bancaria donde deseas recibir los pagos.",
-        "bankLabel": "Banco",
-        "selectBank": "Selecciona el banco",
+        "title": "Receiving account",
+        "description": "Configure the bank account where you want to receive payments.",
+        "bankLabel": "Bank",
+        "selectBank": "Select bank",
         "banks": {
           "bancoDoBrasil": "001 - Banco do Brasil",
           "caixa": "104 - Caixa Econômica",
@@ -181,19 +181,19 @@
           "nubank": "260 - Nubank",
           "inter": "077 - Inter"
         },
-        "accountTypeLabel": "Tipo de cuenta",
+        "accountTypeLabel": "Account type",
         "accountTypes": {
-          "checking": "Cuenta corriente",
-          "savings": "Cuenta de ahorro",
-          "payment": "Cuenta de pago"
+          "checking": "Checking account",
+          "savings": "Savings account",
+          "payment": "Payment account"
         },
-        "agencyLabel": "Sucursal",
-        "accountLabel": "Cuenta",
-        "holderLabel": "Titular de la cuenta",
-        "holderPlaceholder": "Nombre completo del titular",
-        "documentLabel": "CPF/CNPJ del titular"
+        "agencyLabel": "Branch",
+        "accountLabel": "Account",
+        "holderLabel": "Account holder",
+        "holderPlaceholder": "Full name of account holder",
+        "documentLabel": "Holder's CPF/CNPJ"
       },
-      "saveButton": "Guardar configuración"
+      "saveButton": "Save settings"
     },
     "services": {
       "modal": {
@@ -286,51 +286,51 @@
       "referralSystemDescription": "Enable a program for clients to invite friends and earn rewards."
     },
     "commissions": {
-      "qualityTipsTitle": "Garantía de calidad y propinas",
-      "qualityTipsDescription": "Envía automáticamente enlaces de encuesta a clientes después de los servicios.",
-      "qualityTipsSubDescription": "Recopila feedback (1-5 estrellas) y sugiere propina por buen servicio.",
-      "qualityTipsFlowLabel": "Flujo",
-      "qualityTipsFlowDescription": "1. Servicio Completado > 2. Botón \"Enviar Link\" aparece en el Panel > 3. Cliente califica (Estrellas) > 4. Si Bueno > 5. Pedir Propina.",
-      "qualityTipsImpactLabel": "Impacto",
-      "qualityTipsImpactDescription": "Aumenta ganancias del equipo y captura experiencias malas privadamente antes de que lleguen a Google.",
-      "queueDistributionTitle": "Lógica de distribución de clientes sin cita",
-      "queueDistributionDescription": "¿Cómo debe el sistema asignar o recomendar automáticamente profesionales para clientes sin cita (nuevos/anónimos)?",
+      "qualityTipsTitle": "Quality assurance and tips",
+      "qualityTipsDescription": "Automatically send survey links to clients after services.",
+      "qualityTipsSubDescription": "Collects feedback (1-5 stars) and suggests tips for good service.",
+      "qualityTipsFlowLabel": "Flow",
+      "qualityTipsFlowDescription": "1. Service Completed > 2. \"Send Link\" button appears on Dashboard > 3. Client rates (Stars) > 4. If Good > 5. Request Tip.",
+      "qualityTipsImpactLabel": "Impact",
+      "qualityTipsImpactDescription": "Increases team earnings and captures bad experiences privately before they reach Google.",
+      "queueDistributionTitle": "Walk-in client distribution logic",
+      "queueDistributionDescription": "How should the system automatically assign or recommend professionals for walk-in clients (new/anonymous)?",
       "queueRules": {
         "fairness": {
-          "title": "FAIRNESS (Rotación)",
-          "description": "Prioriza profesional con MENOS cortes hoy. Equilibra la carga de trabajo para que todos ganen."
+          "title": "FAIRNESS (Rotation)",
+          "description": "Prioritizes professional with FEWER cuts today. Balances workload so everyone earns."
         },
         "speed": {
-          "title": "VELOCIDAD (Más Rápido)",
-          "description": "Prioriza profesional LIBRE PRIMERO. Minimiza tiempo de espera del cliente sobre todo."
+          "title": "SPEED (Fastest)",
+          "description": "Prioritizes FREE professional FIRST. Minimizes client wait time above all."
         },
         "manual": {
           "title": "MANUAL",
-          "description": "Sin recomendación automática. Recepcionista elige según la situación."
+          "description": "No automatic recommendation. Receptionist chooses based on situation."
         }
       },
-      "discountLiabilityTitle": "Regla de responsabilidad por descuento (¿Quién paga la pérdida?)",
-      "discountLiabilityDescription": "Cuando das un descuento (Cumpleaños, Fidelidad, etc), ¿quién gana menos?",
-      "discountLiabilitySubDescription": "Define cómo se calcula la comisión del equipo en ventas con descuento.",
+      "discountLiabilityTitle": "Discount liability rule (Who pays the loss?)",
+      "discountLiabilityDescription": "When you give a discount (Birthday, Loyalty, etc), who earns less?",
+      "discountLiabilitySubDescription": "Defines how team commission is calculated on discounted sales.",
       "discountOptions": {
         "shared": {
-          "title": "COMPARTIDO (Dividido)",
-          "subtitle": "Comisión sobre Precio Neto"
+          "title": "SHARED (Split)",
+          "subtitle": "Commission on Net Price"
         },
         "shopAbsorbs": {
-          "title": "TIENDA ABSORBE",
-          "subtitle": "Comisión sobre Precio Completo"
+          "title": "SHOP ABSORBS",
+          "subtitle": "Commission on Full Price"
         }
       },
-      "marketingLoyaltyTitle": "Marketing y fidelidad",
-      "discountAllocationExampleLabel": "Ejemplo",
-      "discountAllocationExampleIntro": "Servicio de {servicePrice} con descuento de {discount} = cliente paga {paid}. Comisión {rate}%.",
-      "discountAllocationSharedLabel": "Compartido",
-      "discountAllocationSharedPrefix": "Comisión {rate}% sobre {paid} =",
-      "discountAllocationSharedSuffix": "Descuento compartido. Pierdes {loss} en comisión.",
-      "discountAllocationShopAbsorbsLabel": "Tienda absorbe",
-      "discountAllocationShopAbsorbsPrefix": "Comisión {rate}% sobre {servicePrice} =",
-      "discountAllocationShopAbsorbsSuffix": "La tienda absorbe el descuento de {discount}."
+      "marketingLoyaltyTitle": "Marketing and loyalty",
+      "discountAllocationExampleLabel": "Example",
+      "discountAllocationExampleIntro": "Service of {servicePrice} with discount of {discount} = client pays {paid}. Commission {rate}%.",
+      "discountAllocationSharedLabel": "Shared",
+      "discountAllocationSharedPrefix": "Commission {rate}% on {paid} =",
+      "discountAllocationSharedSuffix": "Discount is shared. You lose {loss} in commission.",
+      "discountAllocationShopAbsorbsLabel": "Shop absorbs",
+      "discountAllocationShopAbsorbsPrefix": "Commission {rate}% on {servicePrice} =",
+      "discountAllocationShopAbsorbsSuffix": "The shop absorbs the discount of {discount}."
     },
     "inventory": {
       "modal": {

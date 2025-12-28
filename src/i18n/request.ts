@@ -15,6 +15,14 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale,
     messages: {
       ...(await import(`../locales/${locale}/common.json`)).default,
+      ...(await import(`../locales/${locale}/dashboard.json`)).default,
+      ...(await import(`../locales/${locale}/agenda.json`)).default,
+      ...(await import(`../locales/${locale}/clients.json`)).default,
+      ...(await import(`../locales/${locale}/catalog.json`)).default,
+      ...(await import(`../locales/${locale}/pdv.json`)).default,
+      ...(await import(`../locales/${locale}/finance.json`)).default,
+      ...(await import(`../locales/${locale}/auth.json`)).default,
+      ...(await import(`../locales/${locale}/barberclub.json`)).default,
       ...(await import(`../locales/${locale}/payments.json`)).default,
       ...(await import(`../locales/${locale}/settings.json`)).default
     }

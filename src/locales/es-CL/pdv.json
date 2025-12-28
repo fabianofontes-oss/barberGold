@@ -1,0 +1,123 @@
+{
+  "pdv": {
+    "title": "Ponto de Venda",
+    "shortTitle": "PDV",
+    "newSale": "Nova Venda",
+    "quickSale": "Venda Rápida",
+    "cart": {
+      "title": "Carrinho",
+      "empty": "Carrinho vazio",
+      "addItems": "Adicione serviços ou produtos",
+      "items": "{count} itens",
+      "subtotal": "Subtotal",
+      "discount": "Desconto",
+      "total": "Total",
+      "clear": "Limpar",
+      "removeItem": "Remover item"
+    },
+    "client": {
+      "selectClient": "Selecionar Cliente",
+      "walkIn": "Cliente Avulso",
+      "searchClient": "Buscar cliente...",
+      "newClient": "Novo Cliente",
+      "noClientSelected": "Nenhum cliente selecionado"
+    },
+    "professional": {
+      "selectProfessional": "Selecionar Profissional",
+      "assignTo": "Atribuir a",
+      "noProfessionalSelected": "Nenhum profissional selecionado"
+    },
+    "payment": {
+      "title": "Pagamento",
+      "method": "Forma de Pagamento",
+      "methods": {
+        "cash": "Dinheiro",
+        "credit": "Cartão de Crédito",
+        "debit": "Cartão de Débito",
+        "pix": "PIX",
+        "transfer": "Transferência",
+        "voucher": "Vale/Voucher",
+        "mixed": "Misto"
+      },
+      "received": "Valor Recebido",
+      "change": "Troco",
+      "installments": "Parcelas",
+      "installmentsCount": "{count}x de {value}",
+      "noInterest": "sem juros",
+      "withInterest": "com juros",
+      "finalize": "Finalizar Venda",
+      "processing": "Processando...",
+      "splitPayment": "Dividir Pagamento",
+      "addPayment": "Adicionar Pagamento",
+      "remainingAmount": "Valor Restante"
+    },
+    "discount": {
+      "title": "Desconto",
+      "apply": "Aplicar Desconto",
+      "type": "Tipo",
+      "percentage": "Porcentagem",
+      "fixed": "Valor Fixo",
+      "value": "Valor",
+      "reason": "Motivo",
+      "reasons": {
+        "loyalty": "Fidelidade",
+        "birthday": "Aniversário",
+        "firstVisit": "Primeira Visita",
+        "promotion": "Promoção",
+        "other": "Outro"
+      }
+    },
+    "receipt": {
+      "title": "Comprovante",
+      "print": "Imprimir",
+      "sendWhatsApp": "Enviar via WhatsApp",
+      "sendEmail": "Enviar por E-mail",
+      "newSale": "Nova Venda"
+    },
+    "history": {
+      "title": "Histórico de Vendas",
+      "today": "Vendas de Hoje",
+      "filter": "Filtrar",
+      "noSales": "Nenhuma venda registrada",
+      "viewDetails": "Ver Detalhes",
+      "refund": "Estornar",
+      "reprint": "Reimprimir"
+    },
+    "register": {
+      "title": "Caixa",
+      "open": "Abrir Caixa",
+      "close": "Fechar Caixa",
+      "currentBalance": "Saldo Atual",
+      "openingBalance": "Saldo de Abertura",
+      "closingBalance": "Saldo de Fechamento",
+      "cashIn": "Entrada",
+      "cashOut": "Saída",
+      "summary": "Resumo do Caixa",
+      "sales": "Vendas",
+      "withdrawals": "Retiradas",
+      "deposits": "Depósitos",
+      "difference": "Diferença",
+      "status": {
+        "open": "Aberto",
+        "closed": "Fechado"
+      }
+    },
+    "toast": {
+      "saleCompleted": "Venda finalizada com sucesso!",
+      "saleError": "Erro ao finalizar venda.",
+      "discountApplied": "Desconto aplicado!",
+      "itemAdded": "Item adicionado!",
+      "itemRemoved": "Item removido.",
+      "cartCleared": "Carrinho limpo.",
+      "receiptSent": "Comprovante enviado!",
+      "registerOpened": "Caixa aberto!",
+      "registerClosed": "Caixa fechado!"
+    },
+    "confirmations": {
+      "clearCart": "Tem certeza que deseja limpar o carrinho?",
+      "cancelSale": "Tem certeza que deseja cancelar esta venda?",
+      "closeRegister": "Tem certeza que deseja fechar o caixa?",
+      "refund": "Tem certeza que deseja estornar esta venda?"
+    }
+  }
+}
