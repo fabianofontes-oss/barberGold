@@ -331,7 +331,7 @@ export const Catalog = () => {
                         
                         <div className="flex justify-between items-end mb-2">
                            <span className={`px-2 py-0.5 rounded text-xs font-bold ${product.stock <= 3 ? 'bg-red-500/20 text-red-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
-                              {product.stock} in stock
+                              {product.stock} em estoque
                            </span>
                            
                            {/* Restock Mini Form */}
@@ -365,18 +365,18 @@ export const Catalog = () => {
                                  onClick={() => startProductRestock(product)}
                                  className="text-[10px] bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold px-2 py-1 rounded flex items-center gap-1 transition-colors"
                               >
-                                 <Plus className="w-3 h-3" /> Restock
+                                 <Plus className="w-3 h-3" /> Reabastecer
                               </button>
                            )}
                         </div>
 
                         <div className="mt-auto grid grid-cols-2 gap-2 text-sm">
                            <div>
-                             <span className="text-zinc-500 block text-xs">Sale Price</span>
+                             <span className="text-zinc-500 block text-xs">Preço de Venda</span>
                              <span className="text-amber-500 font-bold">R$ {product.price}</span>
                            </div>
                            <div>
-                             <span className="text-zinc-500 block text-xs">Last Cost</span>
+                             <span className="text-zinc-500 block text-xs">Último Custo</span>
                              <span className="text-zinc-300 font-medium">R$ {product.costPrice || '-'}</span>
                            </div>
                         </div>
@@ -456,9 +456,9 @@ export const Catalog = () => {
                        <AlertTriangle className={`w-6 h-6 ${lowStockCount > 0 ? 'text-red-500' : 'text-zinc-500'}`} />
                     </div>
                     <div>
-                       <p className="text-xs text-zinc-500 font-bold uppercase">Low Stock Alerts</p>
+                       <p className="text-xs text-zinc-500 font-bold uppercase">Alertas de Estoque Baixo</p>
                        <p className={`text-xl font-bold ${lowStockCount > 0 ? 'text-red-500' : 'text-zinc-500'}`}>
-                          {lowStockCount > 0 ? `${lowStockCount} Items` : 'All Good'}
+                          {lowStockCount > 0 ? `${lowStockCount} Itens` : 'Tudo Certo'}
                        </p>
                     </div>
                  </div>
@@ -506,7 +506,7 @@ export const Catalog = () => {
                              </div>
 
                              <div className="flex items-center justify-between bg-zinc-950 p-3 rounded-lg border border-zinc-800 mb-3">
-                                <span className="text-xs font-bold text-zinc-500">Current Stock</span>
+                                <span className="text-xs font-bold text-zinc-500">Estoque Atual</span>
                                 <span className={`text-xl font-bold ${isLow ? 'text-red-500' : 'text-white'}`}>
                                    {item.quantity} <span className="text-sm font-normal text-zinc-600">{item.unit}</span>
                                 </span>
@@ -517,7 +517,7 @@ export const Catalog = () => {
                                    onClick={() => adjustInventoryStock(item.id, 1, 'ADD')}
                                    className="flex items-center justify-center gap-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 py-2 rounded-lg text-xs font-bold transition-all"
                                 >
-                                   <Plus className="w-3 h-3" /> Quick Add
+                                   <Plus className="w-3 h-3" /> Adicionar Rápido
                                 </button>
                                 <button 
                                    onClick={() => adjustInventoryStock(item.id, 1, 'CONSUME')}
