@@ -48,15 +48,20 @@ export function useClients(filters?: { search?: string; tags?: string[] }) {
   return { clients, loading, error, refetch };
 }
 
-export function useClientStats() {
+export function useClientStats(clientId?: string) {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchStats() {
+      if (!clientId) {
+        setLoading(false);
+        return;
+      }
+      
       try {
-        const result = await getClientStats();
+        const result = await getClientStats(clientId);
         if (result.success) {
           setStats(result.data);
           setError(null);
@@ -71,7 +76,7 @@ export function useClientStats() {
     }
 
     fetchStats();
-  }, []);
+  }, [clientId]);
 
   return { stats, loading, error };
 }
