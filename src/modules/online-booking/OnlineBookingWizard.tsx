@@ -443,7 +443,7 @@ export const OnlineBookingWizard = () => {
      }
   };
 
-  const handleFinalBooking = () => {
+  const handleFinalBooking = async () => {
      if (!hasServices && selectedProductsList.length === 0) return;
 
      let finalClientId = '';
@@ -451,7 +451,7 @@ export const OnlineBookingWizard = () => {
         finalClientId = activeClientProfile.id;
      } else {
         // addClient retorna o ID do novo cliente
-        finalClientId = addClient({
+        finalClientId = await addClient({
            name: clientForm.name,
            phone: phoneInput,
            email: clientForm.email,

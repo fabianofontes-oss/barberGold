@@ -253,10 +253,10 @@ export const PointOfSale = () => {
     }, 2000);
   };
 
-  const handleQuickAddClient = (e: React.FormEvent) => {
+  const handleQuickAddClient = async (e: React.FormEvent) => {
      e.preventDefault();
      if (newClientName && newClientPhone) {
-        const newId = addClient({
+        const newId = await addClient({
            name: newClientName,
            phone: newClientPhone,
            email: '',
