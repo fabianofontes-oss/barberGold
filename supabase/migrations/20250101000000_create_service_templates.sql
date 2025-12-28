@@ -39,10 +39,10 @@ CREATE TABLE IF NOT EXISTS bundle_items_template (
   CONSTRAINT unique_bundle_item UNIQUE (combo_service_id, item_service_id)
 );
 
--- DADOS DO TENANT (cópia após onboarding)
+-- DADOS DA LOJA (cópia após onboarding)
 CREATE TABLE IF NOT EXISTS service_categories (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+  store_id UUID NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
   template_id UUID REFERENCES service_categories_template(id), -- rastreabilidade
   name TEXT NOT NULL,
   icon TEXT,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS service_categories (
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
-  CONSTRAINT unique_category_per_tenant UNIQUE (tenant_id, name)
+  CONSTRAINT unique_category_per_store UNIQUE (store_id, name)
 );
 
 CREATE TABLE IF NOT EXISTS service_variants (
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS bundle_items (
 );
 
 -- ÍNDICES PARA PERFORMANCE
-CREATE INDEX IF NOT EXISTS idx_services_tenant ON services(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_services_store ON services(store_id);
 CREATE INDEX IF NOT EXISTS idx_services_category ON services(category_id);
 CREATE INDEX IF NOT EXISTS idx_services_active ON services(is_active) WHERE is_active = true;
 CREATE INDEX IF NOT EXISTS idx_services_popular ON services(is_popular) WHERE is_popular = true;
