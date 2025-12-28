@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { StaffMember, CompensationModel, DaySchedule, BreakTime } from '@/types';
-import { User, Phone, Wallet, CalendarClock, Scissors, Clock, CheckSquare, Square, Utensils, Coffee, Plus, Trash2, DoorOpen, X } from 'lucide-react';
+import { User, Phone, Wallet, CalendarClock, Scissors, Clock, CheckSquare, Square, Utensils, Coffee, Plus, Trash2, DoorOpen, X, MapPin } from 'lucide-react';
 import { ImageUpload } from '@/components/shared/ImageUpload';
+import { MaskedInput } from '@/components/shared/MaskedInput';
+import { ViaCepResponse } from '@/lib/masks';
 
 interface StaffModalProps {
   isOpen: boolean;
@@ -208,7 +210,13 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                    </div>
                    <div>
                       <label className="block text-xs font-medium text-zinc-400 mb-1.5">Telefone / WhatsApp</label>
-                      <input required type="tel" placeholder="(00) 00000-0000" value={newStaff.phone} onChange={e => setNewStaff({...newStaff, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
+                      <MaskedInput
+                         type="phone"
+                         value={newStaff.phone || ''}
+                         onChange={(val) => setNewStaff({...newStaff, phone: val})}
+                         icon={<Phone className="w-4 h-4" />}
+                         placeholder="(11) 91234-5678"
+                      />
                    </div>
                    
                    <ImageUpload 
@@ -220,8 +228,8 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                 <div className="space-y-4">
                    <h4 className="text-sm font-bold text-amber-500 uppercase tracking-wider border-b border-zinc-800 pb-2 mb-4">Role & Contract</h4>
                    <div>
-                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Address</label>
-                     <input required type="text" placeholder="Rua..." value={newStaff.address || ''} onChange={e => setNewStaff({...newStaff, address: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
+                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Endereço Completo</label>
+                     <input type="text" placeholder="Rua, número, bairro, cidade" value={newStaff.address || ''} onChange={e => setNewStaff({...newStaff, address: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                    </div>
                    <div>
                       <label className="block text-xs font-medium text-zinc-400 mb-1.5">Cargo no Sistema</label>
