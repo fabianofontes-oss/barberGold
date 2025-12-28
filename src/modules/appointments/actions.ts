@@ -1,118 +1,86 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
-import * as repository from './repository';
-import { appointmentSchema } from './types';
+import { revalidatePath } from 'next/cache';
 
-async function getTenantId() {
+export async function createAppointment(data: {
+  clientId?: string;
+  clientName: string;
+  staffId: string;
+  serviceId: string;
+  date: string;
+  time: string;
+  price: number;
+  notes?: string;
+}) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error('Unauthorized');
-  
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('Não autenticado');
+
   const { data: profile } = await supabase
     .from('profiles')
     .select('tenant_id')
-    .eq('user_id', user.id)
+    .eq('user_id', session.user.id)
     .single();
-  
-  if (!profile?.tenant_id) throw new Error('Tenant not found');
-  return profile.tenant_id;
+
+  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+
+  const scheduledAt = `${data.date}T${data.time}:00`;
+
+  const { data: appointment, error } = await supabase
+    .from('appointments')
+    .insert({
+      tenant_id: profile.tenant_id,
+      client_id: data.clientId,
+      client_name: data.clientName,
+      staff_id: data.staffId,
+      service_id: data.serviceId,
+      scheduled_at: scheduledAt,
+      price: data.price,
+      status: 'SCHEDULED',
+      notes: data.notes || '',
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error('❌ Erro ao criar agendamento:', error);
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/app/agenda');
+  revalidatePath('/app/dashboard');
+  console.log('✅ Agendamento criado:', appointment.id);
+  return appointment;
 }
 
-export async function getAppointmentsAction() {
-  try {
-    const tenantId = await getTenantId();
-    const appointments = await repository.getAppointmentsByTenant(tenantId);
-    return { success: true, data: appointments };
-  } catch (error: any) {
-    console.error('Error fetching appointments:', error);
-    return { success: false, error: error.message };
+export async function updateAppointmentStatus(appointmentId: string, status: 'SCHEDULED' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW') {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('Não autenticado');
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('tenant_id')
+    .eq('user_id', session.user.id)
+    .single();
+
+  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+
+  const { data: appointment, error } = await supabase
+    .from('appointments')
+    .update({ status })
+    .eq('id', appointmentId)
+    .eq('tenant_id', profile.tenant_id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('❌ Erro ao atualizar agendamento:', error);
+    throw new Error(error.message);
   }
-}
 
-export async function getAppointmentsByStaffAction(staffId: string) {
-  try {
-    const tenantId = await getTenantId();
-    const appointments = await repository.getAppointmentsByStaff(tenantId, staffId);
-    return { success: true, data: appointments };
-  } catch (error: any) {
-    console.error('Error fetching staff appointments:', error);
-    return { success: false, error: error.message };
-  }
-}
-
-export async function getAppointmentsByDateAction(date: Date) {
-  try {
-    const tenantId = await getTenantId();
-    const appointments = await repository.getAppointmentsByDate(tenantId, date);
-    return { success: true, data: appointments };
-  } catch (error: any) {
-    console.error('Error fetching appointments by date:', error);
-    return { success: false, error: error.message };
-  }
-}
-
-export async function createAppointmentAction(formData: FormData) {
-  try {
-    const tenantId = await getTenantId();
-    
-    const rawData = {
-      client_id: formData.get('client_id') as string,
-      staff_id: formData.get('staff_id') as string,
-      service_id: formData.get('service_id') as string,
-      scheduled_at: formData.get('scheduled_at') as string,
-      price: parseFloat(formData.get('price') as string),
-      status: (formData.get('status') as string) || 'SCHEDULED',
-      notes: formData.get('notes') as string || undefined,
-    };
-
-    const validated = appointmentSchema.parse(rawData);
-    const appointment = await repository.createAppointment(tenantId, validated);
-    
-    revalidatePath('/app/agenda');
-    revalidatePath('/app/dashboard');
-    
-    return { success: true, data: appointment };
-  } catch (error: any) {
-    console.error('Error creating appointment:', error);
-    return { success: false, error: error.message };
-  }
-}
-
-export async function updateAppointmentAction(id: string, formData: FormData) {
-  try {
-    const tenantId = await getTenantId();
-    
-    const updates: any = {};
-    if (formData.has('status')) updates.status = formData.get('status');
-    if (formData.has('scheduled_at')) updates.scheduled_at = formData.get('scheduled_at');
-    if (formData.has('price')) updates.price = parseFloat(formData.get('price') as string);
-    if (formData.has('notes')) updates.notes = formData.get('notes');
-
-    const appointment = await repository.updateAppointment(id, tenantId, updates);
-    
-    revalidatePath('/app/agenda');
-    revalidatePath('/app/dashboard');
-    
-    return { success: true, data: appointment };
-  } catch (error: any) {
-    console.error('Error updating appointment:', error);
-    return { success: false, error: error.message };
-  }
-}
-
-export async function deleteAppointmentAction(id: string) {
-  try {
-    const tenantId = await getTenantId();
-    await repository.deleteAppointment(id, tenantId);
-    
-    revalidatePath('/app/agenda');
-    revalidatePath('/app/dashboard');
-    
-    return { success: true };
-  } catch (error: any) {
-    console.error('Error deleting appointment:', error);
-    return { success: false, error: error.message };
-  }
+  revalidatePath('/app/agenda');
+  revalidatePath('/app/dashboard');
+  return appointment;
 }
