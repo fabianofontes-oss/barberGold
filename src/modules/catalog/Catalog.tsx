@@ -709,7 +709,7 @@ export const Catalog = () => {
                     <span className="text-white font-medium">{service.durationMinutes}m</span>
                    </div>
                    <div className="text-center">
-                    <span className="block text-xs text-zinc-500 mb-1">Price</span>
+                    <span className="block text-xs text-zinc-500 mb-1">Preço</span>
                     <span className="text-amber-500 font-bold">R$ {service.price}</span>
                    </div>
                    
