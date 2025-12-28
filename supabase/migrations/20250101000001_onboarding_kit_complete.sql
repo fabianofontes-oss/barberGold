@@ -302,55 +302,55 @@ INSERT INTO services_template (category_id, type, name, duration_min, price_cent
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- SALÃO COMPLETO - DEPILAÇÃO AVANÇADA
-INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, sort_order) VALUES
-((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Axila', 15, 2000, 2, 1),
-((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Perna Completa', 40, 5000, 2, 2),
-((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Meia Perna', 25, 3500, 2, 3),
-((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Virilha', 20, 3000, 2, 4),
-((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Corpo Completo', 90, 12000, 2, 5)
+INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, is_popular, sort_order) VALUES
+((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Axila', 15, 2000, 2, false, 1),
+((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Perna Completa', 40, 5000, 2, false, 2),
+((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Meia Perna', 25, 3500, 2, false, 3),
+((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Virilha', 20, 3000, 2, false, 4),
+((SELECT id FROM service_categories_template WHERE name='Depilação Avançada' AND business_type='salon'), 'service', 'Corpo Completo', 90, 12000, 2, false, 5)
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- PENTEADOS
-INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, sort_order) VALUES
-((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Penteado Simples', 60, 8000, 2, 1),
-((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Penteado de Festa', 90, 12000, 2, 2),
-((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Penteado de Noiva', 120, 20000, 2, 3),
-((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Trança', 40, 5000, 2, 4),
-((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Coque', 45, 6000, 2, 5)
+INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, is_popular, sort_order) VALUES
+((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Penteado Simples', 60, 8000, 2, false, 1),
+((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Penteado de Festa', 90, 12000, 2, false, 2),
+((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Penteado de Noiva', 120, 20000, 2, true, 3),
+((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Trança', 40, 5000, 2, false, 4),
+((SELECT id FROM service_categories_template WHERE name='Penteados' AND business_type='salon'), 'service', 'Coque', 45, 6000, 2, false, 5)
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- TRATAMENTOS CAPILARES
-INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, sort_order) VALUES
-((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Cauterização', 90, 12000, 2, 1),
-((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Botox Capilar', 90, 15000, 2, 2),
-((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Reconstrução', 75, 10000, 2, 3),
-((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Cronograma Capilar', 60, 8000, 2, 4),
-((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Selagem', 90, 13000, 2, 5)
+INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, is_popular, sort_order) VALUES
+((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Cauterização', 90, 12000, 2, false, 1),
+((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Botox Capilar', 90, 15000, 2, true, 2),
+((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Reconstrução', 75, 10000, 2, false, 3),
+((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Cronograma Capilar', 60, 8000, 2, false, 4),
+((SELECT id FROM service_categories_template WHERE name='Tratamentos Capilares' AND business_type='salon'), 'service', 'Selagem', 90, 13000, 2, false, 5)
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- UNHAS ARTÍSTICAS
-INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, sort_order) VALUES
-((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Unhas em Gel', 90, 8000, 2, 1),
-((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Alongamento de Unhas', 120, 10000, 2, 2),
-((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Unhas Decoradas', 60, 5000, 2, 3),
-((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Fibra de Vidro', 90, 9000, 2, 4),
-((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Manutenção de Gel', 60, 6000, 2, 5)
+INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, is_popular, sort_order) VALUES
+((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Unhas em Gel', 90, 8000, 2, true, 1),
+((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Alongamento de Unhas', 120, 10000, 2, false, 2),
+((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Unhas Decoradas', 60, 5000, 2, false, 3),
+((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Fibra de Vidro', 90, 9000, 2, false, 4),
+((SELECT id FROM service_categories_template WHERE name='Unhas Artísticas' AND business_type='salon'), 'service', 'Manutenção de Gel', 60, 6000, 2, false, 5)
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- ESTÉTICA FACIAL SALÃO
-INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, sort_order) VALUES
-((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Limpeza de Pele', 60, 10000, 2, 1),
-((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Limpeza de Pele Profunda', 90, 15000, 2, 2),
-((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Design de Sobrancelha', 20, 3000, 2, 3),
-((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Henna de Sobrancelha', 25, 3500, 2, 4),
-((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Aplicação de Cílios', 60, 8000, 2, 5)
+INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, is_popular, sort_order) VALUES
+((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Limpeza de Pele', 60, 10000, 2, true, 1),
+((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Limpeza de Pele Profunda', 90, 15000, 2, false, 2),
+((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Design de Sobrancelha', 20, 3000, 2, true, 3),
+((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Henna de Sobrancelha', 25, 3500, 2, false, 4),
+((SELECT id FROM service_categories_template WHERE name='Estética Facial' AND business_type='salon'), 'service', 'Aplicação de Cílios', 60, 8000, 2, false, 5)
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- MASSAGENS
-INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, sort_order) VALUES
-((SELECT id FROM service_categories_template WHERE name='Massagens' AND business_type='salon'), 'service', 'Massagem Relaxante', 50, 8000, 2, 1),
-((SELECT id FROM service_categories_template WHERE name='Massagens' AND business_type='salon'), 'service', 'Massagem Modeladora', 60, 10000, 2, 2),
-((SELECT id FROM service_categories_template WHERE name='Massagens' AND business_type='salon'), 'service', 'Drenagem Linfática', 70, 12000, 2, 3)
+INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, is_popular, sort_order) VALUES
+((SELECT id FROM service_categories_template WHERE name='Massagens' AND business_type='salon'), 'service', 'Massagem Relaxante', 50, 8000, 2, false, 1),
+((SELECT id FROM service_categories_template WHERE name='Massagens' AND business_type='salon'), 'service', 'Massagem Modeladora', 60, 10000, 2, false, 2),
+((SELECT id FROM service_categories_template WHERE name='Massagens' AND business_type='salon'), 'service', 'Drenagem Linfática', 70, 12000, 2, false, 3)
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- ÍNDICES PARA PERFORMANCE
