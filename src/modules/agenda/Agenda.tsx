@@ -206,12 +206,14 @@ export const Agenda = () => {
     setConflictError('');
   };
 
-  const handleQuickAddClient = (e: React.FormEvent) => {
+  const handleQuickAddClient = async (e: React.FormEvent) => {
      e.preventDefault();
      if (newClientName && newClientPhone) {
-        const newId = addClient({
+        const newId = await addClient({
            name: newClientName,
            phone: newClientPhone,
+           tags: [],
+           notes: '',
            email: '',
            birthDate: ''
         });

@@ -134,7 +134,7 @@ interface BarberContextType {
   submitReview: (review: Omit<Review, 'id' | 'date'>) => void; // NEW
   addLateTip: (appointmentId: string, amount: number, method: PaymentMethod) => void; // NEW
 
-  addClient: (client: Omit<Client, 'id' | 'totalSpent' | 'lastVisit' | 'loyaltyPoints' | 'referralCode' | 'profileCompleted'> & { referrerCode?: string }) => string; // Returns ID
+  addClient: (client: Omit<Client, 'id' | 'totalSpent' | 'lastVisit' | 'loyaltyPoints' | 'referralCode' | 'profileCompleted'> & { referrerCode?: string }) => Promise<string>; // Returns ID
   updateClient: (client: Client) => void;
   
   // Catalog & Staff Actions
