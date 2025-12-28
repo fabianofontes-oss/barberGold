@@ -596,8 +596,8 @@ export const Catalog = () => {
                              </div>
                           </div>
                           <div className="space-y-2 text-sm text-zinc-400">
-                             <p><span className="text-zinc-600">Contact:</span> {sup.contactName || '-'}</p>
-                             <p><span className="text-zinc-600">Phone:</span> {sup.phone}</p>
+                             <p><span className="text-zinc-600">Contato:</span> {sup.contactName || '-'}</p>
+                             <p><span className="text-zinc-600">Telefone:</span> {sup.phone}</p>
                           </div>
                           <div className="absolute top-4 right-4 flex gap-2">
                              <button 
@@ -611,7 +611,7 @@ export const Catalog = () => {
                              </button>
                           </div>
                           <div className="mt-4 flex items-center gap-2 text-xs font-bold text-zinc-500 group-hover:text-white">
-                             <Eye className="w-3 h-3" /> View Products & History
+                             <Eye className="w-3 h-3" /> Ver Produtos e Histórico
                           </div>
                        </div>
                     ))}
@@ -705,7 +705,7 @@ export const Catalog = () => {
                 </div>
                 <div className="flex items-center gap-6">
                    <div className="text-center">
-                    <span className="block text-xs text-zinc-500 mb-1">Duration</span>
+                    <span className="block text-xs text-zinc-500 mb-1">Duração</span>
                     <span className="text-white font-medium">{service.durationMinutes}m</span>
                    </div>
                    <div className="text-center">
