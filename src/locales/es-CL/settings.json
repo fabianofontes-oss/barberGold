@@ -97,6 +97,50 @@
         "variantStockLabel": "Qty"
       }
     },
+    "myProfile": {
+      "commissionLabel": "commission",
+      "photoUrlPlaceholder": "Photo URL (optional)",
+      "saveChangesButton": "Save changes",
+      "weeklyScheduleTitle": "Weekly schedule",
+      "weeklyScheduleHint": "Set your hours and breaks",
+      "breakButton": "Break",
+      "toggleOff": "Off",
+      "toggleWork": "Work",
+      "breakTypes": {
+        "lunch": "Lunch",
+        "coffee": "Coffee",
+        "away": "Other"
+      },
+      "workRhythmTitle": "Work rhythm",
+      "workRhythmDescription": "Set how many clients per cycle and the average break duration.",
+      "clientsPerCycleLabel": "Clients per cycle",
+      "breakDurationLabel": "Break duration (min)"
+    },
+    "marketing": {
+      "dailyRevenueGoalTitle": "Daily revenue goal",
+      "dailyRevenueGoalDescription": "Set a daily revenue target to track performance.",
+      "clientFidelityLockTitle": "Fidelity lock",
+      "clientFidelityLockDescription": "Number of visits to consider a client loyal.",
+      "visitsLabel": "visits",
+      "winBackCampaignTitle": "Win-back campaign",
+      "winBackCampaignDescription": "Discount for clients who haven't returned for {days} days.",
+      "birthdaySpecialTitle": "Birthday special",
+      "birthdaySpecialDescription": "Enable automatic benefits during the client's birthday month.",
+      "loyaltyClubTitle": "Loyalty card",
+      "loyaltyClubDescription": "Reward recurring clients with goals and benefits.",
+      "referralSystemTitle": "Referral system",
+      "referralSystemDescription": "Enable a program for clients to invite friends and earn rewards."
+    },
+    "commissions": {
+      "discountAllocationExampleLabel": "Example",
+      "discountAllocationExampleIntro": "Service of {servicePrice} with discount of {discount} = client pays {paid}. Commission {rate}%.",
+      "discountAllocationSharedLabel": "Shared",
+      "discountAllocationSharedPrefix": "Commission {rate}% on {paid} =",
+      "discountAllocationSharedSuffix": "Discount is shared. You lose {loss} in commission.",
+      "discountAllocationShopAbsorbsLabel": "Shop absorbs",
+      "discountAllocationShopAbsorbsPrefix": "Commission {rate}% on {servicePrice} =",
+      "discountAllocationShopAbsorbsSuffix": "The shop absorbs the discount of {discount}."
+    },
     "inventory": {
       "modal": {
         "editTitle": "Edit supply item",

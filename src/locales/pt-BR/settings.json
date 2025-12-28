@@ -97,6 +97,50 @@
         "variantStockLabel": "Est."
       }
     },
+    "myProfile": {
+      "commissionLabel": "de comissão",
+      "photoUrlPlaceholder": "URL da foto (opcional)",
+      "saveChangesButton": "Salvar alterações",
+      "weeklyScheduleTitle": "Agenda semanal",
+      "weeklyScheduleHint": "Defina seus horários e pausas",
+      "breakButton": "Pausa",
+      "toggleOff": "Folga",
+      "toggleWork": "Trabalhar",
+      "breakTypes": {
+        "lunch": "Almoço",
+        "coffee": "Café",
+        "away": "Outro"
+      },
+      "workRhythmTitle": "Ritmo de trabalho",
+      "workRhythmDescription": "Defina a cada quantos clientes você faz uma pausa e a duração média.",
+      "clientsPerCycleLabel": "Clientes por ciclo",
+      "breakDurationLabel": "Duração da pausa (min)"
+    },
+    "marketing": {
+      "dailyRevenueGoalTitle": "Meta de faturamento diário",
+      "dailyRevenueGoalDescription": "Defina um objetivo de receita por dia para acompanhar a performance.",
+      "clientFidelityLockTitle": "Trava de fidelidade",
+      "clientFidelityLockDescription": "Número de visitas para considerar o cliente fiel.",
+      "visitsLabel": "visitas",
+      "winBackCampaignTitle": "Campanha de retorno",
+      "winBackCampaignDescription": "Desconto para clientes sem retorno há {days} dias.",
+      "birthdaySpecialTitle": "Especial de aniversário",
+      "birthdaySpecialDescription": "Ative benefícios automáticos no mês de aniversário do cliente.",
+      "loyaltyClubTitle": "Cartão fidelidade",
+      "loyaltyClubDescription": "Recompense clientes recorrentes com benefícios e metas.",
+      "referralSystemTitle": "Sistema de indicações",
+      "referralSystemDescription": "Ative o programa para clientes indicarem amigos e ganharem recompensas."
+    },
+    "commissions": {
+      "discountAllocationExampleLabel": "Exemplo",
+      "discountAllocationExampleIntro": "Serviço de {servicePrice} com desconto de {discount} = cliente paga {paid}. Comissão {rate}%.",
+      "discountAllocationSharedLabel": "Compartilhado",
+      "discountAllocationSharedPrefix": "Comissão {rate}% sobre {paid} =",
+      "discountAllocationSharedSuffix": "Desconto dividido. Você perde {loss} na comissão.",
+      "discountAllocationShopAbsorbsLabel": "Loja absorve",
+      "discountAllocationShopAbsorbsPrefix": "Comissão {rate}% sobre {servicePrice} =",
+      "discountAllocationShopAbsorbsSuffix": "A loja absorve o desconto de {discount}."
+    },
     "inventory": {
       "modal": {
         "editTitle": "Editar insumo",
