@@ -26,23 +26,22 @@ export async function createSale(data: {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id')
+    .select('store_id')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const { data: sale, error: saleError } = await supabase
     .from('sales')
     .insert({
-      tenant_id: profile.tenant_id,
+      store_id: profile.store_id,
       client_id: data.clientId,
       staff_id: data.staffId,
-      total: data.total,
+      total_amount: data.total,
       payment_method: data.method,
       payment_status: 'PAID',
-      tip: data.tip || 0,
-      notes: data.discountApplied || '',
+      tip_amount: data.tip || 0,
     })
     .select()
     .single();

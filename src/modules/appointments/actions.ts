@@ -19,24 +19,23 @@ export async function createAppointment(data: {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id')
+    .select('store_id')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
-
-  const scheduledAt = `${data.date}T${data.time}:00`;
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const { data: appointment, error } = await supabase
     .from('appointments')
     .insert({
-      tenant_id: profile.tenant_id,
+      store_id: profile.store_id,
       client_id: data.clientId,
-      client_name: data.clientName,
       staff_id: data.staffId,
       service_id: data.serviceId,
-      scheduled_at: scheduledAt,
-      price: data.price,
+      date: data.date,
+      start_time: data.time,
+      end_time: data.time,
+      total_amount: data.price,
       status: 'SCHEDULED',
       notes: data.notes || '',
     })
@@ -61,17 +60,17 @@ export async function updateAppointmentStatus(appointmentId: string, status: 'SC
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id')
+    .select('store_id')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const { data: appointment, error } = await supabase
     .from('appointments')
     .update({ status })
     .eq('id', appointmentId)
-    .eq('tenant_id', profile.tenant_id)
+    .eq('store_id', profile.store_id)
     .select()
     .single();
 
