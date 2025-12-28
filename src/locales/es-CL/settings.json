@@ -90,6 +90,26 @@
       }
     },
     "payments": {
+      "methodsTitle": "Métodos de pago",
+      "methodsDescription": "Configura qué métodos de pago acepta tu barbería en la tienda y en el agendamiento online.",
+      "inStoreTitle": "Pagos en la tienda (POS)",
+      "inStoreDescription": "Métodos aceptados en la caja física y atención presencial.",
+      "onlineTitle": "Pagos online",
+      "onlineDescription": "Métodos aceptados en el agendamiento online por sitio/app.",
+      "notConfiguredBadge": "No configurado",
+      "integrationsInfoTitle": "Importante sobre integraciones",
+      "integrationsInfoDescription": "Configura abajo tus integraciones de pago para aceptar pagos online.",
+      "methodLabels": {
+        "cash": "Efectivo",
+        "creditCard": "Tarjeta de crédito",
+        "debitCard": "Tarjeta de débito",
+        "googlePay": "Google Pay",
+        "applePay": "Apple Pay",
+        "mercadoPago": "Mercado Pago",
+        "pagSeguro": "PagSeguro",
+        "infinitePay": "InfinitePay",
+        "stone": "Stone"
+      },
       "installmentsExampleTitle": "Installment example",
       "installmentsExampleDescription": "Purchase of {total} in {installments}x = {installmentValue} + interest"
     },

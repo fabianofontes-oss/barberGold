@@ -90,6 +90,26 @@
       }
     },
     "payments": {
+      "methodsTitle": "Payment methods",
+      "methodsDescription": "Configure which payment methods your barbershop accepts in-store and online booking.",
+      "inStoreTitle": "In-store payments (POS)",
+      "inStoreDescription": "Methods accepted at the physical checkout and in-person service.",
+      "onlineTitle": "Online payments",
+      "onlineDescription": "Methods accepted on online booking via website/app.",
+      "notConfiguredBadge": "Not configured",
+      "integrationsInfoTitle": "Important about integrations",
+      "integrationsInfoDescription": "Configure your payment integrations below to accept online payments.",
+      "methodLabels": {
+        "cash": "Cash",
+        "creditCard": "Credit card",
+        "debitCard": "Debit card",
+        "googlePay": "Google Pay",
+        "applePay": "Apple Pay",
+        "mercadoPago": "Mercado Pago",
+        "pagSeguro": "PagSeguro",
+        "infinitePay": "InfinitePay",
+        "stone": "Stone"
+      },
       "installmentsExampleTitle": "Installment example",
       "installmentsExampleDescription": "Purchase of {total} in {installments}x = {installmentValue} + interest"
     },

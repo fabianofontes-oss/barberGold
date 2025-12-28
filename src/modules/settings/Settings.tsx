@@ -766,10 +766,10 @@ export const Settings = () => {
             <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
                <div className="mb-6">
                   <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
-                    <Wallet className="w-6 h-6 text-amber-500" /> Métodos de Pagamento
+                    <Wallet className="w-6 h-6 text-amber-500" /> {t('settings.payments.methodsTitle')}
                   </h3>
                   <p className="text-zinc-400">
-                     Configure quais métodos de pagamento sua barbearia aceita na loja física e no agendamento online.
+                     {t('settings.payments.methodsDescription')}
                   </p>
                </div>
 
@@ -778,22 +778,22 @@ export const Settings = () => {
                   <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
                      <div className="flex items-center gap-2 mb-4">
                         <Store className="w-5 h-5 text-emerald-500" />
-                        <h4 className="font-bold text-white text-lg">Pagamentos na Loja (PDV)</h4>
+                        <h4 className="font-bold text-white text-lg">{t('settings.payments.inStoreTitle')}</h4>
                      </div>
-                     <p className="text-xs text-zinc-500 mb-4">Métodos aceitos no caixa físico e atendimento presencial.</p>
+                     <p className="text-xs text-zinc-500 mb-4">{t('settings.payments.inStoreDescription')}</p>
                      
                      <div className="space-y-2">
                         {[
-                           { value: PaymentMethod.CASH, label: 'Dinheiro', icon: Banknote, requiresGateway: false },
-                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard, requiresGateway: false },
-                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard, requiresGateway: false },
+                           { value: PaymentMethod.CASH, label: t('settings.payments.methodLabels.cash'), icon: Banknote, requiresGateway: false },
+                           { value: PaymentMethod.CREDIT_CARD, label: t('settings.payments.methodLabels.creditCard'), icon: CreditCard, requiresGateway: false },
+                           { value: PaymentMethod.DEBIT_CARD, label: t('settings.payments.methodLabels.debitCard'), icon: CreditCard, requiresGateway: false },
                            { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone, requiresGateway: false },
-                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
-                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
-                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
-                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet, requiresGateway: true, gateway: 'pagSeguro' },
-                           { value: PaymentMethod.INFINITE_PAY, label: 'InfinitePay', icon: Wallet, requiresGateway: true, gateway: 'infinitePay' },
-                           { value: PaymentMethod.STONE, label: 'Stone', icon: Wallet, requiresGateway: true, gateway: 'stone' },
+                           { value: PaymentMethod.GOOGLE_PAY, label: t('settings.payments.methodLabels.googlePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
+                           { value: PaymentMethod.APPLE_PAY, label: t('settings.payments.methodLabels.applePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
+                           { value: PaymentMethod.MERCADO_PAGO, label: t('settings.payments.methodLabels.mercadoPago'), icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
+                           { value: PaymentMethod.PAGSEGURO, label: t('settings.payments.methodLabels.pagSeguro'), icon: Wallet, requiresGateway: true, gateway: 'pagSeguro' },
+                           { value: PaymentMethod.INFINITE_PAY, label: t('settings.payments.methodLabels.infinitePay'), icon: Wallet, requiresGateway: true, gateway: 'infinitePay' },
+                           { value: PaymentMethod.STONE, label: t('settings.payments.methodLabels.stone'), icon: Wallet, requiresGateway: true, gateway: 'stone' },
                         ].map(method => {
                            const Icon = method.icon;
                            const isEnabled = shopSettings.paymentSettings?.inStore?.includes(method.value) ?? false;
@@ -861,7 +861,7 @@ export const Settings = () => {
                                  </div>
                                  <div className="flex items-center gap-2">
                                     {!canEnable && (
-                                       <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">Não Configurado</span>
+                                       <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">{t('settings.payments.notConfiguredBadge')}</span>
                                     )}
                                     {isEnabled && canEnable && <Zap className="w-4 h-4 text-emerald-500" />}
                                  </div>
@@ -875,19 +875,19 @@ export const Settings = () => {
                   <div className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5">
                      <div className="flex items-center gap-2 mb-4">
                         <Smartphone className="w-5 h-5 text-blue-500" />
-                        <h4 className="font-bold text-white text-lg">Pagamentos Online</h4>
+                        <h4 className="font-bold text-white text-lg">{t('settings.payments.onlineTitle')}</h4>
                      </div>
-                     <p className="text-xs text-zinc-500 mb-4">Métodos aceitos no agendamento online pelo site/app.</p>
+                     <p className="text-xs text-zinc-500 mb-4">{t('settings.payments.onlineDescription')}</p>
                      
                      <div className="space-y-2">
                         {[
-                           { value: PaymentMethod.CREDIT_CARD, label: 'Cartão de Crédito', icon: CreditCard, requiresGateway: true, gateway: 'any' },
-                           { value: PaymentMethod.DEBIT_CARD, label: 'Cartão de Débito', icon: CreditCard, requiresGateway: true, gateway: 'any' },
+                           { value: PaymentMethod.CREDIT_CARD, label: t('settings.payments.methodLabels.creditCard'), icon: CreditCard, requiresGateway: true, gateway: 'any' },
+                           { value: PaymentMethod.DEBIT_CARD, label: t('settings.payments.methodLabels.debitCard'), icon: CreditCard, requiresGateway: true, gateway: 'any' },
                            { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone, requiresGateway: false },
-                           { value: PaymentMethod.GOOGLE_PAY, label: 'Google Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
-                           { value: PaymentMethod.APPLE_PAY, label: 'Apple Pay', icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
-                           { value: PaymentMethod.MERCADO_PAGO, label: 'Mercado Pago', icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
-                           { value: PaymentMethod.PAGSEGURO, label: 'PagSeguro', icon: Wallet, requiresGateway: true, gateway: 'pagSeguro' },
+                           { value: PaymentMethod.GOOGLE_PAY, label: t('settings.payments.methodLabels.googlePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
+                           { value: PaymentMethod.APPLE_PAY, label: t('settings.payments.methodLabels.applePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
+                           { value: PaymentMethod.MERCADO_PAGO, label: t('settings.payments.methodLabels.mercadoPago'), icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
+                           { value: PaymentMethod.PAGSEGURO, label: t('settings.payments.methodLabels.pagSeguro'), icon: Wallet, requiresGateway: true, gateway: 'pagSeguro' },
                         ].map(method => {
                            const Icon = method.icon;
                            const isEnabled = shopSettings.paymentSettings?.online?.includes(method.value) ?? false;
@@ -954,7 +954,7 @@ export const Settings = () => {
                                  </div>
                                  <div className="flex items-center gap-2">
                                     {!canEnable && (
-                                       <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">Não Configurado</span>
+                                       <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">{t('settings.payments.notConfiguredBadge')}</span>
                                     )}
                                     {isEnabled && canEnable && <Zap className="w-4 h-4 text-blue-500" />}
                                  </div>
@@ -970,10 +970,8 @@ export const Settings = () => {
                   <div className="flex gap-3">
                      <Wallet className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                      <div className="text-sm">
-                        <p className="text-amber-200 font-bold mb-1">Importante sobre Integrações</p>
-                        <p className="text-amber-300/80 text-xs">
-                           Configure abaixo suas integrações de pagamento para aceitar pagamentos online.
-                        </p>
+                        <p className="text-amber-200 font-bold mb-1">{t('settings.payments.integrationsInfoTitle')}</p>
+                        <p className="text-amber-300/80 text-xs">{t('settings.payments.integrationsInfoDescription')}</p>
                      </div>
                   </div>
                </div>

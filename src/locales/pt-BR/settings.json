@@ -90,6 +90,26 @@
       }
     },
     "payments": {
+      "methodsTitle": "Métodos de pagamento",
+      "methodsDescription": "Configure quais métodos de pagamento sua barbearia aceita na loja física e no agendamento online.",
+      "inStoreTitle": "Pagamentos na loja (PDV)",
+      "inStoreDescription": "Métodos aceitos no caixa físico e atendimento presencial.",
+      "onlineTitle": "Pagamentos online",
+      "onlineDescription": "Métodos aceitos no agendamento online pelo site/app.",
+      "notConfiguredBadge": "Não configurado",
+      "integrationsInfoTitle": "Importante sobre integrações",
+      "integrationsInfoDescription": "Configure abaixo suas integrações de pagamento para aceitar pagamentos online.",
+      "methodLabels": {
+        "cash": "Dinheiro",
+        "creditCard": "Cartão de crédito",
+        "debitCard": "Cartão de débito",
+        "googlePay": "Google Pay",
+        "applePay": "Apple Pay",
+        "mercadoPago": "Mercado Pago",
+        "pagSeguro": "PagSeguro",
+        "infinitePay": "InfinitePay",
+        "stone": "Stone"
+      },
       "installmentsExampleTitle": "Exemplo de parcelamento",
       "installmentsExampleDescription": "Compra de {total} em {installments}x = {installmentValue} + juros"
     },
