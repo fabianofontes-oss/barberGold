@@ -246,7 +246,7 @@ export const Catalog = () => {
                     </div>
                     <div>
                        <p className="text-xs text-zinc-500 font-bold uppercase">Inventory Cost Value</p>
-                       <p className="text-xl font-bold text-white">${totalRetailCostValue.toFixed(2)}</p>
+                       <p className="text-xl font-bold text-white">R$ {totalRetailCostValue.toFixed(2)}</p>
                        <p className="text-[10px] text-zinc-500">Asset value sitting on shelf</p>
                     </div>
                  </div>
@@ -257,7 +257,7 @@ export const Catalog = () => {
                     </div>
                     <div>
                        <p className="text-xs text-zinc-500 font-bold uppercase">Revenue Potential</p>
-                       <p className="text-xl font-bold text-white">${totalRetailRevenuePotential.toFixed(2)}</p>
+                       <p className="text-xl font-bold text-white">R$ {totalRetailRevenuePotential.toFixed(2)}</p>
                        <p className="text-[10px] text-zinc-500">If all {totalRetailUnits} units are sold</p>
                     </div>
                  </div>
@@ -373,11 +373,11 @@ export const Catalog = () => {
                         <div className="mt-auto grid grid-cols-2 gap-2 text-sm">
                            <div>
                              <span className="text-zinc-500 block text-xs">Sale Price</span>
-                             <span className="text-amber-500 font-bold">${product.price}</span>
+                             <span className="text-amber-500 font-bold">R$ {product.price}</span>
                            </div>
                            <div>
                              <span className="text-zinc-500 block text-xs">Last Cost</span>
-                             <span className="text-zinc-300 font-medium">${product.costPrice || '-'}</span>
+                             <span className="text-zinc-300 font-medium">R$ {product.costPrice || '-'}</span>
                            </div>
                         </div>
                       </div>
@@ -413,8 +413,8 @@ export const Catalog = () => {
                                          <td className="px-6 py-4 text-center">
                                             <span className="text-emerald-500 font-bold">+{t.quantity}</span>
                                          </td>
-                                         <td className="px-6 py-4 text-right text-zinc-500">${t.unitCost.toFixed(2)}</td>
-                                         <td className="px-6 py-4 text-right font-bold text-white">${t.totalCost.toFixed(2)}</td>
+                                         <td className="px-6 py-4 text-right text-zinc-500">R$ {t.unitCost.toFixed(2)}</td>
+                                         <td className="px-6 py-4 text-right font-bold text-white">R$ {t.totalCost.toFixed(2)}</td>
                                       </tr>
                                    ))
                              )}
@@ -437,7 +437,7 @@ export const Catalog = () => {
                     </div>
                     <div>
                        <p className="text-xs text-zinc-500 font-bold uppercase">Total Value On Hand</p>
-                       <p className="text-xl font-bold text-white">${totalStockValue.toFixed(2)}</p>
+                       <p className="text-xl font-bold text-white">R$ {totalStockValue.toFixed(2)}</p>
                     </div>
                  </div>
                  
@@ -498,7 +498,7 @@ export const Catalog = () => {
                                       <h4 className="font-bold text-white text-lg">{item.name}</h4>
                                       {isLow && <AlertTriangle className="w-4 h-4 text-red-500" />}
                                    </div>
-                                   <p className="text-xs text-zinc-500">{item.category} • Cost: ${item.costPerUnit}/{item.unit.toLowerCase()}</p>
+                                   <p className="text-xs text-zinc-500">{item.category} • Cost: R$ {item.costPerUnit}/{item.unit.toLowerCase()}</p>
                                 </div>
                                 <button onClick={() => openEditInventoryItem(item)} className="p-1.5 hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-white transition-all">
                                    <Edit2 className="w-4 h-4" />
@@ -566,8 +566,8 @@ export const Catalog = () => {
                                             <td className="px-6 py-4 text-center">
                                                <span className="text-emerald-500 font-bold">+{t.quantity}</span>
                                             </td>
-                                            <td className="px-6 py-4 text-right text-zinc-500">${t.unitCost.toFixed(2)}</td>
-                                            <td className="px-6 py-4 text-right font-bold text-white">${t.totalCost.toFixed(2)}</td>
+                                            <td className="px-6 py-4 text-right text-zinc-500">R$ {t.unitCost.toFixed(2)}</td>
+                                            <td className="px-6 py-4 text-right font-bold text-white">R$ {t.totalCost.toFixed(2)}</td>
                                          </tr>
                                       );
                                    })
