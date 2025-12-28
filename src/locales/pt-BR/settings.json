@@ -42,6 +42,12 @@
       "copyMonToFriButton": "Copiar seg para sex",
       "closedLabel": "Fechado"
     },
+    "team": {
+      "commissionLabel": "Comissão",
+      "estimatedRevenueLabel": "Receita est. ({days}d)",
+      "occupancyLabel": "Ocupação ({hours}h disponível)",
+      "addMemberButton": "Adicionar membro da equipe"
+    },
     "alerts": {
       "profileUpdatedSuccessfully": "Perfil atualizado com sucesso!",
       "instagramLinkCopied": "Link copiado! Cole no seu Instagram.",

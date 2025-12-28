@@ -42,6 +42,12 @@
       "copyMonToFriButton": "Copiar lun a vie",
       "closedLabel": "Cerrado"
     },
+    "team": {
+      "commissionLabel": "Comisión",
+      "estimatedRevenueLabel": "Ingresos est. ({days}d)",
+      "occupancyLabel": "Ocupación ({hours}h disponible)",
+      "addMemberButton": "Agregar miembro del equipo"
+    },
     "alerts": {
       "profileUpdatedSuccessfully": "Profile updated successfully!",
       "instagramLinkCopied": "Link copied! Paste it on your Instagram.",

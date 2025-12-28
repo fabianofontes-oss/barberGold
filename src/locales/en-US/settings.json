@@ -42,6 +42,12 @@
       "copyMonToFriButton": "Copy Mon to Fri",
       "closedLabel": "Closed"
     },
+    "team": {
+      "commissionLabel": "Commission",
+      "estimatedRevenueLabel": "Est. revenue ({days}d)",
+      "occupancyLabel": "Occupancy ({hours}h available)",
+      "addMemberButton": "Add team member"
+    },
     "alerts": {
       "profileUpdatedSuccessfully": "Profile updated successfully!",
       "instagramLinkCopied": "Link copied! Paste it on your Instagram.",
