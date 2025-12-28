@@ -598,7 +598,7 @@ export const PointOfSale = () => {
             {cart.length === 0 ? (
               <div className="text-center text-zinc-500 py-10">
                 <ShoppingBag className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                <p>Cart is empty</p>
+                <p>Carrinho vazio</p>
               </div>
             ) : (
               cart.map((item, idx) => (
