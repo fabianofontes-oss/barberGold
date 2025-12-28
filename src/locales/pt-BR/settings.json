@@ -286,6 +286,43 @@
       "referralSystemDescription": "Ative o programa para clientes indicarem amigos e ganharem recompensas."
     },
     "commissions": {
+      "qualityTipsTitle": "Garantia de qualidade e gorjetas",
+      "qualityTipsDescription": "Envie automaticamente links de pesquisa para clientes após atendimentos.",
+      "qualityTipsSubDescription": "Coleta feedback (1-5 estrelas) e sugere gorjeta para bom serviço.",
+      "qualityTipsFlowLabel": "Fluxo",
+      "qualityTipsFlowDescription": "1. Serviço Concluído > 2. Botão \"Enviar Link\" aparece no Painel > 3. Cliente avalia (Estrelas) > 4. Se Bom > 5. Pedir Gorjeta.",
+      "qualityTipsImpactLabel": "Impacto",
+      "qualityTipsImpactDescription": "Aumenta ganhos da equipe e captura experiências ruins privadamente antes de chegarem ao Google.",
+      "queueDistributionTitle": "Lógica de distribuição de clientes sem agendamento",
+      "queueDistributionDescription": "Como o sistema deve atribuir ou recomendar automaticamente profissionais para clientes sem agendamento (novos/anônimos)?",
+      "queueRules": {
+        "fairness": {
+          "title": "FAIRNESS (Rodízio)",
+          "description": "Prioriza profissional com MENOS cortes hoje. Equilibra a carga de trabalho para todos ganharem."
+        },
+        "speed": {
+          "title": "VELOCIDADE (Mais Rápido)",
+          "description": "Prioriza profissional LIVRE PRIMEIRO. Minimiza tempo de espera do cliente acima de tudo."
+        },
+        "manual": {
+          "title": "MANUAL",
+          "description": "Sem recomendação automática. Recepcionista escolhe baseado na situação."
+        }
+      },
+      "discountLiabilityTitle": "Regra de responsabilidade por desconto (Quem paga o prejuízo?)",
+      "discountLiabilityDescription": "Quando você dá um desconto (Aniversário, Fidelidade, etc), quem ganha menos?",
+      "discountLiabilitySubDescription": "Define como a comissão da equipe é calculada em vendas com desconto.",
+      "discountOptions": {
+        "shared": {
+          "title": "COMPARTILHADO (Dividido)",
+          "subtitle": "Comissão sobre Preço Líquido"
+        },
+        "shopAbsorbs": {
+          "title": "LOJA ABSORVE",
+          "subtitle": "Comissão sobre Preço Cheio"
+        }
+      },
+      "marketingLoyaltyTitle": "Marketing e fidelidade",
       "discountAllocationExampleLabel": "Exemplo",
       "discountAllocationExampleIntro": "Serviço de {servicePrice} com desconto de {discount} = cliente paga {paid}. Comissão {rate}%.",
       "discountAllocationSharedLabel": "Compartilhado",

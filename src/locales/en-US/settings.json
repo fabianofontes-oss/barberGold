@@ -286,6 +286,43 @@
       "referralSystemDescription": "Enable a program for clients to invite friends and earn rewards."
     },
     "commissions": {
+      "qualityTipsTitle": "Quality assurance and tips",
+      "qualityTipsDescription": "Automatically send survey links to clients after services.",
+      "qualityTipsSubDescription": "Collects feedback (1-5 stars) and suggests tips for good service.",
+      "qualityTipsFlowLabel": "Flow",
+      "qualityTipsFlowDescription": "1. Service Completed > 2. \"Send Link\" button appears on Dashboard > 3. Client rates (Stars) > 4. If Good > 5. Request Tip.",
+      "qualityTipsImpactLabel": "Impact",
+      "qualityTipsImpactDescription": "Increases team earnings and captures bad experiences privately before they reach Google.",
+      "queueDistributionTitle": "Walk-in client distribution logic",
+      "queueDistributionDescription": "How should the system automatically assign or recommend professionals for walk-in clients (new/anonymous)?",
+      "queueRules": {
+        "fairness": {
+          "title": "FAIRNESS (Rotation)",
+          "description": "Prioritizes professional with FEWER cuts today. Balances workload so everyone earns."
+        },
+        "speed": {
+          "title": "SPEED (Fastest)",
+          "description": "Prioritizes FREE professional FIRST. Minimizes client wait time above all."
+        },
+        "manual": {
+          "title": "MANUAL",
+          "description": "No automatic recommendation. Receptionist chooses based on situation."
+        }
+      },
+      "discountLiabilityTitle": "Discount liability rule (Who pays the loss?)",
+      "discountLiabilityDescription": "When you give a discount (Birthday, Loyalty, etc), who earns less?",
+      "discountLiabilitySubDescription": "Defines how team commission is calculated on discounted sales.",
+      "discountOptions": {
+        "shared": {
+          "title": "SHARED (Split)",
+          "subtitle": "Commission on Net Price"
+        },
+        "shopAbsorbs": {
+          "title": "SHOP ABSORBS",
+          "subtitle": "Commission on Full Price"
+        }
+      },
+      "marketingLoyaltyTitle": "Marketing and loyalty",
       "discountAllocationExampleLabel": "Example",
       "discountAllocationExampleIntro": "Service of {servicePrice} with discount of {discount} = client pays {paid}. Commission {rate}%.",
       "discountAllocationSharedLabel": "Shared",

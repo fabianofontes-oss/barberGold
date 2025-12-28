@@ -286,14 +286,51 @@
       "referralSystemDescription": "Enable a program for clients to invite friends and earn rewards."
     },
     "commissions": {
-      "discountAllocationExampleLabel": "Example",
-      "discountAllocationExampleIntro": "Service of {servicePrice} with discount of {discount} = client pays {paid}. Commission {rate}%.",
-      "discountAllocationSharedLabel": "Shared",
-      "discountAllocationSharedPrefix": "Commission {rate}% on {paid} =",
-      "discountAllocationSharedSuffix": "Discount is shared. You lose {loss} in commission.",
-      "discountAllocationShopAbsorbsLabel": "Shop absorbs",
-      "discountAllocationShopAbsorbsPrefix": "Commission {rate}% on {servicePrice} =",
-      "discountAllocationShopAbsorbsSuffix": "The shop absorbs the discount of {discount}."
+      "qualityTipsTitle": "Garantía de calidad y propinas",
+      "qualityTipsDescription": "Envía automáticamente enlaces de encuesta a clientes después de los servicios.",
+      "qualityTipsSubDescription": "Recopila feedback (1-5 estrellas) y sugiere propina por buen servicio.",
+      "qualityTipsFlowLabel": "Flujo",
+      "qualityTipsFlowDescription": "1. Servicio Completado > 2. Botón \"Enviar Link\" aparece en el Panel > 3. Cliente califica (Estrellas) > 4. Si Bueno > 5. Pedir Propina.",
+      "qualityTipsImpactLabel": "Impacto",
+      "qualityTipsImpactDescription": "Aumenta ganancias del equipo y captura experiencias malas privadamente antes de que lleguen a Google.",
+      "queueDistributionTitle": "Lógica de distribución de clientes sin cita",
+      "queueDistributionDescription": "¿Cómo debe el sistema asignar o recomendar automáticamente profesionales para clientes sin cita (nuevos/anónimos)?",
+      "queueRules": {
+        "fairness": {
+          "title": "FAIRNESS (Rotación)",
+          "description": "Prioriza profesional con MENOS cortes hoy. Equilibra la carga de trabajo para que todos ganen."
+        },
+        "speed": {
+          "title": "VELOCIDAD (Más Rápido)",
+          "description": "Prioriza profesional LIBRE PRIMERO. Minimiza tiempo de espera del cliente sobre todo."
+        },
+        "manual": {
+          "title": "MANUAL",
+          "description": "Sin recomendación automática. Recepcionista elige según la situación."
+        }
+      },
+      "discountLiabilityTitle": "Regla de responsabilidad por descuento (¿Quién paga la pérdida?)",
+      "discountLiabilityDescription": "Cuando das un descuento (Cumpleaños, Fidelidad, etc), ¿quién gana menos?",
+      "discountLiabilitySubDescription": "Define cómo se calcula la comisión del equipo en ventas con descuento.",
+      "discountOptions": {
+        "shared": {
+          "title": "COMPARTIDO (Dividido)",
+          "subtitle": "Comisión sobre Precio Neto"
+        },
+        "shopAbsorbs": {
+          "title": "TIENDA ABSORBE",
+          "subtitle": "Comisión sobre Precio Completo"
+        }
+      },
+      "marketingLoyaltyTitle": "Marketing y fidelidad",
+      "discountAllocationExampleLabel": "Ejemplo",
+      "discountAllocationExampleIntro": "Servicio de {servicePrice} con descuento de {discount} = cliente paga {paid}. Comisión {rate}%.",
+      "discountAllocationSharedLabel": "Compartido",
+      "discountAllocationSharedPrefix": "Comisión {rate}% sobre {paid} =",
+      "discountAllocationSharedSuffix": "Descuento compartido. Pierdes {loss} en comisión.",
+      "discountAllocationShopAbsorbsLabel": "Tienda absorbe",
+      "discountAllocationShopAbsorbsPrefix": "Comisión {rate}% sobre {servicePrice} =",
+      "discountAllocationShopAbsorbsSuffix": "La tienda absorbe el descuento de {discount}."
     },
     "inventory": {
       "modal": {
