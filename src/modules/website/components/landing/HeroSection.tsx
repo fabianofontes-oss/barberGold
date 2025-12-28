@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, PlayCircle } from 'lucide-react';
 
 const avatarUrls = [
@@ -81,10 +82,14 @@ export function HeroSection() {
                             
                             {/* Dashboard Image */}
                             <div className="aspect-[4/3] w-full bg-[#18181b] relative">
-                                <div 
-                                    className="absolute inset-0 bg-cover bg-center opacity-90"
-                                    style={{ backgroundImage: `url('${heroImageUrl}')` }}
-                                ></div>
+                                <Image
+                                    src={heroImageUrl}
+                                    alt="Dashboard Preview"
+                                    fill
+                                    className="object-cover opacity-90"
+                                    priority
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#18181b] via-transparent to-transparent"></div>
                             </div>
                             
