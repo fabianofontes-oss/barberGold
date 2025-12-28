@@ -194,10 +194,10 @@ export const QueuePanel = () => {
       <div className="p-4 border-b border-zinc-800 flex justify-between items-center bg-zinc-950">
         <div>
            <h3 className="font-bold text-white flex items-center gap-2">
-              <UserMinus className="w-5 h-5 text-amber-500" /> Walk-in Queue
+              <UserMinus className="w-5 h-5 text-amber-500" /> Fila de Atendimento
            </h3>
            <p className="text-xs text-zinc-500 flex items-center gap-1">
-              Mode: 
+              Modo: 
               <span className="text-zinc-300 font-bold uppercase">{shopSettings.queueDistributionRule}</span>
            </p>
         </div>
@@ -213,7 +213,7 @@ export const QueuePanel = () => {
          <div className="p-4 bg-zinc-900 border-b border-zinc-800 animate-fade-in">
             <form onSubmit={handleJoinQueue} className="space-y-3">
                <div>
-                  <label className="text-[10px] uppercase font-bold text-zinc-500">Client (Required)</label>
+                  <label className="text-[10px] uppercase font-bold text-zinc-500">Cliente (Obrigatório)</label>
                   <div className="flex gap-2">
                      <select
                         required
@@ -228,7 +228,7 @@ export const QueuePanel = () => {
                            });
                         }}
                      >
-                        <option value="">Select Registered Client</option>
+                        <option value="">Selecionar Cliente Cadastrado</option>
                         {clients.map(c => (
                            <option key={c.id} value={c.id}>{c.name}</option>
                         ))}
@@ -237,7 +237,7 @@ export const QueuePanel = () => {
                         type="button"
                         onClick={() => setIsClientModalOpen(true)}
                         className="bg-zinc-800 hover:bg-zinc-700 text-white p-2 rounded-lg transition-colors border border-zinc-700"
-                        title="New Client"
+                        title="Novo Cliente"
                      >
                         <UserPlus className="w-4 h-4" />
                      </button>
@@ -245,7 +245,7 @@ export const QueuePanel = () => {
                </div>
                
                <div>
-                  <label className="text-[10px] uppercase font-bold text-zinc-500">Service</label>
+                  <label className="text-[10px] uppercase font-bold text-zinc-500">Serviço</label>
                   <select 
                      className="w-full bg-zinc-950 border border-zinc-700 rounded-lg py-2 px-3 text-sm text-white focus:border-amber-500 outline-none"
                      value={formData.serviceId}
@@ -256,21 +256,21 @@ export const QueuePanel = () => {
                </div>
 
                <div>
-                  <label className="text-[10px] uppercase font-bold text-zinc-500">Professional Preference</label>
+                  <label className="text-[10px] uppercase font-bold text-zinc-500">Preferência de Profissional</label>
                   <select 
                      className="w-full bg-zinc-950 border border-zinc-700 rounded-lg py-2 px-3 text-sm text-white focus:border-amber-500 outline-none"
                      value={formData.preferredStaffId}
                      onChange={e => setFormData({...formData, preferredStaffId: e.target.value})}
                   >
                      <option value="">
-                        Any / Next Up 
+                        Qualquer / Próximo 
                         {recommendedStaffId && ` (Rec: ${staff.find(s => s.id === recommendedStaffId)?.name.split(' ')[0]})`}
                      </option>
                      {staff.map(s => {
                         const wait = getStaffFreeTime(s.id);
                         return (
                            <option key={s.id} value={s.id}>
-                              {s.name} ({wait === 0 ? 'Free' : `${wait}m`})
+                              {s.name} ({wait === 0 ? 'Livre' : `${wait}m`})
                            </option>
                         );
                      })}
@@ -282,7 +282,7 @@ export const QueuePanel = () => {
                   disabled={!formData.clientId}
                   className="w-full bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2 rounded-lg text-xs transition-all"
                >
-                  Add to Queue
+                  Adicionar à Fila
                </button>
             </form>
          </div>
@@ -292,7 +292,7 @@ export const QueuePanel = () => {
          {queue.length === 0 ? (
             <div className="text-center text-zinc-500 py-10 opacity-50">
                <User className="w-12 h-12 mx-auto mb-2" />
-               <p className="text-sm">Queue is empty</p>
+               <p className="text-sm">Fila vazia</p>
             </div>
          ) : (
             queue.map(item => {
@@ -328,12 +328,12 @@ export const QueuePanel = () => {
                      <div className="flex items-center gap-2 text-xs text-zinc-500 mb-3">
                         <User className="w-3 h-3" /> 
                         {isSpecific ? (
-                           <span className="text-amber-500 font-bold">{staffName} (Requested)</span>
+                           <span className="text-amber-500 font-bold">{staffName} (Solicitado)</span>
                         ) : (
                            shopSettings.queueDistributionRule === 'MANUAL' ? (
-                              <span className="text-zinc-500 italic">Waiting for assignment</span>
+                              <span className="text-zinc-500 italic">Aguardando atribuição</span>
                            ) : (
-                              <span className="text-emerald-500">{staffName} ({shopSettings.queueDistributionRule === 'SPEED' ? 'Fastest' : 'Next Turn'})</span>
+                              <span className="text-emerald-500">{staffName} ({shopSettings.queueDistributionRule === 'SPEED' ? 'Mais Rápido' : 'Próxima Vez'})</span>
                            )
                         )}
                      </div>
@@ -345,7 +345,7 @@ export const QueuePanel = () => {
                            className="w-full mb-3 bg-zinc-800 hover:bg-zinc-700 text-[10px] text-zinc-300 py-1.5 rounded-lg flex items-center justify-center gap-1 border border-dashed border-zinc-600"
                         >
                            <MoveRight className="w-3 h-3 text-emerald-500" /> 
-                           Switch to {staff.find(s => s.id === recommendedStaffId)?.name.split(' ')[0]} (Save {waitTime - recommendedStaffWait}m)
+                           Mudar para {staff.find(s => s.id === recommendedStaffId)?.name.split(' ')[0]} (Economiza {waitTime - recommendedStaffWait}m)
                         </button>
                      )}
 
@@ -354,7 +354,7 @@ export const QueuePanel = () => {
                            onClick={() => handleStartService(item)}
                            className="flex-1 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-500 hover:text-zinc-900 border border-emerald-500/20 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1"
                         >
-                           <ArrowRightCircle className="w-3 h-3" /> Call / Start
+                           <ArrowRightCircle className="w-3 h-3" /> Chamar / Iniciar
                         </button>
                         <button 
                            onClick={() => leaveQueue(item.id)}
@@ -374,12 +374,12 @@ export const QueuePanel = () => {
          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
             <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-sm p-6 shadow-2xl animate-fade-in">
                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold text-white">Quick Add Client</h3>
+                  <h3 className="text-xl font-bold text-white">Adicionar Cliente Rápido</h3>
                   <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white"><X className="w-5 h-5"/></button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-4">
                   <div>
-                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Full Name</label>
+                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Nome Completo</label>
                      <input 
                         type="text" 
                         required 
@@ -389,7 +389,7 @@ export const QueuePanel = () => {
                      />
                   </div>
                   <div>
-                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Phone (Required for ID)</label>
+                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Telefone (Obrigatório)</label>
                      <input 
                         type="tel" 
                         required 
@@ -400,7 +400,7 @@ export const QueuePanel = () => {
                      />
                   </div>
                   <button type="submit" className="w-full bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold py-3 rounded-xl flex items-center justify-center gap-2 mt-2">
-                     <Save className="w-4 h-4" /> Save Client
+                     <Save className="w-4 h-4" /> Salvar Cliente
                   </button>
                </form>
             </div>
