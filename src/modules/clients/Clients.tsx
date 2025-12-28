@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
+import { useI18n } from '@/hooks/useI18n';
 import { 
   Search, 
   UserPlus, 
@@ -31,6 +32,7 @@ import { ExportClients } from './components/ExportClients';
 export const Clients = () => {
   const { clients, addClient, appointments, updateClient, shopSettings, currentUser, staff, services, products, shopProfile } = useBarber();
   const { canUseFeature } = useFeatureGate();
+  const { t, formatCurrency } = useI18n();
   
   const hasLoyalty = canUseFeature('LOYALTY');
 
@@ -180,9 +182,9 @@ export const Clients = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-white mb-1">Clients</h2>
+          <h2 className="text-3xl font-bold text-white mb-1">{t('clients.title')}</h2>
           <p className="text-zinc-400 text-sm">
-             {isOwner ? 'Manage your customer base & loyalty.' : 'Manage your portfolio and relationships.'}
+             {isOwner ? t('clients.client.notes') : t('clients.client.notes')}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -191,7 +193,7 @@ export const Clients = () => {
             onClick={() => setIsModalOpen(true)}
             className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
           >
-            <UserPlus className="w-5 h-5" /> Adicionar Cliente
+            <UserPlus className="w-5 h-5" /> {t('clients.newClient')}
           </button>
         </div>
       </div>
@@ -199,8 +201,8 @@ export const Clients = () => {
       {/* TABS (STAFF VIEW) */}
       {!isOwner && (
          <div className="flex space-x-2 bg-zinc-900 p-1 rounded-xl mb-6 border border-zinc-800 w-full md:w-max">
-            <button onClick={() => setActiveTab('PORTFOLIO')} className={`px-6 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${activeTab === 'PORTFOLIO' ? 'bg-zinc-800 text-amber-500 shadow-md ring-1 ring-amber-500/20' : 'text-zinc-500 hover:text-white'}`}><Lock className="w-3 h-3" /> My Portfolio ({myLoyalClients.length})</button>
-            <button onClick={() => setActiveTab('HISTORY')} className={`px-6 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${activeTab === 'HISTORY' ? 'bg-zinc-800 text-blue-400 shadow-md' : 'text-zinc-500 hover:text-white'}`}><Unlock className="w-3 h-3" /> Opportunities / History ({myHistoryClients.length})</button>
+            <button onClick={() => setActiveTab('PORTFOLIO')} className={`px-6 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${activeTab === 'PORTFOLIO' ? 'bg-zinc-800 text-amber-500 shadow-md ring-1 ring-amber-500/20' : 'text-zinc-500 hover:text-white'}`}><Lock className="w-3 h-3" /> {t('clients.stats.loyalPortfolio')} ({myLoyalClients.length})</button>
+            <button onClick={() => setActiveTab('HISTORY')} className={`px-6 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${activeTab === 'HISTORY' ? 'bg-zinc-800 text-blue-400 shadow-md' : 'text-zinc-500 hover:text-white'}`}><Unlock className="w-3 h-3" /> {t('clients.history.title')} ({myHistoryClients.length})</button>
          </div>
       )}
 
@@ -209,7 +211,7 @@ export const Clients = () => {
         <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
-          placeholder={canViewContacts ? "Buscar por nome ou telefone..." : "Buscar por nome..."}
+          placeholder={canViewContacts ? t('clients.searchPlaceholder') : t('common.search') + '...'}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
