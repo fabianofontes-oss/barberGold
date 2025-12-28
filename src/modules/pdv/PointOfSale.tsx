@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
+import { useI18n } from '@/hooks/useI18n';
 import { 
   Search, 
   Trash2, 
@@ -63,6 +64,7 @@ const PAYMENT_LABELS: Record<string, string> = {
 
 export const PointOfSale = () => {
   const { services, products, processSale, clients, staff, shopSettings, addClient } = useBarber();
+  const { t, formatCurrency } = useI18n();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClientId, setSelectedClientId] = useState<string>('');
@@ -114,7 +116,7 @@ export const PointOfSale = () => {
       setPromoApplied({ code, discount: PROMO_CODES[code] });
       setPromoError('');
     } else {
-      setPromoError('Cupom inválido');
+      setPromoError(t('pdv.discount.reasons.other'));
       setPromoApplied(null);
     }
   };
