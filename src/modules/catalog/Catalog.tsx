@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
+import { useI18n } from '@/hooks/useI18n';
 import { ProductModal } from '@/modules/settings/modals/ProductModal';
 import { ServiceModal } from '@/modules/settings/modals/ServiceModal';
 import { InventoryModal } from '@/modules/settings/modals/InventoryModal';
@@ -25,6 +26,7 @@ export const Catalog = () => {
     categories, addCategory, deleteCategory, supplyTransactions, restockProduct,
     addProduct, addInventoryItem
   } = useBarber();
+  const { t, formatCurrency } = useI18n();
 
   const { canUseFeature } = useFeatureGate();
   const hasPremiumCatalog = canUseFeature('ADVANCED_REPORTS'); // Premium feature
@@ -96,19 +98,19 @@ export const Catalog = () => {
   }
 
   const handleDeleteService = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this service?')) {
+    if (window.confirm(t('confirmations.deleteItem'))) {
       deleteService(id);
     }
   };
 
   const handleDeleteProduct = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
+    if (window.confirm(t('confirmations.deleteItem'))) {
       deleteProduct(id);
     }
   };
 
   const handleDeleteInventoryItem = (id: string) => {
-     if (window.confirm('Delete this supply item?')) deleteInventoryItem(id);
+     if (window.confirm(t('confirmations.deleteItem'))) deleteInventoryItem(id);
   };
 
   const handleAddCategory = (e: React.FormEvent) => {
