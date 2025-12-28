@@ -39,15 +39,21 @@ export function LandingHeader() {
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="md:hidden p-2 text-gray-300 hover:text-white"
+                        aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+                        aria-expanded={isMobileMenuOpen}
+                        aria-controls="mobile-menu"
                     >
-                        {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        {isMobileMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
                     </button>
                 </div>
             </div>
             
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
-                <div className="md:hidden py-4 px-4 border-t border-white/10 bg-[#0f0f11]">
+                <div
+                    id="mobile-menu"
+                    className="md:hidden py-4 px-4 border-t border-white/10 bg-[#0f0f11]"
+                >
                     <nav className="flex flex-col gap-4">
                         <a href="#features" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Funcionalidades</a>
                         <a href="#pricing" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Preços</a>
