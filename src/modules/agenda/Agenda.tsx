@@ -542,7 +542,7 @@ export const Agenda = () => {
                            {appointments.filter(a => a.staffId === staffMember.id && isSameDay(a.date, selectedDate)).length === 0 && (
                               <div className="h-40 flex flex-col items-center justify-center text-zinc-600 mt-10">
                                  <Coffee className="w-8 h-8 mb-2 opacity-20" />
-                                 <span className="text-xs">Free all day</span>
+                                 <span className="text-xs">Livre o dia todo</span>
                               </div>
                            )}
                         </div>
