@@ -288,11 +288,11 @@ ON CONFLICT (category_id, name) DO NOTHING;
 INSERT INTO services_template (category_id, type, name, duration_min, price_cents, package_level, is_popular, sort_order) VALUES
 ((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Hidratação', 45, 6000, 1, true, 1),
 ((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Progressiva', 180, 25000, 1, true, 2),
-((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Coloração', 90, 15000, 2, 3),
-((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Luzes', 120, 18000, 2, 4),
-((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Mechas', 120, 18000, 2, 5),
-((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Ombré Hair', 150, 25000, 2, 6),
-((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Balayage', 150, 28000, 2, 7)
+((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Coloração', 90, 15000, 2, false, 3),
+((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Luzes', 120, 18000, 2, false, 4),
+((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Mechas', 120, 18000, 2, false, 5),
+((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Ombré Hair', 150, 25000, 2, false, 6),
+((SELECT id FROM service_categories_template WHERE name='Químicas' AND business_type='salon'), 'service', 'Balayage', 150, 28000, 2, false, 7)
 ON CONFLICT (category_id, name) DO NOTHING;
 
 -- COMBOS SALÃO
