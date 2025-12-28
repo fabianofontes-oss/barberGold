@@ -287,13 +287,13 @@ export const Agenda = () => {
                   onClick={() => openModal('BLOCK')}
                   className="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold py-2.5 px-4 rounded-xl flex items-center gap-2 transition-all hidden md:flex"
                >
-                  <Coffee className="w-5 h-5" /> Block
+                  <Coffee className="w-5 h-5" /> Bloquear
                </button>
                <button 
                   onClick={() => openModal('SERVICE')}
                   className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-4 md:px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
                >
-                  <Plus className="w-5 h-5" /> <span className="hidden md:inline">New Appointment</span>
+                  <Plus className="w-5 h-5" /> <span className="hidden md:inline">Novo Agendamento</span>
                </button>
             </div>
          </div>
