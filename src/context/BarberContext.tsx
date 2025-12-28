@@ -830,8 +830,35 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const deleteProduct = (id: string) => setProducts(prev => prev.filter(p => p.id !== id));
   const addStaff = (s: any) => setStaff(prev => [...prev, { ...s, id: Math.random().toString(36).substr(2, 9) }]);
   const updateStaff = (s: StaffMember) => setStaff(prev => prev.map(st => st.id === s.id ? s : st));
-  const addCommissionPlan = (p: any) => setCommissionPlans(prev => [...prev, { ...p, id: Math.random().toString(36).substr(2, 9) }]);
-  const deleteCommissionPlan = (id: string) => setCommissionPlans(prev => prev.filter(p => p.id !== id));
+  const addCommissionPlan = async (p: any) => {
+    try {
+      const { createCommissionPlan } = await import('@/modules/commission/actions');
+      await createCommissionPlan({
+        name: p.name,
+        model: p.model,
+        serviceRate: p.serviceRate,
+        productRate: p.productRate,
+        rentalFee: p.rentalFee || 0,
+      });
+      // Recarregar dados
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao criar plano de comissão:', error);
+      alert('Erro ao criar plano de comissão');
+    }
+  };
+  
+  const deleteCommissionPlan = async (id: string) => {
+    try {
+      const { deleteCommissionPlan: deleteAction } = await import('@/modules/commission/actions');
+      await deleteAction(id);
+      // Recarregar dados
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao deletar plano de comissão:', error);
+      alert('Erro ao deletar plano de comissão');
+    }
+  };
   const addExpense = (e: any) => setExpenses(prev => [...prev, { ...e, id: Math.random().toString(36).substr(2, 9) }]);
   const removeExpense = (id: string) => setExpenses(prev => prev.filter(e => e.id !== id));
   const addStaffPayment = (p: any) => setStaffPayments(prev => [...prev, { ...p, id: Math.random().toString(36).substr(2, 9) }]);
