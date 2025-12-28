@@ -1,114 +1,97 @@
 'use server';
 
-import { ClientsRepository } from './repository';
-import { clientSchema, ClientFormData } from './types';
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-const repository = new ClientsRepository();
-
-async function getTenantId() {
+export async function createClientAction(data: {
+  name: string;
+  phone?: string;
+  email?: string;
+  birthDate?: string;
+  notes?: string;
+  tags?: string[];
+}) {
   const supabase = await createSupabaseClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error('Unauthorized');
-  
-  // Buscar tenant_id do profile do usuário
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('Não autenticado');
+
   const { data: profile } = await supabase
     .from('profiles')
     .select('tenant_id')
-    .eq('user_id', user.id)
+    .eq('user_id', session.user.id)
     .single();
-  
-  if (!profile?.tenant_id) throw new Error('Tenant not found');
-  return profile.tenant_id;
+
+  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+
+  const { data: client, error } = await supabase
+    .from('clients')
+    .insert({
+      tenant_id: profile.tenant_id,
+      name: data.name,
+      phone: data.phone || '',
+      email: data.email || '',
+      birth_date: data.birthDate,
+      notes: data.notes || '',
+      tags: data.tags || [],
+      total_spent: 0,
+      total_visits: 0,
+      loyalty_points: 0,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error('❌ Erro ao criar cliente:', error);
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/app/clients');
+  revalidatePath('/app/dashboard');
+  console.log('✅ Cliente criado:', client.id);
+  return client;
 }
 
-export async function createClient(data: ClientFormData) {
-  try {
-    const storeId = await getTenantId();
-    const validated = clientSchema.parse(data);
-    
-    // Verificar se telefone já existe
-    const phoneExists = await repository.checkPhoneExists(validated.phone, storeId);
-    if (phoneExists) {
-      return { success: false, error: 'Telefone já cadastrado' };
-    }
-    
-    const client = await repository.create(validated, storeId);
-    revalidatePath('/clients');
-    
-    return { success: true, data: client };
-  } catch (error) {
-    console.error('Error creating client:', error);
-    return { success: false, error: 'Erro ao criar cliente' };
-  }
-}
+export async function updateClientAction(clientId: string, data: {
+  name?: string;
+  phone?: string;
+  email?: string;
+  birthDate?: string;
+  notes?: string;
+  tags?: string[];
+}) {
+  const supabase = await createSupabaseClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('Não autenticado');
 
-export async function updateClient(id: string, data: ClientFormData) {
-  try {
-    const storeId = await getTenantId();
-    const validated = clientSchema.parse(data);
-    
-    // Verificar se telefone já existe (excluindo o próprio cliente)
-    if (validated.phone) {
-      const phoneExists = await repository.checkPhoneExists(validated.phone, storeId, id);
-      if (phoneExists) {
-        return { success: false, error: 'Telefone já cadastrado' };
-      }
-    }
-    
-    const client = await repository.update(id, validated, storeId);
-    revalidatePath('/clients');
-    
-    return { success: true, data: client };
-  } catch (error) {
-    console.error('Error updating client:', error);
-    return { success: false, error: 'Erro ao atualizar cliente' };
-  }
-}
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('tenant_id')
+    .eq('user_id', session.user.id)
+    .single();
 
-export async function deleteClient(id: string) {
-  try {
-    const storeId = await getTenantId();
-    await repository.delete(id, storeId);
-    revalidatePath('/clients');
-    
-    return { success: true };
-  } catch (error) {
-    console.error('Error deleting client:', error);
-    return { success: false, error: 'Erro ao excluir cliente' };
-  }
-}
+  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
 
-export async function getClients(filters?: { search?: string; tags?: string[] }) {
-  try {
-    const storeId = await getTenantId();
-    const clients = await repository.list(storeId, filters);
-    return { success: true, data: clients };
-  } catch (error) {
-    console.error('Error fetching clients:', error);
-    return { success: false, error: 'Erro ao buscar clientes' };
-  }
-}
+  const updateData: any = {};
+  if (data.name) updateData.name = data.name;
+  if (data.phone !== undefined) updateData.phone = data.phone;
+  if (data.email !== undefined) updateData.email = data.email;
+  if (data.birthDate !== undefined) updateData.birth_date = data.birthDate;
+  if (data.notes !== undefined) updateData.notes = data.notes;
+  if (data.tags) updateData.tags = data.tags;
 
-export async function getClientById(id: string) {
-  try {
-    const storeId = await getTenantId();
-    const client = await repository.getById(id, storeId);
-    return { success: true, data: client };
-  } catch (error) {
-    console.error('Error fetching client:', error);
-    return { success: false, error: 'Erro ao buscar cliente' };
-  }
-}
+  const { data: client, error } = await supabase
+    .from('clients')
+    .update(updateData)
+    .eq('id', clientId)
+    .eq('tenant_id', profile.tenant_id)
+    .select()
+    .single();
 
-export async function getClientStats() {
-  try {
-    const storeId = await getTenantId();
-    const stats = await repository.getStats(storeId);
-    return { success: true, data: stats };
-  } catch (error) {
-    console.error('Error fetching client stats:', error);
-    return { success: false, error: 'Erro ao buscar estatísticas' };
+  if (error) {
+    console.error('❌ Erro ao atualizar cliente:', error);
+    throw new Error(error.message);
   }
+
+  revalidatePath('/app/clients');
+  return client;
 }

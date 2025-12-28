@@ -721,42 +721,57 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
      if (view === 'TIPS_REVIEW' && params?.appointmentId) setActiveReviewAppointmentId(params.appointmentId);
      setView(view);
   };
-  const addAppointment = (appt: any) => {
-     const baseId = Math.random().toString(36).substr(2, 9);
-     const newAppointments: any[] = [{ ...appt, id: baseId, status: appt.status || AppointmentStatus.SCHEDULED }];
-     
-     // Gera agendamentos recorrentes se configurado
-     if (appt.recurrence && appt.recurrence !== RecurrenceType.NONE && appt.recurrenceEndDate) {
-        let nextDate = new Date(appt.date);
-        const endDate = new Date(appt.recurrenceEndDate);
-        let count = 0;
-        const maxRecurrences = 52; // Limite de segurança (1 ano semanal)
-        
-        while (count < maxRecurrences) {
-           if (appt.recurrence === RecurrenceType.DAILY) {
-              nextDate = addDays(nextDate, 1);
-           } else if (appt.recurrence === RecurrenceType.WEEKLY) {
-              nextDate = addWeeks(nextDate, 1);
-           } else if (appt.recurrence === RecurrenceType.MONTHLY) {
-              nextDate = addMonths(nextDate, 1);
-           }
-           
-           if (nextDate > endDate) break;
-           
-           newAppointments.push({
-              ...appt,
-              id: Math.random().toString(36).substr(2, 9),
-              date: new Date(nextDate),
-              status: AppointmentStatus.SCHEDULED,
-              notes: `${appt.notes || ''} [Recorrente de ${baseId}]`.trim()
-           });
-           count++;
-        }
-     }
-     
-     setAppointments(prev => [...prev, ...newAppointments]);
+  const addAppointment = async (appt: Omit<Appointment, 'id' | 'status'> & { status?: AppointmentStatus }) => {
+    try {
+      const { createAppointment } = await import('@/modules/appointments/actions');
+      
+      const appointmentData = {
+        clientId: appt.clientId,
+        clientName: appt.clientName,
+        staffId: appt.staffId,
+        serviceId: appt.serviceId,
+        date: appt.date.toISOString().split('T')[0],
+        time: appt.date.toTimeString().split(' ')[0].substring(0, 5),
+        price: appt.price,
+        notes: appt.notes || '',
+      };
+      
+      const savedAppointment = await createAppointment(appointmentData);
+      
+      const mappedAppointment: Appointment = {
+        id: savedAppointment.id,
+        clientId: savedAppointment.client_id,
+        clientName: savedAppointment.client_name,
+        staffId: savedAppointment.staff_id,
+        staffName: staff.find(s => s.id === savedAppointment.staff_id)?.name || 'Barbeiro',
+        serviceId: savedAppointment.service_id,
+        serviceName: services.find(s => s.id === savedAppointment.service_id)?.name || 'Serviço',
+        date: new Date(savedAppointment.scheduled_at),
+        price: Number(savedAppointment.price),
+        status: savedAppointment.status as AppointmentStatus,
+        notes: savedAppointment.notes || '',
+        recurrence: RecurrenceType.NONE,
+      };
+      
+      setAppointments(prev => [...prev, mappedAppointment]);
+      console.log('✅ Agendamento salvo');
+    } catch (error) {
+      console.error('❌ Erro ao criar agendamento:', error);
+      alert('Erro ao salvar agendamento');
+      throw error;
+    }
   };
-  const updateAppointmentStatus = (id: string, status: any) => setAppointments(prev => prev.map(a => a.id === id ? { ...a, status } : a));
+  const updateAppointmentStatus = async (id: string, status: AppointmentStatus) => {
+    try {
+      const { updateAppointmentStatus: updateAction } = await import('@/modules/appointments/actions');
+      await updateAction(id, status);
+      setAppointments(prev => prev.map(a => a.id === id ? { ...a, status } : a));
+      console.log('✅ Status atualizado');
+    } catch (error) {
+      console.error('❌ Erro ao atualizar status:', error);
+      alert('Erro ao atualizar status');
+    }
+  };
   const joinQueue = (item: any) => setQueue(prev => [...prev, { ...item, id: Math.random().toString(36).substr(2, 9), arrivalTime: new Date() }]);
   const leaveQueue = (id: string) => setQueue(prev => prev.filter(i => i.id !== id));
   const processSale = (items: CartItem[], clientId: string | null, staffId: string, method: PaymentMethod, discountReason?: string, tip: number = 0) => {
