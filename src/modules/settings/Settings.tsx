@@ -26,7 +26,7 @@ export const Settings = () => {
     deleteCommissionPlan, updateShopSettings, updateShopProfile, updateStaff,
     appointments
   } = useBarber();
-  const { t, currency, formatCurrency } = useI18n();
+  const { t, currency, formatCurrency, locale } = useI18n();
   
   const isOwner = currentUser?.role === 'OWNER';
   
@@ -197,14 +197,20 @@ export const Settings = () => {
      };
   };
 
-  const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+  const baseSunday = new Date(Date.UTC(2021, 0, 3));
+  const days = Array.from({ length: 7 }, (_, index) => {
+     const date = new Date(baseSunday);
+     date.setUTCDate(baseSunday.getUTCDate() + index);
+     const weekday = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(date);
+     return weekday.charAt(0).toUpperCase() + weekday.slice(1);
+  });
 
   return (
     <div className="h-full flex flex-col animate-fade-in">
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-white mb-2">{isOwner ? 'Configurações' : 'Meu Perfil'}</h2>
+        <h2 className="text-3xl font-bold text-white mb-2">{isOwner ? t('settings.header.titleOwner') : t('settings.header.titleStaff')}</h2>
         <p className="text-zinc-400">
-           {isOwner ? 'Gerencie detalhes da barbearia, equipe e regras de negócio.' : 'Gerencie sua agenda e preferências.'}
+           {isOwner ? t('settings.header.descriptionOwner') : t('settings.header.descriptionStaff')}
         </p>
       </div>
 
@@ -221,7 +227,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Store className="w-4 h-4" /> Perfil da Loja
+                  <Store className="w-4 h-4" /> {t('settings.tabs.shop')}
                 </button>
                  <button
                   onClick={() => setActiveTab('TEAM')}
@@ -231,7 +237,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Users className="w-4 h-4" /> Equipe
+                  <Users className="w-4 h-4" /> {t('settings.tabs.team')}
                 </button>
                 <button
                   onClick={() => setActiveTab('PAYMENTS')}
@@ -241,7 +247,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Wallet className="w-4 h-4" /> Pagamentos
+                  <Wallet className="w-4 h-4" /> {t('settings.tabs.payments')}
                 </button>
                 <button
                   onClick={() => setActiveTab('COMMISSIONS')}
@@ -251,7 +257,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Briefcase className="w-4 h-4" /> Regras e Crescimento
+                  <Briefcase className="w-4 h-4" /> {t('settings.tabs.commissions')}
                 </button>
                 <button
                   onClick={() => setActiveTab('REFERRAL')}
@@ -261,7 +267,7 @@ export const Settings = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <Handshake className="w-4 h-4" /> Indicações
+                  <Handshake className="w-4 h-4" /> {t('settings.tabs.referral')}
                 </button>
              </>
            )}
@@ -275,7 +281,7 @@ export const Settings = () => {
                   : 'border-transparent text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              <User className="w-4 h-4" /> Meu Perfil
+              <User className="w-4 h-4" /> {t('settings.tabs.myProfile')}
             </button>
         </div>
         
@@ -287,7 +293,7 @@ export const Settings = () => {
             }}
             className="mb-2 flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold rounded-lg transition-all"
           >
-            <Plus className="w-4 h-4" /> Novo {activeTab === 'TEAM' ? 'Membro' : 'Plano'}
+            <Plus className="w-4 h-4" /> {activeTab === 'TEAM' ? t('settings.actions.newMember') : t('settings.actions.newPlan')}
           </button>
         )}
       </div>
