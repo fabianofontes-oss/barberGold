@@ -282,13 +282,13 @@ export const Catalog = () => {
                     onClick={() => setProductSubTab('LIST')}
                     className={`px-4 py-2 rounded-md text-xs font-bold transition-all whitespace-nowrap ${productSubTab === 'LIST' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                  >
-                    Products List
+                    Lista de Produtos
                  </button>
                  <button 
                     onClick={() => setProductSubTab('HISTORY')}
                     className={`px-4 py-2 rounded-md text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 ${productSubTab === 'HISTORY' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                  >
-                    <History className="w-3 h-3" /> Purchase History
+                    <History className="w-3 h-3" /> Histórico de Compras
                  </button>
              </div>
 
@@ -470,19 +470,19 @@ export const Catalog = () => {
                     onClick={() => setInventorySubTab('ITEMS')}
                     className={`px-4 py-2 rounded-md text-xs font-bold transition-all whitespace-nowrap ${inventorySubTab === 'ITEMS' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                  >
-                    Stock Items
+                    Itens em Estoque
                  </button>
                  <button 
                     onClick={() => setInventorySubTab('HISTORY')}
                     className={`px-4 py-2 rounded-md text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 ${inventorySubTab === 'HISTORY' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                  >
-                    <History className="w-3 h-3" /> Inflow History
+                    <History className="w-3 h-3" /> Histórico de Entrada
                  </button>
                  <button 
                     onClick={() => setInventorySubTab('SUPPLIERS')}
                     className={`px-4 py-2 rounded-md text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 ${inventorySubTab === 'SUPPLIERS' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                  >
-                    <Truck className="w-3 h-3" /> Suppliers
+                    <Truck className="w-3 h-3" /> Fornecedores
                  </button>
               </div>
 
