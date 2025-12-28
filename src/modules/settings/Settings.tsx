@@ -981,10 +981,10 @@ export const Settings = () => {
             <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
                <div className="mb-6">
                   <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
-                    <Zap className="w-6 h-6 text-amber-500" /> Integrações de Gateway
+                    <Zap className="w-6 h-6 text-amber-500" /> {t('settings.payments.gatewayTitle')}
                   </h3>
                   <p className="text-zinc-400">
-                     Configure suas credenciais de API para processar pagamentos online.
+                     {t('settings.payments.gatewayDescription')}
                   </p>
                </div>
 
@@ -997,8 +997,8 @@ export const Settings = () => {
                               <Wallet className="w-5 h-5 text-blue-500" />
                            </div>
                            <div>
-                              <h4 className="font-bold text-white">Mercado Pago</h4>
-                              <p className="text-xs text-zinc-500">Gateway de pagamento da América Latina</p>
+                              <h4 className="font-bold text-white">{t('settings.payments.gateways.mercadoPago.name')}</h4>
+                              <p className="text-xs text-zinc-500">{t('settings.payments.gateways.mercadoPago.description')}</p>
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -1073,8 +1073,8 @@ export const Settings = () => {
                               <Wallet className="w-5 h-5 text-emerald-500" />
                            </div>
                            <div>
-                              <h4 className="font-bold text-white">PagSeguro</h4>
-                              <p className="text-xs text-zinc-500">Gateway do UOL para pagamentos</p>
+                              <h4 className="font-bold text-white">{t('settings.payments.gateways.pagSeguro.name')}</h4>
+                              <p className="text-xs text-zinc-500">{t('settings.payments.gateways.pagSeguro.description')}</p>
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -1149,8 +1149,8 @@ export const Settings = () => {
                               <Wallet className="w-5 h-5 text-purple-500" />
                            </div>
                            <div>
-                              <h4 className="font-bold text-white">Stripe</h4>
-                              <p className="text-xs text-zinc-500">Gateway internacional de pagamentos</p>
+                              <h4 className="font-bold text-white">{t('settings.payments.gateways.stripe.name')}</h4>
+                              <p className="text-xs text-zinc-500">{t('settings.payments.gateways.stripe.description')}</p>
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -1225,8 +1225,8 @@ export const Settings = () => {
                               <Wallet className="w-5 h-5 text-orange-500" />
                            </div>
                            <div>
-                              <h4 className="font-bold text-white">InfinitePay</h4>
-                              <p className="text-xs text-zinc-500">Maquininha e gateway brasileiro</p>
+                              <h4 className="font-bold text-white">{t('settings.payments.gateways.infinitePay.name')}</h4>
+                              <p className="text-xs text-zinc-500">{t('settings.payments.gateways.infinitePay.description')}</p>
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -1301,8 +1301,8 @@ export const Settings = () => {
                               <Wallet className="w-5 h-5 text-green-500" />
                            </div>
                            <div>
-                              <h4 className="font-bold text-white">Stone</h4>
-                              <p className="text-xs text-zinc-500">Maquininha e gateway Stone</p>
+                              <h4 className="font-bold text-white">{t('settings.payments.gateways.stone.name')}</h4>
+                              <p className="text-xs text-zinc-500">{t('settings.payments.gateways.stone.description')}</p>
                            </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -1375,17 +1375,17 @@ export const Settings = () => {
             <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
                <div className="mb-6">
                   <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
-                    <Smartphone className="w-6 h-6 text-emerald-500" /> Configuração PIX
+                    <Smartphone className="w-6 h-6 text-emerald-500" /> {t('settings.payments.pix.title')}
                   </h3>
                   <p className="text-zinc-400">
-                     Configure sua chave PIX para receber pagamentos instantâneos.
+                     {t('settings.payments.pix.description')}
                   </p>
                </div>
 
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Tipo de Chave</label>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.pix.keyTypeLabel')}</label>
                         <select 
                            value={shopSettings.pixConfig?.keyType || 'CPF'}
                            onChange={(e) => updateShopSettings({
@@ -1398,14 +1398,14 @@ export const Settings = () => {
                            })}
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
                         >
-                           <option value="CPF">CPF/CNPJ</option>
-                           <option value="EMAIL">E-mail</option>
-                           <option value="PHONE">Telefone</option>
-                           <option value="RANDOM">Chave Aleatória</option>
+                           <option value="CPF">{t('settings.payments.pix.keyTypes.cpfCnpj')}</option>
+                           <option value="EMAIL">{t('settings.payments.pix.keyTypes.email')}</option>
+                           <option value="PHONE">{t('settings.payments.pix.keyTypes.phone')}</option>
+                           <option value="RANDOM">{t('settings.payments.pix.keyTypes.random')}</option>
                         </select>
                      </div>
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Chave PIX</label>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.pix.keyLabel')}</label>
                         <input 
                            type="text" 
                            value={shopSettings.pixConfig?.key || ''}
@@ -1417,12 +1417,12 @@ export const Settings = () => {
                                  beneficiaryName: shopSettings.pixConfig?.beneficiaryName || ''
                               }
                            })}
-                           placeholder="Digite sua chave PIX"
+                           placeholder={t('settings.payments.pix.keyPlaceholder')}
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
                         />
                      </div>
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome do Beneficiário</label>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.pix.beneficiaryLabel')}</label>
                         <input 
                            type="text" 
                            value={shopSettings.pixConfig?.beneficiaryName || ''}
@@ -1434,7 +1434,7 @@ export const Settings = () => {
                                  beneficiaryName: e.target.value
                               }
                            })}
-                           placeholder="Nome completo ou Razão Social"
+                           placeholder={t('settings.payments.pix.beneficiaryPlaceholder')}
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-emerald-500 outline-none"
                         />
                      </div>
@@ -1465,14 +1465,14 @@ export const Settings = () => {
                               }}
                               className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-lg transition-all"
                            >
-                              <Copy className="w-4 h-4" /> Copiar Código PIX
+                              <Copy className="w-4 h-4" /> {t('settings.payments.pix.copyButton')}
                            </button>
                         </>
                      ) : (
                         <div className="text-center py-12">
                            <Smartphone className="w-12 h-12 text-zinc-700 mx-auto mb-3" />
-                           <p className="text-zinc-500 text-sm font-bold">Configure sua chave PIX</p>
-                           <p className="text-zinc-600 text-xs">Preencha os campos ao lado para gerar o QR Code</p>
+                           <p className="text-zinc-500 text-sm font-bold">{t('settings.payments.pix.emptyTitle')}</p>
+                           <p className="text-zinc-600 text-xs">{t('settings.payments.pix.emptyDescription')}</p>
                         </div>
                      )}
                   </div>
@@ -1483,17 +1483,17 @@ export const Settings = () => {
             <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
                <div className="mb-6">
                   <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
-                    <CreditCard className="w-6 h-6 text-amber-500" /> Configurações de Parcelamento
+                    <CreditCard className="w-6 h-6 text-amber-500" /> {t('settings.payments.installments.title')}
                   </h3>
                   <p className="text-zinc-400">
-                     Defina as regras de parcelamento para cartão de crédito.
+                     {t('settings.payments.installments.description')}
                   </p>
                </div>
 
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Parcelas Máximas</label>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.installments.maxInstallmentsLabel')}</label>
                         <select 
                            value={shopSettings.installmentConfig?.maxInstallments || 1}
                            onChange={(e) => updateShopSettings({
@@ -1507,7 +1507,7 @@ export const Settings = () => {
                            })}
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                         >
-                           <option value={1}>1x (À vista)</option>
+                           <option value={1}>{t('settings.payments.installments.options.cash')}</option>
                            <option value={2}>2x</option>
                            <option value={3}>3x</option>
                            <option value={4}>4x</option>
@@ -1516,7 +1516,7 @@ export const Settings = () => {
                         </select>
                      </div>
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Valor Mínimo por Parcela</label>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.installments.minValueLabel')}</label>
                         <div className="flex items-center gap-2">
                            <span className="text-zinc-400 font-bold">{currency.symbol}</span>
                            <input 
@@ -1539,8 +1539,8 @@ export const Settings = () => {
                      </div>
                      <div className="flex items-center justify-between p-4 bg-zinc-950/50 border border-zinc-800 rounded-lg">
                         <div>
-                           <p className="text-white font-bold text-sm">Juros de Parcelamento</p>
-                           <p className="text-xs text-zinc-500">Cobrar juros nas parcelas</p>
+                           <p className="text-white font-bold text-sm">{t('settings.payments.installments.interestTitle')}</p>
+                           <p className="text-xs text-zinc-500">{t('settings.payments.installments.interestDescription')}</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                            <input 
@@ -1563,7 +1563,7 @@ export const Settings = () => {
                   </div>
                   <div className="space-y-4">
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Taxa de Juros (% ao mês)</label>
+                        <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.installments.interestRateLabel')}</label>
                         <div className="flex items-center gap-2">
                            <input 
                               type="number" 
@@ -1598,16 +1598,16 @@ export const Settings = () => {
             <div className="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6">
                <div className="mb-6">
                   <h3 className="text-white font-bold text-2xl flex items-center gap-2 mb-2">
-                    <Briefcase className="w-6 h-6 text-amber-500" /> Conta para Recebimento
+                    <Briefcase className="w-6 h-6 text-amber-500" /> {t('settings.payments.bankAccount.title')}
                   </h3>
                   <p className="text-zinc-400">
-                     Configure a conta bancária onde deseja receber os pagamentos.
+                     {t('settings.payments.bankAccount.description')}
                   </p>
                </div>
 
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Banco</label>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.bankAccount.bankLabel')}</label>
                      <select 
                         value={shopSettings.bankAccount?.bank || ''}
                         onChange={(e) => updateShopSettings({
@@ -1623,18 +1623,18 @@ export const Settings = () => {
                         })}
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                      >
-                        <option value="">Selecione o banco</option>
-                        <option value="001">001 - Banco do Brasil</option>
-                        <option value="104">104 - Caixa Econômica</option>
-                        <option value="237">237 - Bradesco</option>
-                        <option value="341">341 - Itaú</option>
-                        <option value="033">033 - Santander</option>
-                        <option value="260">260 - Nubank</option>
-                        <option value="077">077 - Inter</option>
+                        <option value="">{t('settings.payments.bankAccount.selectBank')}</option>
+                        <option value="001">{t('settings.payments.bankAccount.banks.bancoDoBrasil')}</option>
+                        <option value="104">{t('settings.payments.bankAccount.banks.caixa')}</option>
+                        <option value="237">{t('settings.payments.bankAccount.banks.bradesco')}</option>
+                        <option value="341">{t('settings.payments.bankAccount.banks.itau')}</option>
+                        <option value="033">{t('settings.payments.bankAccount.banks.santander')}</option>
+                        <option value="260">{t('settings.payments.bankAccount.banks.nubank')}</option>
+                        <option value="077">{t('settings.payments.bankAccount.banks.inter')}</option>
                      </select>
                   </div>
                   <div>
-                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Tipo de Conta</label>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.bankAccount.accountTypeLabel')}</label>
                      <select 
                         value={shopSettings.bankAccount?.accountType || 'CHECKING'}
                         onChange={(e) => updateShopSettings({
@@ -1650,13 +1650,13 @@ export const Settings = () => {
                         })}
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                      >
-                        <option value="CHECKING">Conta Corrente</option>
-                        <option value="SAVINGS">Conta Poupança</option>
-                        <option value="PAYMENT">Conta Pagamento</option>
+                        <option value="CHECKING">{t('settings.payments.bankAccount.accountTypes.checking')}</option>
+                        <option value="SAVINGS">{t('settings.payments.bankAccount.accountTypes.savings')}</option>
+                        <option value="PAYMENT">{t('settings.payments.bankAccount.accountTypes.payment')}</option>
                      </select>
                   </div>
                   <div>
-                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Agência</label>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.bankAccount.agencyLabel')}</label>
                      <input 
                         type="text" 
                         value={shopSettings.bankAccount?.agency || ''}
@@ -1676,7 +1676,7 @@ export const Settings = () => {
                      />
                   </div>
                   <div>
-                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Conta</label>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.bankAccount.accountLabel')}</label>
                      <input 
                         type="text" 
                         value={shopSettings.bankAccount?.account || ''}
@@ -1696,7 +1696,7 @@ export const Settings = () => {
                      />
                   </div>
                   <div className="md:col-span-2">
-                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Titular da Conta</label>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.bankAccount.holderLabel')}</label>
                      <input 
                         type="text" 
                         value={shopSettings.bankAccount?.accountHolder || ''}
@@ -1711,12 +1711,12 @@ export const Settings = () => {
                               holderDocument: shopSettings.bankAccount?.holderDocument || ''
                            }
                         })}
-                        placeholder="Nome completo do titular"
+                        placeholder={t('settings.payments.bankAccount.holderPlaceholder')}
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
                      />
                   </div>
                   <div className="md:col-span-2">
-                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CPF/CNPJ do Titular</label>
+                     <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">{t('settings.payments.bankAccount.documentLabel')}</label>
                      <input 
                         type="text" 
                         value={shopSettings.bankAccount?.holderDocument || ''}
@@ -1739,7 +1739,7 @@ export const Settings = () => {
 
                <div className="mt-6 flex justify-end">
                   <button className="flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold rounded-lg transition-all">
-                     <Save className="w-4 h-4" /> Salvar Configurações
+                     <Save className="w-4 h-4" /> {t('settings.payments.saveButton')}
                   </button>
                </div>
             </div>
