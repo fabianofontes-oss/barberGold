@@ -360,6 +360,52 @@ CREATE TABLE public.bundle_items_template (
 );
 
 -- =============================================
+-- TRIGGERS PARA CAMPOS CALCULADOS
+-- =============================================
+
+-- Trigger para calcular end_at em appointments
+CREATE OR REPLACE FUNCTION calculate_appointment_end_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.end_at := NEW.scheduled_at + (NEW.duration_minutes || ' minutes')::INTERVAL;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_appointment_end_at
+    BEFORE INSERT OR UPDATE OF scheduled_at, duration_minutes ON public.appointments
+    FOR EACH ROW EXECUTE FUNCTION calculate_appointment_end_at();
+
+-- Trigger para calcular commission_amount em sale_items
+CREATE OR REPLACE FUNCTION calculate_commission_amount()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.commission_amount := NEW.total_price * NEW.commission_rate / 100;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_commission_amount
+    BEFORE INSERT OR UPDATE OF total_price, commission_rate ON public.sale_items
+    FOR EACH ROW EXECUTE FUNCTION calculate_commission_amount();
+
+-- Trigger para calcular expected_balance e difference em register_closures
+CREATE OR REPLACE FUNCTION calculate_register_balance()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.expected_balance := NEW.opening_balance + NEW.cash_sales + NEW.cash_deposits - NEW.cash_withdrawals;
+    IF NEW.closing_balance IS NOT NULL THEN
+        NEW.difference := NEW.closing_balance - NEW.expected_balance;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_register_balance
+    BEFORE INSERT OR UPDATE ON public.register_closures
+    FOR EACH ROW EXECUTE FUNCTION calculate_register_balance();
+
+-- =============================================
 -- ÍNDICES
 -- =============================================
 
