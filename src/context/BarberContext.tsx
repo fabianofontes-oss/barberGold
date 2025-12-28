@@ -876,7 +876,6 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         email: savedClient.email || '',
         birthDate: savedClient.birth_date || '',
         lastVisit: savedClient.last_visit ? new Date(savedClient.last_visit) : undefined,
-        totalVisits: savedClient.total_visits || 0,
         totalSpent: Number(savedClient.total_spent) || 0,
         loyaltyPoints: savedClient.loyalty_points || 0,
         tags: savedClient.tags || [],
@@ -1011,7 +1010,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         date: e.date,
         description: e.description,
         supplierId: e.supplierId,
-        paymentMethod: e.paymentMethod
+        paymentMethod: e.paymentMethod,
       });
       setExpenses(prev => [...prev, { ...e, id: savedExpense.id }]);
       console.log('✅ Despesa salva');
