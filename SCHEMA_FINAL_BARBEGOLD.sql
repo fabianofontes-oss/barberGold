@@ -272,3 +272,5 @@ CREATE TABLE public.products (
     -- Compatibilidade
     store_id UUID GENERATED ALWAYS AS (tenant_id) STORED
 );
+
+-- CONTINUA EM: SCHEMA_FINAL_BARBEGOLD_PARTE2.sql
