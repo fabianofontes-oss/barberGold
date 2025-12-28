@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, Calendar, Share2, Eye, ArrowRight } from 'lucide-react';
 import { OnboardingStats } from '@/types/onboarding';
-import confetti from 'canvas-confetti';
 
 interface OnboardingSuccessProps {
   stats: OnboardingStats;
@@ -12,15 +11,6 @@ interface OnboardingSuccessProps {
 
 export const OnboardingSuccess: React.FC<OnboardingSuccessProps> = ({ stats }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    // Confetti animation
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-  }, []);
 
   const nextSteps = [
     {
