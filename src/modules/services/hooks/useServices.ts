@@ -31,11 +31,11 @@ export function useServices() {
 
         const { data: profile } = await supabase
           .from('profiles')
-          .select('tenant_id')
+          .select('store_id')
           .eq('user_id', session.user.id)
           .single();
 
-        if (!profile?.tenant_id) {
+        if (!profile?.store_id) {
           setServices([]);
           setLoading(false);
           return;
@@ -44,7 +44,7 @@ export function useServices() {
         const { data, error: servicesError } = await supabase
           .from('services')
           .select('*')
-          .eq('tenant_id', profile.tenant_id)
+          .eq('store_id', profile.store_id)
           .eq('is_active', true)
           .order('name', { ascending: true });
 
