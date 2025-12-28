@@ -640,7 +640,7 @@ export const PointOfSale = () => {
                {promoDiscount > 0 && (
                   <div className="flex justify-between items-center text-sm text-purple-400 font-bold">
                     <span className="flex items-center gap-1"><Gift className="w-3 h-3" /> Cupom {promoApplied?.code}</span>
-                    <span>-${promoDiscount.toFixed(2)}</span>
+                    <span>-R$ {promoDiscount.toFixed(2)}</span>
                   </div>
                )}
 
@@ -684,7 +684,7 @@ export const PointOfSale = () => {
 
                <div className="flex justify-between items-center pt-2 border-t border-zinc-800">
                  <span className="text-zinc-300 font-bold">Total a Pagar</span>
-                 <span className="text-3xl font-bold text-white">${grandTotal.toFixed(2)}</span>
+                 <span className="text-3xl font-bold text-white">R$ {grandTotal.toFixed(2)}</span>
                </div>
             </div>
 
@@ -718,7 +718,7 @@ export const PointOfSale = () => {
                     <div className="flex justify-between text-xs text-zinc-400">
                       <span>Falta pagar:</span>
                       <span className={`font-bold ${splitRemaining > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
-                        ${splitRemaining.toFixed(2)}
+                        R$ {splitRemaining.toFixed(2)}
                       </span>
                     </div>
 
@@ -727,7 +727,7 @@ export const PointOfSale = () => {
                       <div key={idx} className="flex items-center justify-between bg-zinc-950 p-2 rounded">
                         <span className="text-xs text-zinc-300">{PAYMENT_LABELS[sp.method]}</span>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-white font-bold">${sp.amount.toFixed(2)}</span>
+                          <span className="text-sm text-white font-bold">R$ {sp.amount.toFixed(2)}</span>
                           <button onClick={() => handleRemoveSplitPayment(idx)} className="text-red-400 hover:text-red-300">
                             <Trash2 className="w-3 h-3" />
                           </button>
@@ -814,7 +814,7 @@ export const PointOfSale = () => {
                <span className="flex items-center gap-2"><ShoppingBag className="w-5 h-5" /> {cart.length} itens</span>
                <div className="flex items-center gap-2">
                   <span>Ver Carrinho</span>
-                  <span className="bg-black/20 px-2 py-0.5 rounded text-sm">${grandTotal.toFixed(2)}</span>
+                  <span className="bg-black/20 px-2 py-0.5 rounded text-sm">R$ {grandTotal.toFixed(2)}</span>
                   <ChevronUp className="w-4 h-4" />
                </div>
             </button>

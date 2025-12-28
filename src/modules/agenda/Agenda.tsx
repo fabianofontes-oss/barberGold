@@ -439,7 +439,7 @@ export const Agenda = () => {
                                              {getStatusBadge()}
                                           </div>
                                           {!isBlocked && (
-                                             <span className="text-xs font-bold text-amber-500">${appt.price}</span>
+                                             <span className="text-xs font-bold text-amber-500">R$ {appt.price}</span>
                                           )}
                                        </div>
                                        
@@ -634,7 +634,7 @@ export const Agenda = () => {
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3.5 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none text-lg md:text-base"
                     >
                        {services.map(s => (
-                        <option key={s.id} value={s.id}>{s.name} (${s.price})</option>
+                        <option key={s.id} value={s.id}>{s.name} (R$ {s.price})</option>
                       ))}
                     </select>
                   </div>
