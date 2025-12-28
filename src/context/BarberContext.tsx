@@ -741,13 +741,12 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       const mappedAppointment: Appointment = {
         id: savedAppointment.id,
         clientId: savedAppointment.client_id,
-        clientName: savedAppointment.client_name,
+        clientName: clients.find(c => c.id === savedAppointment.client_id)?.name || 'Cliente',
         staffId: savedAppointment.staff_id,
-        staffName: staff.find(s => s.id === savedAppointment.staff_id)?.name || 'Barbeiro',
         serviceId: savedAppointment.service_id,
         serviceName: services.find(s => s.id === savedAppointment.service_id)?.name || 'Serviço',
-        date: new Date(savedAppointment.scheduled_at),
-        price: Number(savedAppointment.price),
+        date: new Date(`${savedAppointment.date}T${savedAppointment.start_time}`),
+        price: Number(savedAppointment.total_amount),
         status: savedAppointment.status as AppointmentStatus,
         notes: savedAppointment.notes || '',
         recurrence: RecurrenceType.NONE,
@@ -1003,10 +1002,48 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       alert('Erro ao deletar plano de comissão');
     }
   };
-  const addExpense = (e: any) => setExpenses(prev => [...prev, { ...e, id: Math.random().toString(36).substr(2, 9) }]);
+  const addExpense = async (e: any) => {
+    try {
+      const { createExpense } = await import('@/modules/finance/actions');
+      const savedExpense = await createExpense({
+        category: e.category,
+        amount: e.amount,
+        date: e.date,
+        description: e.description,
+        supplierId: e.supplierId,
+        paymentMethod: e.paymentMethod,
+      });
+      setExpenses(prev => [...prev, { ...e, id: savedExpense.id }]);
+      console.log('✅ Despesa salva');
+    } catch (error) {
+      console.error('❌ Erro ao criar despesa:', error);
+      alert('Erro ao salvar despesa');
+    }
+  };
   const removeExpense = (id: string) => setExpenses(prev => prev.filter(e => e.id !== id));
   const addStaffPayment = (p: any) => setStaffPayments(prev => [...prev, { ...p, id: Math.random().toString(36).substr(2, 9) }]);
-  const closeRegister = (c: any) => setRegisterClosures(prev => [...prev, { ...c, id: Math.random().toString(36).substr(2, 9) }]);
+  const closeRegister = async (c: any) => {
+    try {
+      const { createRegisterClosure } = await import('@/modules/finance/actions');
+      const savedClosure = await createRegisterClosure({
+        staffId: c.staffId,
+        openedAt: c.openedAt,
+        closedAt: c.closedAt,
+        openingBalance: c.openingBalance,
+        closingBalance: c.closingBalance,
+        totalSales: c.totalSales,
+        totalCash: c.totalCash,
+        totalCard: c.totalCard,
+        totalPix: c.totalPix,
+        notes: c.notes,
+      });
+      setRegisterClosures(prev => [...prev, { ...c, id: savedClosure.id }]);
+      console.log('✅ Fechamento salvo');
+    } catch (error) {
+      console.error('❌ Erro ao criar fechamento:', error);
+      alert('Erro ao fechar caixa');
+    }
+  };
   const updateShopSettings = (s: any) => setShopSettings(prev => ({ ...prev, ...s }));
   const addInventoryItem = (i: any) => setInventory(prev => [...prev, { ...i, id: Math.random().toString(36).substr(2, 9), lastRestockDate: new Date() }]);
   const updateInventoryItem = (i: any) => setInventory(prev => prev.map(inv => inv.id === i.id ? i : inv));

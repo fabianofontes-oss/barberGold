@@ -17,16 +17,16 @@ export async function createClientAction(data: {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id')
+    .select('store_id')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const { data: client, error } = await supabase
     .from('clients')
     .insert({
-      tenant_id: profile.tenant_id,
+      store_id: profile.store_id,
       name: data.name,
       phone: data.phone || '',
       email: data.email || '',
@@ -65,11 +65,11 @@ export async function updateClientAction(clientId: string, data: {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id')
+    .select('store_id')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const updateData: any = {};
   if (data.name) updateData.name = data.name;
@@ -83,7 +83,7 @@ export async function updateClientAction(clientId: string, data: {
     .from('clients')
     .update(updateData)
     .eq('id', clientId)
-    .eq('tenant_id', profile.tenant_id)
+    .eq('store_id', profile.store_id)
     .select()
     .single();
 
