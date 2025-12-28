@@ -400,6 +400,9 @@ export interface ShopProfile {
   customDomain?: string;
   logo?: string;
   cep?: string;
+  street?: string;
+  number?: string;
+  neighborhood?: string;
   address: string;
   city?: string;
   state?: string;
