@@ -453,7 +453,7 @@ export const PointOfSale = () => {
                   {item.type === 'SERVICE' ? <Scissors className="w-4 h-4 text-blue-400" /> : <Package className="w-4 h-4 text-purple-400" />}
                 </div>
                 <p className="text-[10px] text-zinc-400 font-medium line-clamp-1 w-full">{item.name}</p>
-                <p className="text-xs text-amber-500 font-bold">${item.price}</p>
+                <p className="text-xs text-amber-500 font-bold">R$ {item.price}</p>
               </button>
             ))}
           </div>
@@ -477,7 +477,7 @@ export const PointOfSale = () => {
                     <p className="text-[10px] text-zinc-500">{item.category || item.type}</p>
                   </div>
                 </div>
-                <span className="text-amber-500 font-bold">${item.price}</span>
+                <span className="text-amber-500 font-bold">R$ {item.price}</span>
               </button>
             ))}
           </div>
@@ -613,7 +613,7 @@ export const PointOfSale = () => {
                      </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-amber-500 font-medium">${item.price}</span>
+                    <span className="text-amber-500 font-medium">R$ {item.price}</span>
                     <button onClick={() => removeFromCart(idx)} className="text-zinc-600 hover:text-red-400">
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -627,7 +627,7 @@ export const PointOfSale = () => {
             <div className="space-y-2 mb-6">
                <div className="flex justify-between items-center text-sm text-zinc-500">
                  <span>Subtotal</span>
-                 <span>${subtotal.toFixed(2)}</span>
+                 <span>R$ {subtotal.toFixed(2)}</span>
                </div>
                {discountAmount > 0 && (
                   <div className="flex justify-between items-center text-sm text-emerald-500 font-bold">
