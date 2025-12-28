@@ -151,10 +151,8 @@ export const Catalog = () => {
     <div className="h-full flex flex-col animate-fade-in">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-white mb-2">Catalog & Inventory</h2>
-          <p className="text-zinc-400">
-             Manage what you sell, what you offer, and what you use.
-          </p>
+          <h2 className="text-3xl font-bold text-white mb-2">{t('catalog.title')}</h2>
+          <p className="text-zinc-400">{t('catalog.title')}</p>
         </div>
         <div className="flex items-center gap-2">
           {/* Premium: Quick Add from Catalog */}
@@ -163,7 +161,7 @@ export const Catalog = () => {
               onClick={() => setIsQuickAddOpen(true)}
               className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-purple-500/20"
             >
-              <ShoppingCart className="w-4 h-4" /> Catálogo Rápido
+              <ShoppingCart className="w-4 h-4" /> {t('catalog.actions.add')}
             </button>
           )}
           <button 
@@ -178,7 +176,7 @@ export const Catalog = () => {
             disabled={activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY')}
             className={`flex items-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20 ${activeTab === 'CATEGORIES' || (activeTab === 'INVENTORY' && inventorySubTab === 'HISTORY') || (activeTab === 'PRODUCTS' && productSubTab === 'HISTORY') ? 'opacity-0 pointer-events-none' : ''}`}
           >
-            <Plus className="w-4 h-4" /> New Item
+            <Plus className="w-4 h-4" /> {t('common.new')}
           </button>
         </div>
       </div>
@@ -199,7 +197,7 @@ export const Catalog = () => {
                   : 'border-transparent text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              <Scissors className="w-4 h-4" /> Services
+              <Scissors className="w-4 h-4" /> {t('catalog.tabs.services')}
             </button>
             <button
               onClick={() => setActiveTab('PRODUCTS')}
@@ -209,7 +207,7 @@ export const Catalog = () => {
                   : 'border-transparent text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              <Package className="w-4 h-4" /> Retail Products
+              <Package className="w-4 h-4" /> {t('catalog.tabs.products')}
             </button>
             <button
               onClick={() => setActiveTab('INVENTORY')}
@@ -219,7 +217,7 @@ export const Catalog = () => {
                   : 'border-transparent text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              <Archive className="w-4 h-4" /> Backbar & Suppliers
+              <Archive className="w-4 h-4" /> {t('catalog.tabs.inventory')}
             </button>
             <button
               onClick={() => setActiveTab('CATEGORIES')}
@@ -229,7 +227,7 @@ export const Catalog = () => {
                   : 'border-transparent text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              <Tag className="w-4 h-4" /> Categories
+              <Tag className="w-4 h-4" /> {t('catalog.tabs.categories')}
             </button>
         </div>
       </div>
