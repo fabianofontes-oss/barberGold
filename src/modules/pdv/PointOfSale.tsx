@@ -632,7 +632,7 @@ export const PointOfSale = () => {
                {discountAmount > 0 && (
                   <div className="flex justify-between items-center text-sm text-emerald-500 font-bold">
                     <span className="flex items-center gap-1"><Zap className="w-3 h-3" /> Discount</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
+                    <span>-R$ {discountAmount.toFixed(2)}</span>
                   </div>
                )}
 
