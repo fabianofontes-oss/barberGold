@@ -161,11 +161,11 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
         <div className="flex justify-between items-center mb-6">
            <div className="flex flex-col">
               <h3 className="text-xl font-bold text-white">
-                {staffToEdit ? 'Edit Team Member' : 'Add Team Member'}
+                {staffToEdit ? 'Editar Membro' : 'Adicionar Membro da Equipe'}
               </h3>
               {activeTab === 'SCHEDULE' && (
                  <span className={`text-[10px] font-bold ${totalWeeklyHours < 30 ? 'text-red-500' : 'text-emerald-500'}`}>
-                    ~{totalWeeklyHours} Hours / Week
+                    ~{totalWeeklyHours} Horas / Semana
                  </span>
               )}
            </div>
@@ -191,9 +191,9 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
            {activeTab === 'DETAILS' && (
              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                   <h4 className="text-sm font-bold text-amber-500 uppercase tracking-wider border-b border-zinc-800 pb-2 mb-4">Personal Details</h4>
+                   <h4 className="text-sm font-bold text-amber-500 uppercase tracking-wider border-b border-zinc-800 pb-2 mb-4">Dados Pessoais</h4>
                    <div>
-                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Full Name</label>
+                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Nome Completo</label>
                       <input required type="text" value={newStaff.name} onChange={e => setNewStaff({...newStaff, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                    </div>
                    <div className="grid grid-cols-2 gap-3">
@@ -202,17 +202,17 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                          <input required type="text" placeholder="000.000.000-00" value={newStaff.cpf || ''} onChange={e => setNewStaff({...newStaff, cpf: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                       </div>
                       <div>
-                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Birth Date</label>
+                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Data de Nascimento</label>
                          <input required type="date" value={newStaff.birthDate || ''} onChange={e => setNewStaff({...newStaff, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none text-sm"/>
                       </div>
                    </div>
                    <div>
-                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Phone / WhatsApp</label>
+                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Telefone / WhatsApp</label>
                       <input required type="tel" placeholder="(00) 00000-0000" value={newStaff.phone} onChange={e => setNewStaff({...newStaff, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                    </div>
                    
                    <ImageUpload 
-                      label="Profile Photo"
+                      label="Foto de Perfil"
                       value={newStaff.avatar || ''} 
                       onChange={(val) => setNewStaff({...newStaff, avatar: val})} 
                    />
@@ -221,19 +221,19 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                    <h4 className="text-sm font-bold text-amber-500 uppercase tracking-wider border-b border-zinc-800 pb-2 mb-4">Role & Contract</h4>
                    <div>
                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Address</label>
-                     <input required type="text" placeholder="Street..." value={newStaff.address || ''} onChange={e => setNewStaff({...newStaff, address: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
+                     <input required type="text" placeholder="Rua..." value={newStaff.address || ''} onChange={e => setNewStaff({...newStaff, address: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                    </div>
                    <div>
-                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">System Role</label>
+                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Cargo no Sistema</label>
                       <div className="grid grid-cols-3 gap-2">
-                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'BARBER'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'BARBER' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Barber</button>
-                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'ASSISTANT'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'ASSISTANT' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Assistant</button>
-                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'OWNER'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'OWNER' ? 'bg-amber-500 border-amber-500 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Owner</button>
+                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'BARBER'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'BARBER' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Barbeiro</button>
+                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'ASSISTANT'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'ASSISTANT' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Assistente</button>
+                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'OWNER'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'OWNER' ? 'bg-amber-500 border-amber-500 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Proprietário</button>
                       </div>
                    </div>
 
                    <div>
-                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Payment Frequency</label>
+                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Frequência de Pagamento</label>
                       <div className="relative">
                          <CalendarClock className="absolute left-3 top-2.5 w-4 h-4 text-zinc-500" />
                          <select 
@@ -241,9 +241,9 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                            onChange={(e) => setNewStaff({...newStaff, paymentFrequency: e.target.value as any})}
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-3 pl-9 pr-3 text-white focus:border-amber-500 outline-none text-sm"
                          >
-                            <option value="WEEKLY">Weekly</option>
-                            <option value="BIWEEKLY">Bi-Weekly</option>
-                            <option value="MONTHLY">Monthly</option>
+                            <option value="WEEKLY">Semanal</option>
+                            <option value="BIWEEKLY">Quinzenal</option>
+                            <option value="MONTHLY">Mensal</option>
                          </select>
                       </div>
                    </div>
