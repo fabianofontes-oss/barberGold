@@ -103,6 +103,7 @@
         "cash": "Dinheiro",
         "creditCard": "Cartão de crédito",
         "debitCard": "Cartão de débito",
+        "pix": "PIX",
         "googlePay": "Google Pay",
         "applePay": "Apple Pay",
         "mercadoPago": "Mercado Pago",

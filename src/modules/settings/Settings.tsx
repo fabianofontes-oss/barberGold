@@ -787,7 +787,7 @@ export const Settings = () => {
                            { value: PaymentMethod.CASH, label: t('settings.payments.methodLabels.cash'), icon: Banknote, requiresGateway: false },
                            { value: PaymentMethod.CREDIT_CARD, label: t('settings.payments.methodLabels.creditCard'), icon: CreditCard, requiresGateway: false },
                            { value: PaymentMethod.DEBIT_CARD, label: t('settings.payments.methodLabels.debitCard'), icon: CreditCard, requiresGateway: false },
-                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone, requiresGateway: false },
+                           { value: PaymentMethod.PIX, label: t('settings.payments.methodLabels.pix'), icon: Smartphone, requiresGateway: false },
                            { value: PaymentMethod.GOOGLE_PAY, label: t('settings.payments.methodLabels.googlePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
                            { value: PaymentMethod.APPLE_PAY, label: t('settings.payments.methodLabels.applePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
                            { value: PaymentMethod.MERCADO_PAGO, label: t('settings.payments.methodLabels.mercadoPago'), icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
@@ -883,7 +883,7 @@ export const Settings = () => {
                         {[
                            { value: PaymentMethod.CREDIT_CARD, label: t('settings.payments.methodLabels.creditCard'), icon: CreditCard, requiresGateway: true, gateway: 'any' },
                            { value: PaymentMethod.DEBIT_CARD, label: t('settings.payments.methodLabels.debitCard'), icon: CreditCard, requiresGateway: true, gateway: 'any' },
-                           { value: PaymentMethod.PIX, label: 'PIX', icon: Smartphone, requiresGateway: false },
+                           { value: PaymentMethod.PIX, label: t('settings.payments.methodLabels.pix'), icon: Smartphone, requiresGateway: false },
                            { value: PaymentMethod.GOOGLE_PAY, label: t('settings.payments.methodLabels.googlePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
                            { value: PaymentMethod.APPLE_PAY, label: t('settings.payments.methodLabels.applePay'), icon: Smartphone, requiresGateway: true, gateway: 'stripe' },
                            { value: PaymentMethod.MERCADO_PAGO, label: t('settings.payments.methodLabels.mercadoPago'), icon: Wallet, requiresGateway: true, gateway: 'mercadoPago' },
