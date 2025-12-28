@@ -29,9 +29,11 @@ import {
   DollarSign
 } from 'lucide-react';
 import { CartItem, PaymentMethod } from '@/types';
+import { createClient } from '@/lib/supabase/client';
 import { differenceInDays } from 'date-fns';
 import { ClubCreditBadge } from '@/modules/barber-club/components/ClubCreditBadge';
 import { CashRegister } from './components/CashRegister';
+import { StaffServicesModal } from '@/modules/staff/components/StaffServicesModal';
 
 // Icon Map for dynamic payments
 const PAYMENT_ICONS: Record<string, any> = {
@@ -101,7 +103,35 @@ export const PointOfSale = () => {
   // Cash Register State
   const [isCashRegisterOpen, setIsCashRegisterOpen] = useState(false);
 
+  // Staff Services Modal State
+  const [isStaffServicesModalOpen, setIsStaffServicesModalOpen] = useState(false);
+  const [staffServices, setStaffServices] = useState<string[]>([]);
+
   const selectedClient = clients.find(c => c.id === selectedClientId);
+  const selectedStaff = staff.find(s => s.id === selectedStaffId);
+
+  // Carregar serviços do staff selecionado
+  useEffect(() => {
+    if (!selectedStaffId) {
+      setStaffServices([]);
+      return;
+    }
+
+    async function loadStaffServices() {
+      try {
+        const supabase = createClient();
+        const { data } = await supabase
+          .from('staff_services')
+          .select('service_id')
+          .eq('staff_id', selectedStaffId);
+        setStaffServices(data?.map(s => s.service_id) || []);
+      } catch (err) {
+        console.error('Erro ao carregar serviços do staff:', err);
+      }
+    }
+
+    loadStaffServices();
+  }, [selectedStaffId]);
 
   // Mock promo codes (could come from backend later)
   const PROMO_CODES: Record<string, number> = {
@@ -193,9 +223,13 @@ export const PointOfSale = () => {
   const grandTotal = total + (tipAmount || 0);
   const splitRemaining = grandTotal - splitTotal;
 
-  // Use the item's category if available, otherwise fallback to generic Type
+  // Filtrar apenas serviços do barbeiro selecionado
+  const availableServices = selectedStaffId && staffServices.length > 0
+    ? services.filter(s => staffServices.includes(s.id))
+    : [];
+
   const filteredItems = [
-    ...services, 
+    ...availableServices, 
     ...products
   ].filter(item => 
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -268,14 +302,25 @@ export const PointOfSale = () => {
         {/* Left: Item Selection (Hidden on Mobile if Cart Open) */}
         <div className={`flex-col h-full ${mobileView === 'CART' ? 'hidden lg:flex' : 'flex'}`}>
           <div className="mb-4">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-3xl font-bold text-white">Ponto de Venda</h2>
-              <button
-                onClick={() => setIsCashRegisterOpen(true)}
-                className="flex items-center gap-2 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-300 text-sm font-bold transition-all"
-              >
-                <DollarSign className="w-4 h-4" /> Caixa
-              </button>
+            <div className="flex items-center justify-between mb-2 gap-2">
+              <h2 className="text-2xl md:text-3xl font-bold text-white">Ponto de Venda</h2>
+              <div className="flex gap-2">
+                {selectedStaffId && (
+                  <button
+                    onClick={() => setIsStaffServicesModalOpen(true)}
+                    className="flex items-center gap-2 px-3 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-900 rounded-xl text-xs md:text-sm font-bold transition-all"
+                    title="Configurar Serviços"
+                  >
+                    <Scissors className="w-4 h-4" /> <span className="hidden sm:inline">Meus Serviços</span>
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsCashRegisterOpen(true)}
+                  className="flex items-center gap-2 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-300 text-xs md:text-sm font-bold transition-all"
+                >
+                  <DollarSign className="w-4 h-4" /> <span className="hidden sm:inline">Caixa</span>
+                </button>
+              </div>
             </div>
             <div className="relative">
               <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
@@ -290,10 +335,10 @@ export const PointOfSale = () => {
 
             {/* Quick Access & View Toggle */}
             <div className="flex justify-between items-center mt-3">
-              {/* Quick Access - Top Services */}
-              {!searchQuery && services.length > 0 && (
+              {/* Quick Access - Top Services do Barbeiro */}
+              {!searchQuery && availableServices.length > 0 && (
                 <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 flex-1">
-                  {services.slice(0, 4).map(service => (
+                  {availableServices.slice(0, 4).map(service => (
                     <button
                       key={service.id}
                       onClick={() => addToCart(service)}
@@ -332,9 +377,36 @@ export const PointOfSale = () => {
             </div>
           </div>
 
+          {/* Empty State */}
+          {!selectedStaffId && (
+            <div className="flex-1 flex items-center justify-center text-center p-8">
+              <div>
+                <Scissors className="w-16 h-16 text-zinc-700 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">Selecione um Funcionário</h3>
+                <p className="text-zinc-500">Escolha o barbeiro para ver os serviços disponíveis</p>
+              </div>
+            </div>
+          )}
+
+          {selectedStaffId && staffServices.length === 0 && (
+            <div className="flex-1 flex items-center justify-center text-center p-8">
+              <div>
+                <Package className="w-16 h-16 text-zinc-700 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">Nenhum Serviço Configurado</h3>
+                <p className="text-zinc-500 mb-4">Configure os serviços que você oferece</p>
+                <button
+                  onClick={() => setIsStaffServicesModalOpen(true)}
+                  className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-zinc-900 rounded-lg font-bold transition-all"
+                >
+                  Configurar Serviços
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* GRID VIEW (Default) */}
-          {displayMode === 'GRID' && (
-          <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 gap-3 pb-24 lg:pb-0 scrollbar-hide">
+          {displayMode === 'GRID' && selectedStaffId && staffServices.length > 0 && (
+          <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3 pb-24 lg:pb-0 scrollbar-hide">
             {filteredItems.map((item, idx) => (
               <button 
                 key={`${item.id}-${idx}`}
@@ -369,8 +441,8 @@ export const PointOfSale = () => {
           )}
 
           {/* COMPACT VIEW */}
-          {displayMode === 'COMPACT' && (
-          <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-3 md:grid-cols-4 gap-2 pb-24 lg:pb-0 scrollbar-hide">
+          {displayMode === 'COMPACT' && selectedStaffId && staffServices.length > 0 && (
+          <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-2 pb-24 lg:pb-0 scrollbar-hide">
             {filteredItems.map((item, idx) => (
               <button 
                 key={`${item.id}-${idx}`}
@@ -388,7 +460,7 @@ export const PointOfSale = () => {
           )}
 
           {/* LIST VIEW */}
-          {displayMode === 'LIST' && (
+          {displayMode === 'LIST' && selectedStaffId && staffServices.length > 0 && (
           <div className="flex-1 overflow-y-auto pr-2 space-y-2 pb-24 lg:pb-0 scrollbar-hide">
             {filteredItems.map((item, idx) => (
               <button 
@@ -765,7 +837,7 @@ export const PointOfSale = () => {
                         required 
                         value={newClientName}
                         onChange={e => setNewClientName(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-amber-500 outline-none text-lg"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 text-lg"
                      />
                   </div>
                   <div>
@@ -776,7 +848,7 @@ export const PointOfSale = () => {
                         value={newClientPhone}
                         onChange={e => setNewClientPhone(e.target.value)}
                         placeholder="(00) 00000-0000"
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:border-amber-500 outline-none text-lg"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 text-lg"
                      />
                   </div>
                   <button type="submit" className="w-full bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold py-4 rounded-xl flex items-center justify-center gap-2 mt-4 text-lg shadow-lg">
@@ -792,6 +864,29 @@ export const PointOfSale = () => {
         isOpen={isCashRegisterOpen} 
         onClose={() => setIsCashRegisterOpen(false)} 
       />
+
+      {isStaffServicesModalOpen && selectedStaff && (
+        <StaffServicesModal
+          isOpen={isStaffServicesModalOpen}
+          onClose={() => {
+            setIsStaffServicesModalOpen(false);
+            // Recarregar serviços do staff após fechar modal
+            if (selectedStaffId) {
+              const loadServices = async () => {
+                const supabase = createClient();
+                const { data } = await supabase
+                  .from('staff_services')
+                  .select('service_id')
+                  .eq('staff_id', selectedStaffId);
+                setStaffServices(data?.map(s => s.service_id) || []);
+              };
+              loadServices();
+            }
+          }}
+          staffId={selectedStaffId}
+          staffName={selectedStaff.name}
+        />
+      )}
     </div>
   );
 };
