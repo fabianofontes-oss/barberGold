@@ -112,7 +112,88 @@
         "stone": "Stone"
       },
       "installmentsExampleTitle": "Installment example",
-      "installmentsExampleDescription": "Purchase of {total} in {installments}x = {installmentValue} + interest"
+      "installmentsExampleDescription": "Purchase of {total} in {installments}x = {installmentValue} + interest",
+      "gatewayTitle": "Gateway integrations",
+      "gatewayDescription": "Configure your API credentials to process online payments.",
+      "gateways": {
+        "mercadoPago": {
+          "name": "Mercado Pago",
+          "description": "Latin America payment gateway"
+        },
+        "pagSeguro": {
+          "name": "PagSeguro",
+          "description": "UOL payment gateway"
+        },
+        "stripe": {
+          "name": "Stripe",
+          "description": "International payment gateway"
+        },
+        "infinitePay": {
+          "name": "InfinitePay",
+          "description": "Brazilian card machine and gateway"
+        },
+        "stone": {
+          "name": "Stone",
+          "description": "Stone card machine and gateway"
+        }
+      },
+      "pix": {
+        "title": "PIX Configuration",
+        "description": "Configure your PIX key to receive instant payments.",
+        "keyTypeLabel": "Key type",
+        "keyTypes": {
+          "cpfCnpj": "CPF/CNPJ",
+          "email": "E-mail",
+          "phone": "Phone",
+          "random": "Random key"
+        },
+        "keyLabel": "PIX Key",
+        "keyPlaceholder": "Enter your PIX key",
+        "beneficiaryLabel": "Beneficiary name",
+        "beneficiaryPlaceholder": "Full name or company name",
+        "copyButton": "Copy PIX code",
+        "emptyTitle": "Configure your PIX key",
+        "emptyDescription": "Fill in the fields to generate the QR Code"
+      },
+      "installments": {
+        "title": "Installment settings",
+        "description": "Set the installment rules for credit card.",
+        "maxInstallmentsLabel": "Max installments",
+        "options": {
+          "cash": "1x (Cash)"
+        },
+        "minValueLabel": "Minimum value per installment",
+        "interestTitle": "Installment interest",
+        "interestDescription": "Charge interest on installments",
+        "interestRateLabel": "Interest rate (% per month)"
+      },
+      "bankAccount": {
+        "title": "Receiving account",
+        "description": "Configure the bank account where you want to receive payments.",
+        "bankLabel": "Bank",
+        "selectBank": "Select bank",
+        "banks": {
+          "bancoDoBrasil": "001 - Banco do Brasil",
+          "caixa": "104 - Caixa Econômica",
+          "bradesco": "237 - Bradesco",
+          "itau": "341 - Itaú",
+          "santander": "033 - Santander",
+          "nubank": "260 - Nubank",
+          "inter": "077 - Inter"
+        },
+        "accountTypeLabel": "Account type",
+        "accountTypes": {
+          "checking": "Checking account",
+          "savings": "Savings account",
+          "payment": "Payment account"
+        },
+        "agencyLabel": "Branch",
+        "accountLabel": "Account",
+        "holderLabel": "Account holder",
+        "holderPlaceholder": "Full name of account holder",
+        "documentLabel": "Holder's CPF/CNPJ"
+      },
+      "saveButton": "Save settings"
     },
     "services": {
       "modal": {

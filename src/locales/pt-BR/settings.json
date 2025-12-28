@@ -112,7 +112,88 @@
         "stone": "Stone"
       },
       "installmentsExampleTitle": "Exemplo de parcelamento",
-      "installmentsExampleDescription": "Compra de {total} em {installments}x = {installmentValue} + juros"
+      "installmentsExampleDescription": "Compra de {total} em {installments}x = {installmentValue} + juros",
+      "gatewayTitle": "Integrações de gateway",
+      "gatewayDescription": "Configure suas credenciais de API para processar pagamentos online.",
+      "gateways": {
+        "mercadoPago": {
+          "name": "Mercado Pago",
+          "description": "Gateway de pagamento da América Latina"
+        },
+        "pagSeguro": {
+          "name": "PagSeguro",
+          "description": "Gateway do UOL para pagamentos"
+        },
+        "stripe": {
+          "name": "Stripe",
+          "description": "Gateway internacional de pagamentos"
+        },
+        "infinitePay": {
+          "name": "InfinitePay",
+          "description": "Maquininha e gateway brasileiro"
+        },
+        "stone": {
+          "name": "Stone",
+          "description": "Maquininha e gateway Stone"
+        }
+      },
+      "pix": {
+        "title": "Configuração PIX",
+        "description": "Configure sua chave PIX para receber pagamentos instantâneos.",
+        "keyTypeLabel": "Tipo de chave",
+        "keyTypes": {
+          "cpfCnpj": "CPF/CNPJ",
+          "email": "E-mail",
+          "phone": "Telefone",
+          "random": "Chave aleatória"
+        },
+        "keyLabel": "Chave PIX",
+        "keyPlaceholder": "Digite sua chave PIX",
+        "beneficiaryLabel": "Nome do beneficiário",
+        "beneficiaryPlaceholder": "Nome completo ou razão social",
+        "copyButton": "Copiar código PIX",
+        "emptyTitle": "Configure sua chave PIX",
+        "emptyDescription": "Preencha os campos ao lado para gerar o QR Code"
+      },
+      "installments": {
+        "title": "Configurações de parcelamento",
+        "description": "Defina as regras de parcelamento para cartão de crédito.",
+        "maxInstallmentsLabel": "Parcelas máximas",
+        "options": {
+          "cash": "1x (À vista)"
+        },
+        "minValueLabel": "Valor mínimo por parcela",
+        "interestTitle": "Juros de parcelamento",
+        "interestDescription": "Cobrar juros nas parcelas",
+        "interestRateLabel": "Taxa de juros (% ao mês)"
+      },
+      "bankAccount": {
+        "title": "Conta para recebimento",
+        "description": "Configure a conta bancária onde deseja receber os pagamentos.",
+        "bankLabel": "Banco",
+        "selectBank": "Selecione o banco",
+        "banks": {
+          "bancoDoBrasil": "001 - Banco do Brasil",
+          "caixa": "104 - Caixa Econômica",
+          "bradesco": "237 - Bradesco",
+          "itau": "341 - Itaú",
+          "santander": "033 - Santander",
+          "nubank": "260 - Nubank",
+          "inter": "077 - Inter"
+        },
+        "accountTypeLabel": "Tipo de conta",
+        "accountTypes": {
+          "checking": "Conta corrente",
+          "savings": "Conta poupança",
+          "payment": "Conta pagamento"
+        },
+        "agencyLabel": "Agência",
+        "accountLabel": "Conta",
+        "holderLabel": "Titular da conta",
+        "holderPlaceholder": "Nome completo do titular",
+        "documentLabel": "CPF/CNPJ do titular"
+      },
+      "saveButton": "Salvar configurações"
     },
     "services": {
       "modal": {

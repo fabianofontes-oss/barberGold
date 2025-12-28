@@ -111,8 +111,89 @@
         "infinitePay": "InfinitePay",
         "stone": "Stone"
       },
-      "installmentsExampleTitle": "Installment example",
-      "installmentsExampleDescription": "Purchase of {total} in {installments}x = {installmentValue} + interest"
+      "installmentsExampleTitle": "Ejemplo de cuotas",
+      "installmentsExampleDescription": "Compra de {total} en {installments}x = {installmentValue} + intereses",
+      "gatewayTitle": "Integraciones de gateway",
+      "gatewayDescription": "Configura tus credenciales de API para procesar pagos online.",
+      "gateways": {
+        "mercadoPago": {
+          "name": "Mercado Pago",
+          "description": "Gateway de pago de América Latina"
+        },
+        "pagSeguro": {
+          "name": "PagSeguro",
+          "description": "Gateway de pago de UOL"
+        },
+        "stripe": {
+          "name": "Stripe",
+          "description": "Gateway de pago internacional"
+        },
+        "infinitePay": {
+          "name": "InfinitePay",
+          "description": "Máquina y gateway brasileño"
+        },
+        "stone": {
+          "name": "Stone",
+          "description": "Máquina y gateway Stone"
+        }
+      },
+      "pix": {
+        "title": "Configuración PIX",
+        "description": "Configura tu clave PIX para recibir pagos instantáneos.",
+        "keyTypeLabel": "Tipo de clave",
+        "keyTypes": {
+          "cpfCnpj": "CPF/CNPJ",
+          "email": "E-mail",
+          "phone": "Teléfono",
+          "random": "Clave aleatoria"
+        },
+        "keyLabel": "Clave PIX",
+        "keyPlaceholder": "Ingresa tu clave PIX",
+        "beneficiaryLabel": "Nombre del beneficiario",
+        "beneficiaryPlaceholder": "Nombre completo o razón social",
+        "copyButton": "Copiar código PIX",
+        "emptyTitle": "Configura tu clave PIX",
+        "emptyDescription": "Completa los campos para generar el código QR"
+      },
+      "installments": {
+        "title": "Configuración de cuotas",
+        "description": "Define las reglas de cuotas para tarjeta de crédito.",
+        "maxInstallmentsLabel": "Cuotas máximas",
+        "options": {
+          "cash": "1x (Contado)"
+        },
+        "minValueLabel": "Valor mínimo por cuota",
+        "interestTitle": "Intereses de cuotas",
+        "interestDescription": "Cobrar intereses en las cuotas",
+        "interestRateLabel": "Tasa de interés (% mensual)"
+      },
+      "bankAccount": {
+        "title": "Cuenta para recepción",
+        "description": "Configura la cuenta bancaria donde deseas recibir los pagos.",
+        "bankLabel": "Banco",
+        "selectBank": "Selecciona el banco",
+        "banks": {
+          "bancoDoBrasil": "001 - Banco do Brasil",
+          "caixa": "104 - Caixa Econômica",
+          "bradesco": "237 - Bradesco",
+          "itau": "341 - Itaú",
+          "santander": "033 - Santander",
+          "nubank": "260 - Nubank",
+          "inter": "077 - Inter"
+        },
+        "accountTypeLabel": "Tipo de cuenta",
+        "accountTypes": {
+          "checking": "Cuenta corriente",
+          "savings": "Cuenta de ahorro",
+          "payment": "Cuenta de pago"
+        },
+        "agencyLabel": "Sucursal",
+        "accountLabel": "Cuenta",
+        "holderLabel": "Titular de la cuenta",
+        "holderPlaceholder": "Nombre completo del titular",
+        "documentLabel": "CPF/CNPJ del titular"
+      },
+      "saveButton": "Guardar configuración"
     },
     "services": {
       "modal": {

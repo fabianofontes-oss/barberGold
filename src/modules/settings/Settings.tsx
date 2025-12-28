@@ -1754,11 +1754,11 @@ export const Settings = () => {
                <div className="flex items-center justify-between gap-4 mb-4 relative z-10">
                   <div>
                      <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                       <ThumbsUp className="w-5 h-5 text-amber-500" /> Garantia de Qualidade e Gorjetas
+                       <ThumbsUp className="w-5 h-5 text-amber-500" /> {t('settings.commissions.qualityTipsTitle')}
                      </h3>
                      <p className="text-zinc-400 text-sm mt-1 max-w-xl">
-                        Envie automaticamente links de pesquisa para clientes após atendimentos.
-                        <br/><span className="text-xs text-zinc-500">Coleta feedback (1-5 estrelas) e sugere gorjeta para bom serviço.</span>
+                        {t('settings.commissions.qualityTipsDescription')}
+                        <br/><span className="text-xs text-zinc-500">{t('settings.commissions.qualityTipsSubDescription')}</span>
                      </p>
                   </div>
                   
@@ -1776,12 +1776,12 @@ export const Settings = () => {
                {shopSettings.enableTipsReview && (
                   <div className="mt-4 bg-zinc-950/50 rounded-lg p-4 text-xs text-zinc-400 border border-zinc-800 flex gap-4">
                      <div className="flex-1">
-                        <span className="font-bold text-white block mb-1">Fluxo:</span>
-                        1. Serviço Concluído {'>'} 2. Botão &quot;Enviar Link&quot; aparece no Painel {'>'} 3. Cliente avalia (Estrelas) {'>'} 4. Se Bom {'>'} 5. Pedir Gorjeta.
+                        <span className="font-bold text-white block mb-1">{t('settings.commissions.qualityTipsFlowLabel')}:</span>
+                        {t('settings.commissions.qualityTipsFlowDescription')}
                      </div>
                      <div className="flex-1 border-l border-zinc-800 pl-4">
-                        <span className="font-bold text-white block mb-1">Impacto:</span>
-                        Aumenta ganhos da equipe e captura experiências ruins privadamente antes de chegarem ao Google.
+                        <span className="font-bold text-white block mb-1">{t('settings.commissions.qualityTipsImpactLabel')}:</span>
+                        {t('settings.commissions.qualityTipsImpactDescription')}
                      </div>
                   </div>
                )}
@@ -1790,10 +1790,10 @@ export const Settings = () => {
             {/* QUEUE DISTRIBUTION RULE */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                 <UserMinus className="w-5 h-5 text-amber-500" /> Lógica de Distribuição de Clientes Sem Agendamento
+                 <UserMinus className="w-5 h-5 text-amber-500" /> {t('settings.commissions.queueDistributionTitle')}
                </h3>
                <p className="text-zinc-400 text-sm mb-6">
-                  Como o sistema deve atribuir ou recomendar automaticamente profissionais para clientes sem agendamento (novos/anônimos)?
+                  {t('settings.commissions.queueDistributionDescription')}
                </p>
 
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1802,10 +1802,10 @@ export const Settings = () => {
                      className={`p-4 rounded-xl border flex flex-col gap-2 transition-all text-left ${shopSettings.queueDistributionRule === 'FAIRNESS' ? 'bg-zinc-800 border-amber-500 ring-1 ring-amber-500/50' : 'bg-zinc-950 border-zinc-800 hover:border-zinc-700'}`}
                   >
                      <div className="flex justify-between w-full">
-                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'FAIRNESS' ? 'text-amber-500' : 'text-white'}`}>FAIRNESS (Rodízio)</span>
+                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'FAIRNESS' ? 'text-amber-500' : 'text-white'}`}>{t('settings.commissions.queueRules.fairness.title')}</span>
                         {shopSettings.queueDistributionRule === 'FAIRNESS' && <Zap className="w-4 h-4 text-amber-500" />}
                      </div>
-                     <p className="text-xs text-zinc-400">Prioriza profissional com MENOS cortes hoje. Equilibra a carga de trabalho para todos ganharem.</p>
+                     <p className="text-xs text-zinc-400">{t('settings.commissions.queueRules.fairness.description')}</p>
                   </button>
 
                   <button 
@@ -1813,10 +1813,10 @@ export const Settings = () => {
                      className={`p-4 rounded-xl border flex flex-col gap-2 transition-all text-left ${shopSettings.queueDistributionRule === 'SPEED' ? 'bg-zinc-800 border-emerald-500 ring-1 ring-emerald-500/50' : 'bg-zinc-950 border-zinc-800 hover:border-zinc-700'}`}
                   >
                      <div className="flex justify-between w-full">
-                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'SPEED' ? 'text-emerald-500' : 'text-white'}`}>VELOCIDADE (Mais Rápido)</span>
+                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'SPEED' ? 'text-emerald-500' : 'text-white'}`}>{t('settings.commissions.queueRules.speed.title')}</span>
                         {shopSettings.queueDistributionRule === 'SPEED' && <Zap className="w-4 h-4 text-emerald-500" />}
                      </div>
-                     <p className="text-xs text-zinc-400">Prioriza profissional LIVRE PRIMEIRO. Minimiza tempo de espera do cliente acima de tudo.</p>
+                     <p className="text-xs text-zinc-400">{t('settings.commissions.queueRules.speed.description')}</p>
                   </button>
 
                   <button 
@@ -1824,10 +1824,10 @@ export const Settings = () => {
                      className={`p-4 rounded-xl border flex flex-col gap-2 transition-all text-left ${shopSettings.queueDistributionRule === 'MANUAL' ? 'bg-zinc-800 border-blue-500 ring-1 ring-blue-500/50' : 'bg-zinc-950 border-zinc-800 hover:border-zinc-700'}`}
                   >
                      <div className="flex justify-between w-full">
-                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'MANUAL' ? 'text-blue-500' : 'text-white'}`}>MANUAL</span>
+                        <span className={`font-bold ${shopSettings.queueDistributionRule === 'MANUAL' ? 'text-blue-500' : 'text-white'}`}>{t('settings.commissions.queueRules.manual.title')}</span>
                         {shopSettings.queueDistributionRule === 'MANUAL' && <Zap className="w-4 h-4 text-blue-500" />}
                      </div>
-                     <p className="text-xs text-zinc-400">Sem recomendação automática. Recepcionista escolhe baseado na situação.</p>
+                     <p className="text-xs text-zinc-400">{t('settings.commissions.queueRules.manual.description')}</p>
                   </button>
                </div>
             </div>
@@ -1837,11 +1837,11 @@ export const Settings = () => {
                <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
                   <div>
                      <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                       <Scale className="w-5 h-5 text-amber-500" /> Regra de Responsabilidade por Desconto (Quem paga o prejuízo?)
+                       <Scale className="w-5 h-5 text-amber-500" /> {t('settings.commissions.discountLiabilityTitle')}
                      </h3>
                      <p className="text-zinc-400 text-sm mt-1 max-w-2xl">
-                        Quando você dá um desconto (Aniversário, Fidelidade, etc), quem ganha menos?
-                        <br/><span className="text-xs text-zinc-500">Define como a comissão da equipe é calculada em vendas com desconto.</span>
+                        {t('settings.commissions.discountLiabilityDescription')}
+                        <br/><span className="text-xs text-zinc-500">{t('settings.commissions.discountLiabilitySubDescription')}</span>
                      </p>
                   </div>
 
@@ -1854,8 +1854,8 @@ export const Settings = () => {
                            : 'text-zinc-500 hover:text-zinc-300'
                         }`}
                      >
-                        <span>COMPARTILHADO (Dividido)</span>
-                        <span className="text-[9px] opacity-60 font-normal">Comissão sobre Preço Líquido</span>
+                        <span>{t('settings.commissions.discountOptions.shared.title')}</span>
+                        <span className="text-[9px] opacity-60 font-normal">{t('settings.commissions.discountOptions.shared.subtitle')}</span>
                      </button>
                      <button 
                         onClick={() => updateShopSettings({ discountAllocation: 'SHOP_ABSORBS' })}
@@ -1865,8 +1865,8 @@ export const Settings = () => {
                            : 'text-zinc-500 hover:text-zinc-300'
                         }`}
                      >
-                        <span>LOJA ABSORVE</span>
-                        <span className="text-[9px] opacity-60 font-normal">Comissão sobre Preço Cheio</span>
+                        <span>{t('settings.commissions.discountOptions.shopAbsorbs.title')}</span>
+                        <span className="text-[9px] opacity-60 font-normal">{t('settings.commissions.discountOptions.shopAbsorbs.subtitle')}</span>
                      </button>
                   </div>
                </div>
@@ -1888,7 +1888,7 @@ export const Settings = () => {
             {/* GROWTH & MARKETING RULES */}
             <div>
                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                 <TrendingUp className="w-5 h-5 text-amber-500" /> Marketing e Fidelidade
+                 <TrendingUp className="w-5 h-5 text-amber-500" /> {t('settings.commissions.marketingLoyaltyTitle')}
                </h3>
                
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
