@@ -4,8 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS register_closures (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
-  store_id UUID REFERENCES stores(id) ON DELETE CASCADE,
+  store_id UUID NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
   staff_id UUID NOT NULL REFERENCES staff(id) ON DELETE CASCADE,
   opened_at TIMESTAMPTZ NOT NULL,
   closed_at TIMESTAMPTZ NOT NULL,
@@ -21,7 +20,6 @@ CREATE TABLE IF NOT EXISTS register_closures (
 );
 
 -- Índices para performance
-CREATE INDEX IF NOT EXISTS idx_register_closures_tenant ON register_closures(tenant_id);
 CREATE INDEX IF NOT EXISTS idx_register_closures_store ON register_closures(store_id);
 CREATE INDEX IF NOT EXISTS idx_register_closures_staff ON register_closures(staff_id);
 CREATE INDEX IF NOT EXISTS idx_register_closures_date ON register_closures(closed_at);
@@ -29,21 +27,21 @@ CREATE INDEX IF NOT EXISTS idx_register_closures_date ON register_closures(close
 -- RLS
 ALTER TABLE register_closures ENABLE ROW LEVEL SECURITY;
 
--- Policy: Usuários veem fechamentos do seu tenant
-CREATE POLICY "Users can view register closures from their tenant"
+-- Policy: Usuários veem fechamentos da sua loja
+CREATE POLICY "Users can view register closures from their store"
   ON register_closures FOR SELECT
-  USING (tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid()));
+  USING (store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid()));
 
 -- Policy: Staff pode criar fechamentos
 CREATE POLICY "Staff can create register closures"
   ON register_closures FOR INSERT
-  WITH CHECK (tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid()));
+  WITH CHECK (store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid()));
 
 -- Policy: Apenas owners podem atualizar/deletar fechamentos
 CREATE POLICY "Owners can manage register closures"
   ON register_closures FOR UPDATE
-  USING (tenant_id IN (
-    SELECT tenant_id FROM profiles 
+  USING (store_id IN (
+    SELECT store_id FROM profiles 
     WHERE user_id = auth.uid() AND role IN ('OWNER', 'ADMIN')
   ));
 

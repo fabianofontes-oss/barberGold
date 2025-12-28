@@ -4,8 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS appointments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
-  store_id UUID REFERENCES stores(id) ON DELETE CASCADE,
+  store_id UUID NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
   client_id UUID REFERENCES clients(id) ON DELETE SET NULL,
   client_name TEXT NOT NULL,
   staff_id UUID NOT NULL REFERENCES staff(id) ON DELETE CASCADE,
@@ -19,7 +18,6 @@ CREATE TABLE IF NOT EXISTS appointments (
 );
 
 -- Índices para performance
-CREATE INDEX IF NOT EXISTS idx_appointments_tenant ON appointments(tenant_id);
 CREATE INDEX IF NOT EXISTS idx_appointments_store ON appointments(store_id);
 CREATE INDEX IF NOT EXISTS idx_appointments_client ON appointments(client_id);
 CREATE INDEX IF NOT EXISTS idx_appointments_staff ON appointments(staff_id);
@@ -29,14 +27,14 @@ CREATE INDEX IF NOT EXISTS idx_appointments_status ON appointments(status);
 -- RLS
 ALTER TABLE appointments ENABLE ROW LEVEL SECURITY;
 
--- Policy: Usuários veem agendamentos do seu tenant
-CREATE POLICY "Users can view appointments from their tenant"
+-- Policy: Usuários veem agendamentos da sua loja
+CREATE POLICY "Users can view appointments from their store"
   ON appointments FOR SELECT
-  USING (tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid()));
+  USING (store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid()));
 
 -- Policy: Staff pode gerenciar agendamentos
 CREATE POLICY "Staff can manage appointments"
   ON appointments FOR ALL
-  USING (tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid()));
+  USING (store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid()));
 
 COMMENT ON TABLE appointments IS 'Agendamentos de serviços';

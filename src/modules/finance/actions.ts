@@ -17,16 +17,16 @@ export async function createExpense(data: {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id')
+    .select('store_id')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const { data: expense, error } = await supabase
     .from('expenses')
     .insert({
-      tenant_id: profile.tenant_id,
+      store_id: profile.store_id,
       category: data.category,
       amount: data.amount,
       date: data.date,
@@ -55,11 +55,11 @@ export async function deleteExpense(expenseId: string) {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id, role')
+    .select('store_id, role')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
+  if (!profile?.store_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
     throw new Error('Sem permissão');
   }
 
@@ -67,7 +67,7 @@ export async function deleteExpense(expenseId: string) {
     .from('expenses')
     .delete()
     .eq('id', expenseId)
-    .eq('tenant_id', profile.tenant_id);
+    .eq('store_id', profile.store_id);
 
   if (error) {
     console.error('❌ Erro ao deletar despesa:', error);
@@ -97,16 +97,16 @@ export async function createRegisterClosure(data: {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('tenant_id')
+    .select('store_id')
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.tenant_id) throw new Error('Tenant não encontrado');
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const { data: closure, error } = await supabase
     .from('register_closures')
     .insert({
-      tenant_id: profile.tenant_id,
+      store_id: profile.store_id,
       staff_id: data.staffId,
       opened_at: data.openedAt,
       closed_at: data.closedAt,

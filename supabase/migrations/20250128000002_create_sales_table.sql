@@ -4,8 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS sales (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
-  store_id UUID REFERENCES stores(id) ON DELETE CASCADE,
+  store_id UUID NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
   client_id UUID REFERENCES clients(id) ON DELETE SET NULL,
   staff_id UUID NOT NULL REFERENCES staff(id) ON DELETE CASCADE,
   total DECIMAL(10,2) NOT NULL,
@@ -31,7 +30,6 @@ CREATE TABLE IF NOT EXISTS sale_items (
 );
 
 -- Índices para performance
-CREATE INDEX IF NOT EXISTS idx_sales_tenant ON sales(tenant_id);
 CREATE INDEX IF NOT EXISTS idx_sales_store ON sales(store_id);
 CREATE INDEX IF NOT EXISTS idx_sales_client ON sales(client_id);
 CREATE INDEX IF NOT EXISTS idx_sales_staff ON sales(staff_id);
@@ -43,22 +41,22 @@ ALTER TABLE sales ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sale_items ENABLE ROW LEVEL SECURITY;
 
 -- Policies para sales
-CREATE POLICY "Users can view sales from their tenant"
+CREATE POLICY "Users can view sales from their store"
   ON sales FOR SELECT
-  USING (tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid()));
+  USING (store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid()));
 
 CREATE POLICY "Staff can manage sales"
   ON sales FOR ALL
-  USING (tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid()));
+  USING (store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid()));
 
 -- Policies para sale_items
-CREATE POLICY "Users can view sale items from their tenant"
+CREATE POLICY "Users can view sale items from their store"
   ON sale_items FOR SELECT
-  USING (sale_id IN (SELECT id FROM sales WHERE tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid())));
+  USING (sale_id IN (SELECT id FROM sales WHERE store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid())));
 
 CREATE POLICY "Staff can manage sale items"
   ON sale_items FOR ALL
-  USING (sale_id IN (SELECT id FROM sales WHERE tenant_id IN (SELECT tenant_id FROM profiles WHERE user_id = auth.uid())));
+  USING (sale_id IN (SELECT id FROM sales WHERE store_id IN (SELECT store_id FROM profiles WHERE user_id = auth.uid())));
 
 COMMENT ON TABLE sales IS 'Vendas realizadas no PDV';
 COMMENT ON TABLE sale_items IS 'Itens de cada venda';
