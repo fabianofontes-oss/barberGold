@@ -791,14 +791,14 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         staffId,
         items: saleItems,
         total,
-        method,
+        method: method as "CASH" | "CREDIT_CARD" | "DEBIT_CARD" | "PIX" | "OTHER",
         tip,
         discountApplied: discountReason,
       });
       
       const newSale: Sale = {
         id: savedSale.id,
-        clientId: clientId || undefined,
+        clientId: clientId || null,
         staffId,
         items,
         total,
