@@ -710,7 +710,7 @@ export const Catalog = () => {
                    </div>
                    <div className="text-center">
                     <span className="block text-xs text-zinc-500 mb-1">Price</span>
-                    <span className="text-amber-500 font-bold">${service.price}</span>
+                    <span className="text-amber-500 font-bold">R$ {service.price}</span>
                    </div>
                    
                    {/* ACTIONS */}
