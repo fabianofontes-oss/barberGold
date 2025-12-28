@@ -376,7 +376,7 @@ export const Settings = () => {
                    </div>
 
                    {/* CEP com busca automática */}
-                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div>
                          <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CEP</label>
                          <MaskedInput
@@ -387,9 +387,11 @@ export const Settings = () => {
                                updateShopProfile({
                                   ...shopProfile,
                                   cep: address.cep,
-                                  address: `${address.logradouro}, ${address.bairro}`,
+                                  street: address.logradouro,
+                                  neighborhood: address.bairro,
                                   city: address.localidade,
-                                  state: address.uf
+                                  state: address.uf,
+                                  address: `${address.logradouro}, ${address.bairro}, ${address.localidade} - ${address.uf}`
                                });
                             }}
                             icon={<MapPin className="w-4 h-4" />}
@@ -397,18 +399,37 @@ export const Settings = () => {
                          />
                       </div>
                       <div className="md:col-span-2">
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Endereço</label>
-                         <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2">
-                            <MapPin className="w-4 h-4 text-zinc-500" />
-                            <input 
-                               type="text" 
-                               value={shopProfile.address || ''}
-                               onChange={(e) => updateShopProfile({ ...shopProfile, address: e.target.value })}
-                               className="w-full bg-transparent text-white outline-none"
-                               placeholder="Rua, número, bairro"
-                            />
-                         </div>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Rua</label>
+                         <input 
+                            type="text" 
+                            value={shopProfile.street || ''}
+                            onChange={(e) => updateShopProfile({ ...shopProfile, street: e.target.value })}
+                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                            placeholder="Rua Reginaldo de Souza Lima"
+                         />
                       </div>
+                      <div>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Número</label>
+                         <input 
+                            type="text" 
+                            value={shopProfile.number || ''}
+                            onChange={(e) => updateShopProfile({ ...shopProfile, number: e.target.value })}
+                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                            placeholder="712"
+                         />
+                      </div>
+                   </div>
+
+                   {/* Bairro */}
+                   <div>
+                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Bairro</label>
+                      <input 
+                         type="text" 
+                         value={shopProfile.neighborhood || ''}
+                         onChange={(e) => updateShopProfile({ ...shopProfile, neighborhood: e.target.value })}
+                         className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
+                         placeholder="Bernardo Monteiro"
+                      />
                    </div>
 
                    {/* Cidade e Estado */}
