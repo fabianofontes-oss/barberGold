@@ -5,10 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { useI18n } from '@/hooks/useI18n';
 import { Scissors, Eye, EyeOff, Loader2, Check } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { t } = useI18n();
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -36,7 +38,7 @@ export default function LoginPage() {
       // Success - Hard redirect para garantir que cookies sejam propagados
       window.location.href = '/app/dashboard';
     } catch (err: any) {
-      setError('Ocorreu um erro inesperado ao tentar fazer login.');
+      setError(t('auth.errors.genericError'));
     } finally {
       setLoading(false);
     }
@@ -52,7 +54,7 @@ export default function LoginPage() {
         },
       });
     } catch (err) {
-      setError('Erro ao iniciar login com Google.');
+      setError(t('auth.errors.genericError'));
     }
   };
 
@@ -96,8 +98,8 @@ export default function LoginPage() {
           
           {/* Header */}
           <div className="text-center lg:text-left space-y-2">
-            <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">Bem-vindo de Volta</h1>
-            <p className="text-[#ccb58f] text-base font-normal leading-normal">Digite seus dados para entrar.</p>
+            <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">{t('auth.login.title')}</h1>
+            <p className="text-[#ccb58f] text-base font-normal leading-normal">{t('auth.login.subtitle')}</p>
           </div>
 
           {error && (
