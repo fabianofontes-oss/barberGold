@@ -287,7 +287,7 @@ export const PointOfSale = () => {
         </div>
         <h2 className="text-3xl font-bold text-white mb-2">Venda Concluída!</h2>
         <p className="text-zinc-400">Transação registrada com sucesso.</p>
-        {tipAmount > 0 && <p className="text-amber-500 font-bold mt-2">+ ${tipAmount.toFixed(2)} Gorjeta para o Profissional</p>}
+        {tipAmount > 0 && <p className="text-amber-500 font-bold mt-2">+ R$ {tipAmount.toFixed(2)} Gorjeta para o Profissional</p>}
       </div>
     );
   }
@@ -431,7 +431,7 @@ export const PointOfSale = () => {
                     }`}>
                       {item.category || item.type}
                     </span>
-                    <span className="font-bold text-white text-sm">${item.price}</span>
+                    <span className="font-bold text-white text-sm">R$ {item.price}</span>
                   </div>
                   <h4 className="font-medium text-zinc-300 text-sm group-hover:text-amber-500 transition-colors line-clamp-1">{item.name}</h4>
                 </div>
