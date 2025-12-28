@@ -17,7 +17,7 @@ CREATE TABLE public.appointments (
     -- Horário
     scheduled_at TIMESTAMPTZ NOT NULL,
     duration_minutes INTEGER NOT NULL CHECK (duration_minutes > 0),
-    end_at TIMESTAMPTZ GENERATED ALWAYS AS (scheduled_at + (duration_minutes || ' minutes')::INTERVAL) STORED,
+    end_at TIMESTAMPTZ, -- Será calculado via trigger ou aplicação
     
     -- Status e Valores
     status TEXT DEFAULT 'SCHEDULED' CHECK (status IN ('SCHEDULED', 'CONFIRMED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED', 'NO_SHOW')),
@@ -81,7 +81,7 @@ CREATE TABLE public.sale_items (
     -- Comissão
     staff_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
     commission_rate DECIMAL(5,2) DEFAULT 0 CHECK (commission_rate >= 0 AND commission_rate <= 100),
-    commission_amount DECIMAL(10,2) GENERATED ALWAYS AS (total_price * commission_rate / 100) STORED,
+    commission_amount DECIMAL(10,2), -- Será calculado via trigger ou aplicação
     
     CONSTRAINT check_item_reference CHECK (
         (item_type = 'SERVICE' AND service_id IS NOT NULL AND product_id IS NULL) OR
@@ -168,12 +168,8 @@ CREATE TABLE public.register_closures (
     cash_deposits DECIMAL(10,2) DEFAULT 0,
     
     -- Diferença
-    expected_balance DECIMAL(10,2) GENERATED ALWAYS AS (
-        opening_balance + cash_sales + cash_deposits - cash_withdrawals
-    ) STORED,
-    difference DECIMAL(10,2) GENERATED ALWAYS AS (
-        COALESCE(closing_balance, 0) - (opening_balance + cash_sales + cash_deposits - cash_withdrawals)
-    ) STORED,
+    expected_balance DECIMAL(10,2), -- Será calculado via trigger ou aplicação
+    difference DECIMAL(10,2), -- Será calculado via trigger ou aplicação
     
     -- Status
     status TEXT DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'CLOSED', 'RECONCILED')),
