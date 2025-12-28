@@ -1,0 +1,138 @@
+{
+  "onboarding": {
+    "wizard": {
+      "step1": "Tipo de Negócio",
+      "step2": "Pacote",
+      "step3": "Personalizar",
+      "back": "Voltar"
+    },
+    "businessType": {
+      "title": "Vamos montar seus serviços",
+      "subtitle": "em 30 segundos",
+      "barber": {
+        "title": "Barbearia",
+        "description": "Cortes, barba e mais",
+        "recommended": "Recomendado"
+      },
+      "salon": {
+        "title": "Salão de Beleza",
+        "description": "Cabelo, unhas e estética"
+      },
+      "unisex": {
+        "title": "Barbearia + Salão",
+        "description": "Atendimento unissex"
+      },
+      "skip": {
+        "title": "Pular",
+        "description": "Criar tudo manualmente"
+      },
+      "tip": "💡 Você poderá editar tudo depois"
+    },
+    "package": {
+      "title": "Escolha seu pacote inicial",
+      "selected": "{type} selecionada",
+      "essencial": {
+        "title": "ESSENCIAL",
+        "description": "{count} itens principais",
+        "subtitle": "Pronto para começar",
+        "recommended": "Recomendado"
+      },
+      "completo": {
+        "title": "COMPLETO",
+        "description": "{count} itens + extras",
+        "subtitle": "Para negócios avançados"
+      },
+      "custom": {
+        "title": "SÓ EU ESCOLHO",
+        "description": "Selecionar item por item",
+        "subtitle": "Controle total"
+      },
+      "features": {
+        "barberEssencial": ["✓ Cortes básicos", "✓ Barba", "✓ Combos"],
+        "barberCompleto": ["✓ Tudo do Essencial", "✓ Químicas e tratamentos", "✓ Estética facial"],
+        "salonEssencial": ["✓ Cabelo e escova", "✓ Unhas", "✓ Depilação básica"],
+        "salonCompleto": ["✓ Tudo do Essencial", "✓ Químicas avançadas", "✓ Penteados e estética"],
+        "unisexEssencial": ["✓ Mix barbearia + salão", "✓ Serviços essenciais", "✓ Combos"],
+        "unisexCompleto": ["✓ Tudo de barbearia", "✓ Tudo de salão", "✓ Máxima variedade"],
+        "custom": ["Controle total"]
+      }
+    },
+    "customize": {
+      "title": "Seus Serviços",
+      "searchPlaceholder": "Buscar serviço...",
+      "stats": "📊 {categories} categorias • {services} serviços",
+      "avgTicket": "💰 Ticket médio: ~R$ {value}",
+      "filters": {
+        "all": "Todos",
+        "hair": "Corte",
+        "beard": "Barba",
+        "combo": "Combo",
+        "chemical": "Química",
+        "aesthetic": "Estética",
+        "addon": "Adicional"
+      },
+      "quickActions": {
+        "markRecommended": "✓ Marcar recomendados",
+        "markAll": "☐ Marcar todos",
+        "clear": "✗ Limpar",
+        "expandAll": "⬇️ Expandir tudo"
+      },
+      "service": {
+        "duration": "{min}min",
+        "price": "R$ {value}",
+        "edit": "Editar",
+        "selected": "selecionados"
+      },
+      "actions": {
+        "clearSelection": "Limpar seleção",
+        "addCustom": "+ Adicionar serviço customizado",
+        "finish": "Finalizar"
+      },
+      "empty": {
+        "title": "Nenhum serviço selecionado",
+        "description": "Marque pelo menos 1 serviço para continuar",
+        "action": "Marcar Recomendados"
+      },
+      "loading": "Carregando serviços...",
+      "noServices": "Nenhum serviço disponível"
+    },
+    "success": {
+      "title": "🎉 Tudo pronto!",
+      "subtitle": "Seu negócio está no ar",
+      "summary": {
+        "title": "📊 Resumo do seu catálogo",
+        "services": "✓ {count} serviços ativos",
+        "combos": "✓ {count} combos configurados",
+        "categories": "✓ {count} categorias disponíveis",
+        "avgTicket": "💰 Ticket médio: R$ {value}",
+        "avgDuration": "⏱️ Tempo médio: {min}min"
+      },
+      "nextSteps": {
+        "title": "Próximos passos",
+        "step1": {
+          "title": "Fazer primeiro agendamento",
+          "description": "Comece a usar o sistema",
+          "button": "Agendar agora"
+        },
+        "step2": {
+          "title": "Convidar clientes",
+          "description": "Compartilhe seu link de agendamento",
+          "button": "Compartilhar link"
+        },
+        "step3": {
+          "title": "Ver como cliente vê",
+          "description": "Preview do cardápio",
+          "button": "Preview do cardápio"
+        }
+      },
+      "tip": "💡 Você pode editar serviços a qualquer momento em Painel → Catálogo",
+      "goToDashboard": "Ir para painel"
+    },
+    "errors": {
+      "loadTemplates": "Erro ao carregar templates de serviços",
+      "processOnboarding": "Erro ao processar onboarding",
+      "noTemplates": "Nenhum template encontrado",
+      "tryAgain": "Tentar novamente"
+    }
+  }
+}

@@ -24,7 +24,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ...(await import(`../locales/${locale}/auth.json`)).default,
       ...(await import(`../locales/${locale}/barberclub.json`)).default,
       ...(await import(`../locales/${locale}/payments.json`)).default,
-      ...(await import(`../locales/${locale}/settings.json`)).default
+      ...(await import(`../locales/${locale}/settings.json`)).default,
+      ...(await import(`../locales/${locale}/onboarding.json`)).default
     }
   };
 });
