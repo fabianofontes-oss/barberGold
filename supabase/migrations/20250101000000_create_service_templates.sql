@@ -53,6 +53,24 @@ CREATE TABLE IF NOT EXISTS service_categories (
   CONSTRAINT unique_category_per_store UNIQUE (store_id, name)
 );
 
+CREATE TABLE IF NOT EXISTS services (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  store_id UUID NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
+  category_id UUID REFERENCES service_categories(id) ON DELETE CASCADE,
+  template_id UUID REFERENCES services_template(id), -- rastreabilidade
+  type TEXT NOT NULL CHECK (type IN ('service', 'addon', 'combo')),
+  name TEXT NOT NULL,
+  duration INT NOT NULL CHECK (duration >= 5 AND duration <= 300),
+  price DECIMAL(10,2) NOT NULL,
+  tags TEXT[] DEFAULT '{}',
+  sort_order INT DEFAULT 0,
+  is_active BOOLEAN DEFAULT true,
+  is_popular BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT unique_service_per_store_category UNIQUE (store_id, category_id, name)
+);
+
 CREATE TABLE IF NOT EXISTS service_variants (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   service_id UUID REFERENCES services(id) ON DELETE CASCADE,
