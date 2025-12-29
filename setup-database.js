@@ -5,6 +5,7 @@
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // Helper para ler variáveis de ambiente de arquivo
 function loadEnv(filename) {
@@ -47,9 +48,6 @@ async function setupDatabase() {
   try {
     // Ler o schema SQL
     const schemaPath = path.join(__dirname, 'supabase', 'schema-complete.sql');
-    const schema = fs.readFileSync(schemaPath, 'utf8');
-    
-    console.log('📝 Schema carregado, executando no banco...');
     
     // Para executar SQL direto, você precisa fazer via Dashboard do Supabase
     console.log('\n⚠️  IMPORTANTE:');
@@ -69,9 +67,18 @@ async function setupDatabase() {
 
     // Vamos criar um usuário de teste
     console.log('👤 Criando usuário de teste...');
+
+    // Gerar senha segura se não fornecida
+    const generatePassword = () => {
+      return process.env.ADMIN_PASSWORD || crypto.randomBytes(12).toString('base64').slice(0, 16) + '!1Aa';
+    };
+
+    const adminPassword = generatePassword();
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@barbergold.com';
+
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-      email: 'admin@barbergold.com',
-      password: 'Admin123!',
+      email: adminEmail,
+      password: adminPassword,
       email_confirm: true
     });
 
@@ -83,8 +90,9 @@ async function setupDatabase() {
       }
     } else {
       console.log('✅ Usuário criado com sucesso!');
-      console.log('   Email: admin@barbergold.com');
-      console.log('   Senha: Admin123!');
+      console.log(`   Email: ${adminEmail}`);
+      console.log(`   Senha: ${adminPassword}`);
+      console.log('   ⚠️  GUARDE ESTA SENHA COM SEGURANÇA!');
     }
 
     console.log('\n🎉 Setup concluído!');
