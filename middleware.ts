@@ -35,9 +35,25 @@ export async function middleware(request: NextRequest) {
   }
 
   // Verificar autenticação para rotas protegidas
-  const token = request.cookies.get('sb-yitrspfqpakpygfytduz-auth-token')
+  // Otimização: Tenta verificar o cookie localmente para evitar chamada de rede desnecessária
+  // Se não conseguir determinar o nome do cookie ou se o cookie existir, deixa o updateSession validar
+  let hasSessionCookie = true
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   
-  if (!token && pathname.startsWith('/app')) {
+  if (supabaseUrl) {
+    try {
+      const { hostname } = new URL(supabaseUrl)
+      // O hostname é tipicamente <project-ref>.supabase.co
+      const projectRef = hostname.split('.')[0]
+      const cookieName = `sb-${projectRef}-auth-token`
+      hasSessionCookie = request.cookies.has(cookieName)
+    } catch {
+      // Se falhar ao parsear a URL, assume que pode ter sessão para não bloquear indevidamente
+    }
+  }
+
+  // Se conseguimos determinar o nome do cookie e ele NÃO existe, redireciona login imediatamente
+  if (!hasSessionCookie && pathname.startsWith('/app')) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
