@@ -610,7 +610,7 @@ export const OnlineBookingWizard = () => {
   if (step === 1) {
      return (
         <div className="min-h-screen bg-zinc-950 p-6 flex flex-col">
-           <button onClick={() => setStep(0)} className="w-8 h-8 flex items-center justify-center bg-zinc-900 rounded-full text-zinc-400 mb-8">
+           <button onClick={() => setStep(0)} aria-label="Voltar" className="w-8 h-8 flex items-center justify-center bg-zinc-900 rounded-full text-zinc-400 mb-8">
               <ChevronLeft className="w-5 h-5" />
            </button>
            <div className="flex-1">
@@ -633,7 +633,7 @@ export const OnlineBookingWizard = () => {
      const isFormValid = clientForm.name.length > 2 && clientForm.birthDate;
      return (
         <div className="min-h-screen bg-zinc-950 p-6 flex flex-col">
-           <button onClick={() => setStep(1)} className="w-8 h-8 flex items-center justify-center bg-zinc-900 rounded-full text-zinc-400 mb-6">
+           <button onClick={() => setStep(1)} aria-label="Voltar" className="w-8 h-8 flex items-center justify-center bg-zinc-900 rounded-full text-zinc-400 mb-6">
               <ChevronLeft className="w-5 h-5" />
            </button>
            <div className="flex-1">
@@ -996,9 +996,9 @@ export const OnlineBookingWizard = () => {
                        </div>
                        
                        <div className="flex items-center bg-zinc-950 rounded-lg border border-zinc-700">
-                          <button onClick={() => updateProductQty(product.id, -1)} className="w-8 h-8 flex items-center justify-center text-zinc-400 hover:text-white"><Minus className="w-3 h-3" /></button>
+                          <button onClick={() => updateProductQty(product.id, -1)} aria-label="Diminuir quantidade" className="w-8 h-8 flex items-center justify-center text-zinc-400 hover:text-white"><Minus className="w-3 h-3" /></button>
                           <div className="w-6 text-center text-sm font-bold text-white">{qty}</div>
-                          <button onClick={() => updateProductQty(product.id, 1)} className="w-8 h-8 flex items-center justify-center text-zinc-400 hover:text-white"><Plus className="w-3 h-3" /></button>
+                          <button onClick={() => updateProductQty(product.id, 1)} aria-label="Aumentar quantidade" className="w-8 h-8 flex items-center justify-center text-zinc-400 hover:text-white"><Plus className="w-3 h-3" /></button>
                        </div>
                     </div>
                  );
@@ -1303,7 +1303,7 @@ export const OnlineBookingWizard = () => {
            {isPaymentModalOpen && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
                  <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-md p-6 shadow-2xl animate-fade-in relative">
-                    <button onClick={() => setIsPaymentModalOpen(false)} className="absolute top-4 right-4 text-zinc-500 hover:text-white"><X className="w-5 h-5"/></button>
+                    <button onClick={() => setIsPaymentModalOpen(false)} aria-label="Fechar" className="absolute top-4 right-4 text-zinc-500 hover:text-white"><X className="w-5 h-5"/></button>
                     
                     <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
                        <Lock className="w-5 h-5 text-emerald-500" /> Pagamento Seguro
@@ -1370,7 +1370,7 @@ export const OnlineBookingWizard = () => {
 // Simple Header Component
 const Header = ({ title, onBack, step, total }: { title: string, onBack: () => void, step: number, total: number }) => (
    <div className="flex items-center justify-between mb-2">
-      <button onClick={onBack} className="p-2 bg-zinc-900 rounded-lg text-zinc-400 hover:text-white border border-zinc-800"><ChevronLeft className="w-5 h-5" /></button>
+      <button onClick={onBack} aria-label="Voltar" className="p-2 bg-zinc-900 rounded-lg text-zinc-400 hover:text-white border border-zinc-800"><ChevronLeft className="w-5 h-5" /></button>
       <div className="text-center">
          <h2 className="text-white font-bold">{title}</h2>
          <div className="flex gap-1 justify-center mt-1">
