@@ -13,9 +13,14 @@ export function LandingHeader() {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const supabase = createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-            setIsAuthenticated(!!user);
+            try {
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                setIsAuthenticated(!!user);
+            } catch (error) {
+                console.error('Erro ao verificar autenticação:', error);
+                setIsAuthenticated(false);
+            }
         };
         checkAuth();
     }, []);
