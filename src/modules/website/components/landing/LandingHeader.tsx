@@ -1,11 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Scissors, Menu, X } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 export function LandingHeader() {
+    const router = useRouter();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            setIsAuthenticated(!!user);
+        };
+        checkAuth();
+    }, []);
+
+    const handleLoginClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (isAuthenticated) {
+            router.push('/app/dashboard');
+        } else {
+            router.push('/login');
+        }
+    };
 
     return (
         <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#0f0f11]/90 backdrop-blur-md">
