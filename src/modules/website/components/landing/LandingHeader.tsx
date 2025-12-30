@@ -58,7 +58,7 @@ export function LandingHeader() {
                         onClick={handleLoginClick}
                         className="hidden sm:block text-sm font-bold text-white hover:text-[#f79f08] transition-colors"
                     >
-                        Login
+                        {isAuthenticated ? 'Dashboard' : 'Login'}
                     </button>
                     <Link 
                         href="/register"
