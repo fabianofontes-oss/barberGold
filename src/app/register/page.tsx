@@ -4,7 +4,7 @@ import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
-import { Scissors, Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
 
 function RegisterForm() {
 
@@ -58,7 +58,7 @@ function RegisterForm() {
 
             // Redirecionar para /app/setup para completar cadastro (tenant + profile)
             window.location.href = '/app/setup';
-        } catch (err) {
+        } catch {
             setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
         } finally {
             setLoading(false);
@@ -78,7 +78,7 @@ function RegisterForm() {
                 setError(error.message);
                 return;
             }
-        } catch (err) {
+        } catch {
             setError('Erro ao iniciar cadastro com Google.');
         }
     };

@@ -3,13 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { useI18n } from '@/hooks/useI18n';
 import { Scissors, Eye, EyeOff, Loader2, Check } from 'lucide-react';
 
 export default function LoginPage() {
-  const router = useRouter();
   const { t } = useI18n();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +35,7 @@ export default function LoginPage() {
 
       // Success - Redirecionar para dashboard, AuthGuard vai verificar profile
       window.location.href = '/app/dashboard';
-    } catch (err: any) {
+    } catch {
       setError(t('auth.errors.genericError'));
     } finally {
       setLoading(false);
@@ -47,13 +45,13 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     const supabase = createClient();
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
-    } catch (err) {
+    } catch {
       setError(t('auth.errors.genericError'));
     }
   };

@@ -42,7 +42,7 @@ export function LandingHeader() {
                 // Não logado - vai para login
                 router.push('/login');
             }
-        } catch (error) {
+        } catch {
             // Em caso de erro, vai para login
             router.push('/login');
         } finally {
