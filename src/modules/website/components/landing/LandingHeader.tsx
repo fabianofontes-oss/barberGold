@@ -9,7 +9,8 @@ import { createClient } from '@/lib/supabase/client';
 export function LandingHeader() {
     const router = useRouter();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+    const [isCheckingAuth, setIsCheckingAuth] = useState(false);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -25,12 +26,27 @@ export function LandingHeader() {
         checkAuth();
     }, []);
 
-    const handleLoginClick = (e: React.MouseEvent) => {
+    const handleLoginClick = async (e: React.MouseEvent) => {
         e.preventDefault();
-        if (isAuthenticated) {
-            router.push('/app/dashboard');
-        } else {
+        setIsCheckingAuth(true);
+        
+        try {
+            // Sempre verificar autenticação no momento do clique
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            if (user) {
+                // Usuário logado - vai para dashboard
+                router.push('/app/dashboard');
+            } else {
+                // Não logado - vai para login
+                router.push('/login');
+            }
+        } catch (error) {
+            // Em caso de erro, vai para login
             router.push('/login');
+        } finally {
+            setIsCheckingAuth(false);
         }
     };
 
@@ -56,9 +72,10 @@ export function LandingHeader() {
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={handleLoginClick}
-                        className="hidden sm:block text-sm font-bold text-white hover:text-[#f79f08] transition-colors"
+                        disabled={isCheckingAuth}
+                        className="hidden sm:block text-sm font-bold text-white hover:text-[#f79f08] transition-colors disabled:opacity-50"
                     >
-                        {isAuthenticated ? 'Dashboard' : 'Login'}
+                        {isCheckingAuth ? '...' : (isAuthenticated ? 'Dashboard' : 'Login')}
                     </button>
                     <Link 
                         href="/register"
@@ -88,9 +105,10 @@ export function LandingHeader() {
                                 setIsMobileMenuOpen(false);
                                 handleLoginClick(e);
                             }}
-                            className="text-sm font-medium text-gray-300 hover:text-white text-left"
+                            disabled={isCheckingAuth}
+                            className="text-sm font-medium text-gray-300 hover:text-white text-left disabled:opacity-50"
                         >
-                            {isAuthenticated ? 'Dashboard' : 'Login'}
+                            {isCheckingAuth ? '...' : (isAuthenticated ? 'Dashboard' : 'Login')}
                         </button>
                         <Link href="/register" className="text-sm font-bold bg-[#f79f08] text-[#0f0f11] px-6 py-2 rounded-lg text-center">
                             Começar Teste
