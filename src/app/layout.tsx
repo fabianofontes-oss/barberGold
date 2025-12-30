@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppProviders } from "@/providers/AppProviders";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,6 +29,16 @@ export default async function RootLayout({
       <body className={`${inter.variable} antialiased bg-zinc-950 text-zinc-50`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AppProviders>{children}</AppProviders>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: '#18181b',
+                color: '#fafafa',
+                border: '1px solid #27272a'
+              }
+            }}
+          />
         </NextIntlClientProvider>
       </body>
     </html>
