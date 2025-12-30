@@ -49,9 +49,12 @@ export function LandingHeader() {
                 </nav>
                 
                 <div className="flex items-center gap-4">
-                    <Link className="hidden sm:block text-sm font-bold text-white hover:text-[#f79f08] transition-colors" href="/login">
+                    <button 
+                        onClick={handleLoginClick}
+                        className="hidden sm:block text-sm font-bold text-white hover:text-[#f79f08] transition-colors"
+                    >
                         Login
-                    </Link>
+                    </button>
                     <Link 
                         href="/register"
                         className="bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] text-sm font-bold py-2 px-5 rounded-md transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)]"
@@ -75,7 +78,15 @@ export function LandingHeader() {
                         <a href="#pricing" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Preços</a>
                         <a href="#testimonials" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Depoimentos</a>
                         <a href="#faq" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>FAQ</a>
-                        <Link href="/login" className="text-sm font-medium text-gray-300 hover:text-white">Login</Link>
+                        <button 
+                            onClick={(e) => {
+                                setIsMobileMenuOpen(false);
+                                handleLoginClick(e);
+                            }}
+                            className="text-sm font-medium text-gray-300 hover:text-white text-left"
+                        >
+                            Login
+                        </button>
                         <Link href="/register" className="text-sm font-bold bg-[#f79f08] text-[#0f0f11] px-6 py-2 rounded-lg text-center">
                             Começar Teste
                         </Link>
