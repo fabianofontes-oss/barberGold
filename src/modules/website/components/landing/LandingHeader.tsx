@@ -90,7 +90,7 @@ export function LandingHeader() {
                             }}
                             className="text-sm font-medium text-gray-300 hover:text-white text-left"
                         >
-                            Login
+                            {isAuthenticated ? 'Dashboard' : 'Login'}
                         </button>
                         <Link href="/register" className="text-sm font-bold bg-[#f79f08] text-[#0f0f11] px-6 py-2 rounded-lg text-center">
                             Começar Teste
