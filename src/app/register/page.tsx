@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { Scissors, Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
-import { validateSlug } from '@/lib/validation/reserved-slugs';
 
 function RegisterForm() {
 
@@ -149,7 +148,7 @@ function RegisterForm() {
                     {/* Form Header */}
                     <div className="space-y-2">
                         <h2 className="text-white text-3xl font-bold leading-tight tracking-tight">Criar Conta</h2>
-                        <p className="text-[#ccb58f] text-base">Preencha seus dados para começar.</p>
+                        <p className="text-[#ccb58f] text-base">Crie sua conta. Você configurará sua barbearia na próxima etapa.</p>
                     </div>
 
                     {error && (
@@ -171,23 +170,6 @@ function RegisterForm() {
                                 disabled={loading}
                                 className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
-                        </label>
-
-                        {/* Shop Slug */}
-                        <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal">Nome da sua Barbearia (URL)</span>
-                            <div className="flex items-center gap-2 w-full rounded-lg border border-[#695430] bg-[#342a18] focus-within:border-[#f79f08] focus-within:ring-2 focus-within:ring-[#f79f08]/50 h-12 px-4 transition-all duration-200">
-                                <input
-                                    type="text"
-                                    value={shopSlug}
-                                    onChange={(e) => setShopSlug(e.target.value)}
-                                    placeholder="barbearia-joao"
-                                    disabled={loading}
-                                    className="flex-1 bg-transparent text-white focus:outline-none placeholder:text-[#ccb58f]/50 text-base font-normal disabled:opacity-50"
-                                />
-                                <span className="text-[#ccb58f]/50 text-sm whitespace-nowrap">.barber.gold</span>
-                            </div>
-                            <p className="text-xs text-[#ccb58f]/50">Escolha um nome único para sua barbearia (opcional)</p>
                         </label>
 
                         {/* Email Address */}
@@ -284,9 +266,9 @@ function RegisterForm() {
                             {loading ? (
                                 <>
                                     <Loader2 className="animate-spin h-5 w-5 mr-2" />
-                                    Processando...
+                                    Criando Conta...
                                 </>
-                            ) : 'Começar Grátis'}
+                            ) : 'Criar Conta e Continuar'}
                         </button>
 
                     </form>

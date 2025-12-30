@@ -73,10 +73,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Se está logado e tenta acessar login/register -> Dashboard
+  // Se está logado e tenta acessar login/register -> Redireciona para área autenticada
+  // O AuthGuard vai verificar se tem profile e redirecionar para /app/setup se necessário
   if (user && (pathname.startsWith('/login') || pathname.startsWith('/register'))) {
     const url = request.nextUrl.clone()
-    url.pathname = '/app/dashboard'
+    url.pathname = '/app/setup'
     const response = NextResponse.redirect(url)
     request.cookies.getAll().forEach((cookie) => response.cookies.set(cookie.name, cookie.value))
     return response
