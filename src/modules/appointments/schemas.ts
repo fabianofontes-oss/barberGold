@@ -17,9 +17,7 @@ export const createAppointmentSchema = z.object({
 
 export const updateAppointmentStatusSchema = z.object({
   appointmentId: z.string().uuid('ID do agendamento inválido'),
-  status: z.enum(['SCHEDULED', 'CONFIRMED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'], {
-    errorMap: () => ({ message: 'Status inválido' })
-  })
+  status: z.enum(['SCHEDULED', 'CONFIRMED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'])
 });
 
 export type CreateAppointmentInput = z.infer<typeof createAppointmentSchema>;

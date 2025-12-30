@@ -64,8 +64,8 @@ export async function createSale(data: {
     return sale;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('❌ Erro de validação:', error.errors);
-      throw new Error(`Dados inválidos: ${error.errors[0].message}`);
+      console.error('❌ Erro de validação:', error.issues);
+      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
     }
     throw error;
   }
