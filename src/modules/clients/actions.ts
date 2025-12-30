@@ -2,6 +2,8 @@
 
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { createClientSchema } from './schemas';
+import { z } from 'zod';
 
 export async function getClients(filters?: { search?: string; tags?: string[] }) {
   try {
@@ -45,8 +47,8 @@ export async function getClientStats(clientId: string) {
     if (!session) return { success: false, error: 'Não autenticado' };
 
     // Por enquanto retorna stats vazias - implementar depois
-    return { 
-      success: true, 
+    return {
+      success: true,
       data: {
         totalVisits: 0,
         totalSpent: 0,
@@ -68,44 +70,67 @@ export async function createClientAction(data: {
   notes?: string;
   tags?: string[];
 }) {
-  const supabase = await createSupabaseClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('store_id')
-    .eq('user_id', session.user.id)
-    .single();
-
-  if (!profile?.store_id) throw new Error('Store não encontrado');
-
-  const { data: client, error } = await supabase
-    .from('clients')
-    .insert({
-      store_id: profile.store_id,
+  // ✅ Validação Zod
+  try {
+    // Adaptar dados para o schema (phone precisa formato brasileiro)
+    const dataToValidate = {
       name: data.name,
-      phone: data.phone || '',
-      email: data.email || '',
-      birth_date: data.birthDate,
-      notes: data.notes || '',
-      tags: data.tags || [],
-      total_spent: 0,
-      total_visits: 0,
-      loyalty_points: 0,
-    })
-    .select()
-    .single();
+      phone: data.phone || '(00) 00000-0000', // Default para validação
+      email: data.email,
+      birthDate: data.birthDate,
+      notes: data.notes
+    };
 
-  if (error) {
-    console.error('❌ Erro ao criar cliente:', error);
-    throw new Error(error.message);
+    // Validar apenas se phone foi fornecido
+    if (data.phone) {
+      const validated = createClientSchema.parse(dataToValidate);
+    }
+
+    const supabase = await createSupabaseClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Não autenticado');
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
+
+    if (!profile?.store_id) throw new Error('Store não encontrado');
+
+    const { data: client, error } = await supabase
+      .from('clients')
+      .insert({
+        store_id: profile.store_id,
+        name: data.name,
+        phone: data.phone || '',
+        email: data.email || '',
+        birth_date: data.birthDate,
+        notes: data.notes || '',
+        tags: data.tags || [],
+        total_spent: 0,
+        total_visits: 0,
+        loyalty_points: 0,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('❌ Erro ao criar cliente:', error);
+      throw new Error(error.message);
+    }
+
+    revalidatePath('/app/clients');
+    revalidatePath('/app/dashboard');
+    console.log('✅ Cliente criado:', client.id);
+    return client;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.errors);
+      throw new Error(`Dados inválidos: ${error.errors[0].message}`);
+    }
+    throw error;
   }
-
-  revalidatePath('/app/clients');
-  revalidatePath('/app/dashboard');
-  console.log('✅ Cliente criado:', client.id);
-  return client;
 }
 
 export async function updateClientAction(clientId: string, data: {

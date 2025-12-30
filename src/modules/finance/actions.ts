@@ -2,6 +2,8 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { createExpenseSchema, createRegisterClosureSchema } from './schemas';
+import { z } from 'zod';
 
 export async function createExpense(data: {
   category: string;
@@ -11,41 +13,52 @@ export async function createExpense(data: {
   supplierId?: string;
   paymentMethod?: string;
 }) {
-  const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
+  // ✅ Validação Zod
+  try {
+    const validated = createExpenseSchema.parse(data);
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('store_id')
-    .eq('user_id', session.user.id)
-    .single();
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Não autenticado');
 
-  if (!profile?.store_id) throw new Error('Store não encontrado');
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
 
-  const { data: expense, error } = await supabase
-    .from('expenses')
-    .insert({
-      store_id: profile.store_id,
-      category: data.category,
-      amount: data.amount,
-      date: data.date,
-      description: data.description || '',
-      supplier_id: data.supplierId,
-      payment_method: data.paymentMethod,
-    })
-    .select()
-    .single();
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
-  if (error) {
-    console.error('❌ Erro ao criar despesa:', error);
-    throw new Error(error.message);
+    const { data: expense, error } = await supabase
+      .from('expenses')
+      .insert({
+        store_id: profile.store_id,
+        category: validated.category,
+        amount: validated.amount,
+        date: validated.date,
+        description: validated.description || '',
+        supplier_id: validated.supplierId,
+        payment_method: validated.paymentMethod,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('❌ Erro ao criar despesa:', error);
+      throw new Error(error.message);
+    }
+
+    revalidatePath('/app/finance');
+    revalidatePath('/app/dashboard');
+    console.log('✅ Despesa criada:', expense.id);
+    return expense;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.errors);
+      throw new Error(`Dados inválidos: ${error.errors[0].message}`);
+    }
+    throw error;
   }
-
-  revalidatePath('/app/finance');
-  revalidatePath('/app/dashboard');
-  console.log('✅ Despesa criada:', expense.id);
-  return expense;
 }
 
 export async function deleteExpense(expenseId: string) {
@@ -91,43 +104,54 @@ export async function createRegisterClosure(data: {
   totalPix?: number;
   notes?: string;
 }) {
-  const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
+  // ✅ Validação Zod
+  try {
+    const validated = createRegisterClosureSchema.parse(data);
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('store_id')
-    .eq('user_id', session.user.id)
-    .single();
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Não autenticado');
 
-  if (!profile?.store_id) throw new Error('Store não encontrado');
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
 
-  const { data: closure, error } = await supabase
-    .from('register_closures')
-    .insert({
-      store_id: profile.store_id,
-      staff_id: data.staffId,
-      opened_at: data.openedAt,
-      closed_at: data.closedAt,
-      opening_balance: data.openingBalance,
-      closing_balance: data.closingBalance,
-      total_sales: data.totalSales,
-      total_cash: data.totalCash || 0,
-      total_card: data.totalCard || 0,
-      total_pix: data.totalPix || 0,
-      notes: data.notes || '',
-    })
-    .select()
-    .single();
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
-  if (error) {
-    console.error('❌ Erro ao criar fechamento:', error);
-    throw new Error(error.message);
+    const { data: closure, error } = await supabase
+      .from('register_closures')
+      .insert({
+        store_id: profile.store_id,
+        staff_id: validated.staffId,
+        opened_at: validated.openedAt,
+        closed_at: validated.closedAt,
+        opening_balance: validated.openingBalance,
+        closing_balance: validated.closingBalance,
+        total_sales: validated.totalSales,
+        total_cash: validated.totalCash || 0,
+        total_card: validated.totalCard || 0,
+        total_pix: validated.totalPix || 0,
+        notes: validated.notes || '',
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('❌ Erro ao criar fechamento:', error);
+      throw new Error(error.message);
+    }
+
+    revalidatePath('/app/finance');
+    revalidatePath('/app/dashboard');
+    console.log('✅ Fechamento criado:', closure.id);
+    return closure;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.errors);
+      throw new Error(`Dados inválidos: ${error.errors[0].message}`);
+    }
+    throw error;
   }
-
-  revalidatePath('/app/finance');
-  revalidatePath('/app/dashboard');
-  console.log('✅ Fechamento criado:', closure.id);
-  return closure;
 }
