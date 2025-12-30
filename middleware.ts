@@ -77,24 +77,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Se está logado e tenta acessar login/register -> Verificar se tem profile
+  // Se está logado e tenta acessar login/register -> Dashboard
   if (user && (pathname.startsWith('/login') || pathname.startsWith('/register'))) {
-    console.log(`[Middleware] Usuário logado (${user.id}) acessando ${pathname}, verificando profile...`)
-    
-    // Verificar se usuário já tem profile
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('user_id', user.id)
-      .eq('is_active', true)
-      .single()
-
-    console.log(`[Middleware] Profile encontrado: ${profile?.id || 'null'}, Erro: ${profileError?.code || 'nenhum'}`)
-
     const url = request.nextUrl.clone()
-    // Se tem profile -> Dashboard, senão -> Setup
-    url.pathname = profile ? '/app/dashboard' : '/setup'
-    console.log(`[Middleware] Redirecionando para: ${url.pathname}`)
+    url.pathname = '/app/dashboard'
     const response = NextResponse.redirect(url)
     request.cookies.getAll().forEach((cookie) => response.cookies.set(cookie.name, cookie.value))
     return response
