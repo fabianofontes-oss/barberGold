@@ -14,7 +14,6 @@ function RegisterForm() {
 
     // Form State
     const [fullname, setFullname] = useState('');
-    const [shopSlug, setShopSlug] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -42,51 +41,13 @@ function RegisterForm() {
             return;
         }
 
-        // Validar slug se foi preenchido
-        if (shopSlug.trim()) {
-            const slugValidation = validateSlug(shopSlug);
-            if (!slugValidation.valid) {
-                setError(slugValidation.error || 'Nome inválido');
-                setLoading(false);
-                return;
-            }
-        }
-
         try {
-            // Usar slug escolhido pelo usuário ou gerar automaticamente
-            let finalSlug = shopSlug.trim();
-            
-            if (!finalSlug) {
-                // Se não preencheu, gera automaticamente a partir do nome
-                finalSlug = fullname
-                    .toLowerCase()
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-                    .replace(/[^a-z0-9\s-]/g, '') // Remove caracteres especiais
-                    .replace(/\s+/g, '-') // Substitui espaços por hífens
-                    .replace(/-+/g, '-') // Remove hífens duplicados
-                    .substring(0, 30) // Limita tamanho
-                    + '-' + Math.floor(Math.random() * 10000); // Adiciona número aleatório
-            } else {
-                // Limpa o slug escolhido pelo usuário
-                finalSlug = finalSlug
-                    .toLowerCase()
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .replace(/[^a-z0-9-]/g, '')
-                    .replace(/-+/g, '-')
-                    .replace(/^-|-$/g, '') // Remove hífens no início/fim
-                    .substring(0, 30);
-            }
-
             const { error: authError } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
                     data: {
                         full_name: fullname,
-                        slug: finalSlug,
-                        plan: 'FREE', // SEMPRE FREE - Sistema gratuito
                     }
                 }
             });
@@ -96,8 +57,8 @@ function RegisterForm() {
                 return;
             }
 
-            // Success - Hard redirect para garantir que cookies sejam propagados
-            window.location.href = '/app/dashboard';
+            // Redirecionar para /app/setup para completar cadastro (tenant + profile)
+            window.location.href = '/app/setup';
         } catch (err) {
             setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
         } finally {
