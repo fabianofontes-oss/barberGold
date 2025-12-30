@@ -2,6 +2,8 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { createSaleSchema } from './schemas';
+import { z } from 'zod';
 
 export type SaleItem = {
   id: string;
@@ -20,40 +22,51 @@ export async function createSale(data: {
   tip?: number;
   discountApplied?: string;
 }) {
-  const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
+  // ✅ Validação Zod
+  try {
+    const validated = createSaleSchema.parse(data);
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('store_id')
-    .eq('user_id', session.user.id)
-    .single();
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Não autenticado');
 
-  if (!profile?.store_id) throw new Error('Store não encontrado');
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
 
-  const { data: sale, error: saleError } = await supabase
-    .from('sales')
-    .insert({
-      store_id: profile.store_id,
-      client_id: data.clientId,
-      staff_id: data.staffId,
-      total_amount: data.total,
-      payment_method: data.method,
-      payment_status: 'PAID',
-      tip_amount: data.tip || 0,
-    })
-    .select()
-    .single();
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
-  if (saleError) {
-    console.error('❌ Erro ao criar venda:', saleError);
-    throw new Error(saleError.message);
+    const { data: sale, error: saleError } = await supabase
+      .from('sales')
+      .insert({
+        store_id: profile.store_id,
+        client_id: validated.clientId,
+        staff_id: validated.staffId,
+        total_amount: validated.total,
+        payment_method: validated.method,
+        payment_status: 'PAID',
+        tip_amount: validated.tip || 0,
+      })
+      .select()
+      .single();
+
+    if (saleError) {
+      console.error('❌ Erro ao criar venda:', saleError);
+      throw new Error(saleError.message);
+    }
+
+    revalidatePath('/app/pdv');
+    revalidatePath('/app/finance');
+    revalidatePath('/app/dashboard');
+    console.log('✅ Venda criada:', sale.id);
+    return sale;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.errors);
+      throw new Error(`Dados inválidos: ${error.errors[0].message}`);
+    }
+    throw error;
   }
-
-  revalidatePath('/app/pdv');
-  revalidatePath('/app/finance');
-  revalidatePath('/app/dashboard');
-  console.log('✅ Venda criada:', sale.id);
-  return sale;
 }
