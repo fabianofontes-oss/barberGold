@@ -35,7 +35,7 @@ export default function LoginPage() {
         return;
       }
 
-      // Success - Hard redirect para garantir que cookies sejam propagados
+      // Success - Redirecionar para dashboard, AuthGuard vai verificar profile
       window.location.href = '/app/dashboard';
     } catch (err: any) {
       setError(t('auth.errors.genericError'));
