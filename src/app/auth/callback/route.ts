@@ -37,7 +37,22 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL('/reset-password', requestUrl.origin));
   }
 
-  // Senão, redireciona para o destino especificado ou dashboard
-  const destination = next || '/app/dashboard';
-  return NextResponse.redirect(new URL(destination, requestUrl.origin));
+  // Verificar se usuário tem profile para decidir destino
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('is_active', true)
+      .single();
+
+    // Se tem profile -> Dashboard, senão -> Setup
+    const destination = next || (profile ? '/app/dashboard' : '/app/setup');
+    return NextResponse.redirect(new URL(destination, requestUrl.origin));
+  }
+
+  // Fallback para dashboard (AuthGuard vai verificar)
+  return NextResponse.redirect(new URL('/app/dashboard', requestUrl.origin));
 }
