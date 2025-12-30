@@ -62,12 +62,16 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
+  // DEBUG: Log do estado de autenticação
+  console.log(`[Middleware] Path: ${pathname}, User: ${user?.id || 'null'}`)
+
   // Rotas públicas (não requerem autenticação)
   const publicPaths = ['/login', '/register', '/forgot-password', '/', '/api', '/book']
   const _isPublicPath = publicPaths.some(path => pathname.startsWith(path))
 
   // Se não está logado e tenta acessar rota protegida -> Login
   if (!user && pathname.startsWith('/app')) {
+    console.log(`[Middleware] Usuário não logado tentando acessar ${pathname} -> /login`)
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
@@ -75,17 +79,22 @@ export async function middleware(request: NextRequest) {
 
   // Se está logado e tenta acessar login/register -> Verificar se tem profile
   if (user && (pathname.startsWith('/login') || pathname.startsWith('/register'))) {
+    console.log(`[Middleware] Usuário logado (${user.id}) acessando ${pathname}, verificando profile...`)
+    
     // Verificar se usuário já tem profile
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('id')
       .eq('user_id', user.id)
       .eq('is_active', true)
       .single()
 
+    console.log(`[Middleware] Profile encontrado: ${profile?.id || 'null'}, Erro: ${profileError?.code || 'nenhum'}`)
+
     const url = request.nextUrl.clone()
     // Se tem profile -> Dashboard, senão -> Setup
     url.pathname = profile ? '/app/dashboard' : '/setup'
+    console.log(`[Middleware] Redirecionando para: ${url.pathname}`)
     const response = NextResponse.redirect(url)
     request.cookies.getAll().forEach((cookie) => response.cookies.set(cookie.name, cookie.value))
     return response
