@@ -2,6 +2,7 @@
 
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useBarber } from '@/context/BarberContext';
 import { useI18n } from '@/hooks/useI18n';
@@ -55,23 +56,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
     return null;
   }
 
-  const NavItem = ({ href, icon: Icon, label, disabled = false, className = '' }: { href: string; icon: any; label: string; disabled?: boolean; className?: string }) => (
-    <button
-      onClick={() => {
-        if (!disabled) {
-          router.push(href);
-          onCloseMobile();
-        }
-      }}
-      disabled={disabled}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
-        disabled ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100'
-      } ${className}`}
-    >
-      <Icon className={`w-5 h-5 ${disabled ? 'text-zinc-600' : 'text-zinc-400 group-hover:text-zinc-100'}`} />
-      <span>{label}</span>
-    </button>
-  );
+  const NavItem = ({ href, icon: Icon, label, disabled = false, className = '' }: { href: string; icon: any; label: string; disabled?: boolean; className?: string }) => {
+    if (disabled) {
+      return (
+        <button
+          disabled={disabled}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group opacity-30 cursor-not-allowed ${className}`}
+        >
+          <Icon className="w-5 h-5 text-zinc-600" />
+          <span>{label}</span>
+        </button>
+      );
+    }
+
+    return (
+      <Link
+        href={href}
+        onClick={onCloseMobile}
+        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 ${className}`}
+      >
+        <Icon className="w-5 h-5 text-zinc-400 group-hover:text-zinc-100" />
+        <span>{label}</span>
+      </Link>
+    );
+  };
 
   const isOwner = currentUser.role === 'OWNER';
   const isSuperAdmin = currentUser.role === 'SUPER_ADMIN';
@@ -129,11 +137,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                
                {/* Office God V2 Button */}
                <div className="mx-4 my-2 pt-2 border-t border-zinc-800">
-                  <button
-                    onClick={() => {
-                       router.push('/app/super-admin');
-                       onCloseMobile();
-                    }}
+                  <Link
+                    href="/app/super-admin"
+                    onClick={onCloseMobile}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold bg-violet-900/20 text-violet-300 border border-violet-500/30 hover:bg-violet-900/40 transition-all group"
                   >
                     <div className="flex items-center gap-2">
@@ -141,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                        <span>{t('sidebar.godOfficeV2')}</span>
                     </div>
                     <span className="text-[9px] bg-violet-500 text-white px-1.5 py-0.5 rounded uppercase font-bold">{t('sidebar.beta')}</span>
-                  </button>
+                  </Link>
                </div>
 
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">{t('sidebar.operations')}</p>
@@ -221,11 +227,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
 
         {/* REFERRAL PROMO BLOCK (OWNER ONLY - FULL WIDTH GREEN) */}
         {isOwner && !isSuperAdmin && (
-           <button
-              onClick={() => {
-                 router.push('/app/referrals');
-                 onCloseMobile();
-              }}
+           <Link
+              href="/app/referrals"
+              onClick={onCloseMobile}
               className="w-full bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 flex items-center justify-between group transition-colors relative overflow-hidden"
            >
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-800/50 to-transparent pointer-events-none"></div>
@@ -239,7 +243,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                     <p className="text-[10px] text-emerald-100 font-medium">{t('navigation.earnMoney')}</p>
                  </div>
               </div>
-           </button>
+           </Link>
         )}
 
         <div className="p-4">
