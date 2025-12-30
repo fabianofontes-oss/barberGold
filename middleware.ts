@@ -73,11 +73,19 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Se está logado e tenta acessar login/register -> Redireciona para área autenticada
-  // O AuthGuard vai verificar se tem profile e redirecionar para /app/setup se necessário
+  // Se está logado e tenta acessar login/register -> Verificar se tem profile
   if (user && (pathname.startsWith('/login') || pathname.startsWith('/register'))) {
+    // Verificar se usuário já tem profile
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('is_active', true)
+      .single()
+
     const url = request.nextUrl.clone()
-    url.pathname = '/app/setup'
+    // Se tem profile -> Dashboard, senão -> Setup
+    url.pathname = profile ? '/app/dashboard' : '/app/setup'
     const response = NextResponse.redirect(url)
     request.cookies.getAll().forEach((cookie) => response.cookies.set(cookie.name, cookie.value))
     return response
