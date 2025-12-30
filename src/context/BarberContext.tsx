@@ -443,7 +443,10 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
           .single();
 
         if (profileError) {
-          console.error('❌ Erro ao buscar profile:', profileError);
+          // PGRST116 = "no rows returned" - esperado para usuários sem profile (em /setup)
+          if (profileError.code !== 'PGRST116') {
+            console.error('❌ Erro ao buscar profile:', profileError);
+          }
           setLoading(false);
           return;
         }
