@@ -35,12 +35,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Verificar autenticação para rotas protegidas
-  const token = request.cookies.get('sb-yitrspfqpakpygfytduz-auth-token')
-  
-  if (!token && pathname.startsWith('/app')) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
-
+  // A verificação de sessão é feita dentro de updateSession via supabase.auth.getUser()
   return await updateSession(request)
 }
 
