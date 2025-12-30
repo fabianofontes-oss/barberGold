@@ -131,3 +131,85 @@ export async function createRegisterClosure(data: {
   console.log('✅ Fechamento criado:', closure.id);
   return closure;
 }
+
+export async function createStaffPayment(data: {
+  staffId: string;
+  amount: number;
+  paymentDate: string;
+  periodStart: string;
+  periodEnd: string;
+  paymentType: 'SALARY' | 'COMMISSION' | 'BONUS' | 'OTHER';
+  paymentMethod?: string;
+  notes?: string;
+}) {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('Não autenticado');
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('store_id, role')
+    .eq('user_id', session.user.id)
+    .single();
+
+  if (!profile?.store_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
+    throw new Error('Sem permissão');
+  }
+
+  const { data: payment, error } = await supabase
+    .from('staff_payments')
+    .insert({
+      store_id: profile.store_id,
+      staff_id: data.staffId,
+      amount: data.amount,
+      payment_date: data.paymentDate,
+      period_start: data.periodStart,
+      period_end: data.periodEnd,
+      payment_type: data.paymentType,
+      payment_method: data.paymentMethod,
+      notes: data.notes || '',
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error('❌ Erro ao criar pagamento:', error);
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/app/finance');
+  revalidatePath('/app/staff');
+  console.log('✅ Pagamento criado:', payment.id);
+  return payment;
+}
+
+export async function deleteStaffPayment(paymentId: string) {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('Não autenticado');
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('store_id, role')
+    .eq('user_id', session.user.id)
+    .single();
+
+  if (!profile?.store_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
+    throw new Error('Sem permissão');
+  }
+
+  const { error } = await supabase
+    .from('staff_payments')
+    .delete()
+    .eq('id', paymentId)
+    .eq('store_id', profile.store_id);
+
+  if (error) {
+    console.error('❌ Erro ao deletar pagamento:', error);
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/app/finance');
+  revalidatePath('/app/staff');
+  return { success: true };
+}
