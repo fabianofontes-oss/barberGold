@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { updateSession } from '@/lib/supabase/middleware'
+import { createServerClient } from '@supabase/ssr'
 
 export async function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || ''
@@ -10,17 +10,14 @@ export async function middleware(request: NextRequest) {
   const subdomain = hostname.split('.')[0]
   
   // Lista de domínios principais (não são tenants)
-  // barber.gold é o domínio principal da plataforma
-  const mainDomains = ['barber', 'www']
-  const isMainDomain = mainDomains.includes(subdomain) || hostname === 'barber.gold' || hostname === 'www.barber.gold'
+  const mainDomains = ['barber', 'www', 'localhost']
+  const isMainDomain = mainDomains.includes(subdomain) || hostname === 'barber.gold' || hostname === 'www.barber.gold' || hostname.startsWith('localhost')
   
   // Se não é o domínio principal, é um tenant (barbearia)
   if (!isMainDomain && subdomain && !pathname.startsWith('/api')) {
-    // Adicionar o slug do tenant no header para usar no app
     const response = NextResponse.next()
     response.headers.set('x-tenant-slug', subdomain)
     
-    // Redirecionar para a área do tenant se estiver na raiz
     if (pathname === '/') {
       return NextResponse.rewrite(new URL(`/book?tenant=${subdomain}`, request.url))
     }
@@ -28,20 +25,64 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  // Permitir acesso a rotas públicas
-  const publicPaths = ['/login', '/register', '/forgot-password', '/', '/api', '/book', '/app/setup']
-  if (publicPaths.some(path => pathname.startsWith(path))) {
-    return NextResponse.next()
+  // Criar cliente Supabase para verificar autenticação
+  let supabaseResponse = NextResponse.next({ request })
+  supabaseResponse.headers.set('x-pathname', pathname)
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return supabaseResponse
   }
 
-  // Verificar autenticação para rotas protegidas
-  const token = request.cookies.get('sb-yitrspfqpakpygfytduz-auth-token')
-  
-  if (!token && pathname.startsWith('/app')) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll()
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+        supabaseResponse = NextResponse.next({ request })
+        cookiesToSet.forEach(({ name, value, options }) =>
+          supabaseResponse.cookies.set(name, value, options)
+        )
+      },
+    },
+  })
+
+  // Ignorar assets estáticos
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.includes('/favicon.ico') ||
+    pathname.match(/\.(svg|png|jpg|jpeg|gif|webp)$/)
+  ) {
+    return supabaseResponse
   }
 
-  return await updateSession(request)
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // Rotas públicas (não requerem autenticação)
+  const publicPaths = ['/login', '/register', '/forgot-password', '/', '/api', '/book']
+  const isPublicPath = publicPaths.some(path => pathname.startsWith(path))
+
+  // Se não está logado e tenta acessar rota protegida -> Login
+  if (!user && pathname.startsWith('/app')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+
+  // Se está logado e tenta acessar login/register -> Dashboard
+  if (user && (pathname.startsWith('/login') || pathname.startsWith('/register'))) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/app/dashboard'
+    const response = NextResponse.redirect(url)
+    request.cookies.getAll().forEach((cookie) => response.cookies.set(cookie.name, cookie.value))
+    return response
+  }
+
+  return supabaseResponse
 }
 
 export const config = {

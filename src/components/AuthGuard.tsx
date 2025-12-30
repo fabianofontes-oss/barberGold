@@ -15,7 +15,7 @@ interface AuthGuardProps {
 export async function AuthGuard({ children, requireProfile = true }: AuthGuardProps) {
   const profileResult = await getCurrentProfile();
   const headersList = await headers();
-  const pathname = headersList.get('x-invoke-path') || headersList.get('x-pathname') || '';
+  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || '';
 
   // Não está logado
   if (!profileResult) {
@@ -24,7 +24,9 @@ export async function AuthGuard({ children, requireProfile = true }: AuthGuardPr
 
   // Logado mas sem profile
   // IMPORTANTE: Não redirecionar para /app/setup se já estiver em /app/setup (evita loop)
-  if (requireProfile && !profileResult.profile && !pathname.includes('/app/setup')) {
+  const isSetupPage = pathname === '/app/setup' || pathname.startsWith('/app/setup/');
+  
+  if (requireProfile && !profileResult.profile && !isSetupPage) {
     redirect('/app/setup');
   }
 
