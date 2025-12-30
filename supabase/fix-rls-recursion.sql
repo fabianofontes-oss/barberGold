@@ -7,7 +7,12 @@
 -- Solução: Reescrever políticas para evitar recursão
 -- =============================================
 
--- 1. Remover políticas antigas que causam recursão
+-- 1. Remover TODAS as políticas existentes (antigas e novas)
+DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can view profiles in same tenant" ON public.profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Owners can manage tenant profiles" ON public.profiles;
+DROP POLICY IF EXISTS "Users can create own profile" ON public.profiles;
 DROP POLICY IF EXISTS "Users can view profiles of their tenant" ON public.profiles;
 DROP POLICY IF EXISTS "Users can view profiles in their tenant" ON public.profiles;
 DROP POLICY IF EXISTS "Owners can manage profiles" ON public.profiles;
