@@ -10,7 +10,7 @@ interface AuthGuardProps {
 /**
  * Componente server-side que protege rotas autenticadas
  * 
- * @param requireProfile - Se true, redireciona para /app/setup se não tiver profile
+ * @param requireProfile - Se true, redireciona para /setup se não tiver profile
  */
 export async function AuthGuard({ children, requireProfile = true }: AuthGuardProps) {
   const profileResult = await getCurrentProfile();
@@ -23,11 +23,11 @@ export async function AuthGuard({ children, requireProfile = true }: AuthGuardPr
   }
 
   // Logado mas sem profile
-  // IMPORTANTE: Não redirecionar para /app/setup se já estiver em /app/setup (evita loop)
-  const isSetupPage = pathname === '/app/setup' || pathname.startsWith('/app/setup/');
+  // IMPORTANTE: Não redirecionar para /setup se já estiver em /setup (evita loop)
+  const isSetupPage = pathname === '/setup' || pathname.startsWith('/setup/');
   
   if (requireProfile && !profileResult.profile && !isSetupPage) {
-    redirect('/app/setup');
+    redirect('/setup');
   }
 
   return <>{children}</>;

@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
       .single();
 
     // Se tem profile -> Dashboard, senão -> Setup
-    const destination = next || (profile ? '/app/dashboard' : '/app/setup');
+    const destination = next || (profile ? '/app/dashboard' : '/setup');
     return NextResponse.redirect(new URL(destination, requestUrl.origin));
   }
 

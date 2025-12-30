@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 
 /**
- * Layout específico para /app/setup
+ * Layout específico para /setup
  * 
  * REGRAS:
  * - Usuário DEVE estar autenticado (tem sessão)

@@ -85,7 +85,7 @@ export async function middleware(request: NextRequest) {
 
     const url = request.nextUrl.clone()
     // Se tem profile -> Dashboard, senão -> Setup
-    url.pathname = profile ? '/app/dashboard' : '/app/setup'
+    url.pathname = profile ? '/app/dashboard' : '/setup'
     const response = NextResponse.redirect(url)
     request.cookies.getAll().forEach((cookie) => response.cookies.set(cookie.name, cookie.value))
     return response

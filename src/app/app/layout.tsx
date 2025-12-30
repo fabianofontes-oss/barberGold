@@ -5,7 +5,7 @@ import { AppLayoutClient } from './layout.client';
 /**
  * Layout principal de /app/*
  * Server Component que aplica AuthGuard antes de renderizar o client layout
- * IMPORTANTE: /app/setup tem seu próprio layout e NÃO usa este
+ * IMPORTANTE: /setup está fora deste layout para evitar loops de redirecionamento
  */
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   return (
