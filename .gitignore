@@ -40,3 +40,25 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ==========================================
+# Custom - BarberGold
+# ==========================================
+
+# ESLint Reports (gerados automaticamente)
+eslint-report*.json
+
+# Scripts temporários one-time
+*.py
+*.ps1
+setup-database.js
+
+# AI Assistants
+.Jules/
+.bolt/
+.cursor/
+.windsurf/
+.antigravityignore
+
+# Outros deploys
+netlify.toml
