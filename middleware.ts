@@ -62,16 +62,8 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  // DEBUG: Log do estado de autenticação
-  console.log(`[Middleware] Path: ${pathname}, User: ${user?.id || 'null'}`)
-
-  // Rotas públicas (não requerem autenticação)
-  const publicPaths = ['/login', '/register', '/forgot-password', '/', '/api', '/book']
-  const _isPublicPath = publicPaths.some(path => pathname.startsWith(path))
-
   // Se não está logado e tenta acessar rota protegida -> Login
   if (!user && pathname.startsWith('/app')) {
-    console.log(`[Middleware] Usuário não logado tentando acessar ${pathname} -> /login`)
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)

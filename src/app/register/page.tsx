@@ -56,8 +56,8 @@ function RegisterForm() {
                 return;
             }
 
-            // Redirecionar para /setup para completar cadastro (tenant + profile)
-            window.location.href = '/setup';
+            // Redirecionar para dashboard (modal de setup aparecerá se necessário)
+            window.location.href = '/app/dashboard';
         } catch {
             setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
         } finally {
