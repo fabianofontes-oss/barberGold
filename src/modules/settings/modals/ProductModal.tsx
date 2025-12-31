@@ -1,4 +1,4 @@
-'use client';
+ï»¿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Plus, Trash2, Layers } from 'lucide-react';
@@ -120,7 +120,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
               )}
            </div>
 
-           {/* Variações Toggle */}
+           {/* Variaï¿½ï¿½es Toggle */}
            <div className="flex items-center justify-between p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
               <div className="flex items-center gap-2">
                  <Layers className="w-4 h-4 text-purple-500" />
@@ -136,12 +136,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
               </button>
            </div>
 
-           {/* Variações Section */}
+           {/* Variaï¿½ï¿½es Section */}
            {hasVariants && (
               <div className="space-y-3 p-3 bg-zinc-950 border border-purple-500/30 rounded-lg">
                  <p className="text-xs text-purple-400 font-bold">{t('settings.products.modal.variantsSectionTitle')}</p>
                  
-                 {/* Lista de variações */}
+                 {/* Lista de variaï¿½ï¿½es */}
                  {variants.length > 0 && (
                     <div className="space-y-2">
                        {variants.map((v, i) => (
@@ -161,7 +161,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, pro
                     </div>
                  )}
 
-                 {/* Adicionar variação */}
+                 {/* Adicionar variaï¿½ï¿½o */}
                  <div className="flex gap-2">
                     <input
                        type="text"

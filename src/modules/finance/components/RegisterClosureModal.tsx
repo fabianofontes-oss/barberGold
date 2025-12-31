@@ -1,4 +1,4 @@
-'use client';
+ï»¿'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -13,8 +13,8 @@ interface RegisterClosureModalProps {
 
 const PAYMENT_LABELS: Record<string, string> = {
    [PaymentMethod.CASH]: 'Dinheiro (Gaveta)',
-   [PaymentMethod.CREDIT_CARD]: 'Cartão Crédito',
-   [PaymentMethod.DEBIT_CARD]: 'Cartão Débito',
+   [PaymentMethod.CREDIT_CARD]: 'Cartï¿½o Crï¿½dito',
+   [PaymentMethod.DEBIT_CARD]: 'Cartï¿½o Dï¿½bito',
    [PaymentMethod.PIX]: 'Pix',
    [PaymentMethod.GOOGLE_PAY]: 'Google Pay',
    [PaymentMethod.APPLE_PAY]: 'Apple Pay',
