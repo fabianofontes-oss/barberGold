@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { Download, FileSpreadsheet, FileText, Loader2 } from 'lucide-react';
@@ -33,9 +33,9 @@ export const ExportReport: React.FC<ExportReportProps> = ({
     const lines: string[] = [];
     
     // Header
-    lines.push(`Relatório Financeiro - ${shopName}`);
-    lines.push(`Período: ${period}`);
-    lines.push(`Gerado em: ${format(new Date(), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}`);
+    lines.push(`RelatÃ³rio Financeiro - ${shopName}`);
+    lines.push(`PerÃ­odo: ${period}`);
+    lines.push(`Gerado em: ${format(new Date(), "dd/MM/yyyy 'Ã s' HH:mm", { locale: ptBR })}`);
     lines.push('');
     
     // Resumo
@@ -44,12 +44,12 @@ export const ExportReport: React.FC<ExportReportProps> = ({
     lines.push(`Gorjetas,R$ ${totalTips.toFixed(2)}`);
     lines.push(`Despesas,R$ ${totalExpenses.toFixed(2)}`);
     lines.push(`Pagamentos Equipe,R$ ${totalPayouts.toFixed(2)}`);
-    lines.push(`Lucro Líquido,R$ ${netProfit.toFixed(2)}`);
+    lines.push(`Lucro LÃ­quido,R$ ${netProfit.toFixed(2)}`);
     lines.push('');
     
     // Vendas
     lines.push('=== VENDAS ===');
-    lines.push('Data,Cliente,Funcionário,Total,Gorjeta,Método');
+    lines.push('Data,Cliente,FuncionÃ¡rio,Total,Gorjeta,MÃ©todo');
     sales.forEach((s) => {
       lines.push(
         `${format(new Date(s.date), 'dd/MM/yyyy HH:mm')},${s.clientId || 'Walk-in'},${s.staffId || 'Staff'},R$ ${s.total.toFixed(2)},R$ ${(s.tip || 0).toFixed(2)},${s.method}`
@@ -59,7 +59,7 @@ export const ExportReport: React.FC<ExportReportProps> = ({
     
     // Despesas
     lines.push('=== DESPESAS ===');
-    lines.push('Data,Descrição,Categoria,Valor');
+    lines.push('Data,DescriÃ§Ã£o,Categoria,Valor');
     expenses.forEach((e) => {
       lines.push(
         `${format(new Date(e.date), 'dd/MM/yyyy')},${e.title},${e.category},R$ ${e.amount.toFixed(2)}`
@@ -69,7 +69,7 @@ export const ExportReport: React.FC<ExportReportProps> = ({
     
     // Pagamentos
     lines.push('=== PAGAMENTOS EQUIPE ===');
-    lines.push('Data,Funcionário,Tipo,Valor');
+    lines.push('Data,FuncionÃ¡rio,Tipo,Valor');
     staffPayments.forEach((p) => {
       lines.push(
         `${format(new Date(p.date), 'dd/MM/yyyy')},${p.staffId},${p.type},R$ ${p.amount.toFixed(2)}`
@@ -102,23 +102,23 @@ export const ExportReport: React.FC<ExportReportProps> = ({
     try {
       const lines: string[] = [];
       
-      lines.push('╔══════════════════════════════════════════╗');
-      lines.push(`║  RELATÓRIO FINANCEIRO - ${shopName.toUpperCase().padEnd(15)}  ║`);
-      lines.push('╠══════════════════════════════════════════╣');
-      lines.push(`║  Período: ${period.padEnd(30)}║`);
-      lines.push(`║  Gerado: ${format(new Date(), 'dd/MM/yyyy HH:mm').padEnd(31)}║`);
-      lines.push('╚══════════════════════════════════════════╝');
+      lines.push('â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—');
+      lines.push(`â•‘  RELATÃ“RIO FINANCEIRO - ${shopName.toUpperCase().padEnd(15)}  â•‘`);
+      lines.push('â• â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•£');
+      lines.push(`â•‘  PerÃ­odo: ${period.padEnd(30)}â•‘`);
+      lines.push(`â•‘  Gerado: ${format(new Date(), 'dd/MM/yyyy HH:mm').padEnd(31)}â•‘`);
+      lines.push('â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
       lines.push('');
-      lines.push('┌──────────────────────────────────────────┐');
-      lines.push('│              RESUMO GERAL                │');
-      lines.push('├──────────────────────────────────────────┤');
-      lines.push(`│  Receita:          R$ ${totalRevenue.toFixed(2).padStart(15)}  │`);
-      lines.push(`│  Gorjetas:         R$ ${totalTips.toFixed(2).padStart(15)}  │`);
-      lines.push(`│  Despesas:         R$ ${totalExpenses.toFixed(2).padStart(15)}  │`);
-      lines.push(`│  Pagamentos:       R$ ${totalPayouts.toFixed(2).padStart(15)}  │`);
-      lines.push('├──────────────────────────────────────────┤');
-      lines.push(`│  LUCRO LÍQUIDO:    R$ ${netProfit.toFixed(2).padStart(15)}  │`);
-      lines.push('└──────────────────────────────────────────┘');
+      lines.push('â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”');
+      lines.push('â”‚              RESUMO GERAL                â”‚');
+      lines.push('â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤');
+      lines.push(`â”‚  Receita:          R$ ${totalRevenue.toFixed(2).padStart(15)}  â”‚`);
+      lines.push(`â”‚  Gorjetas:         R$ ${totalTips.toFixed(2).padStart(15)}  â”‚`);
+      lines.push(`â”‚  Despesas:         R$ ${totalExpenses.toFixed(2).padStart(15)}  â”‚`);
+      lines.push(`â”‚  Pagamentos:       R$ ${totalPayouts.toFixed(2).padStart(15)}  â”‚`);
+      lines.push('â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤');
+      lines.push(`â”‚  LUCRO LÃQUIDO:    R$ ${netProfit.toFixed(2).padStart(15)}  â”‚`);
+      lines.push('â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜');
       
       const txt = lines.join('\n');
       const blob = new Blob([txt], { type: 'text/plain;charset=utf-8;' });
@@ -142,7 +142,7 @@ export const ExportReport: React.FC<ExportReportProps> = ({
           <Download className="w-5 h-5 text-emerald-500" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-white">Exportar Relatório</h3>
+          <h3 className="text-lg font-bold text-white">Exportar RelatÃ³rio</h3>
           <p className="text-xs text-zinc-500">Baixe os dados para sua contabilidade</p>
         </div>
       </div>
@@ -176,7 +176,7 @@ export const ExportReport: React.FC<ExportReportProps> = ({
           )}
           <div className="text-left">
             <p className="text-sm font-bold text-white">TXT Resumo</p>
-            <p className="text-[10px] text-zinc-500">Para impressão</p>
+            <p className="text-[10px] text-zinc-500">Para impressÃ£o</p>
           </div>
         </button>
       </div>
