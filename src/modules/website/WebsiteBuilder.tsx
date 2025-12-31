@@ -40,7 +40,7 @@ export const WebsiteBuilder = () => {
                   Fazer Upgrade Agora
                </button>
                <p className="text-[10px] text-zinc-500 mt-4">
-                  Seu site básico continua funcionando normalmente no link .barber.gold.
+                  Seu site básico continua funcionando normalmente no link barber.gold.
                </p>
             </div>
          </div>
@@ -607,7 +607,7 @@ export const WebsiteBuilder = () => {
                            <div className="relative z-10 space-y-6">
                               {/* Standard URL */}
                               <div>
-                                 <label className="block text-xs font-bold text-zinc-500 mb-2 uppercase">Website URL (Gratuito)</label>
+                                 <label className="block text-xs font-bold text-zinc-500 mb-2 uppercase">Subdomínio barber.gold (Free)</label>
                                  <div className="flex items-center">
                                     <input
                                        type="text"

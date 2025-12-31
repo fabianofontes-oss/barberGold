@@ -186,8 +186,8 @@ export const WebsiteEditor = () => {
                                     setSelectedAccentColor(template.accent);
                                  }}
                                  className={`p-4 rounded-xl border transition-all text-center ${selectedTemplate === template.name
-                                       ? 'border-amber-500 bg-amber-500/10 ring-2 ring-amber-500/30'
-                                       : 'border-zinc-800 hover:border-zinc-700'
+                                    ? 'border-amber-500 bg-amber-500/10 ring-2 ring-amber-500/30'
+                                    : 'border-zinc-800 hover:border-zinc-700'
                                     }`}
                               >
                                  <div className="w-full h-16 rounded-lg mb-2 flex gap-1">
@@ -212,13 +212,9 @@ export const WebsiteEditor = () => {
                   <div className="space-y-6 animate-fade-in">
                      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                         <h3 className="text-lg font-bold text-white mb-4">Domínio Gratuito</h3>
-                        <div className="flex-1 flex items-center bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3">
-                           <input
-                              type="text"
-                              defaultValue={slug}
-                              className="flex-1 bg-transparent text-white font-mono outline-none text-right"
-                           />
-                           <span className="text-zinc-500 ml-1">.barber.gold</span>
+                        <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-4 flex items-center gap-2">
+                           <input type="text" defaultValue={slug} className="flex-1 bg-transparent text-white font-mono outline-none text-right" />
+                           <span className="text-zinc-500">.barber.gold</span>
                         </div>
                         <p className="text-xs text-zinc-500 mt-2">Este é o link gratuito do seu site de agendamento.</p>
                      </div>

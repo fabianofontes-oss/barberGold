@@ -40,7 +40,7 @@ export const WebsiteBuilder = () => {
                   Fazer Upgrade Agora
                </button>
                <p className="text-[10px] text-zinc-500 mt-4">
-                  Seu site básico continua funcionando normalmente no link .barber.gold.
+                  Seu site básico continua funcionando normalmente no link barber.gold.
                </p>
             </div>
          </div>
@@ -666,6 +666,6 @@ export const WebsiteBuilder = () => {
                </div>
             </div>
          </div>
-      </div>
+      </div >
    );
 };
