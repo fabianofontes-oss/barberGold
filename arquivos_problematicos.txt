@@ -1,0 +1,5 @@
+﻿D:\projetos\barbergoldquase\barberGold\src\modules\barber-club\types.ts
+D:\projetos\barbergoldquase\barberGold\src\modules\catalog\data\ProductTemplates.ts
+D:\projetos\barbergoldquase\barberGold\src\modules\catalog\data\SupplyTemplates.ts
+D:\projetos\barbergoldquase\barberGold\src\modules\dynamic-pricing\types.ts
+D:\projetos\barbergoldquase\barberGold\src\modules\referrals\ReferralDashboard.tsx
