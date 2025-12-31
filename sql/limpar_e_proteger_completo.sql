@@ -12,11 +12,15 @@ ORDER BY total DESC;
 
 -- Deletar duplicatas (mantém a primeira)
 DELETE FROM clients
-WHERE id NOT IN (
-    SELECT MIN(id)
-    FROM clients
-    WHERE tenant_id = 'bf683fdc-8caa-4e60-afda-e2bf7f32a29a'
-    GROUP BY phone, tenant_id
+WHERE id IN (
+    SELECT id
+    FROM (
+        SELECT id,
+               ROW_NUMBER() OVER (PARTITION BY tenant_id, phone ORDER BY created_at) as rn
+        FROM clients
+        WHERE tenant_id = 'bf683fdc-8caa-4e60-afda-e2bf7f32a29a'
+    ) t
+    WHERE rn > 1
 );
 
 -- =============================================
