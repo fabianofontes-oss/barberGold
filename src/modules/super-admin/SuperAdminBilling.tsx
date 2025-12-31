@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -27,7 +27,7 @@ export const SuperAdminBilling = () => {
                <h2 className="text-3xl font-bold text-white mb-1 flex items-center gap-3">
                   <Receipt className="w-8 h-8 text-emerald-500" /> Faturamento Global
                </h2>
-               <p className="text-zinc-400 text-sm">Controle de receitas, faturas e inadimplÃªncia.</p>
+               <p className="text-zinc-400 text-sm">Controle de receitas, faturas e inadimplência.</p>
             </div>
          </div>
 
@@ -52,7 +52,7 @@ export const SuperAdminBilling = () => {
          {/* INVOICE LIST */}
          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
             <div className="p-4 border-b border-zinc-800 bg-zinc-900/50">
-               <h3 className="font-bold text-white">HistÃ³rico de Faturas</h3>
+               <h3 className="font-bold text-white">Histórico de Faturas</h3>
             </div>
             <div className="overflow-x-auto">
                <table className="w-full text-left text-sm text-zinc-400">
@@ -64,7 +64,7 @@ export const SuperAdminBilling = () => {
                         <th className="px-6 py-4">Vencimento</th>
                         <th className="px-6 py-4">Status</th>
                         <th className="px-6 py-4 text-right">Valor</th>
-                        <th className="px-6 py-4 text-right">AÃ§Ãµes</th>
+                        <th className="px-6 py-4 text-right">Ações</th>
                      </tr>
                   </thead>
                   <tbody className="divide-y divide-zinc-800">

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -100,17 +100,17 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
       id: Date.now().toString(),
       type: 'CLOSE',
       amount: countedAmount,
-      notes: difference === 0 ? 'Fechamento OK' : `DiferenÃ§a: $${difference.toFixed(2)}`,
+      notes: difference === 0 ? 'Fechamento OK' : `Diferença: $${difference.toFixed(2)}`,
       timestamp: new Date(),
       userId: currentUser.id
     }]);
     
     if (Math.abs(difference) < 1) {
-      alert('âœ… Caixa fechado com sucesso!');
+      alert('✅ Caixa fechado com sucesso!');
     } else if (difference > 0) {
-      alert(`âš ï¸ Caixa com sobra de $${difference.toFixed(2)}`);
+      alert(`⚠️ Caixa com sobra de $${difference.toFixed(2)}`);
     } else {
-      alert(`âš ï¸ Caixa com falta de $${Math.abs(difference).toFixed(2)}`);
+      alert(`⚠️ Caixa com falta de $${Math.abs(difference).toFixed(2)}`);
     }
     
     setRegisterStatus('CLOSED');
@@ -144,7 +144,7 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
                 <Lock className="w-10 h-10 text-zinc-500" />
               </div>
               <h3 className="text-white font-bold text-xl">Caixa Fechado</h3>
-              <p className="text-zinc-400 text-sm">Abra o caixa para comeÃ§ar a registrar vendas.</p>
+              <p className="text-zinc-400 text-sm">Abra o caixa para começar a registrar vendas.</p>
               <button
                 onClick={handleOpenRegister}
                 className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-xl flex items-center justify-center gap-2"
@@ -200,7 +200,7 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
                     </div>
                     <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-center">
                       <CheckCircle className="w-6 h-6 text-purple-500 mx-auto mb-2" />
-                      <p className="text-xs text-zinc-500">CartÃµes</p>
+                      <p className="text-xs text-zinc-500">Cartões</p>
                       <p className="text-lg font-bold text-white">${todayCardSales.toFixed(2)}</p>
                     </div>
                   </div>
@@ -213,7 +213,7 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
                   {/* Recent Movements */}
                   {movements.length > 0 && (
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold text-zinc-500 uppercase">MovimentaÃ§Ãµes</h4>
+                      <h4 className="text-xs font-bold text-zinc-500 uppercase">Movimentações</h4>
                       {movements.slice(-5).reverse().map(m => (
                         <div key={m.id} className="flex items-center justify-between text-xs bg-zinc-950 p-2 rounded">
                           <div className="flex items-center gap-2">
@@ -239,7 +239,7 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
                       <AlertCircle className="w-5 h-5 text-orange-400 flex-shrink-0" />
                       <div>
                         <p className="text-orange-300 text-sm font-bold">Retirada de Dinheiro</p>
-                        <p className="text-orange-300/70 text-xs">Sangrias sÃ£o registradas e visÃ­veis no fechamento.</p>
+                        <p className="text-orange-300/70 text-xs">Sangrias são registradas e visíveis no fechamento.</p>
                       </div>
                     </div>
                   </div>
@@ -256,7 +256,7 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
                         className="w-full bg-transparent text-white text-lg font-bold outline-none"
                       />
                     </div>
-                    <p className="text-[10px] text-zinc-500 mt-1">MÃ¡ximo: ${expectedCash.toFixed(2)}</p>
+                    <p className="text-[10px] text-zinc-500 mt-1">Máximo: ${expectedCash.toFixed(2)}</p>
                   </div>
 
                   <div>

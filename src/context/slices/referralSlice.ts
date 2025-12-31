@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import type { ReferralSource } from '@/types';
 import { MOCK_REFERRALS } from '@/constants';
 

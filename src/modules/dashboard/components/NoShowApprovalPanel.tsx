@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -13,7 +13,7 @@ export const NoShowApprovalPanel: React.FC = () => {
 
   const isOwner = currentUser.role === 'OWNER';
   
-  // SÃ³ mostra para o dono
+  // Só mostra para o dono
   if (!isOwner) return null;
 
   // Filtrar agendamentos com status NO_SHOW_PENDING
@@ -37,7 +37,7 @@ export const NoShowApprovalPanel: React.FC = () => {
         <div>
           <h3 className="text-white font-bold flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-orange-400" />
-            No-Shows Pendentes de AprovaÃ§Ã£o
+            No-Shows Pendentes de Aprovação
           </h3>
           <p className="text-orange-300/70 text-xs">
             {pendingNoShows.length} {pendingNoShows.length === 1 ? 'cliente marcado' : 'clientes marcados'} como faltou. Confirme para validar.
@@ -88,7 +88,7 @@ export const NoShowApprovalPanel: React.FC = () => {
       </div>
 
       <p className="text-[10px] text-zinc-500 mt-3 text-center">
-        âš ï¸ Ao confirmar, o cliente serÃ¡ marcado como No-Show e poderÃ¡ afetar seu histÃ³rico.
+        ⚠️ Ao confirmar, o cliente será marcado como No-Show e poderá afetar seu histórico.
       </p>
     </div>
   );

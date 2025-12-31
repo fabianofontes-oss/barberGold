@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ export function LandingHeader() {
                 const { data: { user } } = await supabase.auth.getUser();
                 setIsAuthenticated(!!user);
             } catch (error) {
-                console.error('Erro ao verificar autenticaÃ§Ã£o:', error);
+                console.error('Erro ao verificar autenticação:', error);
                 setIsAuthenticated(false);
             }
         };
@@ -31,15 +31,15 @@ export function LandingHeader() {
         setIsCheckingAuth(true);
         
         try {
-            // Sempre verificar autenticaÃ§Ã£o no momento do clique
+            // Sempre verificar autenticação no momento do clique
             const supabase = createClient();
             const { data: { user } } = await supabase.auth.getUser();
             
             if (user) {
-                // UsuÃ¡rio logado - vai para dashboard
+                // Usuário logado - vai para dashboard
                 router.push('/app/dashboard');
             } else {
-                // NÃ£o logado - vai para login
+                // Não logado - vai para login
                 router.push('/login');
             }
         } catch {
@@ -64,7 +64,7 @@ export function LandingHeader() {
                 
                 <nav className="hidden md:flex items-center gap-8">
                     <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#features">Funcionalidades</a>
-                    <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#pricing">PreÃ§os</a>
+                    <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#pricing">Preços</a>
                     <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#testimonials">Depoimentos</a>
                     <a className="text-sm font-medium text-gray-300 hover:text-white transition-colors" href="#faq">FAQ</a>
                 </nav>
@@ -81,7 +81,7 @@ export function LandingHeader() {
                         href="/register"
                         className="bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] text-sm font-bold py-2 px-5 rounded-md transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)]"
                     >
-                        ComeÃ§ar Teste
+                        Começar Teste
                     </Link>
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -97,7 +97,7 @@ export function LandingHeader() {
                 <div className="md:hidden py-4 px-4 border-t border-white/10 bg-[#0f0f11]">
                     <nav className="flex flex-col gap-4">
                         <a href="#features" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Funcionalidades</a>
-                        <a href="#pricing" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>PreÃ§os</a>
+                        <a href="#pricing" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Preços</a>
                         <a href="#testimonials" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Depoimentos</a>
                         <a href="#faq" className="text-sm font-medium text-gray-300 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>FAQ</a>
                         <button 
@@ -111,7 +111,7 @@ export function LandingHeader() {
                             {isCheckingAuth ? '...' : (isAuthenticated ? 'Dashboard' : 'Login')}
                         </button>
                         <Link href="/register" className="text-sm font-bold bg-[#f79f08] text-[#0f0f11] px-6 py-2 rounded-lg text-center">
-                            ComeÃ§ar Teste
+                            Começar Teste
                         </Link>
                     </nav>
                 </div>

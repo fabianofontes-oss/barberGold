@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { Crown, Users, DollarSign, CreditCard, TrendingUp, Settings } from 'lucide-react';
@@ -13,7 +13,7 @@ export const ClubDashboard: React.FC = () => {
   const { stats, plans, subscriptions, loading } = useBarberClub();
 
   const tabs: { id: TabId; label: string; icon: React.ReactNode }[] = [
-    { id: 'OVERVIEW', label: 'VisÃ£o Geral', icon: <TrendingUp className="w-4 h-4" /> },
+    { id: 'OVERVIEW', label: 'Visão Geral', icon: <TrendingUp className="w-4 h-4" /> },
     { id: 'PLANS', label: 'Planos', icon: <Settings className="w-4 h-4" /> },
     { id: 'SUBSCRIBERS', label: 'Assinantes', icon: <Users className="w-4 h-4" /> },
   ];
@@ -25,7 +25,7 @@ export const ClubDashboard: React.FC = () => {
           <Crown className="w-7 h-7 text-purple-500" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-white">Barber Clubâ„¢</h1>
+          <h1 className="text-2xl font-bold text-white">Barber Club™</h1>
           <p className="text-sm text-zinc-500">Gerencie seus planos de assinatura e assinantes.</p>
         </div>
       </div>
@@ -75,10 +75,10 @@ export const ClubDashboard: React.FC = () => {
                 <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center">
                   <CreditCard className="w-5 h-5 text-amber-500" />
                 </div>
-                <span className="text-xs text-zinc-500 font-medium">CrÃ©ditos Usados</span>
+                <span className="text-xs text-zinc-500 font-medium">Créditos Usados</span>
               </div>
               <p className="text-3xl font-bold text-white">{stats.creditsUsedThisMonth}</p>
-              <p className="text-[10px] text-zinc-600 mt-1">neste mÃªs</p>
+              <p className="text-[10px] text-zinc-600 mt-1">neste mês</p>
             </div>
 
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
@@ -86,10 +86,10 @@ export const ClubDashboard: React.FC = () => {
                 <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
                   <CreditCard className="w-5 h-5 text-blue-500" />
                 </div>
-                <span className="text-xs text-zinc-500 font-medium">CrÃ©ditos Restantes</span>
+                <span className="text-xs text-zinc-500 font-medium">Créditos Restantes</span>
               </div>
               <p className="text-3xl font-bold text-white">{stats.creditsRemainingThisMonth}</p>
-              <p className="text-[10px] text-zinc-600 mt-1">disponÃ­veis</p>
+              <p className="text-[10px] text-zinc-600 mt-1">disponíveis</p>
             </div>
           </div>
 
@@ -98,7 +98,7 @@ export const ClubDashboard: React.FC = () => {
               <Crown className="w-10 h-10 text-purple-500 mx-auto mb-3" />
               <h3 className="text-lg font-bold text-white mb-2">Crie seu primeiro plano!</h3>
               <p className="text-sm text-zinc-400 mb-4 max-w-md mx-auto">
-                Configure os planos de assinatura da sua barbearia. VocÃª define os preÃ§os, crÃ©ditos e benefÃ­cios.
+                Configure os planos de assinatura da sua barbearia. Você define os preços, créditos e benefícios.
               </p>
               <button
                 onClick={() => setActiveTab('PLANS')}
@@ -113,7 +113,7 @@ export const ClubDashboard: React.FC = () => {
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
               <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
                 <Users className="w-4 h-4 text-purple-500" />
-                Ãšltimos Assinantes
+                Últimos Assinantes
               </h3>
               <div className="space-y-2">
                 {subscriptions.slice(0, 5).map((sub) => {
@@ -125,7 +125,7 @@ export const ClubDashboard: React.FC = () => {
                         <p className="text-[10px] text-zinc-500">{plan?.name ?? 'Plano removido'}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm text-emerald-400 font-bold">{sub.creditsRemaining} crÃ©ditos</p>
+                        <p className="text-sm text-emerald-400 font-bold">{sub.creditsRemaining} créditos</p>
                         <p className="text-[10px] text-zinc-600">restantes</p>
                       </div>
                     </div>

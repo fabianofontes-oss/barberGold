@@ -1,4 +1,4 @@
-﻿'use server';
+'use server';
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -22,13 +22,13 @@ export async function createSale(data: {
   tip?: number;
   discountApplied?: string;
 }) {
-  // âœ… ValidaÃ§Ã£o Zod
+  // ✅ Validação Zod
   try {
     const validated = createSaleSchema.parse(data);
 
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw new Error('NÃ£o autenticado');
+    if (!session) throw new Error('Não autenticado');
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -36,7 +36,7 @@ export async function createSale(data: {
       .eq('user_id', session.user.id)
       .single();
 
-    if (!profile?.store_id) throw new Error('Store nÃ£o encontrado');
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
     const { data: sale, error: saleError } = await supabase
       .from('sales')
@@ -53,19 +53,19 @@ export async function createSale(data: {
       .single();
 
     if (saleError) {
-      console.error('âŒ Erro ao criar venda:', saleError);
+      console.error('❌ Erro ao criar venda:', saleError);
       throw new Error(saleError.message);
     }
 
     revalidatePath('/app/pdv');
     revalidatePath('/app/finance');
     revalidatePath('/app/dashboard');
-    console.log('âœ… Venda criada:', sale.id);
+    console.log('✅ Venda criada:', sale.id);
     return sale;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('âŒ Erro de validaÃ§Ã£o:', error.issues);
-      throw new Error(`Dados invÃ¡lidos: ${error.issues[0].message}`);
+      console.error('❌ Erro de validação:', error.issues);
+      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
     }
     throw error;
   }

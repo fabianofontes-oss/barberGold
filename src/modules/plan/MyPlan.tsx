@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -16,16 +16,16 @@ export const MyPlan = () => {
 
   const getDisplayPrice = (planId: PlanId) => {
     const plan = plans.find((p) => p.id === planId);
-    if (!plan) return { label: 'â€”', sub: '' };
-    if (plan.monthlyPriceBRL === 0) return { label: 'GrÃ¡tis', sub: '' };
+    if (!plan) return { label: '—', sub: '' };
+    if (plan.monthlyPriceBRL === 0) return { label: 'Grátis', sub: '' };
 
     if (billingInterval === 'MONTHLY') {
-      return { label: `R$ ${plan.monthlyPriceBRL}`, sub: '/mÃªs' };
+      return { label: `R$ ${plan.monthlyPriceBRL}`, sub: '/mês' };
     }
 
     const monthlyEquivalent = (plan.annualPriceBRL / 10).toFixed(0);
     const annualTotal = plan.annualPriceBRL.toFixed(0);
-    return { label: `R$ ${annualTotal}`, sub: `10x de R$ ${monthlyEquivalent} (2 meses grÃ¡tis)` };
+    return { label: `R$ ${annualTotal}`, sub: `10x de R$ ${monthlyEquivalent} (2 meses grátis)` };
   };
 
   return (
@@ -36,7 +36,7 @@ export const MyPlan = () => {
                <Crown className="w-8 h-8 text-amber-500" /> Meu Plano
             </h1>
             <p className="text-zinc-400 text-sm max-w-2xl">
-               Gerencie sua assinatura e veja os recursos disponÃ­veis para seu plano atual.
+               Gerencie sua assinatura e veja os recursos disponíveis para seu plano atual.
             </p>
          </div>
          
@@ -52,7 +52,7 @@ export const MyPlan = () => {
                   onClick={() => setBillingInterval('ANNUAL')}
                   className={`px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${billingInterval === 'ANNUAL' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-zinc-300'}`}
                >
-                  Anual <span className="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded-full font-bold">2 meses grÃ¡tis</span>
+                  Anual <span className="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded-full font-bold">2 meses grátis</span>
                </button>
             </div>
             <p className="text-[10px] text-zinc-500">Anual = 10x o valor mensal (economia de 2 meses)</p>
@@ -66,11 +66,11 @@ export const MyPlan = () => {
             </div>
             <div>
                <h2 className="text-xl font-bold text-white">Plano Atual: {plans.find(p => p.id === currentPlan)?.name || currentPlan}</h2>
-               <p className="text-zinc-400 text-sm">Sua assinatura estÃ¡ ativa e funcionando normalmente.</p>
+               <p className="text-zinc-400 text-sm">Sua assinatura está ativa e funcionando normalmente.</p>
             </div>
          </div>
          <div className="flex items-center gap-4 text-sm">
-            <div className="flex items-center gap-2 text-zinc-400"><Calendar className="w-4 h-4" /> RenovaÃ§Ã£o: 15/01/2025</div>
+            <div className="flex items-center gap-2 text-zinc-400"><Calendar className="w-4 h-4" /> Renovação: 15/01/2025</div>
             <div className="flex items-center gap-2 text-emerald-500"><DollarSign className="w-4 h-4" /> Em dia</div>
          </div>
       </div>
@@ -158,17 +158,17 @@ export const MyPlan = () => {
                <span className="text-xs text-zinc-500 block mb-1">Clientes Cadastrados</span>
                <div className="flex items-end gap-2">
                   <span className="text-2xl font-bold text-white">247</span>
-                  <span className="text-zinc-500 text-sm">/ âˆž</span>
+                  <span className="text-zinc-500 text-sm">/ ∞</span>
                </div>
                <div className="h-1.5 bg-zinc-800 rounded-full mt-2 overflow-hidden">
                   <div className="h-full bg-emerald-500 rounded-full" style={{ width: '25%' }}></div>
                </div>
             </div>
             <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
-               <span className="text-xs text-zinc-500 block mb-1">Agendamentos/mÃªs</span>
+               <span className="text-xs text-zinc-500 block mb-1">Agendamentos/mês</span>
                <div className="flex items-end gap-2">
                   <span className="text-2xl font-bold text-white">312</span>
-                  <span className="text-zinc-500 text-sm">/ âˆž</span>
+                  <span className="text-zinc-500 text-sm">/ ∞</span>
                </div>
                <div className="h-1.5 bg-zinc-800 rounded-full mt-2 overflow-hidden">
                   <div className="h-full bg-blue-500 rounded-full" style={{ width: '35%' }}></div>

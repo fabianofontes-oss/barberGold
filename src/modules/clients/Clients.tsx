@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -53,7 +53,7 @@ export const Clients = () => {
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
 
-  // ValidaÃ§Ã£o de seguranÃ§a
+  // Validação de segurança
   if (!currentUser) return null;
 
   const isOwner = currentUser.role === 'OWNER';
@@ -220,7 +220,7 @@ export const Clients = () => {
 
       {!hasLoyalty && (
         <div className="mb-4 rounded-xl border border-dashed border-amber-500/60 bg-zinc-900/60 p-3 text-[11px] text-amber-200">
-          Programa de fidelidade disponÃ­vel nos planos <strong>Solo PRO</strong> e acima.
+          Programa de fidelidade disponível nos planos <strong>Solo PRO</strong> e acima.
         </div>
       )}
 
@@ -308,7 +308,7 @@ export const Clients = () => {
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
               <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">NÃºmero de Telefone *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
               <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
@@ -316,7 +316,7 @@ export const Clients = () => {
               
               <div className="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-4">
                 <label className="block text-sm md:text-xs font-bold text-emerald-400 uppercase mb-2 flex items-center gap-2">
-                  <Gift className="w-4 h-4" /> CÃ³digo de IndicaÃ§Ã£o
+                  <Gift className="w-4 h-4" /> Código de Indicação
                 </label>
                 <input 
                   type="text" 
@@ -325,7 +325,7 @@ export const Clients = () => {
                   placeholder="Ex: JOAO123"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500 text-lg md:text-base uppercase"
                 />
-                <p className="text-[10px] text-zinc-500 mt-2">Se o cliente foi indicado por alguÃ©m, insira o cÃ³digo aqui.</p>
+                <p className="text-[10px] text-zinc-500 mt-2">Se o cliente foi indicado por alguém, insira o código aqui.</p>
               </div>
               
               {/* Dependents Section */}
@@ -415,7 +415,7 @@ export const Clients = () => {
                        {clientHistory.length === 0 ? <div className="text-center py-10 text-zinc-500"><Clock className="w-10 h-10 mx-auto mb-3 opacity-30" /><p>No completed services yet.</p></div> : clientHistory.map(appt => (
                           <div key={appt.id} className="flex gap-4 p-4 rounded-xl border border-zinc-800 bg-zinc-950/50">
                              <div className="flex flex-col items-center justify-center px-2 border-r border-zinc-800 text-zinc-400 min-w-[60px]"><span className="text-sm font-bold">{format(appt.date, 'MMM')}</span><span className="text-xl font-bold text-white">{format(appt.date, 'd')}</span></div>
-                             <div><h4 className="font-bold text-white text-lg">{appt.serviceName}</h4><p className="text-sm text-zinc-500">Provided by <span className="text-amber-500">{appt.staffId}</span></p><p className="text-xs text-zinc-600 mt-2">{format(appt.date, 'HH:mm')} â€¢ ${appt.price}</p></div>
+                             <div><h4 className="font-bold text-white text-lg">{appt.serviceName}</h4><p className="text-sm text-zinc-500">Provided by <span className="text-amber-500">{appt.staffId}</span></p><p className="text-xs text-zinc-600 mt-2">{format(appt.date, 'HH:mm')} • ${appt.price}</p></div>
                           </div>
                        ))}
                     </div>

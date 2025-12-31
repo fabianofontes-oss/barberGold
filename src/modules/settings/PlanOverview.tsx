@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -30,24 +30,24 @@ const TEAM_PLANS_INFO: PlanInfo[] = [
   {
     id: 'SOLO',
     name: 'Start',
-    subtitle: 'OrganizaÃ§Ã£o c/ Agendamento',
+    subtitle: 'Organização c/ Agendamento',
     level: 'basic',
     idealFor: 'Para quem quer parar de sofrer no WhatsApp.',
     highlight: 'Essencial',
     modules: [
-      { key: 'CORE', title: 'GestÃ£o BÃ¡sica', included: true, items: ['Agenda & Clientes', 'PDV & ServiÃ§os'] },
-      { key: 'ONLINE', title: 'Agendamento', included: true, items: ['Link Exclusivo', 'GestÃ£o de HorÃ¡rios'] }
+      { key: 'CORE', title: 'Gestão Básica', included: true, items: ['Agenda & Clientes', 'PDV & Serviços'] },
+      { key: 'ONLINE', title: 'Agendamento', included: true, items: ['Link Exclusivo', 'Gestão de Horários'] }
     ]
   },
   {
     id: 'SOLO_PRO',
     name: 'Pro',
-    subtitle: 'GestÃ£o Completa',
+    subtitle: 'Gestão Completa',
     level: 'pro',
-    idealFor: 'Foco em lucro e retenÃ§Ã£o.',
+    idealFor: 'Foco em lucro e retenção.',
     highlight: 'Recomendado',
     modules: [
-      { key: 'FINANCE', title: 'Financeiro', included: true, items: ['Contas a Pagar', 'ComissÃµes', 'DRE'] },
+      { key: 'FINANCE', title: 'Financeiro', included: true, items: ['Contas a Pagar', 'Comissões', 'DRE'] },
       { key: 'LOYALTY', title: 'Fidelidade', included: true, items: ['Programa de Pontos', 'Win-back'] }
     ]
   },
@@ -56,10 +56,10 @@ const TEAM_PLANS_INFO: PlanInfo[] = [
     name: 'Elite',
     subtitle: 'Marca Forte',
     level: 'elite',
-    highlight: 'MÃ¡xima Performance',
+    highlight: 'Máxima Performance',
     modules: [
-      { key: 'BRAND', title: 'Branding', included: true, items: ['Site Personalizado', 'DomÃ­nio PrÃ³prio'] },
-      { key: 'SUPPORT', title: 'Suporte', included: true, items: ['Atendimento PrioritÃ¡rio'] }
+      { key: 'BRAND', title: 'Branding', included: true, items: ['Site Personalizado', 'Domínio Próprio'] },
+      { key: 'SUPPORT', title: 'Suporte', included: true, items: ['Atendimento Prioritário'] }
     ]
   }
 ];
@@ -69,26 +69,26 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
   {
     id: 'FREE',
     name: 'Free Solo',
-    subtitle: 'Caderno digital para comeÃ§ar.',
+    subtitle: 'Caderno digital para começar.',
     level: 'basic',
     modules: [
       {
         key: 'AGENDA',
         title: 'Agenda & Fila',
         included: true,
-        items: ['Agenda diÃ¡ria para registrar horÃ¡rios', 'Bloqueios simples de horÃ¡rio', 'VisualizaÃ§Ã£o rÃ¡pida do dia']
+        items: ['Agenda diária para registrar horários', 'Bloqueios simples de horário', 'Visualização rápida do dia']
       },
       {
         key: 'CRM',
-        title: 'Clientes (CRM BÃ¡sico)',
+        title: 'Clientes (CRM Básico)',
         included: true,
-        items: ['Cadastro bÃ¡sico (nome, telefone)', 'HistÃ³rico simples de visitas', 'Busca por nome/telefone']
+        items: ['Cadastro básico (nome, telefone)', 'Histórico simples de visitas', 'Busca por nome/telefone']
       },
       {
         key: 'PDV',
         title: 'PDV & Produtos',
         included: true,
-        items: ['Registro simples de vendas no PDV', 'Cadastro de serviÃ§os bÃ¡sicos']
+        items: ['Registro simples de vendas no PDV', 'Cadastro de serviços básicos']
       },
       {
         key: 'GENERAL',
@@ -101,7 +101,7 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
   {
     id: 'SOLO',
     name: 'Start',
-    subtitle: 'OrganizaÃ§Ã£o com agendamento online.',
+    subtitle: 'Organização com agendamento online.',
     level: 'basic',
     highlight: 'Tudo do Free Solo, mais:',
     modules: [
@@ -110,28 +110,28 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Agendamento Online',
         included: true,
         items: [
-          'Link Ãºnico para agendamento (seu-nome.barber.gold)',
-          'Wizard: ServiÃ§o â†’ Dia â†’ HorÃ¡rio â†’ ConfirmaÃ§Ã£o',
-          'GestÃ£o de horÃ¡rios e pausas',
+          'Link único para agendamento (seu-nome.barber.gold)',
+          'Wizard: Serviço → Dia → Horário → Confirmação',
+          'Gestão de horários e pausas',
           'Templates prontos para WhatsApp com link'
         ]
       },
       {
         key: 'CATALOG',
-        title: 'CatÃ¡logo Organizado',
+        title: 'Catálogo Organizado',
         included: true,
         items: [
-          'OrganizaÃ§Ã£o de serviÃ§os por categoria',
-          'Controle de preÃ§o e duraÃ§Ã£o'
+          'Organização de serviços por categoria',
+          'Controle de preço e duração'
         ]
       },
       {
         key: 'REPORTS',
-        title: 'RelatÃ³rios Simples',
+        title: 'Relatórios Simples',
         included: true,
         items: [
-          'VisÃ£o de faturamento do mÃªs',
-          'Top serviÃ§os mais vendidos'
+          'Visão de faturamento do mês',
+          'Top serviços mais vendidos'
         ]
       }
     ],
@@ -139,19 +139,19 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
   {
     id: 'SOLO_PRO',
     name: 'Pro',
-    subtitle: 'GestÃ£o completa de lucro, retorno e fidelizaÃ§Ã£o.',
+    subtitle: 'Gestão completa de lucro, retorno e fidelização.',
     level: 'pro',
     highlight: 'Tudo do Start, mais:',
     modules: [
       {
         key: 'FINANCE_ADVANCED',
-        title: 'Financeiro AvanÃ§ado',
+        title: 'Financeiro Avançado',
         included: true,
         items: [
-          'Cadastro de despesas fixas e variÃ¡veis',
-          'DRE simplificado (lucro/prejuÃ­zo)',
-          'Ponto de equilÃ­brio (Break-even)',
-          'RelatÃ³rios por perÃ­odo'
+          'Cadastro de despesas fixas e variáveis',
+          'DRE simplificado (lucro/prejuízo)',
+          'Ponto de equilíbrio (Break-even)',
+          'Relatórios por período'
         ]
       },
       {
@@ -159,7 +159,7 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Fechamento de Caixa',
         included: true,
         items: [
-          'Fechamento cego (seguranÃ§a)',
+          'Fechamento cego (segurança)',
           'Registro de sobras e quebras'
         ]
       },
@@ -168,8 +168,8 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Clientes & Fidelidade',
         included: true,
         items: [
-          'CartÃ£o fidelidade (selos por visita)',
-          'Win-back automÃ¡tico (reconquista)',
+          'Cartão fidelidade (selos por visita)',
+          'Win-back automático (reconquista)',
           'Tags de clientes (VIP, risco, perdido)'
         ]
       },
@@ -178,8 +178,8 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Fila Inteligente',
         included: true,
         items: [
-          'Fila de espera com sugestÃ£o de horÃ¡rio',
-          'Regras Fair / Speed (rodÃ­zio ou velocidade)'
+          'Fila de espera com sugestão de horário',
+          'Regras Fair / Speed (rodízio ou velocidade)'
         ]
       }
     ],
@@ -187,7 +187,7 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
   {
     id: 'STUDIO', // Mapped to "Elite" visually for Solo
     name: 'Elite',
-    subtitle: 'Barbearias que querem marca prÃ³pria forte.',
+    subtitle: 'Barbearias que querem marca própria forte.',
     level: 'elite',
     highlight: 'Tudo do Pro, mais:',
     modules: [
@@ -197,14 +197,14 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         included: true,
         items: [
           'Website Premium (tema BarberFlow)',
-          'DomÃ­nio prÃ³prio (.com.br) â€“ via parceiro',
-          'PersonalizaÃ§Ã£o de cores e logo',
-          'RemoÃ§Ã£o da marca dâ€™Ã¡gua â€œBarberFlowâ€'
+          'Domínio próprio (.com.br) – via parceiro',
+          'Personalização de cores e logo',
+          'Remoção da marca d’água “BarberFlow”'
         ]
       },
       {
         key: 'EXPANSION',
-        title: 'ExpansÃ£o (Futuro)',
+        title: 'Expansão (Futuro)',
         included: true,
         items: [
           'Preparado para multi-unidades',
@@ -216,8 +216,8 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Suporte & Prioridade',
         included: true,
         items: [
-          'Canal de suporte prioritÃ¡rio',
-          'Acesso antecipado a novas funÃ§Ãµes'
+          'Canal de suporte prioritário',
+          'Acesso antecipado a novas funções'
         ]
       }
     ],
@@ -229,39 +229,39 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
   {
     id: 'FREE',
     name: 'Free Solo',
-    subtitle: 'OrganizaÃ§Ã£o bÃ¡sica para equipes pequenas.',
+    subtitle: 'Organização básica para equipes pequenas.',
     level: 'basic',
     modules: [
       {
         key: 'AGENDA',
         title: 'Agenda & Fila',
         included: true,
-        items: ['Agenda diÃ¡ria compartilhada', 'Bloqueios simples por barbeiro', 'VisualizaÃ§Ã£o dos horÃ¡rios de cada cadeira']
+        items: ['Agenda diária compartilhada', 'Bloqueios simples por barbeiro', 'Visualização dos horários de cada cadeira']
       },
       {
         key: 'CRM',
-        title: 'Clientes (CRM BÃ¡sico)',
+        title: 'Clientes (CRM Básico)',
         included: true,
-        items: ['Cadastro de clientes com telefone', 'HistÃ³rico simples de visitas por barbeiro', 'Busca rÃ¡pida pelo nome ou telefone']
+        items: ['Cadastro de clientes com telefone', 'Histórico simples de visitas por barbeiro', 'Busca rápida pelo nome ou telefone']
       },
       {
         key: 'PDV',
-        title: 'PDV & ServiÃ§os',
+        title: 'PDV & Serviços',
         included: true,
-        items: ['Registro simples de vendas no PDV', 'Cadastro de serviÃ§os bÃ¡sicos da barbearia']
+        items: ['Registro simples de vendas no PDV', 'Cadastro de serviços básicos da barbearia']
       },
       {
         key: 'GENERAL',
         title: 'Geral',
         included: true,
-        items: ['AtÃ© 3 barbeiros por conta', 'Sem fidelidade, cancele quando quiser']
+        items: ['Até 3 barbeiros por conta', 'Sem fidelidade, cancele quando quiser']
       }
     ],
   },
   {
     id: 'SOLO', // Mapped to Start
     name: 'Start',
-    subtitle: 'OrganizaÃ§Ã£o com agendamento online para equipe.',
+    subtitle: 'Organização com agendamento online para equipe.',
     level: 'basic',
     highlight: 'Tudo do Free Solo, mais:',
     modules: [
@@ -270,28 +270,28 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
         title: 'Agendamento Online',
         included: true,
         items: [
-          'Link Ãºnico de agendamento da barbearia',
+          'Link único de agendamento da barbearia',
           'Escolha do barbeiro pelo cliente (opcional)',
-          'Wizard: ServiÃ§o â†’ Profissional â†’ Dia â†’ HorÃ¡rio',
-          'Controle de pausas e horÃ¡rios por barbeiro'
+          'Wizard: Serviço → Profissional → Dia → Horário',
+          'Controle de pausas e horários por barbeiro'
         ]
       },
       {
         key: 'CATALOG',
-        title: 'CatÃ¡logo Organizado',
+        title: 'Catálogo Organizado',
         included: true,
         items: [
-          'ServiÃ§os organizados por categoria',
-          'Tempo e preÃ§o por profissional'
+          'Serviços organizados por categoria',
+          'Tempo e preço por profissional'
         ]
       },
       {
         key: 'REPORTS',
-        title: 'RelatÃ³rios Simples',
+        title: 'Relatórios Simples',
         included: true,
         items: [
-          'VisÃ£o de faturamento do mÃªs',
-          'Top serviÃ§os e barbeiros mais requisitados'
+          'Visão de faturamento do mês',
+          'Top serviços e barbeiros mais requisitados'
         ]
       }
     ],
@@ -299,26 +299,26 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
   {
     id: 'SOLO_PRO', // Mapped to Pro
     name: 'Pro',
-    subtitle: 'GestÃ£o completa de lucro, comissÃµes e retenÃ§Ã£o do time.',
+    subtitle: 'Gestão completa de lucro, comissões e retenção do time.',
     level: 'pro',
     highlight: 'Tudo do Start, mais:',
     modules: [
       {
         key: 'FINANCE_ADVANCED',
-        title: 'Financeiro AvanÃ§ado',
+        title: 'Financeiro Avançado',
         included: true,
         items: [
-          'Cadastro de despesas fixas e variÃ¡veis',
-          'DRE simplificado por perÃ­odo',
-          'Ponto de equilÃ­brio da barbearia (Break-even)'
+          'Cadastro de despesas fixas e variáveis',
+          'DRE simplificado por período',
+          'Ponto de equilíbrio da barbearia (Break-even)'
         ]
       },
       {
         key: 'COMMISSIONS',
-        title: 'ComissÃµes & Pagamentos',
+        title: 'Comissões & Pagamentos',
         included: true,
         items: [
-          'CÃ¡lculo automÃ¡tico de comissÃ£o por barbeiro',
+          'Cálculo automático de comissão por barbeiro',
           'Controle de payouts e saldos pendentes'
         ]
       },
@@ -327,7 +327,7 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
         title: 'Fechamento de Caixa',
         included: true,
         items: [
-          'Fechamento cego (seguranÃ§a)',
+          'Fechamento cego (segurança)',
           'Registro de sobras e quebras'
         ]
       },
@@ -336,8 +336,8 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
         title: 'Clientes & Fidelidade',
         included: true,
         items: [
-          'CartÃ£o fidelidade',
-          'Win-back automÃ¡tico (clientes sumidos)',
+          'Cartão fidelidade',
+          'Win-back automático (clientes sumidos)',
           'Tags de clientes (VIP, risco, perdido)'
         ]
       }
@@ -356,17 +356,17 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
         included: true,
         items: [
           'Website Premium da barbearia',
-          'DomÃ­nio prÃ³prio (.com.br) â€“ via parceiro',
-          'PersonalizaÃ§Ã£o de cores, fonte e logo',
-          'RemoÃ§Ã£o da marca dâ€™Ã¡gua BarberFlow'
+          'Domínio próprio (.com.br) – via parceiro',
+          'Personalização de cores, fonte e logo',
+          'Remoção da marca d’água BarberFlow'
         ]
       },
       {
         key: 'CX',
-        title: 'ExperiÃªncia do Cliente',
+        title: 'Experiência do Cliente',
         included: true,
         items: [
-          'PÃ¡gina de equipe com perfil de cada barbeiro',
+          'Página de equipe com perfil de cada barbeiro',
           'Link de agendamento por barbeiro'
         ]
       },
@@ -375,7 +375,7 @@ const UP_TO_3_PLANS_INFO: PlanInfo[] = [
         title: 'Suporte & Crescimento',
         included: true,
         items: [
-          'Suporte prioritÃ¡rio',
+          'Suporte prioritário',
           'Acesso antecipado a novos recursos'
         ]
       }
@@ -388,39 +388,39 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
   {
     id: 'FREE',
     name: 'Free Solo',
-    subtitle: 'OrganizaÃ§Ã£o bÃ¡sica para testar o sistema com o time.',
+    subtitle: 'Organização básica para testar o sistema com o time.',
     level: 'basic',
     modules: [
       {
         key: 'AGENDA',
-        title: 'Agenda & OperaÃ§Ã£o',
+        title: 'Agenda & Operação',
         included: true,
-        items: ['Agenda compartilhada para atÃ© 6 barbeiros', 'Bloqueio de horÃ¡rios por profissional', 'VisÃ£o rÃ¡pida de ocupaÃ§Ã£o das cadeiras']
+        items: ['Agenda compartilhada para até 6 barbeiros', 'Bloqueio de horários por profissional', 'Visão rápida de ocupação das cadeiras']
       },
       {
         key: 'CRM',
         title: 'Clientes & Cadastros',
         included: true,
-        items: ['Cadastro bÃ¡sico de clientes', 'HistÃ³rico de visitas por profissional']
+        items: ['Cadastro básico de clientes', 'Histórico de visitas por profissional']
       },
       {
         key: 'PDV',
-        title: 'PDV & ServiÃ§os',
+        title: 'PDV & Serviços',
         included: true,
-        items: ['Registro simples de vendas', 'Cadastro de serviÃ§os principais']
+        items: ['Registro simples de vendas', 'Cadastro de serviços principais']
       },
       {
         key: 'LIMITS',
-        title: 'LimitaÃ§Ãµes',
+        title: 'Limitações',
         included: true,
-        items: ['Sem financeiro avanÃ§ado', 'Sem fidelidade', 'Sem website prÃ³prio']
+        items: ['Sem financeiro avançado', 'Sem fidelidade', 'Sem website próprio']
       }
     ],
   },
   {
     id: 'SOLO', // Mapped to Start
     name: 'Start',
-    subtitle: 'Agenda online e organizaÃ§Ã£o para equipe de 3 a 6 barbeiros.',
+    subtitle: 'Agenda online e organização para equipe de 3 a 6 barbeiros.',
     level: 'basic',
     highlight: 'Tudo do Free Solo, mais:',
     modules: [
@@ -430,26 +430,26 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
         included: true,
         items: [
           'Link de agendamento da barbearia',
-          'Cliente escolhe barbeiro ou â€œprimeiro disponÃ­velâ€',
-          'Controle de pausas e horÃ¡rios por cadeira'
+          'Cliente escolhe barbeiro ou “primeiro disponível”',
+          'Controle de pausas e horários por cadeira'
         ]
       },
       {
         key: 'TEAM_MGMT',
-        title: 'GestÃ£o de Equipe',
+        title: 'Gestão de Equipe',
         included: true,
         items: [
           'Visual da agenda por barbeiro',
-          'Indicador de ocupaÃ§Ã£o (quem estÃ¡ mais cheio)'
+          'Indicador de ocupação (quem está mais cheio)'
         ]
       },
       {
         key: 'REPORTS',
-        title: 'RelatÃ³rios Simples',
+        title: 'Relatórios Simples',
         included: true,
         items: [
           'Faturamento por dia e por barbeiro',
-          'ServiÃ§os mais vendidos'
+          'Serviços mais vendidos'
         ]
       }
     ],
@@ -457,28 +457,28 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
   {
     id: 'SOLO_PRO', // Mapped to Pro
     name: 'Pro',
-    subtitle: 'GestÃ£o completa de equipe, comissÃµes e caixa.',
+    subtitle: 'Gestão completa de equipe, comissões e caixa.',
     level: 'pro',
     highlight: 'Tudo do Start, mais:',
     modules: [
       {
         key: 'FINANCE_ADVANCED',
-        title: 'Financeiro AvanÃ§ado',
+        title: 'Financeiro Avançado',
         included: true,
         items: [
-          'DRE simplificado (lucro/prejuÃ­zo)',
-          'Ponto de equilÃ­brio da barbearia',
-          'Controle de despesas fixas e variÃ¡veis'
+          'DRE simplificado (lucro/prejuízo)',
+          'Ponto de equilíbrio da barbearia',
+          'Controle de despesas fixas e variáveis'
         ]
       },
       {
         key: 'COMMISSIONS',
-        title: 'ComissÃµes & Payouts',
+        title: 'Comissões & Payouts',
         included: true,
         items: [
-          'Regras de comissÃ£o por barbeiro',
-          'CÃ¡lculo automÃ¡tico de saldos',
-          'HistÃ³rico de pagamentos (payouts)'
+          'Regras de comissão por barbeiro',
+          'Cálculo automático de saldos',
+          'Histórico de pagamentos (payouts)'
         ]
       },
       {
@@ -492,12 +492,12 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
       },
       {
         key: 'RETENTION',
-        title: 'RetenÃ§Ã£o de Clientes',
+        title: 'Retenção de Clientes',
         included: true,
         items: [
-          'CartÃ£o fidelidade',
-          'Win-back automÃ¡tico (clientes sumidos)',
-          'VisÃ£o de retenÃ§Ã£o por barbeiro'
+          'Cartão fidelidade',
+          'Win-back automático (clientes sumidos)',
+          'Visão de retenção por barbeiro'
         ]
       }
     ],
@@ -505,7 +505,7 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
   {
     id: 'STUDIO', // Mapped to Elite
     name: 'Elite',
-    subtitle: 'Barbearias em crescimento que querem marca forte e experiÃªncia premium.',
+    subtitle: 'Barbearias em crescimento que querem marca forte e experiência premium.',
     level: 'elite',
     highlight: 'Tudo do Pro, mais:',
     modules: [
@@ -515,10 +515,10 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
         included: true,
         items: [
           'Site profissional da barbearia',
-          'PÃ¡ginas de perfil para cada barbeiro',
-          'Link de agendamento prÃ³prio por barbeiro',
-          'DomÃ­nio prÃ³prio (.com.br) â€“ via parceiro',
-          'RemoÃ§Ã£o da marca dâ€™Ã¡gua BarberFlow'
+          'Páginas de perfil para cada barbeiro',
+          'Link de agendamento próprio por barbeiro',
+          'Domínio próprio (.com.br) – via parceiro',
+          'Remoção da marca d’água BarberFlow'
         ]
       },
       {
@@ -526,8 +526,8 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
         title: 'Marketing & Crescimento',
         included: true,
         items: [
-          'Base preparada para mÃºltiplas unidades',
-          'Ferramentas de campanhas (WhatsApp, e-mail, SMS â€“ quando liberado)'
+          'Base preparada para múltiplas unidades',
+          'Ferramentas de campanhas (WhatsApp, e-mail, SMS – quando liberado)'
         ]
       },
       {
@@ -535,7 +535,7 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
         title: 'Suporte & Prioridade',
         included: true,
         items: [
-          'Suporte prioritÃ¡rio',
+          'Suporte prioritário',
           'Acesso antecipado aos novos recursos do BarberFlow'
         ]
       }
@@ -545,7 +545,7 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
 
 const SIZE_TIERS: { id: SaasV2SizeTier; label: string }[] = [
   { id: 'SOLO', label: 'Solo (1 Barbeiro)' },
-  { id: 'UP_TO_3', label: 'AtÃ© 3 Barbeiros' },
+  { id: 'UP_TO_3', label: 'Até 3 Barbeiros' },
   { id: 'UP_TO_6', label: '3 a 6 Barbeiros' },
   { id: 'PLUS_6', label: 'Mais de 6' },
 ];
@@ -582,23 +582,23 @@ export const PlanOverview: React.FC = () => {
     if (selectedSizeTier === 'SOLO') {
       return {
         title: 'Escolha o plano ideal para o seu momento',
-        sub: 'Nossos planos foram pensados para barbeiros solo. Comece grÃ¡tis e ative mais recursos conforme o seu fluxo de clientes cresce.'
+        sub: 'Nossos planos foram pensados para barbeiros solo. Comece grátis e ative mais recursos conforme o seu fluxo de clientes cresce.'
       };
     } else if (selectedSizeTier === 'UP_TO_3') {
       return {
-        title: 'Planos para equipes de atÃ© 3 barbeiros',
-        sub: 'Perfeito para barbearias pequenas que jÃ¡ funcionam em dupla ou trio e querem organizar agenda, caixa e crescimento do time.'
+        title: 'Planos para equipes de até 3 barbeiros',
+        sub: 'Perfeito para barbearias pequenas que já funcionam em dupla ou trio e querem organizar agenda, caixa e crescimento do time.'
       };
     } else if (selectedSizeTier === 'UP_TO_6') {
       return {
         title: 'Planos para barbearias em crescimento',
-        sub: 'Para lojas com 3 a 6 barbeiros que precisam controlar agenda, comissÃµes, caixa e experiÃªncia de marca.'
+        sub: 'Para lojas com 3 a 6 barbeiros que precisam controlar agenda, comissões, caixa e experiência de marca.'
       };
     }
     // Default for other tiers
     return {
       title: 'Planos para Barbearias em Crescimento',
-      sub: 'SoluÃ§Ãµes escalÃ¡veis para equipes maiores e mÃºltiplas unidades.'
+      sub: 'Soluções escaláveis para equipes maiores e múltiplas unidades.'
     };
   };
 
@@ -669,7 +669,7 @@ export const PlanOverview: React.FC = () => {
               >
                 Anual
                 <span className={`text-[9px] px-1.5 py-0.5 rounded uppercase ${billingInterval === 'ANNUAL' ? 'bg-black/20 text-black' : 'bg-emerald-500/20 text-emerald-500'}`}>
-                  2 meses grÃ¡tis
+                  2 meses grátis
                 </span>
               </button>
             </div>
@@ -709,7 +709,7 @@ export const PlanOverview: React.FC = () => {
 
                 <div className="h-16 flex flex-col justify-center">
                   {!priceInfo || priceInfo.amount === 0 ? (
-                    <span className="text-2xl font-bold text-white">GrÃ¡tis</span>
+                    <span className="text-2xl font-bold text-white">Grátis</span>
                   ) : billingInterval === 'ANNUAL' ? (
                     <>
                       <div className="flex items-baseline gap-1">
@@ -717,17 +717,17 @@ export const PlanOverview: React.FC = () => {
                         <span className="text-3xl font-bold text-white">R$ {(priceInfo.amount / 12).toFixed(2).replace('.', ',')}</span>
                       </div>
                       <span className="text-[10px] text-zinc-500 leading-tight">
-                        Total R$ {priceInfo.amount.toFixed(2).replace('.', ',')} (2 meses grÃ¡tis)
+                        Total R$ {priceInfo.amount.toFixed(2).replace('.', ',')} (2 meses grátis)
                       </span>
                     </>
                   ) : (
                     <>
                       <div className="flex items-baseline gap-1">
                         <span className="text-3xl font-bold text-white">R$ {priceInfo.amount.toFixed(0)}</span>
-                        <span className="text-xs text-zinc-500 font-medium">/mÃªs</span>
+                        <span className="text-xs text-zinc-500 font-medium">/mês</span>
                       </div>
                       <span className="text-[10px] text-zinc-500 leading-tight">
-                        CobranÃ§a mensal, sem desconto.
+                        Cobrança mensal, sem desconto.
                       </span>
                     </>
                   )}

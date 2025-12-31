@@ -1,4 +1,4 @@
-﻿import { redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { getCurrentProfile } from '@/lib/auth/getCurrentProfile';
 
 interface AuthGuardProps {
@@ -7,12 +7,12 @@ interface AuthGuardProps {
 
 /**
  * Componente server-side que protege rotas autenticadas
- * A configuraÃ§Ã£o inicial (setup) agora Ã© uma modal no dashboard
+ * A configuração inicial (setup) agora é uma modal no dashboard
  */
 export async function AuthGuard({ children }: AuthGuardProps) {
   const profileResult = await getCurrentProfile();
 
-  // NÃ£o estÃ¡ logado
+  // Não está logado
   if (!profileResult) {
     redirect('/login');
   }

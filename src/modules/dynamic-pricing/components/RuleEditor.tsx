@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { Save, Trash2, X, Sparkles, TrendingUp, TrendingDown } from 'lucide-react';
@@ -61,7 +61,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel, 
     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-white">
-          {isEditing ? 'Editar Regra' : 'Nova Regra de PreÃ§o'}
+          {isEditing ? 'Editar Regra' : 'Nova Regra de Preço'}
         </h2>
         <button onClick={onCancel} className="text-zinc-500 hover:text-white">
           <X className="w-5 h-5" />
@@ -72,7 +72,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel, 
         <div className="mb-6">
           <p className="text-xs text-zinc-500 mb-3 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-amber-500" />
-            SugestÃµes prontas (clique para aplicar):
+            Sugestões prontas (clique para aplicar):
           </p>
           <div className="grid grid-cols-2 gap-2">
             {RULE_SUGGESTIONS.map((s) => (
@@ -109,7 +109,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel, 
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            placeholder="Ex: SÃ¡bado ManhÃ£ Premium"
+            placeholder="Ex: Sábado Manhã Premium"
             className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-sm text-white outline-none focus:border-amber-500"
           />
         </div>
@@ -187,7 +187,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel, 
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs text-zinc-500 mb-1">HorÃ¡rio InÃ­cio *</label>
+            <label className="block text-xs text-zinc-500 mb-1">Horário Início *</label>
             <input
               type="time"
               value={startTime}
@@ -197,7 +197,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel, 
             />
           </div>
           <div>
-            <label className="block text-xs text-zinc-500 mb-1">HorÃ¡rio Fim *</label>
+            <label className="block text-xs text-zinc-500 mb-1">Horário Fim *</label>
             <input
               type="time"
               value={endTime}

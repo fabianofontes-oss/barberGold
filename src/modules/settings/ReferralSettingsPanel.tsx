@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -47,13 +47,13 @@ export const ReferralSettingsPanel: React.FC = () => {
             <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                <Trophy className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-500" />
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white mb-1">Programa de IndicaÃ§Ãµes</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-1">Programa de Indicações</h2>
             <p className="text-zinc-500 text-xs sm:text-sm">
-               Indique e ganhe comissÃ£o sobre planos anuais.
+               Indique e ganhe comissão sobre planos anuais.
             </p>
          </div>
 
-         {/* Owner Link - sempre visÃ­vel e destacado */}
+         {/* Owner Link - sempre visível e destacado */}
          <div className="w-full bg-gradient-to-br from-emerald-950/30 to-zinc-950 border border-emerald-500/20 rounded-xl p-4 mb-4">
             <div className="flex items-center gap-2 mb-3">
                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Seu link exclusivo</span>
@@ -83,7 +83,7 @@ export const ReferralSettingsPanel: React.FC = () => {
          <div className="flex items-start gap-2 bg-zinc-950 border border-zinc-800 rounded-lg p-3 mb-4 text-[10px] text-zinc-500">
             <Info className="w-4 h-4 text-zinc-600 flex-shrink-0 mt-0.5" />
             <span>
-               ComissÃ£o apenas em <strong className="text-zinc-300">plano anual</strong>, no <strong className="text-zinc-300">primeiro pagamento</strong>. LiberaÃ§Ã£o em <strong className="text-zinc-300">D+60</strong>.
+               Comissão apenas em <strong className="text-zinc-300">plano anual</strong>, no <strong className="text-zinc-300">primeiro pagamento</strong>. Liberação em <strong className="text-zinc-300">D+60</strong>.
             </span>
          </div>
 
@@ -97,7 +97,7 @@ export const ReferralSettingsPanel: React.FC = () => {
                  <div>
                    <p className="text-sm font-bold text-white">Ativar links da equipe</p>
                    <p className="text-[10px] text-zinc-500 mt-0.5">
-                     Split fixo: <strong className="text-amber-400">70%</strong> staff / <strong className="text-zinc-300">30%</strong> vocÃª
+                     Split fixo: <strong className="text-amber-400">70%</strong> staff / <strong className="text-zinc-300">30%</strong> você
                    </p>
                  </div>
               </div>

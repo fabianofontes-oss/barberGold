@@ -1,18 +1,18 @@
-﻿/**
- * Biblioteca de mÃ¡scaras para formataÃ§Ã£o de inputs
+/**
+ * Biblioteca de máscaras para formatação de inputs
  */
 
 /**
- * MÃ¡scara para telefone brasileiro
+ * Máscara para telefone brasileiro
  * Formato: (11) 91234-5678 ou (11) 1234-5678
  */
 export function phoneMask(value: string): string {
   if (!value) return '';
   
-  // Remove tudo que nÃ£o Ã© nÃºmero
+  // Remove tudo que não é número
   const numbers = value.replace(/\D/g, '');
   
-  // Aplica a mÃ¡scara
+  // Aplica a máscara
   if (numbers.length <= 10) {
     // Telefone fixo: (11) 1234-5678
     return numbers
@@ -29,7 +29,7 @@ export function phoneMask(value: string): string {
 }
 
 /**
- * MÃ¡scara para CEP brasileiro
+ * Máscara para CEP brasileiro
  * Formato: 12345-678
  */
 export function cepMask(value: string): string {
@@ -43,13 +43,13 @@ export function cepMask(value: string): string {
 }
 
 /**
- * MÃ¡scara para Instagram (remove @ e espaÃ§os)
+ * Máscara para Instagram (remove @ e espaços)
  * Formato: username
  */
 export function instagramMask(value: string): string {
   if (!value) return '';
   
-  // Remove @ do inÃ­cio, espaÃ§os e caracteres especiais
+  // Remove @ do início, espaços e caracteres especiais
   return value
     .replace(/^@/, '')
     .replace(/\s/g, '')
@@ -58,7 +58,7 @@ export function instagramMask(value: string): string {
 }
 
 /**
- * MÃ¡scara para WhatsApp (mesmo que telefone)
+ * Máscara para WhatsApp (mesmo que telefone)
  * Formato: (11) 91234-5678
  */
 export function whatsappMask(value: string): string {
@@ -66,21 +66,21 @@ export function whatsappMask(value: string): string {
 }
 
 /**
- * Remove mÃ¡scara de telefone/WhatsApp (retorna apenas nÃºmeros)
+ * Remove máscara de telefone/WhatsApp (retorna apenas números)
  */
 export function unmaskPhone(value: string): string {
   return value.replace(/\D/g, '');
 }
 
 /**
- * Remove mÃ¡scara de CEP (retorna apenas nÃºmeros)
+ * Remove máscara de CEP (retorna apenas números)
  */
 export function unmaskCep(value: string): string {
   return value.replace(/\D/g, '');
 }
 
 /**
- * Busca endereÃ§o por CEP usando ViaCEP API
+ * Busca endereço por CEP usando ViaCEP API
  */
 export interface ViaCepResponse {
   cep: string;

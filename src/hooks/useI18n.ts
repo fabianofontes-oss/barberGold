@@ -1,8 +1,8 @@
-﻿import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { type Locale, localeCurrencies, localeTimezones } from '@/i18n/config';
 
 /**
- * Hook personalizado para internacionalizaÃ§Ã£o
+ * Hook personalizado para internacionalização
  * 
  * Uso:
  * ```tsx
@@ -23,7 +23,7 @@ export function useI18n() {
   const timezone = localeTimezones[locale];
 
   /**
-   * Formata valor monetÃ¡rio de acordo com o locale atual
+   * Formata valor monetário de acordo com o locale atual
    */
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat(locale, {
@@ -46,7 +46,7 @@ export function useI18n() {
   };
 
   /**
-   * Formata nÃºmero de acordo com o locale atual
+   * Formata número de acordo com o locale atual
    */
   const formatNumber = (value: number, options?: Intl.NumberFormatOptions): string => {
     return new Intl.NumberFormat(locale, options).format(value);

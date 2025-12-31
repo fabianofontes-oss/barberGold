@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -27,7 +27,7 @@ export const SuperAdminSupport = () => {
                <h2 className="text-3xl font-bold text-white mb-1 flex items-center gap-3">
                   <LifeBuoy className="w-8 h-8 text-blue-500" /> Central de Suporte
                </h2>
-               <p className="text-zinc-400 text-sm">Gerencie solicitaÃ§Ãµes de ajuda e tickets crÃ­ticos.</p>
+               <p className="text-zinc-400 text-sm">Gerencie solicitações de ajuda e tickets críticos.</p>
             </div>
             
             <div className="flex bg-zinc-900 border border-zinc-800 p-1 rounded-xl">

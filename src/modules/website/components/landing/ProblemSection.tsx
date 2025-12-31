@@ -1,21 +1,21 @@
-﻿import { CalendarX, Calculator, TrendingDown } from 'lucide-react';
+import { CalendarX, Calculator, TrendingDown } from 'lucide-react';
 
 export function ProblemSection() {
     const problems = [
         {
             icon: CalendarX,
             title: 'No-Shows Sem Multa',
-            description: 'Clientes que marcam e nÃ£o aparecem custam em mÃ©dia R$ 2.000/mÃªs por cadeira. Nosso sistema cobra antecipado ou taxa de cancelamento automÃ¡tica.'
+            description: 'Clientes que marcam e não aparecem custam em média R$ 2.000/mês por cadeira. Nosso sistema cobra antecipado ou taxa de cancelamento automática.'
         },
         {
             icon: Calculator,
-            title: 'ComissÃµes Erradas',
-            description: 'Planilhas manuais geram erros de cÃ¡lculo. Pagar comissÃ£o a mais ou a menos destrÃ³i seu caixa ou sua equipe. O Smart Split calcula centavos com precisÃ£o.'
+            title: 'Comissões Erradas',
+            description: 'Planilhas manuais geram erros de cálculo. Pagar comissão a mais ou a menos destrói seu caixa ou sua equipe. O Smart Split calcula centavos com precisão.'
         },
         {
             icon: TrendingDown,
-            title: 'HorÃ¡rios Ociosos',
-            description: 'Cadeiras vazias em horÃ¡rios de pico ou vale. O Smart Pricing ajusta preÃ§os dinamicamente para preencher sua agenda 100% do tempo.'
+            title: 'Horários Ociosos',
+            description: 'Cadeiras vazias em horários de pico ou vale. O Smart Pricing ajusta preços dinamicamente para preencher sua agenda 100% do tempo.'
         }
     ];
 
@@ -23,11 +23,11 @@ export function ProblemSection() {
         <section className="py-24 px-4 sm:px-6 lg:px-8 relative bg-[#0f0f11]">
             <div className="mx-auto max-w-4xl text-center mb-16">
                 <div className="inline-block px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-semibold mb-6">
-                    Alerta de PrejuÃ­zo
+                    Alerta de Prejuízo
                 </div>
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Pare de perder dinheiro invisÃ­vel</h2>
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Pare de perder dinheiro invisível</h2>
                 <p className="text-lg text-gray-400">
-                    Todo mÃªs sua barbearia sangra lucro com erros que vocÃª nem percebe. O BarberGOLD estanca esse sangramento no primeiro dia.
+                    Todo mês sua barbearia sangra lucro com erros que você nem percebe. O BarberGOLD estanca esse sangramento no primeiro dia.
                 </p>
             </div>
             

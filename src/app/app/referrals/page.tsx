@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { ReferralDashboard } from '@/modules/referrals/ReferralDashboard';
 

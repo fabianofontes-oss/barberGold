@@ -1,4 +1,4 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
 
 // ============================================
 // PLANOS DE ASSINATURA (configurados pelo dono)
@@ -7,31 +7,31 @@
 export const MembershipPlanSchema = z.object({
   id: z.string(),
   tenantId: z.string(),
-  name: z.string().min(1, 'Nome obrigatÃ³rio'),
+  name: z.string().min(1, 'Nome obrigatório'),
   description: z.string().optional(),
   
-  // PreÃ§o mensal definido pelo dono
+  // Preço mensal definido pelo dono
   monthlyPriceBRL: z.number().min(0),
   
-  // CrÃ©ditos inclusos por mÃªs
+  // Créditos inclusos por mês
   monthlyCredits: z.number().int().min(1),
   
-  // ServiÃ§os elegÃ­veis (IDs) - vazio = todos
+  // Serviços elegíveis (IDs) - vazio = todos
   eligibleServiceIds: z.array(z.string()).default([]),
   
-  // Desconto em serviÃ§os extras (alÃ©m dos crÃ©ditos)
+  // Desconto em serviços extras (além dos créditos)
   extraServiceDiscountPercent: z.number().min(0).max(100).default(0),
   
   // Desconto em produtos
   productDiscountPercent: z.number().min(0).max(100).default(0),
   
-  // BenefÃ­cios extras (ex: "Cerveja grÃ¡tis", "Prioridade na fila")
+  // Benefícios extras (ex: "Cerveja grátis", "Prioridade na fila")
   perks: z.array(z.string()).default([]),
   
   // Status
   isActive: z.boolean().default(true),
   
-  // Ordem de exibiÃ§Ã£o
+  // Ordem de exibição
   displayOrder: z.number().int().default(0),
   
   createdAt: z.date(),
@@ -41,7 +41,7 @@ export const MembershipPlanSchema = z.object({
 export type MembershipPlan = z.infer<typeof MembershipPlanSchema>;
 
 // ============================================
-// SUGESTÃ•ES DE PLANOS (templates para o dono)
+// SUGESTÕES DE PLANOS (templates para o dono)
 // ============================================
 
 export type PlanSuggestion = {
@@ -59,8 +59,8 @@ export type PlanSuggestion = {
 export const PLAN_SUGGESTIONS: PlanSuggestion[] = [
   {
     templateId: 'basic',
-    name: 'Plano BÃ¡sico',
-    description: 'Para quem corta 1x por mÃªs',
+    name: 'Plano Básico',
+    description: 'Para quem corta 1x por mês',
     monthlyPriceBRL: 59,
     monthlyCredits: 1,
     extraServiceDiscountPercent: 10,
@@ -71,23 +71,23 @@ export const PLAN_SUGGESTIONS: PlanSuggestion[] = [
   {
     templateId: 'popular',
     name: 'Plano Mensal',
-    description: 'Para quem mantÃ©m o visual em dia',
+    description: 'Para quem mantém o visual em dia',
     monthlyPriceBRL: 99,
     monthlyCredits: 2,
     extraServiceDiscountPercent: 15,
     productDiscountPercent: 10,
-    perks: ['Agendamento prioritÃ¡rio'],
+    perks: ['Agendamento prioritário'],
     tier: 'POPULAR',
   },
   {
     templateId: 'premium',
     name: 'Plano VIP',
-    description: 'Acesso ilimitado e benefÃ­cios exclusivos',
+    description: 'Acesso ilimitado e benefícios exclusivos',
     monthlyPriceBRL: 179,
     monthlyCredits: 4,
     extraServiceDiscountPercent: 20,
     productDiscountPercent: 15,
-    perks: ['Agendamento prioritÃ¡rio', 'Cerveja/cafÃ© grÃ¡tis', 'Barba inclusa'],
+    perks: ['Agendamento prioritário', 'Cerveja/café grátis', 'Barba inclusa'],
     tier: 'PREMIUM',
   },
 ];
@@ -114,15 +114,15 @@ export const SubscriptionSchema = z.object({
   
   status: SubscriptionStatusSchema,
   
-  // Data de inÃ­cio e renovaÃ§Ã£o
+  // Data de início e renovação
   startDate: z.date(),
   currentPeriodStart: z.date(),
   currentPeriodEnd: z.date(),
   
-  // CrÃ©ditos restantes no perÃ­odo atual
+  // Créditos restantes no período atual
   creditsRemaining: z.number().int().min(0),
   
-  // HistÃ³rico de pagamentos (simplificado)
+  // Histórico de pagamentos (simplificado)
   lastPaymentDate: z.date().optional(),
   nextPaymentDate: z.date().optional(),
   
@@ -137,7 +137,7 @@ export const SubscriptionSchema = z.object({
 export type Subscription = z.infer<typeof SubscriptionSchema>;
 
 // ============================================
-// HISTÃ“RICO DE USO DE CRÃ‰DITOS
+// HISTÓRICO DE USO DE CRÉDITOS
 // ============================================
 
 export const CreditUsageSchema = z.object({
@@ -146,7 +146,7 @@ export const CreditUsageSchema = z.object({
   clientId: z.string(),
   tenantId: z.string(),
   
-  // ServiÃ§o resgatado
+  // Serviço resgatado
   serviceId: z.string(),
   serviceName: z.string(),
   
@@ -154,7 +154,7 @@ export const CreditUsageSchema = z.object({
   staffId: z.string().optional(),
   staffName: z.string().optional(),
   
-  // Valor economizado (preÃ§o cheio - 0)
+  // Valor economizado (preço cheio - 0)
   savedAmountBRL: z.number(),
   
   usedAt: z.date(),

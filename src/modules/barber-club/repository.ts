@@ -1,4 +1,4 @@
-﻿import type { MembershipPlan, Subscription, CreditUsage } from './types';
+import type { MembershipPlan, Subscription, CreditUsage } from './types';
 
 // ============================================
 // CHAVES LOCALSTORAGE (DEMO MODE)
@@ -123,7 +123,7 @@ export async function upsertSubscription(sub: Subscription): Promise<void> {
 }
 
 // ============================================
-// USO DE CRÃ‰DITOS
+// USO DE CRÉDITOS
 // ============================================
 
 export async function listCreditUsage(tenantId: string): Promise<CreditUsage[]> {

@@ -1,4 +1,4 @@
-﻿import type { ReferralPartner, ReferralSale } from '@/types';
+import type { ReferralPartner, ReferralSale } from '@/types';
 import type { ReferralsRepository } from './types';
 
 function safeParseJSON<T>(raw: string | null): T | null {

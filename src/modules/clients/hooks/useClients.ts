@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ClientWithStats } from '../types';
 import { getClients, getClientStats } from '../actions';
 
@@ -66,10 +66,10 @@ export function useClientStats(clientId?: string) {
           setStats(result.data);
           setError(null);
         } else {
-          setError(result.error || 'Erro ao carregar estatÃ­sticas');
+          setError(result.error || 'Erro ao carregar estatísticas');
         }
       } catch (err) {
-        setError('Erro ao carregar estatÃ­sticas');
+        setError('Erro ao carregar estatísticas');
       } finally {
         setLoading(false);
       }

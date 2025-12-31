@@ -1,7 +1,7 @@
-﻿import type { Locale } from '@/i18n/config';
+import type { Locale } from '@/i18n/config';
 
 /**
- * Tipos para mensagens de traduÃ§Ã£o
+ * Tipos para mensagens de tradução
  */
 export type Messages = {
   app: {
@@ -90,7 +90,7 @@ export type Messages = {
 };
 
 /**
- * ConfiguraÃ§Ã£o de paÃ­s/regiÃ£o
+ * Configuração de país/região
  */
 export interface CountryConfig {
   locale: Locale;
@@ -106,7 +106,7 @@ export interface CountryConfig {
 }
 
 /**
- * ConfiguraÃ§Ãµes por paÃ­s
+ * Configurações por país
  */
 export const countryConfigs: Record<Locale, CountryConfig> = {
   'pt-BR': {

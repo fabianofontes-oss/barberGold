@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -80,7 +80,7 @@ export const BarberRanking: React.FC = () => {
               {/* Info */}
               <div className="flex-1">
                 <p className={`font-bold ${isMe ? 'text-amber-400' : 'text-white'}`}>
-                  {barber.name} {isMe && <span className="text-xs">(vocÃª)</span>}
+                  {barber.name} {isMe && <span className="text-xs">(você)</span>}
                 </p>
                 <p className="text-xs text-zinc-500">{barber.salesCount} vendas</p>
               </div>
@@ -92,7 +92,7 @@ export const BarberRanking: React.FC = () => {
                 </p>
                 {idx === 0 && barber.revenue > 0 && (
                   <div className="flex items-center gap-1 text-[10px] text-emerald-400">
-                    <TrendingUp className="w-3 h-3" /> LÃ­der
+                    <TrendingUp className="w-3 h-3" /> Líder
                   </div>
                 )}
               </div>
@@ -103,7 +103,7 @@ export const BarberRanking: React.FC = () => {
 
       {!isOwner && (
         <p className="text-[10px] text-zinc-500 text-center mt-3">
-          ðŸ† Seja o primeiro hoje!
+          🏆 Seja o primeiro hoje!
         </p>
       )}
     </div>

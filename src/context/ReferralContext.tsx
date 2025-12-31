@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { createContext, useContext, useEffect, useMemo, useState, PropsWithChildren } from 'react';
 import { ReferralPartner, ReferralLink, ReferralSale, BillingPeriod } from '@/types';
@@ -62,7 +62,7 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
         const storedSales = await repo.listSales({ tenantId: tenantKey });
         if (!cancelled && storedSales.length > 0) setSales(storedSales);
       } catch {
-        // Fallback silencioso: mantÃ©m mocks/memÃ³ria em caso de piloto sem schema/config
+        // Fallback silencioso: mantém mocks/memória em caso de piloto sem schema/config
       }
     })();
 
@@ -179,7 +179,7 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
       return buildStaffReferralCode(ownerCode, partner.staffId || 'STAFF');
     }
 
-    // Parceiros: gera cÃ³digo novo (mock)
+    // Parceiros: gera código novo (mock)
     const prefix = normalizeReferralCode(partner.displayName.substring(0, 3) || 'PAR');
     const unique = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
     const newCode = `${prefix}${unique}`;

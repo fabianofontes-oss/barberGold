@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -41,7 +41,7 @@ export function useSuppliers() {
           setError(suppliersError.message);
         } else {
           setSuppliers(data || []);
-          console.log('âœ… Suppliers carregados do Supabase:', data?.length || 0);
+          console.log('✅ Suppliers carregados do Supabase:', data?.length || 0);
         }
       } catch (err) {
         console.error('Erro ao carregar suppliers:', err);

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useSaasV2 } from '@/context/SaasV2Context';
@@ -13,7 +13,7 @@ interface TenantDetailsV2Props {
 
 const sizeTierLabels: Record<SaasV2SizeTier, string> = {
   SOLO: '1 barbeiro (Solo)',
-  UP_TO_3: 'AtÃ© 3 barbeiros',
+  UP_TO_3: 'Até 3 barbeiros',
   UP_TO_6: 'De 3 a 6 barbeiros',
   PLUS_6: 'Mais de 6 barbeiros',
 };
@@ -49,7 +49,7 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
       lastPaymentDate: today,
       status: 'ACTIVE',
       overdueDays: 0,
-      nextDueDate: today, // SimplificaÃ§Ã£o para demo
+      nextDueDate: today, // Simplificação para demo
     });
   };
 
@@ -79,7 +79,7 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
         onClick={onBack}
         className="text-[11px] text-zinc-400 hover:text-zinc-200"
       >
-        â† Voltar para lista
+        ← Voltar para lista
       </button>
 
       <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -88,7 +88,7 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
             {tenant.shopName}
           </h1>
           <p className="text-xs text-zinc-400">
-            Dono: {tenant.ownerName} â€¢ Criado em{' '}
+            Dono: {tenant.ownerName} • Criado em{' '}
             {tenant.createdAt.toLocaleDateString?.() ?? ''}
           </p>
         </div>
@@ -111,58 +111,58 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-[11px]">
-        {/* Bloco 1: Dados de cobranÃ§a */}
+        {/* Bloco 1: Dados de cobrança */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 space-y-2">
           <h2 className="text-sm font-semibold text-zinc-100 mb-1">
-            CobranÃ§a & Assinatura
+            Cobrança & Assinatura
           </h2>
           <p className="text-zinc-400">
             MRR: <span className="text-zinc-100 font-semibold">R$ {tenant.mrr}</span>
           </p>
           <p className="text-zinc-400">
-            Dia de cobranÃ§a: <span className="text-zinc-100">{tenant.billingDay}</span>
+            Dia de cobrança: <span className="text-zinc-100">{tenant.billingDay}</span>
           </p>
           <p className="text-zinc-400">
-            Ãšltimo pagamento:{' '}
+            Último pagamento:{' '}
             <span className="text-zinc-100">
-              {tenant.lastPaymentDate?.toLocaleDateString?.() ?? 'â€”'}
+              {tenant.lastPaymentDate?.toLocaleDateString?.() ?? '—'}
             </span>
           </p>
           <p className="text-zinc-400">
-            PrÃ³ximo vencimento:{' '}
+            Próximo vencimento:{' '}
             <span className="text-zinc-100">
-              {tenant.nextDueDate?.toLocaleDateString?.() ?? 'â€”'}
+              {tenant.nextDueDate?.toLocaleDateString?.() ?? '—'}
             </span>
           </p>
           {typeof tenant.overdueDays === 'number' && tenant.overdueDays > 0 && (
             <p className="text-xs text-amber-400">
-              Em atraso hÃ¡ {tenant.overdueDays} dia(s).
+              Em atraso há {tenant.overdueDays} dia(s).
             </p>
           )}
         </section>
 
-        {/* Bloco 2: RegiÃ£o & idioma */}
+        {/* Bloco 2: Região & idioma */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 space-y-2">
           <h2 className="text-sm font-semibold text-zinc-100 mb-1">
-            RegiÃ£o & Idioma
+            Região & Idioma
           </h2>
           <p className="text-zinc-400">
-            PaÃ­s: <span className="text-zinc-100">{tenant.country}</span>
+            País: <span className="text-zinc-100">{tenant.country}</span>
           </p>
           <p className="text-zinc-400">
-            Idioma padrÃ£o:{' '}
+            Idioma padrão:{' '}
             <span className="text-zinc-100">{tenant.defaultLanguage}</span>
           </p>
           <p className="text-zinc-400">
-            Moeda padrÃ£o:{' '}
+            Moeda padrão:{' '}
             <span className="text-zinc-100">{tenant.defaultCurrency}</span>
           </p>
         </section>
 
-        {/* Bloco 3: Plano & cobranÃ§a */}
+        {/* Bloco 3: Plano & cobrança */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 space-y-2">
           <h2 className="text-sm font-semibold text-zinc-100 mb-2">
-            Plano & cobranÃ§a
+            Plano & cobrança
           </h2>
 
           {/* Plano */}
@@ -178,7 +178,7 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
                 .sort((a, b) => a.order - b.order)
                 .map((plan) => (
                   <option key={plan.id} value={plan.id}>
-                    {plan.name} (R$ {plan.monthlyPriceBRL}/mÃªs)
+                    {plan.name} (R$ {plan.monthlyPriceBRL}/mês)
                   </option>
                 ))}
             </select>
@@ -201,9 +201,9 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
             </select>
           </div>
 
-          {/* Intervalo de cobranÃ§a */}
+          {/* Intervalo de cobrança */}
           <div className="space-y-1">
-            <span className="text-zinc-400">Intervalo de cobranÃ§a</span>
+            <span className="text-zinc-400">Intervalo de cobrança</span>
             <select
               value={tenant.billingInterval || 'MONTHLY'}
               onChange={(e) =>
@@ -216,18 +216,18 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
             </select>
           </div>
 
-          {/* PreÃ§o Sugerido Brasil */}
+          {/* Preço Sugerido Brasil */}
           {tenant.country === 'BR' && (
             <div className="mt-3 p-2.5 rounded-lg border border-zinc-800 bg-zinc-950">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex flex-col">
                   <span className="text-[10px] uppercase tracking-wide text-zinc-500">
-                    PreÃ§o sugerido (Brasil â€“ mensal)
+                    Preço sugerido (Brasil – mensal)
                   </span>
                   <span className="text-sm font-semibold text-zinc-100">
                     {suggestedPriceBR != null
                       ? `R$ ${suggestedPriceBR.toFixed(0)},00`
-                      : 'â€” definir manualmente'}
+                      : '— definir manualmente'}
                   </span>
                 </div>
 
@@ -245,12 +245,12 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
                 </button>
               </div>
               <p className="mt-1 text-[10px] text-zinc-500">
-                Valores base recomendados para o mercado brasileiro. VocÃª pode ajustar o MRR manualmente acima, se der desconto ou condiÃ§Ãµes especiais.
+                Valores base recomendados para o mercado brasileiro. Você pode ajustar o MRR manualmente acima, se der desconto ou condições especiais.
               </p>
             </div>
           )}
 
-          {/* AÃ§Ãµes rÃ¡pidas */}
+          {/* Ações rápidas */}
           <div className="space-y-2 pt-1">
             <button
               type="button"
@@ -286,7 +286,7 @@ export const TenantDetailsV2: React.FC<TenantDetailsV2Props> = ({
           Notas internas
         </h2>
         <p className="text-[11px] text-zinc-300 whitespace-pre-line">
-          {tenant.notesInternal || 'Nenhuma anotaÃ§Ã£o interna cadastrada.'}
+          {tenant.notesInternal || 'Nenhuma anotação interna cadastrada.'}
         </p>
       </section>
     </div>

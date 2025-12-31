@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useReferral } from '@/context/ReferralContext';
@@ -26,7 +26,7 @@ export const SuperAdminPartners: React.FC = () => {
                <Users className="w-6 h-6 text-purple-500" /> Programa de Parceiros
             </h1>
             <p className="text-sm text-zinc-400">
-              Acompanhe donos, staff e influencers que estÃ£o indicando o BarberFlow.
+              Acompanhe donos, staff e influencers que estão indicando o BarberFlow.
             </p>
           </div>
           <div className="flex gap-3 text-xs">
@@ -42,7 +42,7 @@ export const SuperAdminPartners: React.FC = () => {
             <div className="bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 flex items-center gap-2">
               <DollarSign className="w-4 h-4 text-emerald-400" />
               <div>
-                <p className="text-zinc-400">ComissÃ£o aprovada</p>
+                <p className="text-zinc-400">Comissão aprovada</p>
                 <p className="font-semibold text-white">
                   R$ {totalApprovedCommission.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                 </p>
@@ -62,11 +62,11 @@ export const SuperAdminPartners: React.FC = () => {
                 <tr className="text-zinc-500 border-b border-zinc-800 bg-zinc-950/50">
                   <th className="py-3 pl-4 pr-2 font-medium">Nome</th>
                   <th className="py-3 px-2 font-medium">Tipo</th>
-                  <th className="py-3 px-2 font-medium text-center">% ComissÃ£o</th>
-                  <th className="py-3 px-2 font-medium">CÃ³digos Ativos</th>
+                  <th className="py-3 px-2 font-medium text-center">% Comissão</th>
+                  <th className="py-3 px-2 font-medium">Códigos Ativos</th>
                   <th className="py-3 px-2 font-medium text-center">Vendas</th>
                   <th className="py-3 px-2 font-medium text-center">Status</th>
-                  <th className="py-3 pr-4 pl-2 font-medium text-right">AÃ§Ãµes</th>
+                  <th className="py-3 pr-4 pl-2 font-medium text-right">Ações</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800/50">
@@ -96,7 +96,7 @@ export const SuperAdminPartners: React.FC = () => {
                       <td className="py-3 px-2">
                         <div className="flex flex-col gap-1">
                            {partnerLinks.length === 0 ? (
-                              <span className="text-zinc-600 italic">Sem cÃ³digos</span>
+                              <span className="text-zinc-600 italic">Sem códigos</span>
                            ) : (
                               partnerLinks.map(l => (
                                  <button 
@@ -142,7 +142,7 @@ export const SuperAdminPartners: React.FC = () => {
                           className="inline-flex items-center gap-1 text-[10px] px-2 py-1.5 rounded-md bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 border border-zinc-700 hover:border-zinc-600 transition"
                         >
                           <Plus className="w-3 h-3" />
-                          Novo CÃ³digo
+                          Novo Código
                         </button>
                       </td>
                     </tr>

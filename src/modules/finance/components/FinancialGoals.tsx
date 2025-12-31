@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { Target, Plus, Trash2, Check, TrendingUp } from 'lucide-react';
@@ -93,7 +93,7 @@ export const FinancialGoals: React.FC<FinancialGoalsProps> = ({
         </button>
       </div>
 
-      {/* FormulÃ¡rio para adicionar meta */}
+      {/* Formulário para adicionar meta */}
       {isAdding && (
         <div className="mb-4 p-4 bg-zinc-950 rounded-xl border border-zinc-800 space-y-3">
           <input

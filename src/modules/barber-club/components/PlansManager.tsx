@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { Plus, Edit2, Users, CreditCard, Percent, Gift, ToggleLeft, ToggleRight } from 'lucide-react';
@@ -60,7 +60,7 @@ export const PlansManager: React.FC = () => {
         <div>
           <h2 className="text-xl font-bold text-white">Planos de Assinatura</h2>
           <p className="text-xs text-zinc-500 mt-1">
-            Crie e gerencie os planos do seu clube. VocÃª define os valores e benefÃ­cios.
+            Crie e gerencie os planos do seu clube. Você define os valores e benefícios.
           </p>
         </div>
         <button
@@ -110,18 +110,18 @@ export const PlansManager: React.FC = () => {
 
               <div className="flex items-baseline gap-1 mb-4">
                 <span className="text-3xl font-bold text-white">R$ {plan.monthlyPriceBRL}</span>
-                <span className="text-sm text-zinc-500">/mÃªs</span>
+                <span className="text-sm text-zinc-500">/mês</span>
               </div>
 
               <div className="space-y-2 mb-4">
                 <div className="flex items-center gap-2 text-sm text-zinc-400">
                   <Users className="w-4 h-4 text-amber-500" />
-                  <span><strong className="text-white">{plan.monthlyCredits}</strong> crÃ©ditos/mÃªs</span>
+                  <span><strong className="text-white">{plan.monthlyCredits}</strong> créditos/mês</span>
                 </div>
                 {plan.extraServiceDiscountPercent > 0 && (
                   <div className="flex items-center gap-2 text-sm text-zinc-400">
                     <Percent className="w-4 h-4 text-emerald-500" />
-                    <span><strong className="text-white">{plan.extraServiceDiscountPercent}%</strong> off serviÃ§os extras</span>
+                    <span><strong className="text-white">{plan.extraServiceDiscountPercent}%</strong> off serviços extras</span>
                   </div>
                 )}
                 {plan.productDiscountPercent > 0 && (
@@ -133,7 +133,7 @@ export const PlansManager: React.FC = () => {
                 {plan.perks.length > 0 && (
                   <div className="flex items-start gap-2 text-sm text-zinc-400">
                     <Gift className="w-4 h-4 text-purple-500 mt-0.5" />
-                    <span className="text-xs">{plan.perks.join(' â€¢ ')}</span>
+                    <span className="text-xs">{plan.perks.join(' • ')}</span>
                   </div>
                 )}
               </div>

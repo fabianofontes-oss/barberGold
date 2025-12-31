@@ -1,4 +1,4 @@
-﻿import { ReferralLinkInput } from './types';
+import { ReferralLinkInput } from './types';
 
 export function buildReferralUrl(input: ReferralLinkInput, baseUrl = 'https://barberflow.app'): string {
   const trimmedBase = baseUrl.replace(/\/$/, '');

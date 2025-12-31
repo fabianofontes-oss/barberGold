@@ -1,4 +1,4 @@
-﻿import { SAAS_V2_BR_PRICING } from '@/constants';
+import { SAAS_V2_BR_PRICING } from '@/constants';
 import { SaasV2Tenant, SaasV2PlanId, SaasV2SizeTier, SaasV2BillingInterval } from '@/types';
 
 export function getSuggestedMonthlyPriceForTenantBR(tenant: SaasV2Tenant): number | null {

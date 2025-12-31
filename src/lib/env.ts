@@ -1,22 +1,22 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
 
 /**
- * Schema de validaÃ§Ã£o das variÃ¡veis de ambiente
- * Falha rÃ¡pido se alguma variÃ¡vel obrigatÃ³ria estiver faltando
+ * Schema de validação das variáveis de ambiente
+ * Falha rápido se alguma variável obrigatória estiver faltando
  */
 const envSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z
     .string()
-    .url('NEXT_PUBLIC_SUPABASE_URL deve ser uma URL vÃ¡lida')
-    .min(1, 'NEXT_PUBLIC_SUPABASE_URL Ã© obrigatÃ³ria'),
+    .url('NEXT_PUBLIC_SUPABASE_URL deve ser uma URL válida')
+    .min(1, 'NEXT_PUBLIC_SUPABASE_URL é obrigatória'),
 
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z
     .string()
-    .min(1, 'NEXT_PUBLIC_SUPABASE_ANON_KEY Ã© obrigatÃ³ria'),
+    .min(1, 'NEXT_PUBLIC_SUPABASE_ANON_KEY é obrigatória'),
 
   SUPABASE_SERVICE_ROLE_KEY: z
     .string()
-    .optional(), // Opcional - sÃ³ necessÃ¡ria para webhooks e operaÃ§Ãµes de admin
+    .optional(), // Opcional - só necessária para webhooks e operações de admin
 
   NEXT_PUBLIC_APP_MODE: z
     .enum(['demo', 'pilot', 'prod', 'DEMO', 'PILOT', 'PROD'])
@@ -31,7 +31,7 @@ const envSchema = z.object({
 export type AppMode = 'demo' | 'pilot' | 'prod';
 
 /**
- * VariÃ¡veis de ambiente validadas
+ * Variáveis de ambiente validadas
  * Acessar via env.NEXT_PUBLIC_SUPABASE_URL etc.
  */
 function getEnv() {
@@ -48,22 +48,22 @@ function getEnv() {
   if (!parsed.success) {
     const errorDetails = JSON.stringify(parsed.error.flatten().fieldErrors, null, 2);
     
-    console.error('âŒ ERRO CRÃTICO: VariÃ¡veis de ambiente invÃ¡lidas');
+    console.error('❌ ERRO CRÍTICO: Variáveis de ambiente inválidas');
     console.error('Detalhes:', errorDetails);
     console.error('NODE_ENV:', process.env.NODE_ENV);
-    console.error('\nðŸ”§ SOLUÃ‡ÃƒO:');
+    console.error('\n🔧 SOLUÇÃO:');
     console.error('1. Acesse Vercel Dashboard > Settings > Environment Variables');
     console.error('2. Configure: NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY');
-    console.error('3. Redeploy a aplicaÃ§Ã£o\n');
+    console.error('3. Redeploy a aplicação\n');
 
     // SEMPRE falha, tanto em dev quanto em prod
     throw new Error(
-      `âŒ VariÃ¡veis de ambiente obrigatÃ³rias faltando!\n\n` +
+      `❌ Variáveis de ambiente obrigatórias faltando!\n\n` +
       `Detalhes: ${errorDetails}\n\n` +
       `Configure no Vercel Dashboard > Settings > Environment Variables:\n` +
       `- NEXT_PUBLIC_SUPABASE_URL\n` +
       `- NEXT_PUBLIC_SUPABASE_ANON_KEY\n\n` +
-      `ApÃ³s configurar, faÃ§a redeploy.`
+      `Após configurar, faça redeploy.`
     );
   }
 

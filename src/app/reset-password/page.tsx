@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -20,7 +20,7 @@ function ResetPasswordForm() {
   const [tokenValid, setTokenValid] = useState(false);
 
   useEffect(() => {
-    // Verifica se hÃ¡ um token vÃ¡lido na URL ou sessÃ£o
+    // Verifica se há um token válido na URL ou sessão
     const validateToken = async () => {
       const supabase = createClient();
       
@@ -28,12 +28,12 @@ function ResetPasswordForm() {
         const { data: { session }, error } = await supabase.auth.getSession();
         
         if (error) {
-          setError('Link invÃ¡lido ou expirado. Solicite um novo link de recuperaÃ§Ã£o.');
+          setError('Link inválido ou expirado. Solicite um novo link de recuperação.');
           setTokenValid(false);
         } else if (session) {
           setTokenValid(true);
         } else {
-          setError('Link invÃ¡lido ou expirado. Solicite um novo link de recuperaÃ§Ã£o.');
+          setError('Link inválido ou expirado. Solicite um novo link de recuperação.');
           setTokenValid(false);
         }
       } catch (err) {
@@ -52,15 +52,15 @@ function ResetPasswordForm() {
     setLoading(true);
     setError(null);
 
-    // ValidaÃ§Ãµes
+    // Validações
     if (password.length < 6) {
-      setError('A senha deve ter no mÃ­nimo 6 caracteres');
+      setError('A senha deve ter no mínimo 6 caracteres');
       setLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('As senhas nÃ£o coincidem');
+      setError('As senhas não coincidem');
       setLoading(false);
       return;
     }
@@ -80,7 +80,7 @@ function ResetPasswordForm() {
 
       setSuccess(true);
       
-      // Redireciona para login apÃ³s 2 segundos
+      // Redireciona para login após 2 segundos
       setTimeout(() => {
         router.push('/login');
       }, 2000);
@@ -90,13 +90,13 @@ function ResetPasswordForm() {
     }
   };
 
-  // Tela de validaÃ§Ã£o do token
+  // Tela de validação do token
   if (validatingToken) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-[#231c0f]">
         <div className="text-center">
           <Loader2 className="animate-spin h-12 w-12 text-[#f79f08] mx-auto mb-4" />
-          <p className="text-zinc-400">Validando link de recuperaÃ§Ã£o...</p>
+          <p className="text-zinc-400">Validando link de recuperação...</p>
         </div>
       </div>
     );
@@ -128,7 +128,7 @@ function ResetPasswordForm() {
           <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-red-500" />
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">Link InvÃ¡lido</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">Link Inválido</h1>
           <p className="text-zinc-400 mb-6">{error}</p>
           <Link
             href="/forgot-password"
@@ -141,7 +141,7 @@ function ResetPasswordForm() {
     );
   }
 
-  // FormulÃ¡rio de redefiniÃ§Ã£o de senha
+  // Formulário de redefinição de senha
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-[#231c0f]">
       <div className="w-full max-w-md">
@@ -177,7 +177,7 @@ function ResetPasswordForm() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="MÃ­nimo 6 caracteres"
+                  placeholder="Mínimo 6 caracteres"
                   disabled={loading}
                   className="flex w-full min-w-0 flex-1 resize-none overflow-hidden border-none bg-transparent text-white focus:outline-none focus:ring-0 placeholder:text-zinc-500 px-4 text-base font-normal leading-normal h-full disabled:opacity-50"
                 />

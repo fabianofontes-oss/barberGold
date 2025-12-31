@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 
 import React, { useState, useEffect } from 'react';
@@ -351,7 +351,7 @@ export const Finance = () => {
                       : 'border-transparent text-zinc-500 hover:text-zinc-300'
                   }`}
                 >
-                  <LayoutDashboard className="w-4 h-4" /> VisÃ£o Geral
+                  <LayoutDashboard className="w-4 h-4" /> Visão Geral
                 </button>
                 {!isFreePlan && (
                   <button
@@ -388,9 +388,9 @@ export const Finance = () => {
           <div className="flex items-center gap-3">
             <Lock className="w-5 h-5 text-amber-500" />
             <div className="text-sm">
-              <p className="text-zinc-200 font-bold">Funcionalidade AvanÃ§ada Bloqueada</p>
+              <p className="text-zinc-200 font-bold">Funcionalidade Avançada Bloqueada</p>
               <p className="text-zinc-400 text-xs">
-                Controle de despesas, comissÃµes detalhadas e DRE estÃ£o disponÃ­veis apenas nos planos Start, Pro e Elite.
+                Controle de despesas, comissões detalhadas e DRE estão disponíveis apenas nos planos Start, Pro e Elite.
               </p>
             </div>
           </div>
@@ -418,8 +418,8 @@ export const Finance = () => {
                           </h3>
                           <p className="text-zinc-400 text-sm mt-1">
                             {remainingToBreakEven > 0 
-                              ? `A casa precisa de $${remainingToBreakEven.toFixed(2)} a mais para cobrir as despesas do perÃ­odo.` 
-                              : "A loja estÃ¡ cobrindo todos os custos! O excedente cobre pagamentos e lucro."}
+                              ? `A casa precisa de $${remainingToBreakEven.toFixed(2)} a mais para cobrir as despesas do período.` 
+                              : "A loja está cobrindo todos os custos! O excedente cobre pagamentos e lucro."}
                           </p>
                       </div>
                       <div className="text-right">
@@ -447,13 +447,13 @@ export const Finance = () => {
                          <div className="flex items-center justify-between mb-6 border-b border-zinc-800 pb-4">
                             <div className="flex items-center gap-2">
                                <Landmark className="w-6 h-6 text-amber-500" />
-                               <h3 className="text-xl font-bold text-white">Fluxo de Caixa LÃ­quido ({dateFilter})</h3>
+                               <h3 className="text-xl font-bold text-white">Fluxo de Caixa Líquido ({dateFilter})</h3>
                             </div>
-                            <span className="text-xs text-zinc-500">O que realmente estÃ¡ no caixa</span>
+                            <span className="text-xs text-zinc-500">O que realmente está no caixa</span>
                          </div>
                          <div className="space-y-3">
                             <div className="flex justify-between items-center text-sm">
-                               <span className="text-zinc-400">Receita Total (ServiÃ§os + Produtos + Gorjetas)</span>
+                               <span className="text-zinc-400">Receita Total (Serviços + Produtos + Gorjetas)</span>
                                <span className="text-white font-bold">${totalCashIn.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
@@ -465,7 +465,7 @@ export const Finance = () => {
                                <span className="text-red-400">-${totalPayoutsMadePeriod.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center pt-4 border-t border-zinc-800 mt-2">
-                               <span className="text-lg font-bold text-white">Saldo de Caixa LÃ­quido</span>
+                               <span className="text-lg font-bold text-white">Saldo de Caixa Líquido</span>
                                <span className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-emerald-400' : 'text-red-500'}`}>
                                   ${netCashFlow.toFixed(2)}
                                </span>
@@ -476,11 +476,11 @@ export const Finance = () => {
                       <>
                          <div className="flex items-center gap-2 mb-6 border-b border-indigo-500/20 pb-4">
                             <Wallet className="w-6 h-6 text-indigo-500" />
-                            <h3 className="text-xl font-bold text-white">PatrimÃ´nio Pessoal ({dateFilter})</h3>
+                            <h3 className="text-xl font-bold text-white">Patrimônio Pessoal ({dateFilter})</h3>
                          </div>
                          <div className="space-y-3">
                             <div className="flex justify-between items-center text-sm">
-                               <span className="text-zinc-400">DisponÃ­vel da Loja (Caixa LÃ­quido)</span>
+                               <span className="text-zinc-400">Disponível da Loja (Caixa Líquido)</span>
                                <span className="text-emerald-400 font-bold">${netCashFlow.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
@@ -501,11 +501,11 @@ export const Finance = () => {
             ) : (
               <div className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/70 p-4 text-[11px] text-zinc-300">
                 <p className="font-semibold text-amber-400 mb-1">
-                  RelatÃ³rios avanÃ§ados indisponÃ­veis no seu plano atual.
+                  Relatórios avançados indisponíveis no seu plano atual.
                 </p>
                 <p>
-                  Para ver lucro real, ponto de equilÃ­brio e detalhes financeiros completos,
-                  faÃ§a upgrade para <span className="font-semibold">Solo PRO</span> ou superior.
+                  Para ver lucro real, ponto de equilíbrio e detalhes financeiros completos,
+                  faça upgrade para <span className="font-semibold">Solo PRO</span> ou superior.
                 </p>
               </div>
             )}
@@ -536,7 +536,7 @@ export const Finance = () => {
                   <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                     <div className="flex items-center gap-2 mb-2">
                         <Activity className="w-5 h-5 text-orange-500" />
-                        <span className="text-sm font-medium text-zinc-400">Custos VariÃ¡veis</span>
+                        <span className="text-sm font-medium text-zinc-400">Custos Variáveis</span>
                       </div>
                       <p className="text-2xl font-bold text-white">${activeContext === 'BUSINESS' ? variableBizExpenses.toFixed(2) : '0.00'}</p>
                   </div>
@@ -549,7 +549,7 @@ export const Finance = () => {
               <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                  <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-lg text-white flex items-center gap-2">
-                       <PieChart className="w-5 h-5 text-amber-500" /> ComposiÃ§Ã£o do Caixa
+                       <PieChart className="w-5 h-5 text-amber-500" /> Composição do Caixa
                     </h3>
                     
                     {/* CLOSE REGISTER BUTTON (Feature Toggle Check) */}
@@ -580,7 +580,7 @@ export const Finance = () => {
                           <CreditCard className="w-5 h-5 text-blue-500" />
                        </div>
                        <div>
-                          <p className="text-xs text-zinc-500 uppercase font-bold">CrÃ©dito/DÃ©bito</p>
+                          <p className="text-xs text-zinc-500 uppercase font-bold">Crédito/Débito</p>
                           <p className="text-lg font-bold text-white">${((salesByMethod[PaymentMethod.CREDIT_CARD] || 0) + (salesByMethod[PaymentMethod.DEBIT_CARD] || 0)).toFixed(2)}</p>
                        </div>
                     </div>
@@ -626,7 +626,7 @@ export const Finance = () => {
             
             {/* Expense List Header */}
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg text-white">HistÃ³rico de Despesas ({dateFilter})</h3>
+              <h3 className="font-bold text-lg text-white">Histórico de Despesas ({dateFilter})</h3>
               <button onClick={openNewExpenseModal} className="text-sm bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-lg text-white font-medium transition-colors flex items-center gap-2">
                  <TrendingDown className="w-4 h-4 text-red-500" /> Adicionar Personalizada
               </button>
@@ -636,7 +636,7 @@ export const Finance = () => {
                {(activeContext === 'BUSINESS' ? businessExpensesList : personalExpensesList).length === 0 ? (
                   <div className="text-center text-zinc-500 py-10 bg-zinc-900 border border-zinc-800 rounded-xl">
                     <TrendingDown className="w-10 h-10 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">Nenhuma despesa registrada para este perÃ­odo.</p>
+                    <p className="text-sm">Nenhuma despesa registrada para este período.</p>
                   </div>
                ) : (
                   (activeContext === 'BUSINESS' ? businessExpensesList : personalExpensesList).map(exp => (
@@ -708,7 +708,7 @@ export const Finance = () => {
                         {/* Financial Stats Grid */}
                         <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4 border-t md:border-t-0 md:border-l border-zinc-800 pt-4 md:pt-0 md:pl-6">
                            <div>
-                              <p className="text-xs text-zinc-500 mb-1">Ganhos do PerÃ­odo</p>
+                              <p className="text-xs text-zinc-500 mb-1">Ganhos do Período</p>
                               <p className="font-bold text-white">${stat.periodEarnings.toFixed(2)}</p>
                               {stat.periodTips > 0 && <span className="text-[10px] text-amber-500">+ ${stat.periodTips} gorjetas</span>}
                            </div>
@@ -717,7 +717,7 @@ export const Finance = () => {
                               <p className="font-bold text-red-400">-${stat.totalPaidOut.toFixed(2)}</p>
                            </div>
                            <div className="md:col-span-2">
-                              <p className="text-xs text-zinc-400 mb-1 font-bold uppercase tracking-wider">Saldo a Pagar (LÃ­quido)</p>
+                              <p className="text-xs text-zinc-400 mb-1 font-bold uppercase tracking-wider">Saldo a Pagar (Líquido)</p>
                               <p className={`font-bold text-2xl ${stat.netPayable <= 0 ? 'text-zinc-500' : 'text-emerald-400'}`}>
                                  ${stat.netPayable.toFixed(2)}
                               </p>
@@ -784,7 +784,7 @@ export const Finance = () => {
 
             <form onSubmit={handleCreateExpense} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-zinc-400 mb-1.5">DescriÃ§Ã£o</label>
+                <label className="block text-xs font-medium text-zinc-400 mb-1.5">Descrição</label>
                 <input 
                   required 
                   type="text" 

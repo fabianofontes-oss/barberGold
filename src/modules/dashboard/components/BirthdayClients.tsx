@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -8,7 +8,7 @@ import { format, isToday, parseISO } from 'date-fns';
 export const BirthdayClients: React.FC = () => {
   const { clients } = useBarber();
 
-  // Filtrar clientes que fazem aniversÃ¡rio hoje
+  // Filtrar clientes que fazem aniversário hoje
   const todayBirthdays = clients.filter(client => {
     if (!client.birthDate) return false;
     try {
@@ -26,7 +26,7 @@ export const BirthdayClients: React.FC = () => {
   const sendBirthdayMessage = (client: typeof clients[0]) => {
     if (client.phone) {
       const phone = client.phone.replace(/\D/g, '');
-      const message = `ðŸŽ‚ Feliz AniversÃ¡rio, ${client.name}! ðŸŽ‰\n\nQue seu dia seja incrÃ­vel! Passe na barbearia para um corte especial! ðŸ’ˆ`;
+      const message = `🎂 Feliz Aniversário, ${client.name}! 🎉\n\nQue seu dia seja incrível! Passe na barbearia para um corte especial! 💈`;
       window.open(`https://wa.me/55${phone}?text=${encodeURIComponent(message)}`, '_blank');
     }
   };
@@ -35,7 +35,7 @@ export const BirthdayClients: React.FC = () => {
     <div className="bg-gradient-to-r from-pink-900/30 to-purple-900/30 border border-pink-500/30 rounded-2xl p-6">
       <div className="flex items-center gap-2 mb-4">
         <Cake className="w-5 h-5 text-pink-400" />
-        <h3 className="text-lg font-bold text-white">Aniversariantes Hoje ðŸŽ‚</h3>
+        <h3 className="text-lg font-bold text-white">Aniversariantes Hoje 🎂</h3>
       </div>
 
       <div className="space-y-3">
@@ -70,7 +70,7 @@ export const BirthdayClients: React.FC = () => {
 
       <div className="flex items-center justify-center gap-2 mt-4 text-xs text-pink-300/50">
         <Gift className="w-3 h-3" />
-        <span>OfereÃ§a um desconto especial!</span>
+        <span>Ofereça um desconto especial!</span>
       </div>
     </div>
   );

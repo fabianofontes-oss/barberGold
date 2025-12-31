@@ -1,4 +1,4 @@
-﻿// Re-export do novo env.ts centralizado
+// Re-export do novo env.ts centralizado
 // Mantido para retrocompatibilidade
 export { 
   getAppMode, 

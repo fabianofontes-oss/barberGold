@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -25,7 +25,7 @@ export function HeroSection() {
                     <div className="flex flex-col gap-6 max-w-2xl">
                         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 w-fit">
                             <span className="flex h-2 w-2 rounded-full bg-green-500"></span>
-                            <span className="text-xs font-medium text-gray-300">Nova versÃ£o 3.0 disponÃ­vel</span>
+                            <span className="text-xs font-medium text-gray-300">Nova versão 3.0 disponível</span>
                         </div>
                         
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
@@ -33,7 +33,7 @@ export function HeroSection() {
                         </h1>
                         
                         <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
-                            Agendamento automÃ¡tico, controle financeiro, clube de assinaturas e precificaÃ§Ã£o inteligente. Transforme sua barbearia em uma mÃ¡quina de lucro.
+                            Agendamento automático, controle financeiro, clube de assinaturas e precificação inteligente. Transforme sua barbearia em uma máquina de lucro.
                         </p>
                         
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -41,7 +41,7 @@ export function HeroSection() {
                                 href="/register"
                                 className="bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] text-base font-bold py-4 px-8 rounded-md transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] flex items-center justify-center gap-2"
                             >
-                                ComeÃ§ar Teste de 14 Dias
+                                Começar Teste de 14 Dias
                                 <ArrowRight className="w-5 h-5" />
                             </Link>
                             <a
@@ -49,7 +49,7 @@ export function HeroSection() {
                                 className="bg-white/5 hover:bg-white/10 border border-white/10 text-white text-base font-bold py-4 px-8 rounded-md transition-all flex items-center justify-center gap-2"
                             >
                                 <PlayCircle className="w-5 h-5" />
-                                Ver DemonstraÃ§Ã£o
+                                Ver Demonstração
                             </a>
                         </div>
                         
@@ -101,7 +101,7 @@ export function HeroSection() {
                                 </div>
                                 <div className="bg-white/5 p-4 rounded-lg border border-white/5">
                                     <p className="text-xs text-gray-400 mb-1">Agendamentos</p>
-                                    <p className="text-xl font-bold text-[#f79f08] font-mono">32 <span className="text-xs text-green-500 ml-1">â–² 12%</span></p>
+                                    <p className="text-xl font-bold text-[#f79f08] font-mono">32 <span className="text-xs text-green-500 ml-1">▲ 12%</span></p>
                                 </div>
                             </div>
                         </div>

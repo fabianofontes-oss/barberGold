@@ -1,4 +1,4 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
 import { Database } from '@/lib/database.types';
 
 // Types do Banco
@@ -6,7 +6,7 @@ export type AppointmentRow = Database['public']['Tables']['appointments']['Row']
 export type AppointmentInsert = Database['public']['Tables']['appointments']['Insert'];
 export type AppointmentUpdate = Database['public']['Tables']['appointments']['Update'];
 
-// Zod Schema para validaÃ§Ã£o
+// Zod Schema para validação
 export const appointmentSchema = z.object({
   client_id: z.string().uuid(),
   staff_id: z.string().uuid(),

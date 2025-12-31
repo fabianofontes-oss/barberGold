@@ -1,4 +1,4 @@
-﻿import { getAppMode } from '@/lib/appMode';
+import { getAppMode } from '@/lib/appMode';
 
 import { createTenantPlanLocalStorageRepository } from './tenantPlan/localStorage';
 import { createTenantPlanSupabaseRepository } from './tenantPlan/supabase';

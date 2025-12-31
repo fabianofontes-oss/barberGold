@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { ClubDashboard } from '@/modules/barber-club/components/ClubDashboard';
 

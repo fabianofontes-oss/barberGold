@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -15,7 +15,7 @@ export type UserProfile = {
 };
 
 /**
- * Hook client-side para buscar profile do usuÃ¡rio logado
+ * Hook client-side para buscar profile do usuário logado
  * Substitui uso de mocks no BarberContext
  */
 export function useCurrentProfile() {
@@ -28,7 +28,7 @@ export function useCurrentProfile() {
       try {
         const supabase = createClient();
 
-        // 1. Verificar sessÃ£o
+        // 1. Verificar sessão
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session) {
@@ -37,7 +37,7 @@ export function useCurrentProfile() {
           return;
         }
 
-        // 2. Buscar profile do usuÃ¡rio
+        // 2. Buscar profile do usuário
         const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select('*')

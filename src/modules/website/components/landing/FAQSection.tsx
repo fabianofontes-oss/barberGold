@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { ChevronDown } from 'lucide-react';
 
@@ -6,15 +6,15 @@ export function FAQSection() {
     const faqs = [
         {
             question: 'Preciso instalar algum programa no computador?',
-            answer: 'NÃ£o. O BarberGOLD Ã© 100% online e roda direto no navegador, seja no PC, tablet ou celular. Seus dados ficam salvos na nuvem com seguranÃ§a bancÃ¡ria.'
+            answer: 'Não. O BarberGOLD é 100% online e roda direto no navegador, seja no PC, tablet ou celular. Seus dados ficam salvos na nuvem com segurança bancária.'
         },
         {
             question: 'Consigo migrar os dados do meu sistema antigo?',
-            answer: 'Sim! Temos uma equipe dedicada a importaÃ§Ã£o de dados. Trazemos sua lista de clientes, produtos e histÃ³rico.'
+            answer: 'Sim! Temos uma equipe dedicada a importação de dados. Trazemos sua lista de clientes, produtos e histórico.'
         },
         {
-            question: 'O perÃ­odo de teste Ã© realmente gratuito?',
-            answer: 'Sim, 14 dias totalmente grÃ¡tis, sem necessidade de cartÃ£o de crÃ©dito. VocÃª testa todas as funcionalidades premium.'
+            question: 'O período de teste é realmente gratuito?',
+            answer: 'Sim, 14 dias totalmente grátis, sem necessidade de cartão de crédito. Você testa todas as funcionalidades premium.'
         }
     ];
 

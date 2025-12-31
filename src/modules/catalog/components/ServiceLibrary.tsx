@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -45,7 +45,7 @@ export function ServiceLibrary() {
             .order('category', { ascending: true })
             .order('name', { ascending: true });
 
-        // Buscar meus serviÃ§os
+        // Buscar meus serviços
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) return;
 
@@ -80,7 +80,7 @@ export function ServiceLibrary() {
 
         if (!profile) return;
 
-        // Verificar se jÃ¡ existe
+        // Verificar se já existe
         const existing = myServices.find(s => s.template_id === template.id);
 
         if (existing) {
@@ -149,8 +149,8 @@ export function ServiceLibrary() {
     return (
         <div className="max-w-6xl mx-auto p-6">
             <div className="mb-6">
-                <h2 className="text-2xl font-bold text-white mb-2">ðŸ“š Biblioteca de ServiÃ§os</h2>
-                <p className="text-zinc-400">Marque os serviÃ§os que sua barbearia oferece. VocÃª pode editar preÃ§os e duraÃ§Ã£o depois.</p>
+                <h2 className="text-2xl font-bold text-white mb-2">📚 Biblioteca de Serviços</h2>
+                <p className="text-zinc-400">Marque os serviços que sua barbearia oferece. Você pode editar preços e duração depois.</p>
             </div>
 
             {categories.map(category => {
@@ -201,7 +201,7 @@ export function ServiceLibrary() {
                                                     <h4 className="font-semibold text-white">{template.name}</h4>
                                                     <p className="text-sm text-zinc-400 mb-2">{template.description}</p>
 
-                                                    {/* PreÃ§o e DuraÃ§Ã£o (EditÃ¡vel se ativo) */}
+                                                    {/* Preço e Duração (Editável se ativo) */}
                                                     {isActive && myService && (
                                                         <div className="flex items-center gap-4 text-sm">
                                                             {isEditing ? (
@@ -211,7 +211,7 @@ export function ServiceLibrary() {
                                                                         value={editPrice}
                                                                         onChange={(e) => setEditPrice(e.target.value)}
                                                                         className="w-20 px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-white"
-                                                                        placeholder="PreÃ§o"
+                                                                        placeholder="Preço"
                                                                     />
                                                                     <input
                                                                         type="number"
@@ -246,7 +246,7 @@ export function ServiceLibrary() {
                                                         </div>
                                                     )}
 
-                                                    {/* SugestÃ£o (se nÃ£o ativo) */}
+                                                    {/* Sugestão (se não ativo) */}
                                                     {!isActive && (
                                                         <div className="flex items-center gap-4 text-sm text-zinc-500">
                                                             <span>R$ {template.suggested_price.toFixed(2)}</span>
@@ -256,12 +256,12 @@ export function ServiceLibrary() {
                                                 </div>
                                             </div>
 
-                                            {/* BotÃ£o Editar */}
+                                            {/* Botão Editar */}
                                             {isActive && myService && !isEditing && (
                                                 <button
                                                     onClick={() => startEdit(myService)}
                                                     className="p-2 hover:bg-zinc-800 rounded transition-colors"
-                                                    title="Editar preÃ§o e duraÃ§Ã£o"
+                                                    title="Editar preço e duração"
                                                 >
                                                     <Edit2 className="w-4 h-4 text-zinc-400" />
                                                 </button>
@@ -278,7 +278,7 @@ export function ServiceLibrary() {
             {/* Resumo */}
             <div className="mt-8 p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
                 <div className="flex items-center justify-between">
-                    <span className="text-zinc-400">ServiÃ§os ativos:</span>
+                    <span className="text-zinc-400">Serviços ativos:</span>
                     <span className="text-2xl font-bold text-amber-500">{myServices.length}</span>
                 </div>
             </div>

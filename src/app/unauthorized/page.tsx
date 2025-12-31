@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import { ShieldAlert, ArrowLeft, Home } from 'lucide-react';
@@ -18,8 +18,8 @@ export default function UnauthorizedPage() {
         
         {/* Message */}
         <p className="text-zinc-400 mb-8 leading-relaxed">
-          VocÃª nÃ£o tem permissÃ£o para acessar esta Ã¡rea. 
-          Esta pÃ¡gina Ã© restrita a administradores do sistema.
+          Você não tem permissão para acessar esta área. 
+          Esta página é restrita a administradores do sistema.
         </p>
 
         {/* Actions */}
@@ -43,7 +43,7 @@ export default function UnauthorizedPage() {
 
         {/* Footer */}
         <p className="text-xs text-zinc-600 mt-8">
-          Se vocÃª acredita que deveria ter acesso, entre em contato com o administrador do sistema.
+          Se você acredita que deveria ter acesso, entre em contato com o administrador do sistema.
         </p>
       </div>
     </div>

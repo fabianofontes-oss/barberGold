@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { Crown, Lock, ShoppingCart, Bell, Zap } from 'lucide-react';
@@ -29,13 +29,13 @@ export const AutoReorderFeature: React.FC = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
-              Pedido AutomÃ¡tico
+              Pedido Automático
               <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold uppercase">
                 Premium
               </span>
             </h3>
             <p className="text-sm text-zinc-400 mb-4">
-              Gere pedidos de reposiÃ§Ã£o automaticamente quando o estoque estiver baixo. 
+              Gere pedidos de reposição automaticamente quando o estoque estiver baixo. 
               Envie direto para o WhatsApp do fornecedor.
             </p>
             <div className="flex flex-wrap gap-3 text-xs text-zinc-500">
@@ -46,7 +46,7 @@ export const AutoReorderFeature: React.FC = () => {
                 <ShoppingCart className="w-3 h-3" /> Pedido em 1 clique
               </span>
               <span className="flex items-center gap-1">
-                <Zap className="w-3 h-3" /> WhatsApp automÃ¡tico
+                <Zap className="w-3 h-3" /> WhatsApp automático
               </span>
             </div>
           </div>
@@ -58,7 +58,7 @@ export const AutoReorderFeature: React.FC = () => {
     );
   }
 
-  // Se nÃ£o hÃ¡ itens com estoque baixo
+  // Se não há itens com estoque baixo
   if (totalLowStock === 0) {
     return null;
   }

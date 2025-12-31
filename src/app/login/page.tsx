@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -80,7 +80,7 @@ export default function LoginPage() {
             <h2 className="text-4xl font-bold text-white tracking-tight">BarberGOLD</h2>
           </Link>
           <p className="text-xl text-[#ccb58f] font-medium leading-relaxed">
-            GestÃ£o premium para a barbearia moderna. Organize seus agendamentos, gerencie sua equipe e eleve a experiÃªncia do seu cliente.
+            Gestão premium para a barbearia moderna. Organize seus agendamentos, gerencie sua equipe e eleve a experiência do seu cliente.
           </p>
         </div>
       </div>
@@ -183,7 +183,7 @@ export default function LoginPage() {
           {/* Footer */}
           <div className="flex justify-center mt-4">
             <p className="text-[#ccb58f] text-base font-normal">
-              NÃ£o tem uma conta?{' '}
+              Não tem uma conta?{' '}
               <Link href="/register" className="text-[#f79f08] font-bold hover:underline ml-1">
                 Cadastre-se
               </Link>

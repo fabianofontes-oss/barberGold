@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -47,8 +47,8 @@ const PAYMENT_ICONS: Record<string, LucideIcon> = {
 
 const PAYMENT_LABELS: Record<string, string> = {
    [PaymentMethod.CASH]: 'Dinheiro',
-   [PaymentMethod.CREDIT_CARD]: 'CrÃ©dito',
-   [PaymentMethod.DEBIT_CARD]: 'DÃ©bito',
+   [PaymentMethod.CREDIT_CARD]: 'Crédito',
+   [PaymentMethod.DEBIT_CARD]: 'Débito',
    [PaymentMethod.PIX]: 'Pix',
    [PaymentMethod.GOOGLE_PAY]: 'Google Pay',
    [PaymentMethod.APPLE_PAY]: 'Apple Pay',
@@ -92,7 +92,7 @@ export const OnlineBookingWizard = () => {
 
   // --- NEW: MULTI-ENTITY STATE ---
   const [bookingEntities, setBookingEntities] = useState<BookingEntity[]>([
-     { id: 'MAIN', name: 'VocÃª', isMain: true, serviceIds: [], assignedStaffId: null }
+     { id: 'MAIN', name: 'Você', isMain: true, serviceIds: [], assignedStaffId: null }
   ]);
   const [activeEntityId, setActiveEntityId] = useState<string>('MAIN');
   const [isAddingGuestMode, setIsAddingGuestMode] = useState(false); // Toggle the guest addition UI
@@ -119,9 +119,9 @@ export const OnlineBookingWizard = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-50 px-4">
         <div className="max-w-md text-center">
-          <h1 className="text-xl font-semibold mb-2">Agendamento online indisponÃ­vel</h1>
+          <h1 className="text-xl font-semibold mb-2">Agendamento online indisponível</h1>
           <p className="text-sm text-zinc-400">
-            Esta barbearia ainda nÃ£o ativou o mÃ³dulo de agendamento online do BarberFlow.
+            Esta barbearia ainda não ativou o módulo de agendamento online do BarberFlow.
           </p>
         </div>
       </div>
@@ -520,8 +520,8 @@ export const OnlineBookingWizard = () => {
 
   const RELATIONSHIP_SHORTCUTS = [
      { label: 'Filho(a)', icon: Baby },
-     { label: 'CÃ´njuge', icon: Heart },
-     { label: 'Pai/MÃ£e', icon: UserCheck },
+     { label: 'Cônjuge', icon: Heart },
+     { label: 'Pai/Mãe', icon: UserCheck },
      { label: 'Sobrinho(a)', icon: Smile },
      { label: 'Amigo(a)', icon: Users },
   ];
@@ -529,7 +529,7 @@ export const OnlineBookingWizard = () => {
   // --- RENDER COMPONENTS ---
 
   const BottomBar = ({ 
-     label = "AvanÃ§ar", 
+     label = "Avançar", 
      onClick, 
      disabled = false, 
      showTotal = true, 
@@ -590,7 +590,7 @@ export const OnlineBookingWizard = () => {
               </div>
               <h1 className="text-3xl font-bold text-white mb-2">{shopProfile.name}</h1>
               <p className="text-zinc-400 mb-8 max-w-xs mx-auto text-sm leading-relaxed">
-                 O jeito mais fÃ¡cil de agendar seu corte. <br/> Acesse seu perfil e histÃ³rico.
+                 O jeito mais fácil de agendar seu corte. <br/> Acesse seu perfil e histórico.
               </p>
               <button onClick={() => setStep(1)} className="w-full max-w-sm bg-white hover:bg-zinc-200 text-zinc-900 font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group">
                  Entrar / Agendar <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -614,7 +614,7 @@ export const OnlineBookingWizard = () => {
               <ChevronLeft className="w-5 h-5" />
            </button>
            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-white mb-2">Qual seu nÃºmero?</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">Qual seu número?</h2>
               <p className="text-zinc-400 text-sm mb-8">Digite seu celular para acessar seu perfil.</p>
               <div className="space-y-4">
                  <label className="text-xs font-bold text-amber-500 uppercase tracking-wider">Celular / WhatsApp</label>
@@ -644,13 +644,13 @@ export const OnlineBookingWizard = () => {
               <div className="bg-zinc-900 border border-amber-500/30 rounded-xl p-4 mb-8 relative overflow-hidden">
                  <div className="relative z-10">
                     <h3 className="text-amber-500 font-bold flex items-center gap-2 mb-1">
-                       <Sparkles className="w-4 h-4" /> Quase lÃ¡!
+                       <Sparkles className="w-4 h-4" /> Quase lá!
                     </h3>
                     <p className="text-zinc-300 text-sm mb-3">Preencha para ganhar <b>2 selos de fidelidade</b>.</p>
                  </div>
               </div>
               <div className="space-y-4">
-                 <div><label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo</label><input type="text" placeholder="Ex: JoÃ£o Silva" value={clientForm.name} onChange={e => setClientForm({...clientForm, name: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-white focus:border-amber-500 outline-none" /></div>
+                 <div><label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo</label><input type="text" placeholder="Ex: João Silva" value={clientForm.name} onChange={e => setClientForm({...clientForm, name: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-white focus:border-amber-500 outline-none" /></div>
                  <div><label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label><input type="date" value={clientForm.birthDate} onChange={e => setClientForm({...clientForm, birthDate: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-white focus:border-amber-500 outline-none" /></div>
                  <div><label className="block text-xs font-bold text-zinc-500 uppercase mb-2">E-mail (Opcional)</label><input type="email" placeholder="joao@email.com" value={clientForm.email} onChange={e => setClientForm({...clientForm, email: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-white focus:border-amber-500 outline-none" /></div>
               </div>
@@ -688,7 +688,7 @@ export const OnlineBookingWizard = () => {
                        </div>
                     ))}
                  </div>
-                 {points >= 10 && <div className="mt-4 bg-white text-zinc-900 text-center text-xs font-bold py-2 rounded-lg animate-pulse">ðŸŽ‰ Corte GrÃ¡tis DisponÃ­vel!</div>}
+                 {points >= 10 && <div className="mt-4 bg-white text-zinc-900 text-center text-xs font-bold py-2 rounded-lg animate-pulse">🎉 Corte Grátis Disponível!</div>}
               </div>
            </div>
            <div className="p-6 space-y-6">
@@ -697,7 +697,7 @@ export const OnlineBookingWizard = () => {
               {activeClientProfile && (
                  <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
                     <div className="flex justify-between items-center mb-3">
-                       <h3 className="text-zinc-300 font-bold flex items-center gap-2 text-sm"><Users className="w-4 h-4 text-amber-500" /> FamÃ­lia & Amigos</h3>
+                       <h3 className="text-zinc-300 font-bold flex items-center gap-2 text-sm"><Users className="w-4 h-4 text-amber-500" /> Família & Amigos</h3>
                        <button onClick={() => setIsAddingGuestMode(true)} className="text-xs bg-zinc-800 hover:bg-zinc-700 text-white px-3 py-1.5 rounded-lg border border-zinc-700 font-bold flex items-center gap-1"><Plus className="w-3 h-3" /> Adicionar</button>
                     </div>
                     {(!activeClientProfile.dependents || activeClientProfile.dependents.length === 0) ? (
@@ -714,7 +714,7 @@ export const OnlineBookingWizard = () => {
                     
                     {isAddingGuestMode && (
                         <div className="mt-3 bg-zinc-950 p-3 rounded-lg border border-zinc-800 animate-fade-in">
-                           <p className="text-xs font-bold text-zinc-500 mb-2">Quem vocÃª quer cadastrar?</p>
+                           <p className="text-xs font-bold text-zinc-500 mb-2">Quem você quer cadastrar?</p>
                            <div className="flex gap-2 flex-wrap mb-2">
                               {RELATIONSHIP_SHORTCUTS.map(rel => (
                                  <button 
@@ -745,7 +745,7 @@ export const OnlineBookingWizard = () => {
                  <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
                     <div className="flex items-center gap-4 mb-3">
                        <div className="bg-emerald-500/10 p-3 rounded-lg text-emerald-500"><CalendarCheck className="w-6 h-6" /></div>
-                       <div><p className="text-xs text-zinc-500 font-bold uppercase">PrÃ³ximo Agendamento</p><p className="text-white font-bold">{format(nextAppt.date, "dd 'de' MMM, HH:mm")}</p><p className="text-sm text-zinc-400">{nextAppt.serviceName}</p></div>
+                       <div><p className="text-xs text-zinc-500 font-bold uppercase">Próximo Agendamento</p><p className="text-white font-bold">{format(nextAppt.date, "dd 'de' MMM, HH:mm")}</p><p className="text-sm text-zinc-400">{nextAppt.serviceName}</p></div>
                     </div>
                     {/* ACTIONS */}
                     <div className="flex gap-2 pt-2 border-t border-zinc-800">
@@ -757,10 +757,10 @@ export const OnlineBookingWizard = () => {
 
               <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
                  <div className="flex items-center gap-2 mb-2"><Sparkles className="w-4 h-4 text-amber-500" /><h3 className="text-white font-bold">Indique e Ganhe</h3></div>
-                 <p className="text-zinc-400 text-xs mb-4">Compartilhe seu cÃ³digo. VocÃª e seu amigo ganham 1 selo apÃ³s o corte dele.</p>
+                 <p className="text-zinc-400 text-xs mb-4">Compartilhe seu código. Você e seu amigo ganham 1 selo após o corte dele.</p>
                  <div className="flex gap-2">
                     <div className="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-center font-mono font-bold text-white tracking-widest text-lg">{activeClientProfile.referralCode || '----'}</div>
-                    <button onClick={() => { navigator.clipboard.writeText(activeClientProfile.referralCode || ''); alert('CÃ³digo copiado!'); }} className="bg-zinc-800 hover:bg-zinc-700 text-white p-3 rounded-lg transition-colors"><Copy className="w-5 h-5" /></button>
+                    <button onClick={() => { navigator.clipboard.writeText(activeClientProfile.referralCode || ''); alert('Código copiado!'); }} className="bg-zinc-800 hover:bg-zinc-700 text-white p-3 rounded-lg transition-colors"><Copy className="w-5 h-5" /></button>
                  </div>
               </div>
 
@@ -773,21 +773,21 @@ export const OnlineBookingWizard = () => {
                        price: p.monthlyPriceBRL,
                        billingCycle: 'MONTHLY' as const,
                        credits: p.monthlyCredits,
-                       benefits: p.description ? [p.description] : ['Desconto em serviÃ§os', 'CrÃ©ditos mensais']
+                       benefits: p.description ? [p.description] : ['Desconto em serviços', 'Créditos mensais']
                     }))}
                     shopName={shopProfile.name}
                     compact={true}
                     onSelectPlan={() => {
                        // Futuramente: abrir modal de assinatura
-                       alert('Em breve vocÃª poderÃ¡ assinar direto pelo app!');
+                       alert('Em breve você poderá assinar direto pelo app!');
                     }}
                  />
               )}
 
               <div>
-                 <h3 className="text-zinc-500 text-xs font-bold uppercase mb-3 flex items-center gap-2"><History className="w-4 h-4" /> HistÃ³rico Recente</h3>
+                 <h3 className="text-zinc-500 text-xs font-bold uppercase mb-3 flex items-center gap-2"><History className="w-4 h-4" /> Histórico Recente</h3>
                  <div className="space-y-3">
-                    {history.length === 0 ? <p className="text-zinc-600 text-sm italic text-center py-4">Nenhum histÃ³rico ainda.</p> : history.map(appt => (
+                    {history.length === 0 ? <p className="text-zinc-600 text-sm italic text-center py-4">Nenhum histórico ainda.</p> : history.map(appt => (
                        <div key={appt.id} className="flex justify-between items-center bg-zinc-900/50 p-3 rounded-lg border border-zinc-800/50">
                           <div><p className="text-white text-sm font-medium">{appt.serviceName}</p><p className="text-zinc-500 text-xs">{format(appt.date, "dd/MM/yyyy")}</p></div><span className="text-zinc-400 text-sm">${appt.price}</span>
                        </div>
@@ -825,7 +825,7 @@ export const OnlineBookingWizard = () => {
                  <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl mb-2 flex items-center gap-3 animate-fade-in">
                     <Sparkles className="w-5 h-5 text-amber-500" />
                     <p className="text-xs text-amber-200">
-                       JÃ¡ que vai passar aqui para retirar, que tal dar um tapa no visual?
+                       Já que vai passar aqui para retirar, que tal dar um tapa no visual?
                     </p>
                  </div>
               )}
@@ -872,7 +872,7 @@ export const OnlineBookingWizard = () => {
               {isAddingGuestMode && !isUpsell && (
                  <div className="mt-3 bg-zinc-900 p-4 rounded-xl border border-zinc-800 animate-fade-in shadow-xl">
                     <p className="text-xs text-zinc-500 font-bold mb-3 uppercase flex items-center gap-2">
-                       <UserPlus className="w-3 h-3 text-amber-500" /> Quem serÃ¡ atendido?
+                       <UserPlus className="w-3 h-3 text-amber-500" /> Quem será atendido?
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
                        {RELATIONSHIP_SHORTCUTS.map(rel => {
@@ -912,7 +912,7 @@ export const OnlineBookingWizard = () => {
 
            <div className="p-4 space-y-4 animate-fade-in">
               <div className="flex justify-between items-center mb-2">
-                 <h3 className="text-white font-bold text-lg">ServiÃ§os para {activeEntity.name}</h3>
+                 <h3 className="text-white font-bold text-lg">Serviços para {activeEntity.name}</h3>
               </div>
               <div className="space-y-3">
                  {services.map(service => {
@@ -925,7 +925,7 @@ export const OnlineBookingWizard = () => {
                        >
                           <div className="text-left">
                              <h3 className={`font-bold ${isSelected ? 'text-amber-500' : 'text-white'}`}>{service.name}</h3>
-                             <p className="text-xs text-zinc-500 mt-1">{service.durationMinutes} min â€¢ {service.category}</p>
+                             <p className="text-xs text-zinc-500 mt-1">{service.durationMinutes} min • {service.category}</p>
                           </div>
                           <div className="flex items-center gap-3">
                              <span className="font-bold text-zinc-300">${service.price}</span>
@@ -940,10 +940,10 @@ export const OnlineBookingWizard = () => {
            </div>
 
            <BottomBar 
-              label={isUpsell && !hasServices ? "Apenas Retirar Produtos" : "AvanÃ§ar"}
+              label={isUpsell && !hasServices ? "Apenas Retirar Produtos" : "Avançar"}
               onClick={handleNextStep}
               disabled={!isUpsell && !hasServices} // Disable only if NOT in upsell mode (normal service flow requires service)
-              secondaryLabel={isUpsell && hasServices ? "NÃ£o, apenas produtos" : ""}
+              secondaryLabel={isUpsell && hasServices ? "Não, apenas produtos" : ""}
               onSecondaryClick={() => setStep(7)} // Skip to Time
            />
         </div>
@@ -1003,7 +1003,7 @@ export const OnlineBookingWizard = () => {
                     </div>
                  );
               })}
-              {products.length === 0 && <div className="text-center py-10 text-zinc-500">Nenhum produto disponÃ­vel.</div>}
+              {products.length === 0 && <div className="text-center py-10 text-zinc-500">Nenhum produto disponível.</div>}
            </div>
 
            <BottomBar 
@@ -1091,7 +1091,7 @@ export const OnlineBookingWizard = () => {
                        {bookingEntities.some(e => e.id !== entity.id && e.assignedStaffId === entity.assignedStaffId && entity.assignedStaffId) && (
                           <div className="mt-3 text-[10px] text-red-200 bg-red-500/20 border border-red-500/30 px-3 py-2 rounded-lg flex items-center gap-2">
                              <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" /> 
-                             <span><b>AtenÃ§Ã£o:</b> {entity.name} terÃ¡ que esperar. Escolha outro profissional para atendimento simultÃ¢neo.</span>
+                             <span><b>Atenção:</b> {entity.name} terá que esperar. Escolha outro profissional para atendimento simultâneo.</span>
                           </div>
                        )}
                     </div>
@@ -1103,19 +1103,19 @@ export const OnlineBookingWizard = () => {
               <div className="max-w-md mx-auto">
                  {bookingEntities.length > 1 && (
                     <div className="flex justify-between items-center mb-3 text-xs">
-                       <span className="text-zinc-400">Tempo Total da ExperiÃªncia:</span>
+                       <span className="text-zinc-400">Tempo Total da Experiência:</span>
                        <div className="text-right">
                           <span className={`font-bold text-lg ${timingInfo.isFaster ? 'text-emerald-400' : 'text-white'}`}>
                              {timingInfo.parallelOptimized} min
                           </span>
                           {timingInfo.isFaster && (
                              <span className="block text-[10px] text-emerald-500">
-                                âš¡ {timingInfo.sequential - timingInfo.parallelOptimized} min mais rÃ¡pido (SimultÃ¢neo)
+                                ⚡ {timingInfo.sequential - timingInfo.parallelOptimized} min mais rápido (Simultâneo)
                              </span>
                           )}
                           {!timingInfo.isFaster && (
                              <span className="block text-[10px] text-zinc-500">
-                                Sequencial (Um apÃ³s o outro)
+                                Sequencial (Um após o outro)
                              </span>
                           )}
                        </div>
@@ -1127,7 +1127,7 @@ export const OnlineBookingWizard = () => {
                     disabled={!allAssigned}
                     className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-zinc-900 font-bold py-3 px-6 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
                  >
-                    Ver HorÃ¡rios <ArrowRight className="w-4 h-4" />
+                    Ver Horários <ArrowRight className="w-4 h-4" />
                  </button>
               </div>
            </div>
@@ -1159,12 +1159,12 @@ export const OnlineBookingWizard = () => {
            <div className="flex-1 overflow-y-auto mt-2 pb-24">
               <h4 className="text-white font-bold mb-3 flex items-center gap-2">
                  <Clock className="w-4 h-4 text-amber-500" /> 
-                 {hasServices ? 'HorÃ¡rios CompatÃ­veis' : 'HorÃ¡rios de Retirada'}
+                 {hasServices ? 'Horários Compatíveis' : 'Horários de Retirada'}
               </h4>
               {availableSlots.length === 0 ? (
                  <div className="text-center py-10 bg-zinc-900 rounded-xl border border-zinc-800 border-dashed">
                     <p className="text-zinc-500 text-sm">
-                       {hasServices ? 'Sem horÃ¡rios livres para todos nesta data.' : 'Loja fechada nesta data.'}
+                       {hasServices ? 'Sem horários livres para todos nesta data.' : 'Loja fechada nesta data.'}
                     </p>
                     <p className="text-xs text-zinc-600 mt-2">Tente mudar {hasServices ? 'o profissional ou ' : ''}a data.</p>
                  </div>
@@ -1179,7 +1179,7 @@ export const OnlineBookingWizard = () => {
                              className="py-3 px-4 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:border-amber-500 text-white font-medium text-sm transition-all flex justify-between items-center"
                           >
                              <span>{format(slot, 'HH:mm')}</span>
-                             <span className="text-xs text-zinc-500">atÃ© {format(endTime, 'HH:mm')}</span>
+                             <span className="text-xs text-zinc-500">até {format(endTime, 'HH:mm')}</span>
                           </button>
                        );
                     })}
@@ -1196,7 +1196,7 @@ export const OnlineBookingWizard = () => {
 
      return (
         <div className="min-h-screen bg-zinc-950 p-4 pb-32">
-           <Header title="RevisÃ£o" onBack={handleBack} step={4} total={4} />
+           <Header title="Revisão" onBack={handleBack} step={4} total={4} />
            
            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mt-4 mb-6">
               <h4 className="text-zinc-500 text-xs font-bold uppercase mb-4">Resumo do Pedido</h4>
@@ -1208,8 +1208,8 @@ export const OnlineBookingWizard = () => {
                  </div>
                  
                  <div className="flex justify-between">
-                    <span className="text-zinc-400">{hasServices ? 'Data e Hora' : 'PrevisÃ£o de Retirada'}</span>
-                    <span className="text-amber-500 font-bold">{format(selectedTimeSlot!, "dd/MM 'Ã s' HH:mm")}</span>
+                    <span className="text-zinc-400">{hasServices ? 'Data e Hora' : 'Previsão de Retirada'}</span>
+                    <span className="text-amber-500 font-bold">{format(selectedTimeSlot!, "dd/MM 'às' HH:mm")}</span>
                  </div>
 
                  <hr className="border-zinc-800" />
@@ -1288,7 +1288,7 @@ export const OnlineBookingWizard = () => {
            <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex items-center gap-3 mb-6">
               <Sparkles className="w-5 h-5 text-emerald-500" />
               <p className="text-emerald-200 text-xs">
-                 Ao confirmar, vocÃª ganharÃ¡ <b>+{stampsEarned} selos</b> no seu cartÃ£o fidelidade!
+                 Ao confirmar, você ganhará <b>+{stampsEarned} selos</b> no seu cartão fidelidade!
               </p>
            </div>
 
@@ -1336,7 +1336,7 @@ export const OnlineBookingWizard = () => {
                     </div>
                     
                     <p className="text-[10px] text-center text-zinc-600 mt-6 flex items-center justify-center gap-1">
-                       <Lock className="w-3 h-3" /> Seus dados sÃ£o criptografados de ponta a ponta.
+                       <Lock className="w-3 h-3" /> Seus dados são criptografados de ponta a ponta.
                     </p>
                  </div>
               </div>
@@ -1352,11 +1352,11 @@ export const OnlineBookingWizard = () => {
            <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 animate-bounce"><CheckCircle2 className="w-10 h-10 text-zinc-900" /></div>
            <h2 className="text-2xl font-bold text-white mb-2">Tudo Certo!</h2>
            <p className="text-zinc-400 mb-8 max-w-xs mx-auto">
-              {hasServices ? `Te esperamos no dia ${format(selectedTimeSlot!, "dd/MM")} Ã s ${format(selectedTimeSlot!, "HH:mm")}.` : 'Seus produtos foram reservados para retirada.'}
+              {hasServices ? `Te esperamos no dia ${format(selectedTimeSlot!, "dd/MM")} às ${format(selectedTimeSlot!, "HH:mm")}.` : 'Seus produtos foram reservados para retirada.'}
            </p>
            {bookingEntities.length > 1 && (
               <p className="text-xs text-zinc-500 mb-4 bg-zinc-900 p-2 rounded">
-                 Agendamento mÃºltiplo confirmado para {bookingEntities.length} pessoas.
+                 Agendamento múltiplo confirmado para {bookingEntities.length} pessoas.
               </p>
            )}
            <button onClick={() => { setStep(3); setSelectedTimeSlot(null); setBookingEntities([]); setProductQuantities({}); }} className="text-amber-500 hover:text-amber-400 font-bold text-sm">Voltar ao Meu Perfil</button>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useSaasV2 } from '@/context/SaasV2Context';
@@ -38,7 +38,7 @@ export const SuperOfficeV2: React.FC = () => {
               BarberFlow HQ
             </h1>
             <p className="text-[11px] text-zinc-400">
-              Office God V2 â€¢ Painel de controle das barbearias.
+              Office God V2 • Painel de controle das barbearias.
             </p>
           </div>
           <div className="text-[11px] text-zinc-400">

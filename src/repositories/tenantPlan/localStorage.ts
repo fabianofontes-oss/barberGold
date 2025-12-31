@@ -1,4 +1,4 @@
-﻿import type { TenantPlanRepository, TenantRecord } from './types';
+import type { TenantPlanRepository, TenantRecord } from './types';
 
 const STORAGE_KEY_TENANTS = 'bf:tenantPlan:tenants';
 const STORAGE_KEY_CURRENT_TENANT_ID = 'bf:tenantPlan:currentTenantId';

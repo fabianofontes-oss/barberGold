@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 
 import React from 'react';
@@ -263,7 +263,7 @@ export const Dashboard = () => {
                 </h3>
                 <div className="space-y-3">
                    {todaysAppointments.filter(a => a.status === AppointmentStatus.COMPLETED).length === 0 ? (
-                      <p className="text-zinc-500 text-sm">Nenhum agendamento concluÃ­do ainda.</p>
+                      <p className="text-zinc-500 text-sm">Nenhum agendamento concluído ainda.</p>
                    ) : (
                       todaysAppointments
                          .filter(a => a.status === AppointmentStatus.COMPLETED)
@@ -272,7 +272,7 @@ export const Dashboard = () => {
                             <div key={appt.id} className="flex justify-between items-center bg-zinc-950 p-3 rounded-xl border border-zinc-800">
                                <div>
                                   <p className="text-sm font-bold text-white">{appt.clientName}</p>
-                                  <p className="text-xs text-zinc-500">Finalizado Ã s {format(appt.date, 'HH:mm')}</p>
+                                  <p className="text-xs text-zinc-500">Finalizado às {format(appt.date, 'HH:mm')}</p>
                                </div>
                                <button 
                                   onClick={() => sendSurvey(appt.id)}
@@ -290,7 +290,7 @@ export const Dashboard = () => {
 
           {/* Up Next Card */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">PrÃ³ximo</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Próximo</h3>
             
             {(isOwner ? nextAppointment : myNextAppointment) ? (
               <div className="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
@@ -327,7 +327,7 @@ export const Dashboard = () => {
 
           {/* Quick Actions */}
           <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-zinc-950">
-            <h3 className="font-bold text-xl mb-2">Venda RÃ¡pida</h3>
+            <h3 className="font-bold text-xl mb-2">Venda Rápida</h3>
             <p className="text-zinc-900/80 text-sm mb-4">Cliente sem agendamento comprando produto?</p>
             <button 
               onClick={() => router.push('/app/pdv')}

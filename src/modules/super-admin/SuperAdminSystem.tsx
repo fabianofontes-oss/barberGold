@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { 
@@ -76,7 +76,7 @@ export const SuperAdminSystem = () => {
                </h2>
                <p className="text-zinc-400 text-sm flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Production Environment â€¢ v2.4.0
+                  Production Environment • v2.4.0
                </p>
             </div>
             <div className="flex gap-4">

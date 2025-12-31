@@ -1,9 +1,9 @@
-﻿import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 import type { AppointmentRow, AppointmentInsert, AppointmentUpdate, AppointmentWithDetails } from './types';
 
 /**
  * Repository: Data Layer para Appointments
- * Apenas chamadas ao Supabase, sem regras de negÃ³cio
+ * Apenas chamadas ao Supabase, sem regras de negócio
  */
 
 export async function getAppointmentsByTenant(tenantId: string): Promise<AppointmentWithDetails[]> {

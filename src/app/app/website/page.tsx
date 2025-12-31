@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { WebsiteEditor } from '@/modules/website/WebsiteEditor';
 

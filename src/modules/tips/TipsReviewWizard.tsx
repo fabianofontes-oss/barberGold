@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -48,7 +48,7 @@ export const TipsReviewWizard = () => {
            <div>
               <AlertCircle className="w-12 h-12 text-zinc-600 mx-auto mb-4" />
               <h2 className="text-xl font-bold text-white">Pesquisa Encerrada</h2>
-              <p className="text-zinc-400 mt-2">Esta funcionalidade estÃ¡ temporariamente desativada.</p>
+              <p className="text-zinc-400 mt-2">Esta funcionalidade está temporariamente desativada.</p>
               <button onClick={() => setView('DASHBOARD')} className="mt-6 text-zinc-500 hover:text-white underline">Voltar para Home</button>
            </div>
         </div>
@@ -60,8 +60,8 @@ export const TipsReviewWizard = () => {
         <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-6 text-center">
            <div>
               <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h2 className="text-xl font-bold text-white">Link InvÃ¡lido</h2>
-              <p className="text-zinc-400 mt-2">NÃ£o encontramos o agendamento para avaliaÃ§Ã£o.</p>
+              <h2 className="text-xl font-bold text-white">Link Inválido</h2>
+              <p className="text-zinc-400 mt-2">Não encontramos o agendamento para avaliação.</p>
               <button onClick={() => setView('DASHBOARD')} className="mt-6 text-amber-500 underline">Voltar</button>
            </div>
         </div>
@@ -124,7 +124,7 @@ export const TipsReviewWizard = () => {
               </div>
               
               <h2 className="text-2xl font-bold text-white mb-2">Como foi seu corte com {staffMember.name.split(' ')[0]}?</h2>
-              <p className="text-zinc-400 text-sm mb-8">Sua opiniÃ£o nos ajuda a melhorar sempre.</p>
+              <p className="text-zinc-400 text-sm mb-8">Sua opinião nos ajuda a melhorar sempre.</p>
 
               <div className="flex gap-2 mb-8">
                  {[1, 2, 3, 4, 5].map((star) => (
@@ -143,7 +143,7 @@ export const TipsReviewWizard = () => {
               {rating > 0 && (
                  <div className="w-full max-w-sm animate-fade-in-up">
                     <textarea 
-                       placeholder="Algum comentÃ¡rio? (Opcional)"
+                       placeholder="Algum comentário? (Opcional)"
                        value={comment}
                        onChange={(e) => setComment(e.target.value)}
                        className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-white focus:border-amber-500 outline-none resize-none h-24 mb-4"
@@ -152,7 +152,7 @@ export const TipsReviewWizard = () => {
                        onClick={handleSubmitReview}
                        className="w-full bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-4 rounded-xl shadow-lg transition-all"
                     >
-                       Enviar AvaliaÃ§Ã£o
+                       Enviar Avaliação
                     </button>
                  </div>
               )}
@@ -170,7 +170,7 @@ export const TipsReviewWizard = () => {
                  <ThumbsUp className="w-10 h-10" />
               </div>
               
-              <h2 className="text-2xl font-bold text-white mb-2">Que Ã³timo que gostou!</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">Que ótimo que gostou!</h2>
               <p className="text-zinc-400 text-sm mb-8 max-w-xs mx-auto">
                  O {staffMember.name.split(' ')[0]} ficaria muito feliz com um reconhecimento extra. Gostaria de deixar uma gorjeta?
               </p>
@@ -183,7 +183,7 @@ export const TipsReviewWizard = () => {
                        className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-emerald-500 rounded-xl p-4 flex flex-col items-center gap-1 transition-all group"
                     >
                        <span className="text-2xl font-bold text-white group-hover:text-emerald-500">${amount}</span>
-                       <span className="text-xs text-zinc-500 font-bold uppercase">CafÃ©/Cerveja</span>
+                       <span className="text-xs text-zinc-500 font-bold uppercase">Café/Cerveja</span>
                     </button>
                  ))}
               </div>
@@ -206,7 +206,7 @@ export const TipsReviewWizard = () => {
                  </div>
                  
                  <button onClick={() => setStep(3)} className="text-zinc-500 text-sm font-medium hover:text-white py-2">
-                    NÃ£o, obrigado. Apenas finalizar.
+                    Não, obrigado. Apenas finalizar.
                  </button>
               </div>
            </div>
@@ -248,7 +248,7 @@ export const TipsReviewWizard = () => {
                  })}
                  
                  {OnlineMethods.length === 0 && (
-                    <p className="text-red-500 text-center text-sm">Nenhum mÃ©todo de pagamento online configurado na loja.</p>
+                    <p className="text-red-500 text-center text-sm">Nenhum método de pagamento online configurado na loja.</p>
                  )}
               </div>
 
@@ -268,8 +268,8 @@ export const TipsReviewWizard = () => {
            
            <h2 className="text-3xl font-bold text-white mb-2">Obrigado!</h2>
            <p className="text-zinc-400 mb-8 max-w-xs mx-auto">
-              {tipAmount > 0 ? `Sua avaliaÃ§Ã£o e gorjeta de $${tipAmount} foram enviadas.` : 'Sua avaliaÃ§Ã£o foi enviada com sucesso.'}
-              <br/>Esperamos vÃª-lo novamente em breve!
+              {tipAmount > 0 ? `Sua avaliação e gorjeta de $${tipAmount} foram enviadas.` : 'Sua avaliação foi enviada com sucesso.'}
+              <br/>Esperamos vê-lo novamente em breve!
            </p>
            
            <button onClick={() => setView('DASHBOARD')} className="bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 px-8 rounded-xl transition-all">

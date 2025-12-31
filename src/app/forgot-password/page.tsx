@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -31,7 +31,7 @@ export default function ForgotPasswordPage() {
 
             setSuccess(true);
         } catch (err) {
-            setError('Ocorreu um erro ao tentar enviar o link de recuperaÃ§Ã£o.');
+            setError('Ocorreu um erro ao tentar enviar o link de recuperação.');
         } finally {
             setLoading(false);
         }
@@ -68,7 +68,7 @@ export default function ForgotPasswordPage() {
                     <div className="flex flex-col gap-3 p-6 pb-2 text-center">
                         <h1 className="text-white tracking-tight text-[32px] font-bold leading-tight">Esqueceu a Senha?</h1>
                         <p className="text-[#ccb58f] text-sm font-normal leading-relaxed px-4">
-                            NÃ£o se preocupe, acontece. Digite o email associado Ã  sua conta BarberGOLD.
+                            Não se preocupe, acontece. Digite o email associado à sua conta BarberGOLD.
                         </p>
                     </div>
                     
@@ -82,7 +82,7 @@ export default function ForgotPasswordPage() {
 
                         {success && (
                             <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-500 text-sm">
-                                Link de recuperaÃ§Ã£o enviado com sucesso! Verifique seu e-mail.
+                                Link de recuperação enviado com sucesso! Verifique seu e-mail.
                             </div>
                         )}
                         
@@ -113,7 +113,7 @@ export default function ForgotPasswordPage() {
                                             <Loader2 className="animate-spin h-5 w-5 mr-2" />
                                             Enviando...
                                         </>
-                                    ) : 'Enviar Link de RecuperaÃ§Ã£o'}
+                                    ) : 'Enviar Link de Recuperação'}
                                 </button>
                             </div>
                         </form>

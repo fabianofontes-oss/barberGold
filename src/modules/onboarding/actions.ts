@@ -1,4 +1,4 @@
-﻿'use server';
+'use server';
 
 import { createClient } from '@/lib/supabase/server';
 import { BusinessType, PackageLevel, OnboardingStats } from '@/types/onboarding';
@@ -16,7 +16,7 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
   const supabase = await createClient();
 
   try {
-    // 1. Buscar templates baseado no tipo de negÃ³cio e nÃ­vel de pacote
+    // 1. Buscar templates baseado no tipo de negócio e nível de pacote
     const maxPackageLevel = packageLevel === 'completo' ? 2 : packageLevel === 'essencial' ? 1 : 3;
     
     const { data: templates, error: templatesError } = await supabase
@@ -36,13 +36,13 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
       return { success: false, error: 'Nenhum template encontrado' };
     }
 
-    // 2. Filtrar por serviÃ§os selecionados se for custom
+    // 2. Filtrar por serviços selecionados se for custom
     let servicesToCreate = templates;
     if (packageLevel === 'custom' && selectedServiceIds && selectedServiceIds.length > 0) {
       servicesToCreate = templates.filter(t => selectedServiceIds.includes(t.id));
     }
 
-    // 3. Criar categorias Ãºnicas primeiro
+    // 3. Criar categorias únicas primeiro
     const uniqueCategories = Array.from(
       new Map(servicesToCreate.map(t => [t.category.id, t.category])).values()
     );
@@ -73,7 +73,7 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
       }
     }
 
-    // 4. Criar serviÃ§os
+    // 4. Criar serviços
     const serviceMap: Record<string, string> = {};
 
     for (const template of servicesToCreate) {
@@ -88,14 +88,14 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
           duration: template.duration_min,
           price: template.price_cents / 100, // converter cents para decimal
           tags: template.tags,
-          is_active: packageLevel !== 'custom', // auto-ativar se nÃ£o for custom
+          is_active: packageLevel !== 'custom', // auto-ativar se não for custom
           sort_order: template.sort_order
         })
         .select()
         .single();
 
       if (serviceError) {
-        console.error('Erro ao criar serviÃ§o:', serviceError);
+        console.error('Erro ao criar serviço:', serviceError);
         continue;
       }
 
@@ -115,7 +115,7 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
 
       if (bundleTemplates && bundleTemplates.length > 0) {
         const bundleItems = bundleTemplates
-          .filter(item => serviceMap[item.item_service_id]) // sÃ³ itens que foram criados
+          .filter(item => serviceMap[item.item_service_id]) // só itens que foram criados
           .map(item => ({
             combo_service_id: serviceMap[combo.id],
             item_service_id: serviceMap[item.item_service_id],
@@ -128,7 +128,7 @@ export async function processOnboarding(params: ProcessOnboardingParams): Promis
       }
     }
 
-    // 6. Calcular estatÃ­sticas (sÃ³ type='service')
+    // 6. Calcular estatísticas (só type='service')
     const mainServices = servicesToCreate.filter(s => s.type === 'service');
     
     const stats: OnboardingStats = {

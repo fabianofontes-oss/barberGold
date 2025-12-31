@@ -1,4 +1,4 @@
-﻿import { toast } from 'sonner';
+import { toast } from 'sonner';
 
 /**
  * Wrapper para server actions que adiciona toast notifications automaticamente
@@ -17,7 +17,7 @@ export async function withToast<T>(
 
     try {
         const result = await action();
-        toast.success(options.success || 'OperaÃ§Ã£o realizada com sucesso!', {
+        toast.success(options.success || 'Operação realizada com sucesso!', {
             id: loadingToast
         });
         return result;

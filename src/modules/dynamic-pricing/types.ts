@@ -1,4 +1,4 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
 
 // ============================================
 // DIAS DA SEMANA
@@ -18,16 +18,16 @@ export type DayOfWeek = z.infer<typeof DayOfWeekSchema>;
 
 export const DAY_LABELS: Record<DayOfWeek, string> = {
   MONDAY: 'Segunda',
-  TUESDAY: 'TerÃ§a',
+  TUESDAY: 'Terça',
   WEDNESDAY: 'Quarta',
   THURSDAY: 'Quinta',
   FRIDAY: 'Sexta',
-  SATURDAY: 'SÃ¡bado',
+  SATURDAY: 'Sábado',
   SUNDAY: 'Domingo',
 };
 
 // ============================================
-// REGRAS DE PRECIFICAÃ‡ÃƒO
+// REGRAS DE PRECIFICAÇÃO
 // ============================================
 
 export const PricingRuleTypeSchema = z.enum(['SURGE', 'DEAL']);
@@ -41,18 +41,18 @@ export const PricingRuleSchema = z.object({
   
   type: PricingRuleTypeSchema,
   
-  // Modificador de preÃ§o (positivo = aumento, negativo = desconto)
+  // Modificador de preço (positivo = aumento, negativo = desconto)
   // Ex: 0.20 = +20%, -0.15 = -15%
   percentModifier: z.number().min(-0.99).max(1),
   
-  // Dias da semana aplicÃ¡veis
+  // Dias da semana aplicáveis
   daysOfWeek: z.array(DayOfWeekSchema),
   
-  // HorÃ¡rio de inÃ­cio e fim (formato HH:mm)
+  // Horário de início e fim (formato HH:mm)
   startTime: z.string().regex(/^\d{2}:\d{2}$/),
   endTime: z.string().regex(/^\d{2}:\d{2}$/),
   
-  // ServiÃ§os aplicÃ¡veis (vazio = todos)
+  // Serviços aplicáveis (vazio = todos)
   serviceIds: z.array(z.string()).default([]),
   
   // Status
@@ -68,7 +68,7 @@ export const PricingRuleSchema = z.object({
 export type PricingRule = z.infer<typeof PricingRuleSchema>;
 
 // ============================================
-// SUGESTÃ•ES DE REGRAS (templates para o dono)
+// SUGESTÕES DE REGRAS (templates para o dono)
 // ============================================
 
 export type RuleSuggestion = {
@@ -85,13 +85,13 @@ export type RuleSuggestion = {
 export const RULE_SUGGESTIONS: RuleSuggestion[] = [
   {
     templateId: 'saturday_morning_surge',
-    name: 'SÃ¡bado ManhÃ£ Premium',
+    name: 'Sábado Manhã Premium',
     type: 'SURGE',
     percentModifier: 0.20,
     daysOfWeek: ['SATURDAY'],
     startTime: '09:00',
     endTime: '12:00',
-    description: '+20% no horÃ¡rio mais concorrido',
+    description: '+20% no horário mais concorrido',
   },
   {
     templateId: 'monday_deal',
@@ -111,11 +111,11 @@ export const RULE_SUGGESTIONS: RuleSuggestion[] = [
     daysOfWeek: ['TUESDAY', 'WEDNESDAY', 'THURSDAY'],
     startTime: '14:00',
     endTime: '16:00',
-    description: '-10% para preencher horÃ¡rios ociosos',
+    description: '-10% para preencher horários ociosos',
   },
   {
     templateId: 'friday_evening_surge',
-    name: 'Sexta Ã  Noite',
+    name: 'Sexta à Noite',
     type: 'SURGE',
     percentModifier: 0.15,
     daysOfWeek: ['FRIDAY'],
@@ -126,7 +126,7 @@ export const RULE_SUGGESTIONS: RuleSuggestion[] = [
 ];
 
 // ============================================
-// RESULTADO DO CÃLCULO DE PREÃ‡O
+// RESULTADO DO CÁLCULO DE PREÇO
 // ============================================
 
 export type PriceCalculation = {

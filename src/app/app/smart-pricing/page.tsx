@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { SmartPricing } from '@/modules/smart-pricing/SmartPricing';
 

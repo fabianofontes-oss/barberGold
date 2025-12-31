@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { MyPlan } from '@/modules/plan/MyPlan';
 

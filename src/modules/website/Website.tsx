@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -253,8 +253,8 @@ export const Website = () => {
      return (
         <SectionWrapper id="services" styles={styles}>
            <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-sm">Nossos ServiÃ§os</h2>
-              <p className="opacity-80 max-w-xl mx-auto font-medium">TÃ©cnicas clÃ¡ssicas e modernas para garantir o seu melhor visual.</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-sm">Nossos Serviços</h2>
+              <p className="opacity-80 max-w-xl mx-auto font-medium">Técnicas clássicas e modernas para garantir o seu melhor visual.</p>
            </div>
            <CategoryFilter items={services} current={serviceCatFilter} onChange={setServiceCatFilter} textColor={styles.text} />
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -276,7 +276,7 @@ export const Website = () => {
      const styles = getSectionTheme(visualIndex);
      return (
         <SectionWrapper id="team" styles={styles}>
-           <div className="text-center mb-12"><h3 className="text-3xl font-bold mb-2">Equipe</h3><p className="opacity-80">ConheÃ§a nossos especialistas.</p></div>
+           <div className="text-center mb-12"><h3 className="text-3xl font-bold mb-2">Equipe</h3><p className="opacity-80">Conheça nossos especialistas.</p></div>
            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">{staff.map(member => (<div key={member.id} className="text-center group"><div className={`relative mb-4 overflow-hidden shadow-lg border-4 aspect-[3/4] ${isLightMode ? 'group-hover:border-amber-500 transition-colors' : ''}`} style={{ borderRadius: radius, borderColor: styles.borderColor || 'transparent', backgroundColor: styles.cardBg }}>{member.avatar ? (<img src={member.avatar} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105" />) : (<div className="w-full h-full flex items-center justify-center opacity-20" style={{color: styles.cardText}}><User className="w-12 h-12" /></div>)}</div><h3 className="text-lg font-bold">{member.name.split(' ')[0]}</h3><p className={`opacity-60 text-sm uppercase tracking-wider font-bold ${isLightMode ? 'text-amber-600' : ''}`}>Barber</p></div>))}</div>
         </SectionWrapper>
      );
@@ -315,7 +315,7 @@ export const Website = () => {
      const styles = getSectionTheme(visualIndex);
      return (
         <SectionWrapper id="reviews" styles={styles}>
-           <div className="text-center mb-16"><h2 className="text-3xl md:text-4xl font-bold mb-4">O que dizem sobre nÃ³s</h2><div className="flex justify-center gap-1 mb-4 text-amber-500"><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /></div></div>
+           <div className="text-center mb-16"><h2 className="text-3xl md:text-4xl font-bold mb-4">O que dizem sobre nós</h2><div className="flex justify-center gap-1 mb-4 text-amber-500"><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /><Star className="fill-current w-5 h-5" /></div></div>
            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">{config.externalReviews.map(review => (<div key={review.id} className="p-6 relative border backdrop-blur-md" style={{ borderRadius: radius, borderColor: styles.borderColor || 'rgba(255,255,255,0.1)', backgroundColor: styles.cardBg, color: styles.cardText, boxShadow: styles.shadow }}><div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center border shadow-xl bg-white">{review.source === 'GOOGLE' && <span className="font-bold text-blue-600 text-sm">G</span>}{review.source === 'FACEBOOK' && <Facebook className="w-4 h-4 text-blue-600" />}{review.source === 'SYSTEM' && <Scissors className="w-4 h-4 text-zinc-900" />}</div><div className="flex gap-1 mb-3 text-xs text-amber-500">{Array.from({length: review.rating}).map((_, i) => <Star key={i} className="fill-current w-3 h-3" />)}</div><p className="text-sm italic mb-4 opacity-80">&quot;{review.text}&quot;</p><div className="flex items-center gap-3"><div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs opacity-50 bg-current`}><span className="text-white mix-blend-difference">{review.name.charAt(0)}</span></div><div><p className="text-xs font-bold">{review.name}</p><p className="text-[10px] opacity-50">{review.date}</p></div></div></div>))}</div>
         </SectionWrapper>
      );
@@ -325,7 +325,7 @@ export const Website = () => {
      const styles = getSectionTheme(visualIndex);
      return (
         <SectionWrapper id="location" styles={styles}>
-           <div className="grid md:grid-cols-2 gap-12"><div><h2 className="text-3xl font-bold mb-6">Visite-nos</h2><div className="space-y-6"><div className="flex items-start gap-4"><div className="p-3 bg-current opacity-10 rounded-lg"><MapPin className="w-6 h-6" /></div><div><h4 className="font-bold mb-1">EndereÃ§o</h4><p className="opacity-70">{shopProfile.address}</p></div></div><div className="flex items-start gap-4"><div className="p-3 bg-current opacity-10 rounded-lg"><Phone className="w-6 h-6" /></div><div><h4 className="font-bold mb-1">Contato</h4><p className="opacity-70">{shopProfile.phone}</p><p className="opacity-70">{shopProfile.whatsapp}</p></div></div><div className="flex items-start gap-4"><div className="p-3 bg-current opacity-10 rounded-lg"><Clock className="w-6 h-6" /></div><div><h4 className="font-bold mb-1">HorÃ¡rios</h4><div className="opacity-70 text-sm space-y-1">{shopProfile.operatingHours?.filter(d => d.isActive).map(d => (<p key={d.dayIndex} className="flex justify-between w-40"><span>{['Dom','Seg','Ter','Qua','Qui','Sex','SÃ¡b'][d.dayIndex]}:</span><span>{d.startTime} - {d.endTime}</span></p>))}</div></div></div></div></div><div className="h-full min-h-[300px] flex items-center justify-center relative overflow-hidden group shadow-lg border" style={{borderRadius: radius, backgroundColor: '#e2e8f0', borderColor: styles.borderColor}}><div className="absolute inset-0 opacity-30 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/OpenStreetMap_Logo.png')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700"></div><button className="bg-white text-zinc-900 font-bold px-6 py-3 shadow-xl z-10 flex items-center gap-2 hover:bg-zinc-200 transition-colors" style={{borderRadius: radius}}><MapPin className="w-5 h-5 text-red-500" /> Abrir no Maps</button></div></div>
+           <div className="grid md:grid-cols-2 gap-12"><div><h2 className="text-3xl font-bold mb-6">Visite-nos</h2><div className="space-y-6"><div className="flex items-start gap-4"><div className="p-3 bg-current opacity-10 rounded-lg"><MapPin className="w-6 h-6" /></div><div><h4 className="font-bold mb-1">Endereço</h4><p className="opacity-70">{shopProfile.address}</p></div></div><div className="flex items-start gap-4"><div className="p-3 bg-current opacity-10 rounded-lg"><Phone className="w-6 h-6" /></div><div><h4 className="font-bold mb-1">Contato</h4><p className="opacity-70">{shopProfile.phone}</p><p className="opacity-70">{shopProfile.whatsapp}</p></div></div><div className="flex items-start gap-4"><div className="p-3 bg-current opacity-10 rounded-lg"><Clock className="w-6 h-6" /></div><div><h4 className="font-bold mb-1">Horários</h4><div className="opacity-70 text-sm space-y-1">{shopProfile.operatingHours?.filter(d => d.isActive).map(d => (<p key={d.dayIndex} className="flex justify-between w-40"><span>{['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][d.dayIndex]}:</span><span>{d.startTime} - {d.endTime}</span></p>))}</div></div></div></div></div><div className="h-full min-h-[300px] flex items-center justify-center relative overflow-hidden group shadow-lg border" style={{borderRadius: radius, backgroundColor: '#e2e8f0', borderColor: styles.borderColor}}><div className="absolute inset-0 opacity-30 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/OpenStreetMap_Logo.png')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700"></div><button className="bg-white text-zinc-900 font-bold px-6 py-3 shadow-xl z-10 flex items-center gap-2 hover:bg-zinc-200 transition-colors" style={{borderRadius: radius}}><MapPin className="w-5 h-5 text-red-500" /> Abrir no Maps</button></div></div>
         </SectionWrapper>
      );
   };
@@ -334,7 +334,7 @@ export const Website = () => {
      const styles = getSectionTheme(visualIndex);
      return (
         <SectionWrapper id="about" styles={styles}>
-           <div className="grid md:grid-cols-2 gap-12 items-center"><div className="relative group"><div className="absolute -inset-4 blur-xl transition-all duration-500 opacity-20 group-hover:opacity-40" style={{borderRadius: radius, backgroundColor: isClassic ? CLASSIC_PALETTE.BLUE : theme.accent}}></div><img src={config.aboutImage} className="relative w-full shadow-2xl border-4" style={{ borderRadius: radius, borderColor: styles.cardBg }} alt="About Us" /></div><div className="space-y-6"><h2 className="text-3xl md:text-4xl font-bold">{config.aboutTitle}</h2><div className="w-20 h-1 rounded-full bg-current opacity-30"></div><p className="leading-relaxed text-lg opacity-80">{config.aboutText}</p><div className="grid grid-cols-2 gap-6 pt-4"><div><span className="block text-3xl font-bold mb-1">5k+</span><span className="text-sm opacity-50">Clientes Atendidos</span></div><div><span className="block text-3xl font-bold mb-1">4.9</span><span className="text-sm opacity-50">AvaliaÃ§Ã£o MÃ©dia</span></div></div></div></div>
+           <div className="grid md:grid-cols-2 gap-12 items-center"><div className="relative group"><div className="absolute -inset-4 blur-xl transition-all duration-500 opacity-20 group-hover:opacity-40" style={{borderRadius: radius, backgroundColor: isClassic ? CLASSIC_PALETTE.BLUE : theme.accent}}></div><img src={config.aboutImage} className="relative w-full shadow-2xl border-4" style={{ borderRadius: radius, borderColor: styles.cardBg }} alt="About Us" /></div><div className="space-y-6"><h2 className="text-3xl md:text-4xl font-bold">{config.aboutTitle}</h2><div className="w-20 h-1 rounded-full bg-current opacity-30"></div><p className="leading-relaxed text-lg opacity-80">{config.aboutText}</p><div className="grid grid-cols-2 gap-6 pt-4"><div><span className="block text-3xl font-bold mb-1">5k+</span><span className="text-sm opacity-50">Clientes Atendidos</span></div><div><span className="block text-3xl font-bold mb-1">4.9</span><span className="text-sm opacity-50">Avaliação Média</span></div></div></div></div>
         </SectionWrapper>
      );
   };
@@ -349,8 +349,8 @@ export const Website = () => {
         <footer className="py-12 border-t" style={{ backgroundColor: styles.bg, color: styles.text, borderColor: styles.borderColor || 'rgba(255,255,255,0.1)' }}>
            <div className="max-w-7xl mx-auto px-6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                 <div className="col-span-1 md:col-span-2"><div className="flex items-center gap-2 mb-4">{shopProfile.logo ? (<img src={shopProfile.logo} alt={shopProfile.name} className="h-8 w-auto grayscale opacity-80" />) : (<span className="font-bold text-xl">{shopProfile.name}</span>)}</div><p className="text-sm max-w-xs mb-6 opacity-70">A melhor experiÃªncia em barbearia clÃ¡ssica e moderna. Agende seu horÃ¡rio e sinta a diferenÃ§a.</p><div className="flex gap-4 opacity-70"><a href={shopProfile.instagram} target="_blank" rel="noreferrer" className="hover:opacity-100 transition-colors"><Instagram className="w-5 h-5" /></a><a href={`https://wa.me/${shopProfile.whatsapp}`} target="_blank" rel="noreferrer" className="hover:opacity-100 transition-colors"><MessageSquare className="w-5 h-5" /></a><a href="mailto:contato@barbergold.com" className="hover:opacity-100 transition-colors"><Mail className="w-5 h-5" /></a></div></div>
-                 <div><h4 className="font-bold mb-4">Links RÃ¡pidos</h4><ul className="space-y-2 text-sm opacity-60"><li><a href="#hero" onClick={(e)=>handleScrollTo(e, 'hero')} className="hover:opacity-100 transition-colors">InÃ­cio</a></li><li><a href="#services" onClick={(e)=>handleScrollTo(e, 'services')} className="hover:opacity-100 transition-colors">ServiÃ§os</a></li><li><a href="#products" onClick={(e)=>handleScrollTo(e, 'products')} className="hover:opacity-100 transition-colors">Produtos</a></li><li><a href="#location" onClick={(e)=>handleScrollTo(e, 'location')} className="hover:opacity-100 transition-colors">LocalizaÃ§Ã£o</a></li></ul></div>
+                 <div className="col-span-1 md:col-span-2"><div className="flex items-center gap-2 mb-4">{shopProfile.logo ? (<img src={shopProfile.logo} alt={shopProfile.name} className="h-8 w-auto grayscale opacity-80" />) : (<span className="font-bold text-xl">{shopProfile.name}</span>)}</div><p className="text-sm max-w-xs mb-6 opacity-70">A melhor experiência em barbearia clássica e moderna. Agende seu horário e sinta a diferença.</p><div className="flex gap-4 opacity-70"><a href={shopProfile.instagram} target="_blank" rel="noreferrer" className="hover:opacity-100 transition-colors"><Instagram className="w-5 h-5" /></a><a href={`https://wa.me/${shopProfile.whatsapp}`} target="_blank" rel="noreferrer" className="hover:opacity-100 transition-colors"><MessageSquare className="w-5 h-5" /></a><a href="mailto:contato@barbergold.com" className="hover:opacity-100 transition-colors"><Mail className="w-5 h-5" /></a></div></div>
+                 <div><h4 className="font-bold mb-4">Links Rápidos</h4><ul className="space-y-2 text-sm opacity-60"><li><a href="#hero" onClick={(e)=>handleScrollTo(e, 'hero')} className="hover:opacity-100 transition-colors">Início</a></li><li><a href="#services" onClick={(e)=>handleScrollTo(e, 'services')} className="hover:opacity-100 transition-colors">Serviços</a></li><li><a href="#products" onClick={(e)=>handleScrollTo(e, 'products')} className="hover:opacity-100 transition-colors">Produtos</a></li><li><a href="#location" onClick={(e)=>handleScrollTo(e, 'location')} className="hover:opacity-100 transition-colors">Localização</a></li></ul></div>
                  <div><h4 className="font-bold mb-4">Contato</h4><ul className="space-y-2 text-sm opacity-60"><li className="flex items-center gap-2"><Phone className="w-3 h-3" /> {shopProfile.phone}</li><li className="flex items-start gap-2"><MapPin className="w-3 h-3 mt-1" /> {shopProfile.address}</li></ul></div>
               </div>
               <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs opacity-50" style={{borderColor: styles.borderColor || 'rgba(255,255,255,0.1)'}}>
@@ -361,7 +361,7 @@ export const Website = () => {
                        onClick={() => setView('AUTH')}
                        className="text-white hover:underline flex items-center gap-1 font-bold"
                     >
-                       <LayoutDashboard className="w-3 h-3" /> Sou ProprietÃ¡rio
+                       <LayoutDashboard className="w-3 h-3" /> Sou Proprietário
                     </button>
                  </div>
                  <button onClick={scrollToTop} className="md:hidden flex items-center gap-1 font-bold border px-3 py-1 rounded-full" style={{borderColor: styles.text}}>Topo <ArrowUp className="w-3 h-3" /></button>
@@ -407,7 +407,7 @@ export const Website = () => {
                      onClick={(e) => handleScrollTo(e, section.toLowerCase())}
                      className="hover:opacity-100 hover:text-amber-500 transition-all capitalize cursor-pointer"
                   >
-                     {section === 'SERVICES' ? 'ServiÃ§os' : section === 'PRODUCTS' ? 'Produtos' : section === 'ABOUT' ? 'Sobre' : section === 'GALLERY' ? 'Fotos' : section === 'REVIEWS' ? 'AvaliaÃ§Ãµes' : 'LocalizaÃ§Ã£o'}
+                     {section === 'SERVICES' ? 'Serviços' : section === 'PRODUCTS' ? 'Produtos' : section === 'ABOUT' ? 'Sobre' : section === 'GALLERY' ? 'Fotos' : section === 'REVIEWS' ? 'Avaliações' : 'Localização'}
                   </a>
                ))}
             </div>
@@ -441,7 +441,7 @@ export const Website = () => {
                      onClick={(e) => handleScrollTo(e, section.toLowerCase())}
                      className="text-2xl font-bold text-zinc-400 hover:text-white capitalize transition-colors"
                   >
-                     {section === 'SERVICES' ? 'ServiÃ§os' : section === 'PRODUCTS' ? 'Produtos' : section === 'ABOUT' ? 'Sobre NÃ³s' : section === 'GALLERY' ? 'Galeria' : section === 'REVIEWS' ? 'AvaliaÃ§Ãµes' : 'LocalizaÃ§Ã£o'}
+                     {section === 'SERVICES' ? 'Serviços' : section === 'PRODUCTS' ? 'Produtos' : section === 'ABOUT' ? 'Sobre Nós' : section === 'GALLERY' ? 'Galeria' : section === 'REVIEWS' ? 'Avaliações' : 'Localização'}
                   </a>
                ))}
                <hr className="w-20 border-zinc-800" />
@@ -497,7 +497,7 @@ export const Website = () => {
                   className="font-bold text-lg px-8 py-4 shadow-2xl transition-all hover:scale-105 flex items-center gap-2 mx-auto active:scale-95"
                   style={isClassic ? { backgroundColor: CLASSIC_PALETTE.RED, color: 'white', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '1px', boxShadow: '5px 5px 0px rgba(0,0,0,0.5)' } : buttonStyle}
                >
-                  Agendar HorÃ¡rio <ArrowRight className="w-5 h-5" />
+                  Agendar Horário <ArrowRight className="w-5 h-5" />
                </button>
             </div>
          </div>
@@ -529,7 +529,7 @@ export const Website = () => {
             className="w-full font-bold py-4 shadow-2xl flex items-center justify-center gap-2 animate-bounce-slight active:scale-95 transition-transform"
             style={isClassic ? { backgroundColor: CLASSIC_PALETTE.BLUE, color: 'white', borderRadius: '4px', border: '2px solid white' } : buttonStyle}
          >
-            <CalendarCheck className="w-5 h-5" /> Agendar HorÃ¡rio
+            <CalendarCheck className="w-5 h-5" /> Agendar Horário
          </button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-﻿import { PLAN_FEATURES } from './features';
+import { PLAN_FEATURES } from './features';
 import { PlanFeatureKey, PlanId, PlanLimits, TenantLike } from './types';
 import { getPlanDefinition } from './plans';
 

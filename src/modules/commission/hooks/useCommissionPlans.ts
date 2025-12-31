@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -41,7 +41,7 @@ export function useCommissionPlans() {
           setError(plansError.message);
         } else {
           setCommissionPlans(data || []);
-          console.log('âœ… Commission Plans carregados do Supabase:', data?.length || 0);
+          console.log('✅ Commission Plans carregados do Supabase:', data?.length || 0);
         }
       } catch (err) {
         console.error('Erro ao carregar commission plans:', err);

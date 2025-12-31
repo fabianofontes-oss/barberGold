@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useMemo } from 'react';
 import { TrendingUp, TrendingDown, BarChart3, Calendar } from 'lucide-react';
@@ -12,7 +12,7 @@ interface PremiumChartsProps {
 }
 
 export const PremiumCharts: React.FC<PremiumChartsProps> = ({ sales, expenses }) => {
-  // Ãšltimos 7 dias
+  // Últimos 7 dias
   const last7Days = useMemo(() => {
     const today = new Date();
     return eachDayOfInterval({
@@ -21,7 +21,7 @@ export const PremiumCharts: React.FC<PremiumChartsProps> = ({ sales, expenses })
     });
   }, []);
 
-  // Dados diÃ¡rios
+  // Dados diários
   const dailyData = useMemo(() => {
     return last7Days.map((day) => {
       const daySales = sales.filter((s) => isSameDay(new Date(s.date), day));
@@ -43,13 +43,13 @@ export const PremiumCharts: React.FC<PremiumChartsProps> = ({ sales, expenses })
 
   const maxValue = Math.max(...dailyData.map((d) => Math.max(d.revenue, d.expense)), 1);
 
-  // Totais do perÃ­odo
+  // Totais do período
   const totals = useMemo(() => {
     const revenue = dailyData.reduce((sum, d) => sum + d.revenue, 0);
     const expense = dailyData.reduce((sum, d) => sum + d.expense, 0);
     const profit = revenue - expense;
     
-    // Comparar com perÃ­odo anterior (simplificado)
+    // Comparar com período anterior (simplificado)
     const prevPeriodSales = sales.filter((s) => {
       const date = new Date(s.date);
       return date >= subDays(last7Days[0], 7) && date < last7Days[0];
@@ -68,7 +68,7 @@ export const PremiumCharts: React.FC<PremiumChartsProps> = ({ sales, expenses })
             <BarChart3 className="w-5 h-5 text-amber-500" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white">TendÃªncia 7 Dias</h3>
+            <h3 className="text-lg font-bold text-white">Tendência 7 Dias</h3>
             <p className="text-xs text-zinc-500">Receita vs Despesas</p>
           </div>
         </div>
@@ -84,7 +84,7 @@ export const PremiumCharts: React.FC<PremiumChartsProps> = ({ sales, expenses })
         </div>
       </div>
 
-      {/* GrÃ¡fico de barras */}
+      {/* Gráfico de barras */}
       <div className="flex items-end justify-between gap-2 h-32 mb-4">
         {dailyData.map((day, i) => (
           <div key={i} className="flex-1 flex flex-col items-center gap-1">

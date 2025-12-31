@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect } from 'react';
 import { AlertTriangle, Home } from 'lucide-react';
@@ -23,11 +23,11 @@ export default function AppError({
                 </div>
 
                 <h2 className="text-2xl font-bold text-white mb-2">
-                    Erro na aplicaÃ§Ã£o
+                    Erro na aplicação
                 </h2>
 
                 <p className="text-zinc-400 mb-6">
-                    Ocorreu um erro. Tente novamente ou volte para o inÃ­cio.
+                    Ocorreu um erro. Tente novamente ou volte para o início.
                 </p>
 
                 {process.env.NODE_ENV === 'development' && (
@@ -56,7 +56,7 @@ export default function AppError({
                         className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2"
                     >
                         <Home className="w-4 h-4" />
-                        InÃ­cio
+                        Início
                     </Link>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 
 import React, { useState } from 'react';
@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
   const { t } = useI18n();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-  // ValidaÃ§Ã£o de seguranÃ§a
+  // Validação de segurança
   if (!currentUser) {
     return null;
   }

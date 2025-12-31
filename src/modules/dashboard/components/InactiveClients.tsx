@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -12,7 +12,7 @@ export const InactiveClients: React.FC = () => {
 
   const isOwner = currentUser.role === 'OWNER';
 
-  // Filtrar clientes que nÃ£o voltam hÃ¡ 30+ dias
+  // Filtrar clientes que não voltam há 30+ dias
   const inactiveClients = clients
     .filter(client => {
       if (!client.lastVisit) return false;
@@ -31,7 +31,7 @@ export const InactiveClients: React.FC = () => {
   const sendWinbackMessage = (client: typeof inactiveClients[0]) => {
     if (client.phone) {
       const phone = client.phone.replace(/\D/g, '');
-      const message = `OlÃ¡ ${client.name}! ðŸ‘‹\n\nSentimos sua falta na barbearia! Que tal marcar um horÃ¡rio? Temos novidades esperando por vocÃª! ðŸ’ˆ\n\nAgende jÃ¡!`;
+      const message = `Olá ${client.name}! 👋\n\nSentimos sua falta na barbearia! Que tal marcar um horário? Temos novidades esperando por você! 💈\n\nAgende já!`;
       window.open(`https://wa.me/55${phone}?text=${encodeURIComponent(message)}`, '_blank');
     }
   };

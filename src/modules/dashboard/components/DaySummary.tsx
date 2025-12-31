@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -30,7 +30,7 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
     a.status !== AppointmentStatus.CANCELLED
   );
 
-  // EstatÃ­sticas
+  // Estatísticas
   const inProgress = todayAppointments.filter(a => a.status === AppointmentStatus.IN_PROGRESS);
   const waiting = todayAppointments.filter(a => a.status === AppointmentStatus.CHECKED_IN);
   const scheduled = todayAppointments.filter(a => a.status === AppointmentStatus.SCHEDULED);
@@ -44,7 +44,7 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
   const myInProgress = inProgress.filter(a => a.staffId === currentUser.id);
   const myWaiting = waiting.filter(a => a.staffId === currentUser.id);
 
-  // 8 stats unificados (sem repetiÃ§Ã£o) - com fundos coloridos
+  // 8 stats unificados (sem repetição) - com fundos coloridos
   const allStats = [
     { label: 'Receita', value: `$${todayRevenue.toFixed(0)}`, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
     { label: 'Agenda', value: todayAppointments.length, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
@@ -52,7 +52,7 @@ export const DaySummary: React.FC<DaySummaryProps> = ({ todayRevenue = 0, active
     { label: 'Ticket', value: '$42', color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
     { label: 'Atendendo', value: isOwner ? inProgress.length : myInProgress.length, color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20', pulse: inProgress.length > 0 },
     { label: 'Na Fila', value: isOwner ? waiting.length : myWaiting.length, color: 'text-cyan-400', bg: 'bg-cyan-500/10 border-cyan-500/20' },
-    { label: 'ConcluÃ­dos', value: completed.length, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
+    { label: 'Concluídos', value: completed.length, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
     { label: 'No-Show', value: noShows.length, color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20' },
   ];
 

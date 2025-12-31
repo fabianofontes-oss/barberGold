@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -13,14 +13,14 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({ children }
   const { currentTenantStatus, shopProfile, isImpersonating, exitImpersonation, currentView, setView } = useBarber();
   const { canUseFeature } = useFeatureGate();
 
-  // 1. Se nÃ£o houver tenant selecionado ou estiver em modo standalone: libera
+  // 1. Se não houver tenant selecionado ou estiver em modo standalone: libera
   if (!currentTenantStatus) {
     return <>{children}</>;
   }
 
   // 2. Se estiver ativo ou em trial: libera
   if (currentTenantStatus === 'ACTIVE' || currentTenantStatus === 'TRIAL') {
-    // Gating incremental por mÃ³dulo/feature (sem reescrever navegaÃ§Ã£o)
+    // Gating incremental por módulo/feature (sem reescrever navegação)
     if (currentView === 'WEBSITE_EDITOR' && !canUseFeature('WEBSITE_PREMIUM')) {
       return (
         <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-6">
@@ -30,7 +30,7 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({ children }
             </div>
             <h1 className="text-2xl font-bold text-white mb-3">Recurso bloqueado</h1>
             <p className="text-zinc-400 text-sm mb-8 leading-relaxed">
-              O mÃ³dulo <strong className="text-zinc-200">Website Premium</strong> estÃ¡ disponÃ­vel apenas no plano Studio.
+              O módulo <strong className="text-zinc-200">Website Premium</strong> está disponível apenas no plano Studio.
             </p>
             <button
               type="button"
@@ -47,12 +47,12 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({ children }
     return <>{children}</>;
   }
 
-  // 3. Se chegou aqui: OVERDUE ou SUSPENDED â†’ bloquear
+  // 3. Se chegou aqui: OVERDUE ou SUSPENDED → bloquear
   const isSuspended = currentTenantStatus === 'SUSPENDED';
   const title = isSuspended ? 'Conta Suspensa' : 'Pagamento Pendente';
   const description = isSuspended
-    ? 'O acesso a este ambiente foi suspenso devido a pendÃªncias crÃ­ticas ou violaÃ§Ã£o de termos de uso.'
-    : 'Identificamos uma pendÃªncia no pagamento da sua assinatura. Regularize para retomar o acesso total ao sistema.';
+    ? 'O acesso a este ambiente foi suspenso devido a pendências críticas ou violação de termos de uso.'
+    : 'Identificamos uma pendência no pagamento da sua assinatura. Regularize para retomar o acesso total ao sistema.';
   
   const themeColor = isSuspended ? 'red' : 'amber';
   const borderColor = isSuspended ? 'border-red-900' : 'border-amber-900';
@@ -99,7 +99,7 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({ children }
 
           <div className="space-y-3 w-full">
             <button className={`w-full py-3.5 rounded-xl font-bold text-white shadow-lg transition-transform hover:scale-[1.02] active:scale-95 ${isSuspended ? 'bg-red-600 hover:bg-red-500' : 'bg-amber-600 hover:bg-amber-500'}`}>
-              {isSuspended ? 'Contestar SuspensÃ£o' : 'Regularizar Agora'}
+              {isSuspended ? 'Contestar Suspensão' : 'Regularizar Agora'}
             </button>
             <button className="w-full py-3.5 rounded-xl font-bold text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
               Falar com Suporte

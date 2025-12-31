@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 
 import React, { useState } from 'react';
@@ -18,7 +18,7 @@ export const Login = () => {
     
     const success = login(email, password);
     if (!success) {
-       setError('Credenciais invÃ¡lidas. Tente novamente.');
+       setError('Credenciais inválidas. Tente novamente.');
     }
   };
 
@@ -56,7 +56,7 @@ export const Login = () => {
                 <Scissors className="w-10 h-10 text-zinc-900" />
              </div>
              <h1 className="text-3xl font-bold text-white mb-2">BarberFlow</h1>
-             <p className="text-zinc-400">Entre para gerenciar seu negÃ³cio.</p>
+             <p className="text-zinc-400">Entre para gerenciar seu negócio.</p>
           </div>
 
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
@@ -106,7 +106,7 @@ export const Login = () => {
                          value={password}
                          onChange={e => setPassword(e.target.value)}
                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 pl-10 pr-4 text-white focus:border-amber-500 outline-none transition-all"
-                         placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                         placeholder="••••••••"
                       />
                    </div>
                 </div>
@@ -120,7 +120,7 @@ export const Login = () => {
              </form>
 
              <div className="mt-6 pt-6 border-t border-zinc-800">
-                <p className="text-[10px] text-zinc-500 text-center mb-3 uppercase font-bold">Acesso RÃ¡pido (Demo)</p>
+                <p className="text-[10px] text-zinc-500 text-center mb-3 uppercase font-bold">Acesso Rápido (Demo)</p>
                 <div className="flex gap-2 justify-center">
                    <button onClick={() => handleDemoLogin('OWNER')} className="text-xs bg-zinc-800 hover:bg-zinc-700 text-white px-3 py-1.5 rounded-lg border border-zinc-700">Dono</button>
                    <button onClick={() => handleDemoLogin('BARBER')} className="text-xs bg-zinc-800 hover:bg-zinc-700 text-white px-3 py-1.5 rounded-lg border border-zinc-700">Barbeiro</button>

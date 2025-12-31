@@ -1,4 +1,4 @@
-﻿import { AppMode } from '@/lib/appMode';
+import { AppMode } from '@/lib/appMode';
 
 export type ReferralPartnerType = 'OWNER' | 'STAFF' | 'PARTNER_GENERAL' | 'PARTNER_PRO';
 

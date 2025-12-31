@@ -1,4 +1,4 @@
-﻿import { CreditCard, Store } from 'lucide-react';
+import { CreditCard, Store } from 'lucide-react';
 
 export function SocialProofSection() {
     return (
@@ -7,7 +7,7 @@ export function SocialProofSection() {
                 <div className="flex flex-col lg:flex-row gap-10 items-center justify-between">
                     <div className="max-w-md text-center lg:text-left">
                         <h3 className="text-2xl font-bold text-white mb-2">Usado pela elite</h3>
-                        <p className="text-gray-400 text-sm">As barbearias mais lucrativas do paÃ­s rodam no nosso sistema operacional.</p>
+                        <p className="text-gray-400 text-sm">As barbearias mais lucrativas do país rodam no nosso sistema operacional.</p>
                     </div>
                     
                     <div className="flex flex-1 w-full flex-col sm:flex-row gap-6 items-center justify-end">
@@ -17,7 +17,7 @@ export function SocialProofSection() {
                             </div>
                             <div>
                                 <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Volume Mensal</p>
-                                <p className="text-xl font-bold text-white font-mono">+ R$ 5 MilhÃµes</p>
+                                <p className="text-xl font-bold text-white font-mono">+ R$ 5 Milhões</p>
                             </div>
                         </div>
                         

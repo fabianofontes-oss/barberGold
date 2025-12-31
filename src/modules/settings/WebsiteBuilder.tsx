@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -33,14 +33,14 @@ export const WebsiteBuilder = () => {
                   Website Premium Bloqueado
                </h1>
                <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
-                  PersonalizaÃ§Ã£o avanÃ§ada, temas premium e domÃ­nio prÃ³prio (.com.br) estÃ£o disponÃ­veis
+                  Personalização avançada, temas premium e domínio próprio (.com.br) estão disponíveis
                   apenas no plano <span className="text-amber-400 font-bold">ELITE</span>.
                </p>
                <button className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold rounded-xl transition-all">
                   Fazer Upgrade Agora
                </button>
                <p className="text-[10px] text-zinc-500 mt-4">
-                  Seu site bÃ¡sico continua funcionando normalmente no link barber.gold.
+                  Seu site básico continua funcionando normalmente no link barber.gold.
                </p>
             </div>
          </div>
@@ -123,7 +123,7 @@ export const WebsiteBuilder = () => {
                   <Globe className="w-8 h-8 text-amber-500" /> Website & Brand
                </h2>
                <p className="text-zinc-400">
-                  Customize sua vitrine digital. Ã‰ isso que seu cliente vÃª antes de agendar.
+                  Customize sua vitrine digital. É isso que seu cliente vê antes de agendar.
                </p>
             </div>
             <div className="flex gap-2">
@@ -153,7 +153,7 @@ export const WebsiteBuilder = () => {
                      onClick={() => setActiveTab('CONTENT')}
                      className={`flex-1 py-4 text-sm font-bold border-b-2 transition-colors whitespace-nowrap px-4 ${activeTab === 'CONTENT' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}
                   >
-                     Editor de ConteÃºdo
+                     Editor de Conteúdo
                   </button>
                   <button
                      onClick={() => setActiveTab('LAYOUT')}
@@ -171,7 +171,7 @@ export const WebsiteBuilder = () => {
                      onClick={() => setActiveTab('DOMAIN')}
                      className={`flex-1 py-4 text-sm font-bold border-b-2 transition-colors whitespace-nowrap px-4 flex items-center justify-center gap-2 ${activeTab === 'DOMAIN' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}
                   >
-                     <Globe className="w-3 h-3" /> DomÃ­nio
+                     <Globe className="w-3 h-3" /> Domínio
                   </button>
                </div>
 
@@ -183,7 +183,7 @@ export const WebsiteBuilder = () => {
                         {/* Sidebar for Content Sections */}
                         <div className="w-full md:w-40 flex flex-row md:flex-col gap-2 border-b md:border-b-0 md:border-r border-zinc-800 pb-4 md:pb-0 md:pr-4 overflow-x-auto">
                            <button onClick={() => setActiveContentSection('HERO')} className={`text-left px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap ${activeContentSection === 'HERO' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-400 hover:bg-zinc-800'}`}>Capa / Hero</button>
-                           <button onClick={() => setActiveContentSection('ABOUT')} className={`text-left px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap ${activeContentSection === 'ABOUT' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-400 hover:bg-zinc-800'}`}>Sobre NÃ³s</button>
+                           <button onClick={() => setActiveContentSection('ABOUT')} className={`text-left px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap ${activeContentSection === 'ABOUT' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-400 hover:bg-zinc-800'}`}>Sobre Nós</button>
                            <button onClick={() => setActiveContentSection('GALLERY')} className={`text-left px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap ${activeContentSection === 'GALLERY' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-400 hover:bg-zinc-800'}`}>Galeria</button>
                         </div>
 
@@ -192,11 +192,11 @@ export const WebsiteBuilder = () => {
                            {activeContentSection === 'HERO' && (
                               <>
                                  <div>
-                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">TÃ­tulo Principal</label>
+                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Título Principal</label>
                                     <input type="text" value={config.heroTitle} onChange={(e) => setConfig({ ...config, heroTitle: e.target.value })} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:border-amber-500 outline-none font-bold text-lg" />
                                  </div>
                                  <div>
-                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">SubtÃ­tulo</label>
+                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Subtítulo</label>
                                     <textarea rows={3} value={config.heroSubtitle} onChange={(e) => setConfig({ ...config, heroSubtitle: e.target.value })} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-300 focus:border-amber-500 outline-none resize-none" />
                                  </div>
 
@@ -216,7 +216,7 @@ export const WebsiteBuilder = () => {
                            {activeContentSection === 'ABOUT' && (
                               <>
                                  <div>
-                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">TÃ­tulo da SeÃ§Ã£o</label>
+                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Título da Seção</label>
                                     <input type="text" value={config.aboutTitle} onChange={(e) => setConfig({ ...config, aboutTitle: e.target.value })} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:border-amber-500 outline-none" />
                                  </div>
                                  <div>
@@ -233,7 +233,7 @@ export const WebsiteBuilder = () => {
 
                            {activeContentSection === 'GALLERY' && (
                               <div className="space-y-6">
-                                 <p className="text-sm text-zinc-400 mb-4">Adicione imagens e legendas para exibir no seu portfÃ³lio.</p>
+                                 <p className="text-sm text-zinc-400 mb-4">Adicione imagens e legendas para exibir no seu portfólio.</p>
                                  <div className="grid grid-cols-1 gap-6">
                                     {config.gallery.map((item, idx) => (
                                        <div key={item.id} className="relative group bg-zinc-950 p-4 rounded-xl border border-zinc-800">
@@ -250,10 +250,10 @@ export const WebsiteBuilder = () => {
                                                 />
                                              </div>
                                              <div className="flex-1 space-y-2">
-                                                <label className="block text-[10px] font-bold text-zinc-500 uppercase">Legenda / TÃ­tulo</label>
+                                                <label className="block text-[10px] font-bold text-zinc-500 uppercase">Legenda / Título</label>
                                                 <input
                                                    type="text"
-                                                   placeholder="Ex: Corte DegradÃª Navalhado"
+                                                   placeholder="Ex: Corte Degradê Navalhado"
                                                    value={item.caption || ''}
                                                    onChange={(e) => {
                                                       const newGallery = [...config.gallery];
@@ -316,7 +316,7 @@ export const WebsiteBuilder = () => {
                               </div>
                               <div className="p-4 bg-zinc-950">
                                  <h4 className="font-bold text-white mb-1">Premium Gold</h4>
-                                 <p className="text-[10px] text-zinc-500">O padrÃ£o de excelÃªncia. Escuro, elegante e com toques dourados.</p>
+                                 <p className="text-[10px] text-zinc-500">O padrão de excelência. Escuro, elegante e com toques dourados.</p>
                               </div>
                               {config.themeTemplate === 'PREMIUM' && (
                                  <div className="absolute top-2 right-2 bg-amber-500 text-zinc-900 text-[10px] font-bold px-2 py-1 rounded">ATIVO</div>
@@ -340,7 +340,7 @@ export const WebsiteBuilder = () => {
                               </div>
                               <div className="p-4 bg-zinc-950">
                                  <h4 className="font-bold text-white mb-1">Premium Classic Barber</h4>
-                                 <p className="text-[10px] text-zinc-500">Royal Navy & Branco. Alto contraste com toque clÃ¡ssico e limpo.</p>
+                                 <p className="text-[10px] text-zinc-500">Royal Navy & Branco. Alto contraste com toque clássico e limpo.</p>
                               </div>
                               {config.themeTemplate === 'CLASSIC' && (
                                  <div className="absolute top-2 right-2 bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded">ATIVO</div>
@@ -357,7 +357,7 @@ export const WebsiteBuilder = () => {
                               </div>
                               <div className="p-4 bg-zinc-950">
                                  <h4 className="font-bold text-white mb-1">Personalizado</h4>
-                                 <p className="text-[10px] text-zinc-500">Defina sua prÃ³pria paleta de cores para combinar com sua marca.</p>
+                                 <p className="text-[10px] text-zinc-500">Defina sua própria paleta de cores para combinar com sua marca.</p>
                               </div>
                               {config.themeTemplate === 'CUSTOM' && (
                                  <div className="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded">ATIVO</div>
@@ -419,7 +419,7 @@ export const WebsiteBuilder = () => {
                                     </div>
                                  </div>
                                  <div>
-                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Cor SecundÃ¡ria (Cards)</label>
+                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Cor Secundária (Cards)</label>
                                     <div className="flex items-center gap-2 bg-zinc-950 p-2 rounded-lg border border-zinc-800">
                                        <input
                                           type="color"
@@ -431,7 +431,7 @@ export const WebsiteBuilder = () => {
                                     </div>
                                  </div>
                                  <div>
-                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Cor de Destaque (BotÃµes)</label>
+                                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Cor de Destaque (Botões)</label>
                                     <div className="flex items-center gap-2 bg-zinc-950 p-2 rounded-lg border border-zinc-800">
                                        <input
                                           type="color"
@@ -464,7 +464,7 @@ export const WebsiteBuilder = () => {
                   {activeTab === 'LAYOUT' && (
                      <div className="max-w-xl mx-auto">
                         <p className="text-sm text-zinc-400 mb-6 text-center">
-                           Organize a ordem das seÃ§Ãµes do seu site. Ative ou desative o que deseja exibir.
+                           Organize a ordem das seções do seu site. Ative ou desative o que deseja exibir.
                         </p>
 
                         <div className="space-y-3">
@@ -475,12 +475,12 @@ export const WebsiteBuilder = () => {
                               let Icon = Layout;
                               let label: string = section;
                               if (section === 'HERO') { Icon = Star; label = 'Capa (Hero)'; }
-                              if (section === 'ABOUT') { Icon = Users; label = 'Sobre NÃ³s'; }
-                              if (section === 'SERVICES') { Icon = Scissors; label = 'ServiÃ§os'; }
+                              if (section === 'ABOUT') { Icon = Users; label = 'Sobre Nós'; }
+                              if (section === 'SERVICES') { Icon = Scissors; label = 'Serviços'; }
                               if (section === 'PRODUCTS') { Icon = ShoppingBag; label = 'Produtos'; }
                               if (section === 'GALLERY') { Icon = ImageIcon; label = 'Galeria'; }
-                              if (section === 'REVIEWS') { Icon = Star; label = 'AvaliaÃ§Ãµes'; }
-                              if (section === 'LOCATION') { Icon = MapPin; label = 'LocalizaÃ§Ã£o'; }
+                              if (section === 'REVIEWS') { Icon = Star; label = 'Avaliações'; }
+                              if (section === 'LOCATION') { Icon = MapPin; label = 'Localização'; }
 
                               return (
                                  <div key={section} className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${isLocked ? 'bg-zinc-950/50 border-zinc-800 opacity-80' : 'bg-zinc-900 border-zinc-700 hover:border-amber-500/50'}`}>
@@ -529,7 +529,7 @@ export const WebsiteBuilder = () => {
                               {/* Standard URL */}
                               <div>
                                  <div className="flex justify-between items-center mb-2">
-                                    <label className="block text-xs font-bold text-zinc-500 uppercase">Link Exclusivo (GrÃ¡tis)</label>
+                                    <label className="block text-xs font-bold text-zinc-500 uppercase">Link Exclusivo (Grátis)</label>
                                     <span className="text-[10px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded font-bold">ATIVO</span>
                                  </div>
                                  <div className="flex items-center">
@@ -560,7 +560,7 @@ export const WebsiteBuilder = () => {
                               <div>
                                  <div className="flex justify-between items-center mb-2">
                                     <label className="block text-xs font-bold text-white uppercase flex items-center gap-2">
-                                       DomÃ­nio PrÃ³prio (.com.br) <span className="bg-amber-500 text-zinc-900 text-[9px] px-1.5 rounded font-bold">PRO</span>
+                                       Domínio Próprio (.com.br) <span className="bg-amber-500 text-zinc-900 text-[9px] px-1.5 rounded font-bold">PRO</span>
                                     </label>
                                  </div>
                                  <div className="flex items-center gap-3 bg-zinc-900 p-4 rounded-xl border border-zinc-800">

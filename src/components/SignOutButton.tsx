@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { LogOut } from 'lucide-react';
 import { signOutAction } from '@/modules/auth/actions';

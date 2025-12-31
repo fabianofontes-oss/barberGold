@@ -1,4 +1,4 @@
-﻿// Barrel export para domain/referrals - FONTE ÃšNICA de regras de indicaÃ§Ãµes
+// Barrel export para domain/referrals - FONTE ÚNICA de regras de indicações
 export * from './types';
 export * from './rules';
 export * from './link';

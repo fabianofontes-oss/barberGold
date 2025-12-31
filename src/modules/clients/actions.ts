@@ -1,4 +1,4 @@
-﻿'use server';
+'use server';
 
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -9,7 +9,7 @@ export async function getClients(filters?: { search?: string; tags?: string[] })
   try {
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return { success: false, error: 'NÃ£o autenticado' };
+    if (!session) return { success: false, error: 'Não autenticado' };
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -17,7 +17,7 @@ export async function getClients(filters?: { search?: string; tags?: string[] })
       .eq('user_id', session.user.id)
       .single();
 
-    if (!profile?.store_id) return { success: false, error: 'Store nÃ£o encontrada' };
+    if (!profile?.store_id) return { success: false, error: 'Store não encontrada' };
 
     let query = supabase
       .from('clients')
@@ -44,7 +44,7 @@ export async function getClientStats(clientId: string) {
   try {
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return { success: false, error: 'NÃ£o autenticado' };
+    if (!session) return { success: false, error: 'Não autenticado' };
 
     // Por enquanto retorna stats vazias - implementar depois
     return {
@@ -58,7 +58,7 @@ export async function getClientStats(clientId: string) {
     };
   } catch (error) {
     console.error('Erro ao buscar stats do cliente:', error);
-    return { success: false, error: 'Erro ao buscar estatÃ­sticas' };
+    return { success: false, error: 'Erro ao buscar estatísticas' };
   }
 }
 
@@ -70,12 +70,12 @@ export async function createClientAction(data: {
   notes?: string;
   tags?: string[];
 }) {
-  // âœ… ValidaÃ§Ã£o Zod
+  // ✅ Validação Zod
   try {
     // Adaptar dados para o schema (phone precisa formato brasileiro)
     const dataToValidate = {
       name: data.name,
-      phone: data.phone || '(00) 00000-0000', // Default para validaÃ§Ã£o
+      phone: data.phone || '(00) 00000-0000', // Default para validação
       email: data.email,
       birthDate: data.birthDate,
       notes: data.notes
@@ -88,7 +88,7 @@ export async function createClientAction(data: {
 
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw new Error('NÃ£o autenticado');
+    if (!session) throw new Error('Não autenticado');
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -96,7 +96,7 @@ export async function createClientAction(data: {
       .eq('user_id', session.user.id)
       .single();
 
-    if (!profile?.store_id) throw new Error('Store nÃ£o encontrado');
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
     const { data: client, error } = await supabase
       .from('clients')
@@ -116,18 +116,18 @@ export async function createClientAction(data: {
       .single();
 
     if (error) {
-      console.error('âŒ Erro ao criar cliente:', error);
+      console.error('❌ Erro ao criar cliente:', error);
       throw new Error(error.message);
     }
 
     revalidatePath('/app/clients');
     revalidatePath('/app/dashboard');
-    console.log('âœ… Cliente criado:', client.id);
+    console.log('✅ Cliente criado:', client.id);
     return client;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('âŒ Erro de validaÃ§Ã£o:', error.issues);
-      throw new Error(`Dados invÃ¡lidos: ${error.issues[0].message}`);
+      console.error('❌ Erro de validação:', error.issues);
+      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
     }
     throw error;
   }
@@ -143,7 +143,7 @@ export async function updateClientAction(clientId: string, data: {
 }) {
   const supabase = await createSupabaseClient();
   const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('NÃ£o autenticado');
+  if (!session) throw new Error('Não autenticado');
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -151,7 +151,7 @@ export async function updateClientAction(clientId: string, data: {
     .eq('user_id', session.user.id)
     .single();
 
-  if (!profile?.store_id) throw new Error('Store nÃ£o encontrado');
+  if (!profile?.store_id) throw new Error('Store não encontrado');
 
   const updateData: any = {};
   if (data.name) updateData.name = data.name;
@@ -170,7 +170,7 @@ export async function updateClientAction(clientId: string, data: {
     .single();
 
   if (error) {
-    console.error('âŒ Erro ao atualizar cliente:', error);
+    console.error('❌ Erro ao atualizar cliente:', error);
     throw new Error(error.message);
   }
 

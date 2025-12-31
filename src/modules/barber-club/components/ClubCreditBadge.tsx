@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { Crown, CreditCard, Check } from 'lucide-react';
@@ -103,7 +103,7 @@ export const ClubCreditBadge: React.FC<ClubCreditBadgeProps> = ({
       <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-2 flex items-center gap-2">
         <Crown className="w-4 h-4 text-purple-500" />
         <span className="text-xs text-zinc-400">
-          <strong className="text-white">{plan.name}</strong> â€” Sem crÃ©ditos restantes
+          <strong className="text-white">{plan.name}</strong> — Sem créditos restantes
         </span>
       </div>
     );
@@ -120,7 +120,7 @@ export const ClubCreditBadge: React.FC<ClubCreditBadgeProps> = ({
             <p className="text-xs font-bold text-white">{plan.name}</p>
             <p className="text-[10px] text-purple-300">
               <CreditCard className="w-3 h-3 inline mr-1" />
-              {subscription.creditsRemaining} crÃ©dito{subscription.creditsRemaining !== 1 ? 's' : ''} disponÃ­vel
+              {subscription.creditsRemaining} crédito{subscription.creditsRemaining !== 1 ? 's' : ''} disponível
             </p>
           </div>
         </div>
@@ -135,7 +135,7 @@ export const ClubCreditBadge: React.FC<ClubCreditBadgeProps> = ({
             disabled={disabled || redeeming}
             className="px-3 py-1.5 bg-purple-500 hover:bg-purple-400 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold rounded-lg transition-all"
           >
-            {redeeming ? 'Resgatando...' : 'Usar CrÃ©dito'}
+            {redeeming ? 'Resgatando...' : 'Usar Crédito'}
           </button>
         )}
       </div>

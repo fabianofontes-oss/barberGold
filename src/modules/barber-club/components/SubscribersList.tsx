@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Users, CreditCard, XCircle, CheckCircle } from 'lucide-react';
@@ -10,7 +10,7 @@ export const SubscribersList: React.FC = () => {
   const { subscriptions, plans, loading, cancelSubscription } = useBarberClub();
 
   const handleCancel = async (subId: string) => {
-    if (confirm('Cancelar assinatura? O cliente perderÃ¡ os crÃ©ditos restantes.')) {
+    if (confirm('Cancelar assinatura? O cliente perderá os créditos restantes.')) {
       await cancelSubscription(subId, 'Cancelado pelo admin');
     }
   };
@@ -29,7 +29,7 @@ export const SubscribersList: React.FC = () => {
         <Users className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
         <h3 className="text-lg font-bold text-white mb-2">Nenhum assinante ainda</h3>
         <p className="text-sm text-zinc-500">
-          Quando clientes assinarem seus planos, eles aparecerÃ£o aqui.
+          Quando clientes assinarem seus planos, eles aparecerão aqui.
         </p>
       </div>
     );
@@ -48,10 +48,10 @@ export const SubscribersList: React.FC = () => {
             <tr className="border-b border-zinc-800 bg-zinc-950/50">
               <th className="text-left py-3 px-4 text-xs text-zinc-500 font-medium">Cliente</th>
               <th className="text-left py-3 px-4 text-xs text-zinc-500 font-medium">Plano</th>
-              <th className="text-center py-3 px-4 text-xs text-zinc-500 font-medium">CrÃ©ditos</th>
+              <th className="text-center py-3 px-4 text-xs text-zinc-500 font-medium">Créditos</th>
               <th className="text-center py-3 px-4 text-xs text-zinc-500 font-medium">Status</th>
-              <th className="text-center py-3 px-4 text-xs text-zinc-500 font-medium">PrÃ³x. RenovaÃ§Ã£o</th>
-              <th className="text-right py-3 px-4 text-xs text-zinc-500 font-medium">AÃ§Ãµes</th>
+              <th className="text-center py-3 px-4 text-xs text-zinc-500 font-medium">Próx. Renovação</th>
+              <th className="text-right py-3 px-4 text-xs text-zinc-500 font-medium">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -64,8 +64,8 @@ export const SubscribersList: React.FC = () => {
                     <p className="text-[10px] text-zinc-600">ID: {sub.id.slice(0, 8)}</p>
                   </td>
                   <td className="py-3 px-4">
-                    <span className="text-white">{plan?.name ?? 'â€”'}</span>
-                    {plan && <span className="text-zinc-500 text-xs ml-1">R$ {plan.monthlyPriceBRL}/mÃªs</span>}
+                    <span className="text-white">{plan?.name ?? '—'}</span>
+                    {plan && <span className="text-zinc-500 text-xs ml-1">R$ {plan.monthlyPriceBRL}/mês</span>}
                   </td>
                   <td className="py-3 px-4 text-center">
                     <div className="inline-flex items-center gap-1 bg-zinc-800 px-2 py-1 rounded-lg">
@@ -95,7 +95,7 @@ export const SubscribersList: React.FC = () => {
                   <td className="py-3 px-4 text-center text-zinc-400 text-xs">
                     {sub.nextPaymentDate
                       ? format(sub.nextPaymentDate, "dd 'de' MMM", { locale: ptBR })
-                      : 'â€”'}
+                      : '—'}
                   </td>
                   <td className="py-3 px-4 text-right">
                     {sub.status === 'ACTIVE' && (

@@ -1,4 +1,4 @@
-﻿import { isProdMode } from '@/lib/appMode';
+import { isProdMode } from '@/lib/appMode';
 import {
   ReferralProgramConfig,
   ReferralSaleComputed,
@@ -62,7 +62,7 @@ export function getCommissionPercentForPartnerType(config: ReferralProgramConfig
 export function computeReferralSale(config: ReferralProgramConfig, input: ReferralSaleInput, now: Date = new Date()): ReferralSaleComputed {
   const warnings: string[] = [];
 
-  // V1: comissÃ£o apenas para novos clientes
+  // V1: comissão apenas para novos clientes
   if (!input.isNewCustomer) {
     return {
       commissionBaseBRL: 0,
@@ -73,7 +73,7 @@ export function computeReferralSale(config: ReferralProgramConfig, input: Referr
       status: 'CANCELLED',
       availableAt: addDaysSafe(input.paidAt, config.payoutDelayDays),
       shouldBlock: false,
-      warnings: ['V1: comissÃ£o apenas para novos clientes.'],
+      warnings: ['V1: comissão apenas para novos clientes.'],
     };
   }
 
@@ -88,13 +88,13 @@ export function computeReferralSale(config: ReferralProgramConfig, input: Referr
       status: 'CANCELLED',
       availableAt: addDaysSafe(input.paidAt, config.payoutDelayDays),
       shouldBlock: false,
-      warnings: ['ComissÃ£o apenas sobre plano anual e apenas no primeiro pagamento anual.'],
+      warnings: ['Comissão apenas sobre plano anual e apenas no primeiro pagamento anual.'],
     };
   }
 
   const self = isSelfReferral(input.referrerCpfCnpj, input.referredCpfCnpj);
   const shouldBlock = self && (config.appMode === 'prod' || isProdMode());
-  if (self) warnings.push('Auto-indicaÃ§Ã£o detectada (placeholder).');
+  if (self) warnings.push('Auto-indicação detectada (placeholder).');
 
   const percent = getCommissionPercentForPartnerType(config, input.partnerType);
   const base = input.annualValueBRL;
@@ -116,7 +116,7 @@ export function computeReferralSale(config: ReferralProgramConfig, input: Referr
       ownerAmount = (amount * config.staffSplitPercent.owner) / 100;
     }
   } else {
-    // Parceiros ficam com 100% da comissÃ£o deles
+    // Parceiros ficam com 100% da comissão deles
     ownerAmount = 0;
     staffAmount = 0;
   }

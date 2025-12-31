@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Check, ArrowRight, Crown, Star } from 'lucide-react';
@@ -14,14 +14,14 @@ interface PlanSummaryCardProps {
 // Highlights de marketing por plano (resumo visual)
 const planHighlights: Record<PlanId, string[]> = {
   FREE: [
-    'Agenda bÃ¡sica',
+    'Agenda básica',
     'Cadastro de clientes',
     'Registro de vendas simples',
   ],
   SOLO: [
     '1 barbeiro',
     'Agenda + Fila Inteligente',
-    'PDV e catÃ¡logo de serviÃ§os',
+    'PDV e catálogo de serviços',
   ],
   SOLO_PRO: [
     '1 barbeiro com modo empresa',
@@ -29,18 +29,18 @@ const planHighlights: Record<PlanId, string[]> = {
     'Agendamento Online',
   ],
   EQUIPE: [
-    'AtÃ© 3 barbeiros',
+    'Até 3 barbeiros',
     'Tudo do Solo PRO',
-    'Fidelidade, ComissÃµes, Caixa Cego',
+    'Fidelidade, Comissões, Caixa Cego',
   ],
   STUDIO: [
-    'AtÃ© 6 barbeiros e 2 unidades',
+    'Até 6 barbeiros e 2 unidades',
     'Tudo do Equipe',
-    'Website Premium + domÃ­nio prÃ³prio',
+    'Website Premium + domínio próprio',
   ],
   ENTERPRISE: [
     'Barbeiros ilimitados',
-    'MÃºltiplas unidades',
+    'Múltiplas unidades',
     'Gerente de contas dedicado',
   ],
 };
@@ -73,20 +73,20 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
             Plano {currentPlan.name}
           </h2>
           <p className="text-xs text-zinc-400 mt-1 max-w-sm">
-            O plano ideal para o momento do seu negÃ³cio.
+            O plano ideal para o momento do seu negócio.
           </p>
         </div>
         <div className="text-right bg-zinc-950/50 p-3 rounded-xl border border-zinc-800/50">
           <div className="text-[10px] text-zinc-500 uppercase font-bold">Investimento</div>
           <div className="text-2xl font-bold text-white">
-            {currentPlan.monthlyPriceBRL === 0 ? 'GrÃ¡tis' : `R$ ${currentPlan.monthlyPriceBRL}`}
+            {currentPlan.monthlyPriceBRL === 0 ? 'Grátis' : `R$ ${currentPlan.monthlyPriceBRL}`}
           </div>
-          {currentPlan.monthlyPriceBRL > 0 && <div className="text-[10px] text-zinc-500">/mÃªs</div>}
+          {currentPlan.monthlyPriceBRL > 0 && <div className="text-[10px] text-zinc-500">/mês</div>}
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
-        {/* BenefÃ­cios do plano atual */}
+        {/* Benefícios do plano atual */}
         <div className="space-y-3">
           <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
             Seus recursos liberados:
@@ -103,7 +103,7 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
           </ul>
         </div>
 
-        {/* PrÃ³ximo plano (se existir) */}
+        {/* Próximo plano (se existir) */}
         {nextPlan ? (
           <div className="border border-amber-500/20 rounded-xl p-4 bg-gradient-to-br from-zinc-900 to-amber-950/10 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-2 opacity-5">
@@ -113,7 +113,7 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
             <div className="relative z-10">
                <div className="flex justify-between items-center mb-2">
                   <p className="text-[11px] font-bold text-amber-500 uppercase tracking-wider">
-                    PrÃ³ximo NÃ­vel: {nextPlan.name}
+                    Próximo Nível: {nextPlan.name}
                   </p>
                   <span className="text-[10px] font-bold bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded border border-amber-500/20">
                      Recomendado
@@ -121,7 +121,7 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
                </div>
                
                <p className="text-[11px] text-zinc-400 mb-3 leading-relaxed">
-                 Por apenas mais <span className="font-bold text-white">R$ {(nextPlan.monthlyPriceBRL - currentPlan.monthlyPriceBRL).toFixed(0)}</span>/mÃªs, vocÃª desbloqueia:
+                 Por apenas mais <span className="font-bold text-white">R$ {(nextPlan.monthlyPriceBRL - currentPlan.monthlyPriceBRL).toFixed(0)}</span>/mês, você desbloqueia:
                </p>
                
                <ul className="space-y-1.5 mb-4">
@@ -138,7 +138,7 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
                
                <button
                  type="button"
-                 onClick={() => alert('Em breve: fluxo de upgrade automÃ¡tico!')}
+                 onClick={() => alert('Em breve: fluxo de upgrade automático!')}
                  className="w-full inline-flex items-center justify-center gap-2 text-xs font-bold px-3 py-2.5 rounded-lg bg-amber-500 text-zinc-900 hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/10"
                >
                  Quero evoluir para {nextPlan.name}
@@ -152,10 +152,10 @@ export const PlanSummaryCard: React.FC<PlanSummaryCardProps> = ({ currentPlanId 
                <Crown className="w-6 h-6 text-emerald-500" />
             </div>
             <p className="text-sm font-bold text-emerald-400 mb-1">
-              VocÃª estÃ¡ no topo!
+              Você está no topo!
             </p>
             <p className="text-[11px] text-zinc-400 max-w-xs">
-              VocÃª possui o plano mais completo do BarberFlow. Para necessidades customizadas de grandes redes, fale com nosso suporte.
+              Você possui o plano mais completo do BarberFlow. Para necessidades customizadas de grandes redes, fale com nosso suporte.
             </p>
           </div>
         )}

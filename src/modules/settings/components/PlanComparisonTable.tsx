@@ -1,11 +1,11 @@
-﻿'use client';
+'use client';
 
 
 import React from 'react';
 import { Check, Minus } from 'lucide-react';
 
 const CheckIcon = () => <Check className="w-4 h-4 text-emerald-500 mx-auto" />;
-const DashIcon = () => <span className="text-zinc-600 font-bold opacity-50">â€“</span>; 
+const DashIcon = () => <span className="text-zinc-600 font-bold opacity-50">–</span>; 
 
 // Helper types
 type RowData = {
@@ -24,11 +24,11 @@ type CategoryData = {
 export const PlanComparisonTable: React.FC = () => {
   const categories: CategoryData[] = [
     {
-      title: "Agenda & OperaÃ§Ã£o",
+      title: "Agenda & Operação",
       rows: [
         { 
            feature: "Agenda & Fila", 
-           free: "DiÃ¡ria BÃ¡sica", 
+           free: "Diária Básica", 
            start: "Agenda Completa", 
            pro: "Agenda + Fila Inteligente", 
            elite: "Agenda + Fila Inteligente" 
@@ -38,14 +38,14 @@ export const PlanComparisonTable: React.FC = () => {
            free: <DashIcon />, 
            start: "Link da Barbearia", 
            pro: "Online + Fila Espera", 
-           elite: "PÃ¡gina de Equipe / Perfil" 
+           elite: "Página de Equipe / Perfil" 
         },
       ]
     },
     {
         title: "Clientes (CRM)",
         rows: [
-            { feature: "Cadastro de Clientes", free: "BÃ¡sico", start: "HistÃ³rico Simples", pro: "CRM Completo + Tags", elite: "CRM Completo + Tags" },
+            { feature: "Cadastro de Clientes", free: "Básico", start: "Histórico Simples", pro: "CRM Completo + Tags", elite: "CRM Completo + Tags" },
             { feature: "Fidelidade & Pontos", free: <DashIcon />, start: <DashIcon />, pro: <CheckIcon />, elite: <CheckIcon /> },
             { feature: "Win-back (Reconquista)", free: <DashIcon />, start: <DashIcon />, pro: <CheckIcon />, elite: <CheckIcon /> },
         ]
@@ -53,23 +53,23 @@ export const PlanComparisonTable: React.FC = () => {
     {
         title: "Financeiro & Caixa",
         rows: [
-            { feature: "VisÃ£o Financeira", free: "Faturamento Dia", start: "Faturamento MÃªs", pro: "RelatÃ³rios AvanÃ§ados", elite: "RelatÃ³rios AvanÃ§ados" },
-            { feature: "DRE & Break-even", free: <DashIcon />, start: <DashIcon />, pro: "DRE + Ponto EquilÃ­brio", elite: "DRE + Ponto EquilÃ­brio" },
-            { feature: "ComissÃµes & Payouts", free: <DashIcon />, start: <DashIcon />, pro: <CheckIcon />, elite: <CheckIcon /> },
+            { feature: "Visão Financeira", free: "Faturamento Dia", start: "Faturamento Mês", pro: "Relatórios Avançados", elite: "Relatórios Avançados" },
+            { feature: "DRE & Break-even", free: <DashIcon />, start: <DashIcon />, pro: "DRE + Ponto Equilíbrio", elite: "DRE + Ponto Equilíbrio" },
+            { feature: "Comissões & Payouts", free: <DashIcon />, start: <DashIcon />, pro: <CheckIcon />, elite: <CheckIcon /> },
             { feature: "Fechamento Cego", free: <DashIcon />, start: <DashIcon />, pro: <CheckIcon />, elite: <CheckIcon /> },
         ]
     },
     {
         title: "Produtos & Estoque",
         rows: [
-            { feature: "CatÃ¡logo & Vendas", free: "Simples", start: "Organizado", pro: "Custo & Margem", elite: "Custo & Margem" },
+            { feature: "Catálogo & Vendas", free: "Simples", start: "Organizado", pro: "Custo & Margem", elite: "Custo & Margem" },
         ]
     },
     {
-        title: "Marca & ExpansÃ£o",
+        title: "Marca & Expansão",
         rows: [
-            { feature: "Website Profissional", free: <DashIcon />, start: <DashIcon />, pro: <DashIcon />, elite: "Site Premium + DomÃ­nio" },
-            { feature: "Ferramentas Marketing", free: <DashIcon />, start: <DashIcon />, pro: "BÃ¡sico", elite: "AvanÃ§ado + Prioridade" },
+            { feature: "Website Profissional", free: <DashIcon />, start: <DashIcon />, pro: <DashIcon />, elite: "Site Premium + Domínio" },
+            { feature: "Ferramentas Marketing", free: <DashIcon />, start: <DashIcon />, pro: "Básico", elite: "Avançado + Prioridade" },
         ]
     }
   ];
@@ -118,7 +118,7 @@ export const PlanComparisonTable: React.FC = () => {
             <table className="w-full min-w-[700px] border-collapse text-sm">
                 <thead>
                     <tr>
-                        <th className="p-4 text-left text-zinc-500 font-bold uppercase text-xs w-1/3 bg-zinc-900 sticky left-0 z-10 border-b border-zinc-800">MÃ³dulo / Recurso</th>
+                        <th className="p-4 text-left text-zinc-500 font-bold uppercase text-xs w-1/3 bg-zinc-900 sticky left-0 z-10 border-b border-zinc-800">Módulo / Recurso</th>
                         <th className="p-4 text-center text-zinc-400 font-bold w-1/6 border-b border-zinc-800 bg-zinc-900/50">Free Solo</th>
                         <th className="p-4 text-center text-white font-bold w-1/6 border-b border-zinc-800 bg-zinc-900">Start</th>
                         <th className="p-4 text-center text-amber-500 font-bold w-1/6 border-b border-zinc-800 bg-amber-500/5">Pro</th>
@@ -151,7 +151,7 @@ export const PlanComparisonTable: React.FC = () => {
         </div>
 
         <p className="text-center text-[10px] text-zinc-600 mt-4 px-4">
-           * Anual = 10x o valor mensal. O plano Elite inclui domÃ­nio por 1 ano.
+           * Anual = 10x o valor mensal. O plano Elite inclui domínio por 1 ano.
         </p>
     </div>
   );

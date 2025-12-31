@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 
 import React from 'react';
@@ -52,7 +52,7 @@ export const ReferralDashboard: React.FC = () => {
   if (currentUser.role !== 'OWNER') {
      return (
         <div className="h-full flex items-center justify-center text-zinc-500">
-           Acesso restrito ao proprietÃ¡rio.
+           Acesso restrito ao proprietário.
         </div>
      );
   }
@@ -62,7 +62,7 @@ export const ReferralDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col gap-2">
          <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-2 sm:gap-3">
-            <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-500 flex-shrink-0" /> Programa de IndicaÃ§Ãµes
+            <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-500 flex-shrink-0" /> Programa de Indicações
          </h1>
          <p className="text-zinc-400 text-xs sm:text-sm">
             Transforme sua rede de contatos em receita extra.
@@ -85,7 +85,7 @@ export const ReferralDashboard: React.FC = () => {
             <div className="flex-1 space-y-6 text-center lg:text-left">
                <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-1.5 backdrop-blur-md">
                   <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
-                  <span className="text-xs font-bold text-emerald-300 uppercase tracking-widest">ComissÃ£o Exclusiva de Dono</span>
+                  <span className="text-xs font-bold text-emerald-300 uppercase tracking-widest">Comissão Exclusiva de Dono</span>
                </div>
                
                <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
@@ -94,7 +94,7 @@ export const ReferralDashboard: React.FC = () => {
                </h2>
                
                <p className="text-zinc-400 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  Indique barbearias e receba comissÃ£o sobre o <strong className="text-white">1Âº pagamento anual</strong>. Suas indicaÃ§Ãµes diretas = 100% pra vocÃª.
+                  Indique barbearias e receba comissão sobre o <strong className="text-white">1º pagamento anual</strong>. Suas indicações diretas = 100% pra você.
                </p>
 
                <div className="flex flex-wrap justify-center lg:justify-start gap-3">
@@ -108,7 +108,7 @@ export const ReferralDashboard: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-300">
                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500"><Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" /></div>
-                     D+60 seguranÃ§a
+                     D+60 segurança
                   </div>
                </div>
             </div>
@@ -141,7 +141,7 @@ export const ReferralDashboard: React.FC = () => {
                   </button>
                   
                   <p className="text-[9px] sm:text-[10px] text-zinc-500 text-center leading-tight">
-                     ComissÃ£o sobre 1Âº pagamento anual. Liberada em D+60 (seguranÃ§a contra estornos).
+                     Comissão sobre 1º pagamento anual. Liberada em D+60 (segurança contra estornos).
                   </p>
                </div>
             </div>
@@ -164,11 +164,11 @@ export const ReferralDashboard: React.FC = () => {
                   </div>
                   
                   <h3 className="text-2xl font-bold text-white mb-3">
-                     MultiplicaÃ§Ã£o de Ganhos <span className="text-red-500">Desativada</span>
+                     Multiplicação de Ganhos <span className="text-red-500">Desativada</span>
                   </h3>
                   
                   <p className="text-zinc-400 max-w-md mb-8 text-sm leading-relaxed">
-                     VocÃª estÃ¡ deixando dinheiro na mesa. Ative o programa para permitir que seus barbeiros vendam por vocÃª e receba <strong className="text-amber-500">30% de comissÃ£o</strong> sem esforÃ§o adicional.
+                     Você está deixando dinheiro na mesa. Ative o programa para permitir que seus barbeiros vendam por você e receba <strong className="text-amber-500">30% de comissão</strong> sem esforço adicional.
                   </p>
 
                   <button 
@@ -191,19 +191,19 @@ export const ReferralDashboard: React.FC = () => {
                         </div>
                         <div>
                            <h3 className="text-2xl font-bold text-white">Multiplique seus ganhos com o seu time</h3>
-                           <p className="text-sm text-zinc-400 mt-1">Ative links individuais para cada barbeiro. Eles ganham por indicar e vocÃª ainda recebe uma parte.</p>
+                           <p className="text-sm text-zinc-400 mt-1">Ative links individuais para cada barbeiro. Eles ganham por indicar e você ainda recebe uma parte.</p>
                         </div>
                      </div>
                      
                      <div className="text-zinc-400 text-sm leading-relaxed space-y-4">
                         <p>
-                           Quando vocÃª ativa o programa para a equipe, cada colaborador (staff) recebe um link prÃ³prio para indicar outras barbearias para o BarberFlow.
+                           Quando você ativa o programa para a equipe, cada colaborador (staff) recebe um link próprio para indicar outras barbearias para o BarberFlow.
                         </p>
                         <p>
-                           Sempre que uma barbearia fechar um <strong className="text-white">PLANO ANUAL</strong> usando o link de um dos seus barbeiros, a comissÃ£o dessa venda Ã© dividida automaticamente.
+                           Sempre que uma barbearia fechar um <strong className="text-white">PLANO ANUAL</strong> usando o link de um dos seus barbeiros, a comissão dessa venda é dividida automaticamente.
                         </p>
                         <p>
-                           Nas indicaÃ§Ãµes feitas pelos links da equipe, a mesma regra se aplica: a comissÃ£o Ã© calculada sobre o primeiro pagamento do plano anual e Ã© liberada em atÃ© 60 dias apÃ³s a confirmaÃ§Ã£o, sendo dividida automaticamente em 70% para o staff e 30% para vocÃª (dono).
+                           Nas indicações feitas pelos links da equipe, a mesma regra se aplica: a comissão é calculada sobre o primeiro pagamento do plano anual e é liberada em até 60 dias após a confirmação, sendo dividida automaticamente em 70% para o staff e 30% para você (dono).
                         </p>
                      </div>
                   </div>
@@ -217,19 +217,19 @@ export const ReferralDashboard: React.FC = () => {
                      <div className="flex-1 bg-zinc-950/80 border border-orange-500/30 p-4 rounded-xl text-center relative overflow-hidden shadow-lg">
                         <div className="absolute inset-0 bg-orange-500/5"></div>
                         <span className="block text-3xl font-bold text-orange-500 mb-1 relative z-10">30%</span>
-                        <span className="text-[10px] uppercase font-bold text-zinc-500 relative z-10">Para VocÃª (Dono)</span>
+                        <span className="text-[10px] uppercase font-bold text-zinc-500 relative z-10">Para Você (Dono)</span>
                      </div>
                   </div>
 
                   {/* Upsell / Fear Removal */}
                   <div className="relative z-10 bg-gradient-to-r from-orange-950/20 to-zinc-950/50 rounded-xl p-4 border border-orange-500/20 mb-6 text-sm">
                      <p className="text-zinc-400 mb-2 leading-relaxed">
-                        VocÃª nÃ£o perde nada das suas indicaÃ§Ãµes diretas: tudo o que for vendido pelo seu prÃ³prio link continua com a comissÃ£o inteira para vocÃª. A divisÃ£o 70/30 acontece apenas nas vendas feitas pelos links dos colaboradores.
+                        Você não perde nada das suas indicações diretas: tudo o que for vendido pelo seu próprio link continua com a comissão inteira para você. A divisão 70/30 acontece apenas nas vendas feitas pelos links dos colaboradores.
                      </p>
                      <p className="text-orange-400 font-bold leading-relaxed flex gap-2">
                         <Rocket className="w-4 h-4 flex-shrink-0 mt-0.5" />
                         <span>
-                           Sem ativar o programa para o time, vocÃª ganha R$ 0,00 sobre as indicaÃ§Ãµes deles. Com o programa ativo, vocÃª passa a receber automaticamente 30% de tudo que o seu time trouxer.
+                           Sem ativar o programa para o time, você ganha R$ 0,00 sobre as indicações deles. Com o programa ativo, você passa a receber automaticamente 30% de tudo que o seu time trouxer.
                         </span>
                      </p>
                   </div>
@@ -237,7 +237,7 @@ export const ReferralDashboard: React.FC = () => {
                   {/* Toggle Button */}
                   <div className="relative z-10 bg-zinc-950/50 rounded-xl p-4 border border-zinc-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                      <div className="text-xs text-zinc-400">
-                        ðŸŸ¢ Seus barbeiros jÃ¡ podem acessar os links no painel deles.
+                        🟢 Seus barbeiros já podem acessar os links no painel deles.
                      </div>
                      <button
                         onClick={handleToggleStaff}
@@ -259,10 +259,10 @@ export const ReferralDashboard: React.FC = () => {
                </div>
                <h3 className="text-white font-bold text-lg mb-2">Potencial de Ganho</h3>
                <p className="text-zinc-500 text-xs mb-6">
-                  Se 5 barbeiros fizerem 1 venda por mÃªs:
+                  Se 5 barbeiros fizerem 1 venda por mês:
                </p>
                <div className="text-4xl font-bold text-emerald-500 mb-2">
-                  R$ 1.250<span className="text-lg text-emerald-500/50">/mÃªs</span>
+                  R$ 1.250<span className="text-lg text-emerald-500/50">/mês</span>
                </div>
                <p className="text-[10px] text-zinc-600 uppercase font-bold tracking-wider">
                   Renda passiva estimada
@@ -277,24 +277,24 @@ export const ReferralDashboard: React.FC = () => {
             <span className="text-white font-bold flex items-center gap-2 text-sm sm:text-lg">
                <Info className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400" /> Ver regras do programa
             </span>
-            <span className="text-zinc-500 text-xs group-open:rotate-180 transition-transform">â–¼</span>
+            <span className="text-zinc-500 text-xs group-open:rotate-180 transition-transform">▼</span>
          </summary>
          <ul className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-2 text-xs sm:text-sm text-zinc-400 list-disc list-outside pl-5 leading-relaxed">
-            <li>ComissÃ£o apenas em <strong className="text-zinc-300">plano anual</strong>, no <strong className="text-zinc-300">1Âº pagamento</strong>.</li>
-            <li>Liberada em <strong className="text-zinc-300">D+60</strong> (prazo de seguranÃ§a contra estornos).</li>
-            <li>Se houver estorno/cancelamento, a comissÃ£o Ã© ajustada.</li>
-            <li className="text-red-400/80">Proibida auto-indicaÃ§Ã£o.</li>
+            <li>Comissão apenas em <strong className="text-zinc-300">plano anual</strong>, no <strong className="text-zinc-300">1º pagamento</strong>.</li>
+            <li>Liberada em <strong className="text-zinc-300">D+60</strong> (prazo de segurança contra estornos).</li>
+            <li>Se houver estorno/cancelamento, a comissão é ajustada.</li>
+            <li className="text-red-400/80">Proibida auto-indicação.</li>
          </ul>
       </details>
 
-      {/* LISTA DE COMISSÃ•ES (OWNER) */}
+      {/* LISTA DE COMISSÕES (OWNER) */}
       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
          <h3 className="text-white font-bold mb-4 flex items-center gap-2 text-sm sm:text-lg">
-            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" /> Suas comissÃµes
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" /> Suas comissões
          </h3>
          {ownerSales.length === 0 ? (
             <div className="text-center py-8">
-               <p className="text-zinc-500 text-sm mb-2">Nenhuma comissÃ£o ainda</p>
+               <p className="text-zinc-500 text-sm mb-2">Nenhuma comissão ainda</p>
                <p className="text-zinc-600 text-xs">Compartilhe seu link e comece a ganhar!</p>
             </div>
          ) : (
@@ -310,7 +310,7 @@ export const ReferralDashboard: React.FC = () => {
                               s.status === 'PENDING' ? 'bg-amber-500/10 text-amber-400' :
                               'bg-red-500/10 text-red-400'
                            }`}>
-                              {s.status === 'PENDING' ? 'Aguardando' : s.status === 'AVAILABLE' ? 'DisponÃ­vel' : s.status}
+                              {s.status === 'PENDING' ? 'Aguardando' : s.status === 'AVAILABLE' ? 'Disponível' : s.status}
                            </span>
                         </div>
                         <div className="flex items-center justify-between">
@@ -329,9 +329,9 @@ export const ReferralDashboard: React.FC = () => {
                   <table className="w-full text-sm">
                      <thead>
                         <tr className="text-zinc-500 border-b border-zinc-800 text-xs">
-                           <th className="py-2 text-left">CÃ³digo</th>
+                           <th className="py-2 text-left">Código</th>
                            <th className="py-2 text-left">Status</th>
-                           <th className="py-2 text-left">LiberaÃ§Ã£o</th>
+                           <th className="py-2 text-left">Liberação</th>
                            <th className="py-2 text-right">Valor</th>
                         </tr>
                      </thead>
@@ -345,11 +345,11 @@ export const ReferralDashboard: React.FC = () => {
                                     s.status === 'PENDING' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
                                     'bg-red-500/10 text-red-400 border-red-500/20'
                                  }`}>
-                                    {s.status === 'PENDING' ? 'Aguardando D+60' : s.status === 'AVAILABLE' ? 'DisponÃ­vel' : s.status}
+                                    {s.status === 'PENDING' ? 'Aguardando D+60' : s.status === 'AVAILABLE' ? 'Disponível' : s.status}
                                  </span>
                               </td>
                               <td className="py-2 text-xs text-zinc-400">
-                                 {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : 'â€”'}
+                                 {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : '—'}
                               </td>
                               <td className="py-2 text-right font-bold text-emerald-400">
                                  R$ {(s.ownerCommissionAmountBRL ?? s.commissionAmountBRL).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}

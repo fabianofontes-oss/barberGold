@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Lock, TrendingUp, Sparkles, BarChart2, Share2, Rocket } from 'lucide-react';
@@ -23,8 +23,8 @@ export const GrowthCommand = () => {
             <div className="h-1 w-24 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mb-8 opacity-30"></div>
 
             <p className="text-zinc-400 mb-10 leading-relaxed text-sm md:text-base">
-               O mÃ³dulo de <b>InteligÃªncia de Crescimento</b> estÃ¡ reservado para o futuro. 
-               <br/>Aqui vocÃª poderÃ¡ gerenciar campanhas, influencers e automaÃ§Ã£o de marketing.
+               O módulo de <b>Inteligência de Crescimento</b> está reservado para o futuro. 
+               <br/>Aqui você poderá gerenciar campanhas, influencers e automação de marketing.
             </p>
 
             <div className="grid grid-cols-2 gap-4 mb-10">
@@ -32,14 +32,14 @@ export const GrowthCommand = () => {
                   <Sparkles className="w-6 h-6 text-purple-400" />
                   <div className="text-center">
                      <h4 className="font-bold text-zinc-300 text-xs">Social AI</h4>
-                     <p className="text-[10px] text-zinc-600">Posts AutomÃ¡ticos</p>
+                     <p className="text-[10px] text-zinc-600">Posts Automáticos</p>
                   </div>
                </div>
                <div className="bg-zinc-950/50 p-4 rounded-2xl border border-zinc-800/50 flex flex-col items-center gap-2 opacity-40 hover:opacity-60 transition-opacity">
                   <Rocket className="w-6 h-6 text-emerald-400" />
                   <div className="text-center">
                      <h4 className="font-bold text-zinc-300 text-xs">Influencers</h4>
-                     <p className="text-[10px] text-zinc-600">GestÃ£o de Parceiros</p>
+                     <p className="text-[10px] text-zinc-600">Gestão de Parceiros</p>
                   </div>
                </div>
                <div className="bg-zinc-950/50 p-4 rounded-2xl border border-zinc-800/50 flex flex-col items-center gap-2 opacity-40 hover:opacity-60 transition-opacity">
@@ -52,14 +52,14 @@ export const GrowthCommand = () => {
                <div className="bg-zinc-950/50 p-4 rounded-2xl border border-zinc-800/50 flex flex-col items-center gap-2 opacity-40 hover:opacity-60 transition-opacity">
                   <Share2 className="w-6 h-6 text-pink-400" />
                   <div className="text-center">
-                     <h4 className="font-bold text-zinc-300 text-xs">ViralizaÃ§Ã£o</h4>
+                     <h4 className="font-bold text-zinc-300 text-xs">Viralização</h4>
                      <p className="text-[10px] text-zinc-600">Links Rastreados</p>
                   </div>
                </div>
             </div>
 
             <button disabled className="w-full bg-zinc-800 text-zinc-500 font-bold py-4 rounded-xl border border-zinc-700 cursor-not-allowed tracking-wider uppercase text-xs hover:bg-zinc-800/80 transition-colors">
-               MÃ³dulo Bloqueado
+               Módulo Bloqueado
             </button>
          </div>
       </div>

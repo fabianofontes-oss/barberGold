@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Star, Flame, Zap, Check } from 'lucide-react';
@@ -13,7 +13,7 @@ export const PackageSelection: React.FC<PackageSelectionProps> = ({ businessType
   const getBusinessTypeLabel = () => {
     switch (businessType) {
       case 'barber': return 'Barbearia';
-      case 'salon': return 'SalÃ£o';
+      case 'salon': return 'Salão';
       case 'unisex': return 'Unissex';
     }
   };
@@ -23,25 +23,25 @@ export const PackageSelection: React.FC<PackageSelectionProps> = ({ businessType
       return [
         {
           level: 'essencial',
-          icon: 'â­',
+          icon: '⭐',
           title: 'ESSENCIAL',
           description: '10 itens principais',
           itemCount: 10,
-          features: ['âœ“ Cortes bÃ¡sicos', 'âœ“ Barba', 'âœ“ Combos'],
+          features: ['✓ Cortes básicos', '✓ Barba', '✓ Combos'],
           recommended: true
         },
         {
           level: 'completo',
-          icon: 'ðŸ”¥',
+          icon: '🔥',
           title: 'COMPLETO',
           description: '26 itens + extras',
           itemCount: 26,
-          features: ['âœ“ Tudo do Essencial', 'âœ“ QuÃ­micas e tratamentos', 'âœ“ EstÃ©tica facial']
+          features: ['✓ Tudo do Essencial', '✓ Químicas e tratamentos', '✓ Estética facial']
         },
         {
           level: 'custom',
-          icon: 'âš¡',
-          title: 'SÃ“ EU ESCOLHO',
+          icon: '⚡',
+          title: 'SÓ EU ESCOLHO',
           description: 'Selecionar item por item',
           itemCount: 0,
           features: ['Controle total']
@@ -51,25 +51,25 @@ export const PackageSelection: React.FC<PackageSelectionProps> = ({ businessType
       return [
         {
           level: 'essencial',
-          icon: 'â­',
+          icon: '⭐',
           title: 'ESSENCIAL',
           description: '14 itens principais',
           itemCount: 14,
-          features: ['âœ“ Cabelo e escova', 'âœ“ Unhas', 'âœ“ DepilaÃ§Ã£o bÃ¡sica'],
+          features: ['✓ Cabelo e escova', '✓ Unhas', '✓ Depilação básica'],
           recommended: true
         },
         {
           level: 'completo',
-          icon: 'ðŸ”¥',
+          icon: '🔥',
           title: 'COMPLETO',
           description: '44 itens + extras',
           itemCount: 44,
-          features: ['âœ“ Tudo do Essencial', 'âœ“ QuÃ­micas avanÃ§adas', 'âœ“ Penteados e estÃ©tica']
+          features: ['✓ Tudo do Essencial', '✓ Químicas avançadas', '✓ Penteados e estética']
         },
         {
           level: 'custom',
-          icon: 'âš¡',
-          title: 'SÃ“ EU ESCOLHO',
+          icon: '⚡',
+          title: 'SÓ EU ESCOLHO',
           description: 'Selecionar item por item',
           itemCount: 0,
           features: ['Controle total']
@@ -79,25 +79,25 @@ export const PackageSelection: React.FC<PackageSelectionProps> = ({ businessType
       return [
         {
           level: 'essencial',
-          icon: 'â­',
+          icon: '⭐',
           title: 'ESSENCIAL',
           description: '15 itens principais',
           itemCount: 15,
-          features: ['âœ“ Mix barbearia + salÃ£o', 'âœ“ ServiÃ§os essenciais', 'âœ“ Combos'],
+          features: ['✓ Mix barbearia + salão', '✓ Serviços essenciais', '✓ Combos'],
           recommended: true
         },
         {
           level: 'completo',
-          icon: 'ðŸ”¥',
+          icon: '🔥',
           title: 'COMPLETO',
           description: '50 itens completos',
           itemCount: 50,
-          features: ['âœ“ Tudo de barbearia', 'âœ“ Tudo de salÃ£o', 'âœ“ MÃ¡xima variedade']
+          features: ['✓ Tudo de barbearia', '✓ Tudo de salão', '✓ Máxima variedade']
         },
         {
           level: 'custom',
-          icon: 'âš¡',
-          title: 'SÃ“ EU ESCOLHO',
+          icon: '⚡',
+          title: 'SÓ EU ESCOLHO',
           description: 'Selecionar item por item',
           itemCount: 0,
           features: ['Controle total']
@@ -112,7 +112,7 @@ export const PackageSelection: React.FC<PackageSelectionProps> = ({ businessType
     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 md:p-12">
       <div className="mb-8">
         <div className="flex items-center gap-2 text-zinc-400 text-sm mb-4">
-          <span>â†</span>
+          <span>←</span>
           <span>{getBusinessTypeLabel()} selecionada</span>
         </div>
         <h2 className="text-2xl font-bold text-white mb-2">
@@ -154,7 +154,7 @@ export const PackageSelection: React.FC<PackageSelectionProps> = ({ businessType
                 </div>
                 {option.itemCount > 0 && (
                   <p className="text-amber-500 text-xs font-bold mt-3">
-                    Pronto para comeÃ§ar
+                    Pronto para começar
                   </p>
                 )}
               </div>

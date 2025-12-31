@@ -1,4 +1,4 @@
-﻿import type { PricingRule, DayOfWeek, PriceCalculation } from './types';
+import type { PricingRule, DayOfWeek, PriceCalculation } from './types';
 
 const DAY_MAP: Record<number, DayOfWeek> = {
   0: 'SUNDAY',
@@ -38,7 +38,7 @@ export function calculateDynamicPrice(params: {
   const dayOfWeek = DAY_MAP[dateTime.getDay()];
   const currentTime = `${String(dateTime.getHours()).padStart(2, '0')}:${String(dateTime.getMinutes()).padStart(2, '0')}`;
 
-  // Filtra regras aplicÃ¡veis
+  // Filtra regras aplicáveis
   const applicableRules = rules
     .filter((r) => r.isActive)
     .filter((r) => r.daysOfWeek.includes(dayOfWeek))

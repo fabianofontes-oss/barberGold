@@ -1,4 +1,4 @@
-﻿import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import type { ReferralPartner, ReferralSale, ReferralPartnerType, SaasPlanId } from '@/types';
 import type { BillingInterval } from '@/domain/plans/types';
 import type { ReferralsRepository } from './types';

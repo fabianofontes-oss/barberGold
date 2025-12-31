@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { phoneMask, cepMask, instagramMask, whatsappMask, fetchAddressByCep, ViaCepResponse } from '@/lib/masks';
 
 interface MaskedInputProps {
@@ -57,7 +57,7 @@ export const MaskedInput: React.FC<MaskedInputProps> = ({
             onAddressFetched(address);
             setCepError('');
           } else {
-            setCepError('CEP nÃ£o encontrado');
+            setCepError('CEP não encontrado');
           }
         })
         .catch(() => {

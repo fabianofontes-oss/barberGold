@@ -1,4 +1,4 @@
-﻿import { createServerClient } from '@supabase/ssr'
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { env } from '@/lib/env'
 
@@ -19,9 +19,9 @@ export async function createClient() {
               cookieStore.set(name, value, options)
             )
           } catch {
-            // O mÃ©todo `setAll` Ã© chamado de um Server Component.
-            // Isso pode ser ignorado se vocÃª tiver middleware que atualiza
-            // as sessÃµes do usuÃ¡rio.
+            // O método `setAll` é chamado de um Server Component.
+            // Isso pode ser ignorado se você tiver middleware que atualiza
+            // as sessões do usuário.
           }
         },
       },

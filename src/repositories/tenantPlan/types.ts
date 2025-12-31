@@ -1,4 +1,4 @@
-﻿export type TenantPlanStatus = 'ACTIVE' | 'TRIAL' | 'OVERDUE' | 'SUSPENDED';
+export type TenantPlanStatus = 'ACTIVE' | 'TRIAL' | 'OVERDUE' | 'SUSPENDED';
 
 export type TenantPlanBillingInterval = 'MONTHLY' | 'ANNUAL';
 

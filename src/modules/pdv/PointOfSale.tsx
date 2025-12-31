@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -52,8 +52,8 @@ const PAYMENT_ICONS: Record<string, any> = {
 
 const PAYMENT_LABELS: Record<string, string> = {
    [PaymentMethod.CASH]: 'Dinheiro',
-   [PaymentMethod.CREDIT_CARD]: 'CrÃ©dito',
-   [PaymentMethod.DEBIT_CARD]: 'DÃ©bito',
+   [PaymentMethod.CREDIT_CARD]: 'Crédito',
+   [PaymentMethod.DEBIT_CARD]: 'Débito',
    [PaymentMethod.PIX]: 'Pix',
    [PaymentMethod.GOOGLE_PAY]: 'Google Pay',
    [PaymentMethod.APPLE_PAY]: 'Apple Pay',
@@ -110,7 +110,7 @@ export const PointOfSale = () => {
   const selectedClient = clients.find(c => c.id === selectedClientId);
   const selectedStaff = staff.find(s => s.id === selectedStaffId);
 
-  // Carregar serviÃ§os do staff selecionado
+  // Carregar serviços do staff selecionado
   useEffect(() => {
     if (!selectedStaffId) {
       setStaffServices([]);
@@ -126,7 +126,7 @@ export const PointOfSale = () => {
           .eq('staff_id', selectedStaffId);
         setStaffServices(data?.map(s => s.service_id) || []);
       } catch (err) {
-        console.error('Erro ao carregar serviÃ§os do staff:', err);
+        console.error('Erro ao carregar serviços do staff:', err);
       }
     }
 
@@ -223,7 +223,7 @@ export const PointOfSale = () => {
   const grandTotal = total + (tipAmount || 0);
   const splitRemaining = grandTotal - splitTotal;
 
-  // Filtrar apenas serviÃ§os do barbeiro selecionado
+  // Filtrar apenas serviços do barbeiro selecionado
   const availableServices = selectedStaffId && staffServices.length > 0
     ? services.filter(s => staffServices.includes(s.id))
     : [];
@@ -285,8 +285,8 @@ export const PointOfSale = () => {
         <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/30">
           <ShoppingBag className="w-10 h-10 text-zinc-950" />
         </div>
-        <h2 className="text-3xl font-bold text-white mb-2">Venda ConcluÃ­da!</h2>
-        <p className="text-zinc-400">TransaÃ§Ã£o registrada com sucesso.</p>
+        <h2 className="text-3xl font-bold text-white mb-2">Venda Concluída!</h2>
+        <p className="text-zinc-400">Transação registrada com sucesso.</p>
         {tipAmount > 0 && <p className="text-amber-500 font-bold mt-2">+ R$ {tipAmount.toFixed(2)} Gorjeta para o Profissional</p>}
       </div>
     );
@@ -309,9 +309,9 @@ export const PointOfSale = () => {
                   <button
                     onClick={() => setIsStaffServicesModalOpen(true)}
                     className="flex items-center gap-2 px-3 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-900 rounded-xl text-xs md:text-sm font-bold transition-all"
-                    title="Configurar ServiÃ§os"
+                    title="Configurar Serviços"
                   >
-                    <Scissors className="w-4 h-4" /> <span className="hidden sm:inline">Meus ServiÃ§os</span>
+                    <Scissors className="w-4 h-4" /> <span className="hidden sm:inline">Meus Serviços</span>
                   </button>
                 )}
                 <button
@@ -326,7 +326,7 @@ export const PointOfSale = () => {
               <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
               <input 
                 type="text"
-                placeholder="Buscar serviÃ§os ou produtos..."
+                placeholder="Buscar serviços ou produtos..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
@@ -382,8 +382,8 @@ export const PointOfSale = () => {
             <div className="flex-1 flex items-center justify-center text-center p-8">
               <div>
                 <Scissors className="w-16 h-16 text-zinc-700 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">Selecione um FuncionÃ¡rio</h3>
-                <p className="text-zinc-500">Escolha o barbeiro para ver os serviÃ§os disponÃ­veis</p>
+                <h3 className="text-xl font-bold text-white mb-2">Selecione um Funcionário</h3>
+                <p className="text-zinc-500">Escolha o barbeiro para ver os serviços disponíveis</p>
               </div>
             </div>
           )}
@@ -392,13 +392,13 @@ export const PointOfSale = () => {
             <div className="flex-1 flex items-center justify-center text-center p-8">
               <div>
                 <Package className="w-16 h-16 text-zinc-700 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">Nenhum ServiÃ§o Configurado</h3>
-                <p className="text-zinc-500 mb-4">Configure os serviÃ§os que vocÃª oferece</p>
+                <h3 className="text-xl font-bold text-white mb-2">Nenhum Serviço Configurado</h3>
+                <p className="text-zinc-500 mb-4">Configure os serviços que você oferece</p>
                 <button
                   onClick={() => setIsStaffServicesModalOpen(true)}
                   className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-zinc-900 rounded-lg font-bold transition-all"
                 >
-                  Configurar ServiÃ§os
+                  Configurar Serviços
                 </button>
               </div>
             </div>
@@ -507,7 +507,7 @@ export const PointOfSale = () => {
                        onChange={(e) => setSelectedClientId(e.target.value)}
                        className={`flex-1 bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-amber-500 ${!selectedClientId ? 'text-zinc-500 border-red-500/30' : 'text-zinc-300'}`}
                      >
-                       <option value="" disabled>Cliente (ObrigatÃ³rio)</option>
+                       <option value="" disabled>Cliente (Obrigatório)</option>
                        {clients.map(c => (
                          <option key={c.id} value={c.id}>{c.name}</option>
                        ))}
@@ -515,7 +515,7 @@ export const PointOfSale = () => {
                      <button 
                         onClick={() => setIsClientModalOpen(true)}
                         className="bg-zinc-800 hover:bg-zinc-700 text-white p-2 rounded-lg transition-colors border border-zinc-700"
-                        title="Adicionar Cliente RÃ¡pido"
+                        title="Adicionar Cliente Rápido"
                      >
                         <UserPlus className="w-4 h-4" />
                      </button>
@@ -529,7 +529,7 @@ export const PointOfSale = () => {
                     onChange={(e) => setSelectedStaffId(e.target.value)}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-9 pr-3 text-sm text-zinc-300 focus:outline-none focus:border-amber-500"
                   >
-                    <option value="" disabled>FuncionÃ¡rio...</option>
+                    <option value="" disabled>Funcionário...</option>
                     {staff.map(s => (
                       <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
@@ -551,7 +551,7 @@ export const PointOfSale = () => {
                      onClick={redeemLoyalty}
                      className="w-full mt-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-900 text-xs font-bold py-1.5 rounded animate-pulse"
                    >
-                      Resgatar Recompensa de Corte GrÃ¡tis
+                      Resgatar Recompensa de Corte Grátis
                    </button>
                  )}
 
@@ -559,9 +559,9 @@ export const PointOfSale = () => {
                  {activeDiscount && (
                    <div className="mt-2 bg-emerald-500/10 border border-emerald-500/20 p-2 rounded flex justify-between items-center">
                       <span className="text-xs font-bold text-emerald-400">
-                         {activeDiscount.type === 'BIRTHDAY' ? 'ðŸŽ‚ PromoÃ§Ã£o de AniversÃ¡rio' : 
-                          activeDiscount.type === 'WINBACK' ? 'ðŸ‘‹ Promo Retorno' : 
-                          activeDiscount.type === 'CLUB_CREDIT' ? 'ðŸ‘‘ CrÃ©dito do Clube' : 'ðŸ† Recompensa Resgatada'}
+                         {activeDiscount.type === 'BIRTHDAY' ? '🎂 Promoção de Aniversário' : 
+                          activeDiscount.type === 'WINBACK' ? '👋 Promo Retorno' : 
+                          activeDiscount.type === 'CLUB_CREDIT' ? '👑 Crédito do Clube' : '🏆 Recompensa Resgatada'}
                       </span>
                       <button onClick={() => { setActiveDiscount(null); setClubCreditApplied(false); }} className="text-zinc-500 hover:text-white">
                          <Trash2 className="w-3 h-3" />
@@ -694,7 +694,7 @@ export const PointOfSale = () => {
                 onClick={() => setCheckoutStep('PAYMENT')}
                 className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-zinc-900 font-bold py-4 rounded-xl transition-all shadow-lg shadow-amber-500/20"
               >
-                {!selectedClientId ? 'Selecionar Cliente' : (selectedStaffId ? 'Ir para Pagamento' : 'Selecionar FuncionÃ¡rio')}
+                {!selectedClientId ? 'Selecionar Cliente' : (selectedStaffId ? 'Ir para Pagamento' : 'Selecionar Funcionário')}
               </button>
             ) : (
               <div className="space-y-3">
@@ -708,7 +708,7 @@ export const PointOfSale = () => {
                     }}
                     className={`px-3 py-1 rounded text-xs font-bold transition-all ${isSplitPayment ? 'bg-purple-500 text-white' : 'bg-zinc-800 text-zinc-400'}`}
                   >
-                    {isSplitPayment ? 'Sim' : 'NÃ£o'}
+                    {isSplitPayment ? 'Sim' : 'Não'}
                   </button>
                 </div>
 
@@ -765,7 +765,7 @@ export const PointOfSale = () => {
                         onClick={() => handleCheckout(splitPayments[0].method)}
                         className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-lg"
                       >
-                        âœ“ Finalizar Pagamento
+                        ✓ Finalizar Pagamento
                       </button>
                     )}
                   </div>
@@ -826,7 +826,7 @@ export const PointOfSale = () => {
          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
             <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-sm p-6 shadow-2xl animate-fade-in md:rounded-2xl border-0 md:border md:border-zinc-800 flex flex-col justify-center">
                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl font-bold text-white">Adicionar Cliente RÃ¡pido</h3>
+                  <h3 className="text-xl font-bold text-white">Adicionar Cliente Rápido</h3>
                   <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"><X className="w-5 h-5"/></button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-6">
@@ -870,7 +870,7 @@ export const PointOfSale = () => {
           isOpen={isStaffServicesModalOpen}
           onClose={() => {
             setIsStaffServicesModalOpen(false);
-            // Recarregar serviÃ§os do staff apÃ³s fechar modal
+            // Recarregar serviços do staff após fechar modal
             if (selectedStaffId) {
               const loadServices = async () => {
                 const supabase = createClient();

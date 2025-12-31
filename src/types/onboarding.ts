@@ -1,5 +1,5 @@
-﻿// =====================================================
-// TIPOS DO KIT PREGUIÃ‡OSO - ONBOARDING
+// =====================================================
+// TIPOS DO KIT PREGUIÇOSO - ONBOARDING
 // =====================================================
 
 export type BusinessType = 'barber' | 'salon' | 'unisex';
@@ -42,8 +42,8 @@ export interface BundleItemTemplate {
 export interface OnboardingData {
   businessType: BusinessType | null;
   packageLevel: PackageLevel | null;
-  selectedServices: string[]; // IDs dos serviÃ§os selecionados
-  customizedServices: Record<string, Partial<ServiceTemplate>>; // EdiÃ§Ãµes customizadas
+  selectedServices: string[]; // IDs dos serviços selecionados
+  customizedServices: Record<string, Partial<ServiceTemplate>>; // Edições customizadas
 }
 
 export interface OnboardingStats {

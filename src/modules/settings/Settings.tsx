@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -334,7 +334,7 @@ export const Settings = () => {
                          value={shopProfile.name}
                          onChange={(e) => updateShopProfile({ ...shopProfile, name: e.target.value })}
                          className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
-                         placeholder="Ex: Barbearia do JoÃ£o"
+                         placeholder="Ex: Barbearia do João"
                       />
                    </div>
 
@@ -372,10 +372,10 @@ export const Settings = () => {
                          icon={<Instagram className="w-4 h-4" />}
                          placeholder="seuperfil"
                       />
-                      <p className="text-[10px] text-zinc-500 mt-1">Digite apenas o nome de usuÃ¡rio, sem @</p>
+                      <p className="text-[10px] text-zinc-500 mt-1">Digite apenas o nome de usuário, sem @</p>
                    </div>
 
-                   {/* CEP com busca automÃ¡tica */}
+                   {/* CEP com busca automática */}
                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div>
                          <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CEP</label>
@@ -409,7 +409,7 @@ export const Settings = () => {
                          />
                       </div>
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">NÃºmero</label>
+                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Número</label>
                          <input 
                             type="text" 
                             value={shopProfile.number || ''}
@@ -441,7 +441,7 @@ export const Settings = () => {
                             value={shopProfile.city || ''}
                             onChange={(e) => updateShopProfile({ ...shopProfile, city: e.target.value })}
                             className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none"
-                            placeholder="SÃ£o Paulo"
+                            placeholder="São Paulo"
                          />
                       </div>
                       <div>
@@ -867,7 +867,7 @@ export const Settings = () => {
                            const Icon = method.icon;
                            const isEnabled = shopSettings.paymentSettings?.inStore?.includes(method.value) ?? false;
                            
-                           // Validar se gateway estÃ¡ configurado
+                           // Validar se gateway está configurado
                            let isConfigured = true;
                            if (method.gateway === 'mercadoPago') {
                               isConfigured = !!(shopSettings.gatewayConfig?.mercadoPago?.enabled && 
@@ -961,7 +961,7 @@ export const Settings = () => {
                            const Icon = method.icon;
                            const isEnabled = shopSettings.paymentSettings?.online?.includes(method.value) ?? false;
                            
-                           // Validar se gateway estÃ¡ configurado
+                           // Validar se gateway está configurado
                            let isConfigured = true;
                            if (method.gateway === 'mercadoPago') {
                               isConfigured = !!(shopSettings.gatewayConfig?.mercadoPago?.enabled && 
@@ -976,7 +976,7 @@ export const Settings = () => {
                                                shopSettings.gatewayConfig?.stripe?.publishableKey && 
                                                shopSettings.gatewayConfig?.stripe?.secretKey);
                            } else if (method.gateway === 'any') {
-                              // CartÃ£o requer pelo menos um gateway configurado
+                              // Cartão requer pelo menos um gateway configurado
                               isConfigured = !!(
                                  (shopSettings.gatewayConfig?.mercadoPago?.enabled && shopSettings.gatewayConfig?.mercadoPago?.publicKey) ||
                                  (shopSettings.gatewayConfig?.pagSeguro?.enabled && shopSettings.gatewayConfig?.pagSeguro?.email) ||

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 
 import React from 'react';
@@ -19,7 +19,7 @@ export const OwnerReferralModal: React.FC<OwnerReferralModalProps> = ({
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(ownerReferralLink);
-    alert('Link copiado para a Ã¡rea de transferÃªncia!');
+    alert('Link copiado para a área de transferência!');
   };
 
   return (
@@ -32,11 +32,11 @@ export const OwnerReferralModal: React.FC<OwnerReferralModalProps> = ({
           <X className="w-5 h-5" />
         </button>
 
-        <h3 className="text-xl font-bold text-white mb-2">Seu link de indicaÃ§Ã£o</h3>
+        <h3 className="text-xl font-bold text-white mb-2">Seu link de indicação</h3>
         
         <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
-          Sempre que uma barbearia assinar um plano anual usando esse link, vocÃª recebe
-          <span className="text-emerald-400 font-bold"> 100% da comissÃ£o</span> dessa venda.
+          Sempre que uma barbearia assinar um plano anual usando esse link, você recebe
+          <span className="text-emerald-400 font-bold"> 100% da comissão</span> dessa venda.
         </p>
 
         <div className="flex items-center gap-2 mb-6">
