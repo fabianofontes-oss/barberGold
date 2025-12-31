@@ -110,7 +110,7 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Agendamento Online',
         included: true,
         items: [
-          'Link único para agendamento (barber.gold/seu-nome)',
+          'Link único para agendamento (seu-nome.barber.gold)',
           'Wizard: Serviço → Dia → Horário → Confirmação',
           'Gestão de horários e pausas',
           'Templates prontos para WhatsApp com link'
@@ -544,21 +544,21 @@ const UP_TO_6_PLANS_INFO: PlanInfo[] = [
 ];
 
 const SIZE_TIERS: { id: SaasV2SizeTier; label: string }[] = [
-   { id: 'SOLO', label: 'Solo (1 Barbeiro)' },
-   { id: 'UP_TO_3', label: 'Até 3 Barbeiros' },
-   { id: 'UP_TO_6', label: '3 a 6 Barbeiros' },
-   { id: 'PLUS_6', label: 'Mais de 6' },
+  { id: 'SOLO', label: 'Solo (1 Barbeiro)' },
+  { id: 'UP_TO_3', label: 'Até 3 Barbeiros' },
+  { id: 'UP_TO_6', label: '3 a 6 Barbeiros' },
+  { id: 'PLUS_6', label: 'Mais de 6' },
 ];
 
 export const PlanOverview: React.FC = () => {
-  const { currentTenantPlanId } = useBarber(); 
+  const { currentTenantPlanId } = useBarber();
   const { getCurrentTenant } = useSaasV2();
-  
+
   const currentTenant = getCurrentTenant();
-  
+
   // Default to tenant's size or SOLO
   const [selectedSizeTier, setSelectedSizeTier] = useState<SaasV2SizeTier>(
-     currentTenant?.sizeTier || 'SOLO'
+    currentTenant?.sizeTier || 'SOLO'
   );
 
   // Billing Interval State - DEFAULT ANNUAL AS REQUESTED
@@ -570,36 +570,36 @@ export const PlanOverview: React.FC = () => {
   // Determine which plan set to use
   let activePlanList = TEAM_PLANS_INFO;
   if (selectedSizeTier === 'SOLO') {
-     activePlanList = SOLO_PLANS_INFO;
+    activePlanList = SOLO_PLANS_INFO;
   } else if (selectedSizeTier === 'UP_TO_3') {
-     activePlanList = UP_TO_3_PLANS_INFO;
+    activePlanList = UP_TO_3_PLANS_INFO;
   } else if (selectedSizeTier === 'UP_TO_6') {
-     activePlanList = UP_TO_6_PLANS_INFO;
+    activePlanList = UP_TO_6_PLANS_INFO;
   }
 
   // Header Logic
   const getHeaderText = () => {
-     if (selectedSizeTier === 'SOLO') {
-        return {
-           title: 'Escolha o plano ideal para o seu momento',
-           sub: 'Nossos planos foram pensados para barbeiros solo. Comece grátis e ative mais recursos conforme o seu fluxo de clientes cresce.'
-        };
-     } else if (selectedSizeTier === 'UP_TO_3') {
-        return {
-           title: 'Planos para equipes de até 3 barbeiros',
-           sub: 'Perfeito para barbearias pequenas que já funcionam em dupla ou trio e querem organizar agenda, caixa e crescimento do time.'
-        };
-     } else if (selectedSizeTier === 'UP_TO_6') {
-        return {
-           title: 'Planos para barbearias em crescimento',
-           sub: 'Para lojas com 3 a 6 barbeiros que precisam controlar agenda, comissões, caixa e experiência de marca.'
-        };
-     }
-     // Default for other tiers
-     return {
-        title: 'Planos para Barbearias em Crescimento',
-        sub: 'Soluções escaláveis para equipes maiores e múltiplas unidades.'
-     };
+    if (selectedSizeTier === 'SOLO') {
+      return {
+        title: 'Escolha o plano ideal para o seu momento',
+        sub: 'Nossos planos foram pensados para barbeiros solo. Comece grátis e ative mais recursos conforme o seu fluxo de clientes cresce.'
+      };
+    } else if (selectedSizeTier === 'UP_TO_3') {
+      return {
+        title: 'Planos para equipes de até 3 barbeiros',
+        sub: 'Perfeito para barbearias pequenas que já funcionam em dupla ou trio e querem organizar agenda, caixa e crescimento do time.'
+      };
+    } else if (selectedSizeTier === 'UP_TO_6') {
+      return {
+        title: 'Planos para barbearias em crescimento',
+        sub: 'Para lojas com 3 a 6 barbeiros que precisam controlar agenda, comissões, caixa e experiência de marca.'
+      };
+    }
+    // Default for other tiers
+    return {
+      title: 'Planos para Barbearias em Crescimento',
+      sub: 'Soluções escaláveis para equipes maiores e múltiplas unidades.'
+    };
   };
 
   const headerInfo = getHeaderText();
@@ -609,74 +609,71 @@ export const PlanOverview: React.FC = () => {
       {/* Header & Selectors */}
       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-           <div>
-             <p className="text-xs uppercase tracking-widest text-amber-500 font-bold mb-2">
-               Assinatura & Planos
-             </p>
-             <h1 className="text-3xl font-bold text-white mb-2">
-               {headerInfo.title}
-             </h1>
-             <p className="text-zinc-400 text-sm max-w-2xl">
-               {headerInfo.sub}
-             </p>
-           </div>
+          <div>
+            <p className="text-xs uppercase tracking-widest text-amber-500 font-bold mb-2">
+              Assinatura & Planos
+            </p>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              {headerInfo.title}
+            </h1>
+            <p className="text-zinc-400 text-sm max-w-2xl">
+              {headerInfo.sub}
+            </p>
+          </div>
         </div>
 
         {/* Controls */}
         <div className="space-y-6">
-           {/* Size Tier Selector */}
-           <div>
-              <p className="text-xs font-bold text-zinc-500 uppercase mb-3 flex items-center gap-2">
-                 <Users className="w-4 h-4" /> Tamanho da Equipe
-              </p>
-              <div className="flex flex-wrap gap-2">
-                 {SIZE_TIERS.map(tier => (
-                    <button
-                       key={tier.id}
-                       onClick={() => setSelectedSizeTier(tier.id)}
-                       className={`px-4 py-3 rounded-xl text-sm font-bold border-2 transition-all ${
-                          selectedSizeTier === tier.id 
-                          ? 'bg-zinc-100 text-zinc-900 border-zinc-100 shadow-lg' 
-                          : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-white'
-                       }`}
-                    >
-                       {tier.label}
-                    </button>
-                 ))}
-              </div>
-           </div>
+          {/* Size Tier Selector */}
+          <div>
+            <p className="text-xs font-bold text-zinc-500 uppercase mb-3 flex items-center gap-2">
+              <Users className="w-4 h-4" /> Tamanho da Equipe
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SIZE_TIERS.map(tier => (
+                <button
+                  key={tier.id}
+                  onClick={() => setSelectedSizeTier(tier.id)}
+                  className={`px-4 py-3 rounded-xl text-sm font-bold border-2 transition-all ${selectedSizeTier === tier.id
+                      ? 'bg-zinc-100 text-zinc-900 border-zinc-100 shadow-lg'
+                      : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-white'
+                    }`}
+                >
+                  {tier.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
-           {/* Billing Interval Toggle */}
-           <div className="flex items-center gap-4">
-              <p className="text-xs font-bold text-zinc-500 uppercase flex items-center gap-2">
-                 <Calendar className="w-4 h-4" /> Ciclo de Pagamento
-              </p>
-              <div className="flex items-center gap-1 bg-zinc-950 border border-zinc-800 p-1 rounded-lg">
-                 <button
-                    onClick={() => setBillingInterval('MONTHLY')}
-                    className={`px-4 py-2 rounded-md text-xs font-bold transition-all ${
-                       billingInterval === 'MONTHLY'
-                       ? 'bg-zinc-800 text-white shadow-sm'
-                       : 'text-zinc-500 hover:text-zinc-300'
-                    }`}
-                 >
-                    Mensal
-                 </button>
-                 <button
-                    onClick={() => setBillingInterval('ANNUAL')}
-                    className={`px-4 py-2 rounded-md text-xs font-bold transition-all flex items-center gap-2 ${
-                       billingInterval === 'ANNUAL'
-                       ? 'bg-amber-500 text-zinc-900 shadow-sm'
-                       : 'text-zinc-500 hover:text-zinc-300'
-                    }`}
-                 >
-                    Anual
-                    <span className={`text-[9px] px-1.5 py-0.5 rounded uppercase ${billingInterval === 'ANNUAL' ? 'bg-black/20 text-black' : 'bg-emerald-500/20 text-emerald-500'}`}>
-                       2 meses grátis
-                    </span>
-                 </button>
-              </div>
-           </div>
+          {/* Billing Interval Toggle */}
+          <div className="flex items-center gap-4">
+            <p className="text-xs font-bold text-zinc-500 uppercase flex items-center gap-2">
+              <Calendar className="w-4 h-4" /> Ciclo de Pagamento
+            </p>
+            <div className="flex items-center gap-1 bg-zinc-950 border border-zinc-800 p-1 rounded-lg">
+              <button
+                onClick={() => setBillingInterval('MONTHLY')}
+                className={`px-4 py-2 rounded-md text-xs font-bold transition-all ${billingInterval === 'MONTHLY'
+                    ? 'bg-zinc-800 text-white shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                  }`}
+              >
+                Mensal
+              </button>
+              <button
+                onClick={() => setBillingInterval('ANNUAL')}
+                className={`px-4 py-2 rounded-md text-xs font-bold transition-all flex items-center gap-2 ${billingInterval === 'ANNUAL'
+                    ? 'bg-amber-500 text-zinc-900 shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                  }`}
+              >
+                Anual
+                <span className={`text-[9px] px-1.5 py-0.5 rounded uppercase ${billingInterval === 'ANNUAL' ? 'bg-black/20 text-black' : 'bg-emerald-500/20 text-emerald-500'}`}>
+                  2 meses grátis
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -686,10 +683,10 @@ export const PlanOverview: React.FC = () => {
           const isCurrent = plan.id === currentPlanId;
           const isPro = plan.level === 'pro';
           const isElite = plan.level === 'elite';
-          
+
           // Calculate Price Logic
           const priceInfo = getPlanPriceBR(plan.id, selectedSizeTier, billingInterval);
-          
+
           // Visual helpers
           const borderColor = isCurrent ? 'border-amber-500' : 'border-zinc-800';
           const titleColor = isElite ? 'text-purple-400' : (isPro ? 'text-amber-400' : 'text-white');
@@ -700,40 +697,40 @@ export const PlanOverview: React.FC = () => {
               className={`flex flex-col h-full rounded-3xl border ${borderColor} bg-zinc-900 p-5 relative overflow-hidden transition-all hover:border-zinc-700`}
             >
               {isCurrent && (
-                 <div className="absolute top-0 right-0 bg-amber-500 text-zinc-900 text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider z-10">
-                    ATUAL
-                 </div>
+                <div className="absolute top-0 right-0 bg-amber-500 text-zinc-900 text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider z-10">
+                  ATUAL
+                </div>
               )}
 
               <div className="mb-6 border-b border-zinc-800/50 pb-4">
                 <h2 className={`text-xl font-bold mb-1 ${titleColor}`}>
                   {plan.name}
                 </h2>
-                
+
                 <div className="h-16 flex flex-col justify-center">
-                   {!priceInfo || priceInfo.amount === 0 ? (
-                      <span className="text-2xl font-bold text-white">Grátis</span>
-                   ) : billingInterval === 'ANNUAL' ? (
-                      <>
-                         <div className="flex items-baseline gap-1">
-                            <span className="text-lg font-bold text-white">12x </span>
-                            <span className="text-3xl font-bold text-white">R$ {(priceInfo.amount / 12).toFixed(2).replace('.', ',')}</span>
-                         </div>
-                         <span className="text-[10px] text-zinc-500 leading-tight">
-                            Total R$ {priceInfo.amount.toFixed(2).replace('.', ',')} (2 meses grátis)
-                         </span>
-                      </>
-                   ) : (
-                      <>
-                         <div className="flex items-baseline gap-1">
-                            <span className="text-3xl font-bold text-white">R$ {priceInfo.amount.toFixed(0)}</span>
-                            <span className="text-xs text-zinc-500 font-medium">/mês</span>
-                         </div>
-                         <span className="text-[10px] text-zinc-500 leading-tight">
-                            Cobrança mensal, sem desconto.
-                         </span>
-                      </>
-                   )}
+                  {!priceInfo || priceInfo.amount === 0 ? (
+                    <span className="text-2xl font-bold text-white">Grátis</span>
+                  ) : billingInterval === 'ANNUAL' ? (
+                    <>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-lg font-bold text-white">12x </span>
+                        <span className="text-3xl font-bold text-white">R$ {(priceInfo.amount / 12).toFixed(2).replace('.', ',')}</span>
+                      </div>
+                      <span className="text-[10px] text-zinc-500 leading-tight">
+                        Total R$ {priceInfo.amount.toFixed(2).replace('.', ',')} (2 meses grátis)
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-3xl font-bold text-white">R$ {priceInfo.amount.toFixed(0)}</span>
+                        <span className="text-xs text-zinc-500 font-medium">/mês</span>
+                      </div>
+                      <span className="text-[10px] text-zinc-500 leading-tight">
+                        Cobrança mensal, sem desconto.
+                      </span>
+                    </>
+                  )}
                 </div>
 
                 <p className="text-xs text-zinc-400 mt-2 min-h-[32px] font-medium">{plan.subtitle}</p>
@@ -742,52 +739,51 @@ export const PlanOverview: React.FC = () => {
               {/* MODULES LIST */}
               <div className="flex-1 space-y-5">
                 {plan.highlight && (
-                   <p className="text-[11px] font-bold text-zinc-200 bg-zinc-950 p-2 rounded border border-zinc-800 text-center">
-                      {plan.highlight}
-                   </p>
+                  <p className="text-[11px] font-bold text-zinc-200 bg-zinc-950 p-2 rounded border border-zinc-800 text-center">
+                    {plan.highlight}
+                  </p>
                 )}
 
                 {plan.modules.map((module) => {
-                   return (
-                     <div key={module.key}>
-                       <div className="flex items-center gap-2 mb-2">
-                         <span className="text-[11px] font-bold text-amber-500 uppercase tracking-wider">
-                           {module.title}
-                         </span>
-                         <div className="h-px bg-zinc-800 flex-1"></div>
-                       </div>
+                  return (
+                    <div key={module.key}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[11px] font-bold text-amber-500 uppercase tracking-wider">
+                          {module.title}
+                        </span>
+                        <div className="h-px bg-zinc-800 flex-1"></div>
+                      </div>
 
-                       <ul className="space-y-2 pl-1">
-                           {module.items.map((item, idx) => (
-                             <li key={idx} className="flex items-start gap-2 text-[11px] text-zinc-400 leading-tight">
-                               <Check className="w-3 h-3 text-zinc-600 flex-shrink-0 mt-0.5" />
-                               <span>{item}</span>
-                             </li>
-                           ))}
-                       </ul>
-                     </div>
-                   );
+                      <ul className="space-y-2 pl-1">
+                        {module.items.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-[11px] text-zinc-400 leading-tight">
+                            <Check className="w-3 h-3 text-zinc-600 flex-shrink-0 mt-0.5" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
                 })}
               </div>
-              
+
               {/* Action Button */}
               <div className="mt-6 pt-4 border-t border-zinc-800">
-                 {isCurrent ? (
-                    <button disabled className="w-full py-3 rounded-xl bg-zinc-800 text-zinc-500 text-xs font-bold text-center cursor-default">
-                       Plano ativo
-                    </button>
-                 ) : (
-                    <button 
-                       className={`w-full py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
-                          plan.id === 'FREE' 
-                          ? 'border border-zinc-700 text-zinc-300 hover:bg-zinc-800' 
-                          : 'bg-amber-500 hover:bg-amber-400 text-zinc-900 shadow-lg shadow-amber-500/10'
-                       }`}
-                       onClick={() => alert(`Plano ${plan.name} selecionado. Fluxo de checkout em breve.`)}
-                    >
-                       {plan.id === 'FREE' ? 'Manter este plano' : 'Quero este plano'}
-                    </button>
-                 )}
+                {isCurrent ? (
+                  <button disabled className="w-full py-3 rounded-xl bg-zinc-800 text-zinc-500 text-xs font-bold text-center cursor-default">
+                    Plano ativo
+                  </button>
+                ) : (
+                  <button
+                    className={`w-full py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${plan.id === 'FREE'
+                        ? 'border border-zinc-700 text-zinc-300 hover:bg-zinc-800'
+                        : 'bg-amber-500 hover:bg-amber-400 text-zinc-900 shadow-lg shadow-amber-500/10'
+                      }`}
+                    onClick={() => alert(`Plano ${plan.name} selecionado. Fluxo de checkout em breve.`)}
+                  >
+                    {plan.id === 'FREE' ? 'Manter este plano' : 'Quero este plano'}
+                  </button>
+                )}
               </div>
             </div>
           );
@@ -796,7 +792,7 @@ export const PlanOverview: React.FC = () => {
 
       {/* Comparison Table Section */}
       <div className="mt-16 pt-8 border-t border-zinc-800">
-         <PlanComparisonTable />
+        <PlanComparisonTable />
       </div>
     </div>
   );

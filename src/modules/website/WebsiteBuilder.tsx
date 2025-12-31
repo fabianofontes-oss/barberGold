@@ -59,7 +59,7 @@ export const WebsiteBuilder = () => {
 
    const copyBookingLink = () => {
       const slug = shopProfile.slug || shopProfile.name.toLowerCase().replace(/\s+/g, '-');
-      const domain = shopProfile.customDomain || `barber.gold/${slug}`;
+      const domain = shopProfile.customDomain || `${slug}.barber.gold`;
       navigator.clipboard.writeText(`https://${domain}`);
       alert('Link copied to clipboard!');
    };
