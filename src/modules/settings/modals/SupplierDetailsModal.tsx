@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -140,7 +140,7 @@ export const SupplierDetailsModal: React.FC<SupplierDetailsModalProps> = ({ isOp
                         <div key={item.id} className="bg-zinc-950 border border-zinc-800 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                            <div className="flex-1">
                               <h4 className="font-bold text-white">{item.name}</h4>
-                              <p className="text-xs text-zinc-500">{item.category} � Cost: ${item.costPerUnit.toFixed(2)}</p>
+                              <p className="text-xs text-zinc-500">{item.category} • Cost: ${item.costPerUnit.toFixed(2)}</p>
                            </div>
                            <div className="flex items-center gap-6">
                               <div className="text-right">
