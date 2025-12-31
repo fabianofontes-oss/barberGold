@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useMemo } from 'react';
 import { Brain, TrendingUp, Coins, Sparkles, Check, Info } from 'lucide-react';
@@ -23,10 +23,10 @@ export const SmartSuggestionsPanel: React.FC<SmartSuggestionsPanelProps> = ({ on
             <Info className="w-5 h-5 text-amber-500" />
           </div>
           <div>
-            <p className="text-sm text-zinc-300 font-medium">Cadastre seus serviços primeiro</p>
+            <p className="text-sm text-zinc-300 font-medium">Cadastre seus serviÃ§os primeiro</p>
             <p className="text-xs text-zinc-500 mt-1">
-              Vá em <strong>Catálogo</strong> e adicione seus serviços com os preços. 
-              Depois volte aqui para receber sugestões inteligentes de planos.
+              VÃ¡ em <strong>CatÃ¡logo</strong> e adicione seus serviÃ§os com os preÃ§os. 
+              Depois volte aqui para receber sugestÃµes inteligentes de planos.
             </p>
           </div>
         </div>
@@ -36,7 +36,7 @@ export const SmartSuggestionsPanel: React.FC<SmartSuggestionsPanelProps> = ({ on
 
   return (
     <div className="mb-6 space-y-4">
-      {/* Header com explicação */}
+      {/* Header com explicaÃ§Ã£o */}
       <div className="bg-gradient-to-br from-purple-950/30 to-zinc-900 border border-purple-500/20 rounded-xl p-4">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -45,14 +45,14 @@ export const SmartSuggestionsPanel: React.FC<SmartSuggestionsPanelProps> = ({ on
           <div>
             <p className="text-sm font-bold text-white flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              Sugestões Inteligentes
+              SugestÃµes Inteligentes
             </p>
             <p className="text-xs text-zinc-400 mt-1">{summary}</p>
           </div>
         </div>
       </div>
 
-      {/* Cards de sugestões */}
+      {/* Cards de sugestÃµes */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {analysis.suggestions.map((suggestion) => (
           <button
@@ -78,23 +78,23 @@ export const SmartSuggestionsPanel: React.FC<SmartSuggestionsPanelProps> = ({ on
                     : 'bg-zinc-800 text-zinc-400'
                 }`}
               >
-                {suggestion.tier === 'POPULAR' ? 'Recomendado' : suggestion.tier === 'PREMIUM' ? 'VIP' : 'Básico'}
+                {suggestion.tier === 'POPULAR' ? 'Recomendado' : suggestion.tier === 'PREMIUM' ? 'VIP' : 'BÃ¡sico'}
               </span>
               {suggestion.tier === 'POPULAR' && <Sparkles className="w-4 h-4 text-amber-500" />}
             </div>
 
-            {/* Nome e preço */}
+            {/* Nome e preÃ§o */}
             <h4 className="text-lg font-bold text-white mb-1">{suggestion.name}</h4>
             <div className="flex items-baseline gap-1 mb-2">
               <span className="text-2xl font-bold text-white">R$ {suggestion.monthlyPriceBRL}</span>
-              <span className="text-xs text-zinc-500">/mês</span>
+              <span className="text-xs text-zinc-500">/mÃªs</span>
             </div>
 
-            {/* Créditos */}
+            {/* CrÃ©ditos */}
             <div className="flex items-center gap-2 text-sm text-zinc-400 mb-2">
               <Check className="w-4 h-4 text-emerald-500" />
               <span>
-                <strong className="text-white">{suggestion.monthlyCredits}</strong> crédito{suggestion.monthlyCredits > 1 ? 's' : ''}/mês
+                <strong className="text-white">{suggestion.monthlyCredits}</strong> crÃ©dito{suggestion.monthlyCredits > 1 ? 's' : ''}/mÃªs
               </span>
             </div>
 
@@ -102,14 +102,14 @@ export const SmartSuggestionsPanel: React.FC<SmartSuggestionsPanelProps> = ({ on
             <div className="flex items-center gap-2 text-sm mb-3">
               <Coins className="w-4 h-4 text-emerald-500" />
               <span className="text-emerald-400 font-medium">
-                Economia de R$ {suggestion.savingsPerMonth}/mês
+                Economia de R$ {suggestion.savingsPerMonth}/mÃªs
               </span>
             </div>
 
-            {/* Comparativo de preço por visita */}
+            {/* Comparativo de preÃ§o por visita */}
             <div className="bg-black/30 rounded-lg p-2 text-[10px] text-zinc-500">
               <div className="flex justify-between">
-                <span>Preço avulso:</span>
+                <span>PreÃ§o avulso:</span>
                 <span className="line-through">R$ {suggestion.originalPricePerVisit}</span>
               </div>
               <div className="flex justify-between text-emerald-400 font-bold">
@@ -118,11 +118,11 @@ export const SmartSuggestionsPanel: React.FC<SmartSuggestionsPanelProps> = ({ on
               </div>
             </div>
 
-            {/* Benefícios */}
+            {/* BenefÃ­cios */}
             {suggestion.perks.length > 0 && (
               <div className="mt-2 pt-2 border-t border-zinc-800/50">
                 <p className="text-[10px] text-zinc-500">
-                  + {suggestion.perks.join(' • ')}
+                  + {suggestion.perks.join(' â€¢ ')}
                 </p>
               </div>
             )}
@@ -136,7 +136,7 @@ export const SmartSuggestionsPanel: React.FC<SmartSuggestionsPanelProps> = ({ on
       </div>
 
       <p className="text-[10px] text-zinc-600 text-center">
-        Clique em uma sugestão para preencher o formulário. Você pode ajustar todos os valores antes de salvar.
+        Clique em uma sugestÃ£o para preencher o formulÃ¡rio. VocÃª pode ajustar todos os valores antes de salvar.
       </p>
     </div>
   );

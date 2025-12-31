@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { createContext, useContext, useEffect, useMemo, useState, PropsWithChildren } from 'react';
 import { SaasV2Tenant, SaasPlan, SaasPlanId, SaasV2FeatureKey } from '@/types';
@@ -12,18 +12,18 @@ interface SaasV2ContextType {
 
   plans: SaasPlan[];
 
-  // Seleção
+  // SeleÃ§Ã£o
   setCurrentTenantId: (tenantId: string | null) => void;
   getCurrentTenant: () => SaasV2Tenant | undefined;
   getTenantById: (tenantId: string) => SaasV2Tenant | undefined;
 
-  // Mutação básica
+  // MutaÃ§Ã£o bÃ¡sica
   updateTenant: (tenantId: string, partial: Partial<SaasV2Tenant>) => void;
 
   getPlanById: (planId: SaasPlanId) => SaasPlan | undefined;
   updatePlan: (planId: SaasPlanId, partial: Partial<SaasPlan>) => void;
   
-  // Helper de Feature Gating Dinâmico
+  // Helper de Feature Gating DinÃ¢mico
   planHasFeature: (planId: SaasPlanId, feature: SaasV2FeatureKey) => boolean;
 }
 
@@ -106,7 +106,7 @@ export const SaasV2Provider: React.FC<PropsWithChildren> = ({ children }) => {
         setTenants(SAAS_V2_MOCK_TENANTS);
         await Promise.all(SAAS_V2_MOCK_TENANTS.map((t) => tenantRepo.upsertTenant(mapTenantToRecord(t))));
       } catch {
-        // Se Supabase não estiver configurado no PILOT ainda, mantemos fallback local
+        // Se Supabase nÃ£o estiver configurado no PILOT ainda, mantemos fallback local
       }
     })();
 

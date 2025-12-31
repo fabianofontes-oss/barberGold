@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/client';
+﻿import { createClient } from '@/lib/supabase/client';
 import type { TenantPlanRepository, TenantRecord } from './types';
 
 const TABLE_TENANTS = 'tenants_registry';

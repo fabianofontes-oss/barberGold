@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -23,13 +23,13 @@ export const SuperAdminLandingEditor = () => {
                <h2 className="text-3xl font-bold text-white mb-1 flex items-center gap-3">
                   <Globe className="w-8 h-8 text-indigo-500" /> Landing Page CMS
                </h2>
-               <p className="text-zinc-400 text-sm">Controle o conteúdo público do site BarberFlow (Máquina de Vendas).</p>
+               <p className="text-zinc-400 text-sm">Controle o conteÃºdo pÃºblico do site BarberFlow (MÃ¡quina de Vendas).</p>
             </div>
             <button 
                onClick={handleSave}
                className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-500/20 transition-all"
             >
-               <Save className="w-5 h-5" /> {isSaving ? 'Salvando...' : 'Salvar Alterações'}
+               <Save className="w-5 h-5" /> {isSaving ? 'Salvando...' : 'Salvar AlteraÃ§Ãµes'}
             </button>
          </div>
 
@@ -46,7 +46,7 @@ export const SuperAdminLandingEditor = () => {
                   onClick={() => setActiveTab('CONTENT')}
                   className={`w-full text-left px-4 py-3 rounded-xl font-bold text-sm flex items-center gap-3 transition-all ${activeTab === 'CONTENT' ? 'bg-indigo-600 text-white shadow-lg' : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white'}`}
                >
-                  <DollarSign className="w-4 h-4" /> Planos & Conteúdo
+                  <DollarSign className="w-4 h-4" /> Planos & ConteÃºdo
                </button>
                <button 
                   onClick={() => setActiveTab('SEO')}
@@ -68,7 +68,7 @@ export const SuperAdminLandingEditor = () => {
                      {/* Announcement Bar */}
                      <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
                         <div className="flex justify-between items-center mb-4">
-                           <label className="text-xs font-bold text-zinc-500 uppercase">Barra de Anúncio (Topo)</label>
+                           <label className="text-xs font-bold text-zinc-500 uppercase">Barra de AnÃºncio (Topo)</label>
                            <label className="relative inline-flex items-center cursor-pointer">
                               <input type="checkbox" checked={config.announcementBar.enabled} onChange={e => setConfig({...config, announcementBar: {...config.announcementBar, enabled: e.target.checked}})} className="sr-only peer" />
                               <div className="w-9 h-5 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -79,7 +79,7 @@ export const SuperAdminLandingEditor = () => {
                            value={config.announcementBar.text}
                            onChange={e => setConfig({...config, announcementBar: {...config.announcementBar, text: e.target.value}})}
                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-indigo-500 outline-none mb-2"
-                           placeholder="Ex: Oferta de Lançamento..."
+                           placeholder="Ex: Oferta de LanÃ§amento..."
                         />
                      </div>
 
@@ -93,7 +93,7 @@ export const SuperAdminLandingEditor = () => {
                         />
                      </div>
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Subtítulo (H2)</label>
+                        <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">SubtÃ­tulo (H2)</label>
                         <textarea 
                            rows={3}
                            value={config.heroSubheadline}
@@ -102,7 +102,7 @@ export const SuperAdminLandingEditor = () => {
                         />
                      </div>
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Texto do Botão (CTA)</label>
+                        <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Texto do BotÃ£o (CTA)</label>
                         <input 
                            type="text" 
                            value={config.heroCtaText}
@@ -116,13 +116,13 @@ export const SuperAdminLandingEditor = () => {
                {activeTab === 'CONTENT' && (
                   <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-6 animate-fade-in">
                      <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                        <DollarSign className="w-5 h-5 text-zinc-500" /> Configuração de Seções
+                        <DollarSign className="w-5 h-5 text-zinc-500" /> ConfiguraÃ§Ã£o de SeÃ§Ãµes
                      </h3>
 
                      {/* Pricing Toggle */}
                      <div className="flex items-center justify-between p-4 bg-zinc-950 rounded-xl border border-zinc-800">
                         <div>
-                           <h4 className="text-white font-bold">Tabela de Preços</h4>
+                           <h4 className="text-white font-bold">Tabela de PreÃ§os</h4>
                            <p className="text-xs text-zinc-500">Exibir planos (Basic, Pro) na home page.</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -135,7 +135,7 @@ export const SuperAdminLandingEditor = () => {
                      <div className="flex items-center justify-between p-4 bg-zinc-950 rounded-xl border border-zinc-800">
                         <div>
                            <h4 className="text-white font-bold">Prova Social</h4>
-                           <p className="text-xs text-zinc-500">Exibir seção de depoimentos de clientes.</p>
+                           <p className="text-xs text-zinc-500">Exibir seÃ§Ã£o de depoimentos de clientes.</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                            <input type="checkbox" checked={config.showTestimonials} onChange={e => setConfig({...config, showTestimonials: e.target.checked})} className="sr-only peer" />
@@ -162,7 +162,7 @@ export const SuperAdminLandingEditor = () => {
                {activeTab === 'SEO' && (
                   <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-6 animate-fade-in">
                      <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                        <Search className="w-5 h-5 text-zinc-500" /> Otimização para Buscas (SEO)
+                        <Search className="w-5 h-5 text-zinc-500" /> OtimizaÃ§Ã£o para Buscas (SEO)
                      </h3>
 
                      <div>
@@ -190,13 +190,13 @@ export const SuperAdminLandingEditor = () => {
                      </div>
 
                      <div>
-                        <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Keywords (Separadas por vírgula)</label>
+                        <label className="block text-xs font-bold text-zinc-500 uppercase mb-2">Keywords (Separadas por vÃ­rgula)</label>
                         <input 
                            type="text" 
                            value={config.seoKeywords}
                            onChange={e => setConfig({...config, seoKeywords: e.target.value})}
                            className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:border-indigo-500 outline-none"
-                           placeholder="barbearia, sistema, gestão..."
+                           placeholder="barbearia, sistema, gestÃ£o..."
                         />
                      </div>
                   </div>

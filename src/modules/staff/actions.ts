@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -23,7 +23,7 @@ export async function createStaff(data: {
 
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
-    throw new Error('Não autenticado');
+    throw new Error('NÃ£o autenticado');
   }
 
   const { data: profile } = await supabase
@@ -33,7 +33,7 @@ export async function createStaff(data: {
     .single();
 
   if (!profile?.store_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
-    throw new Error('Sem permissão');
+    throw new Error('Sem permissÃ£o');
   }
 
   const { data: staff, error } = await supabase
@@ -82,7 +82,7 @@ export async function updateStaff(data: {
 
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
-    throw new Error('Não autenticado');
+    throw new Error('NÃ£o autenticado');
   }
 
   const { data: profile } = await supabase
@@ -92,7 +92,7 @@ export async function updateStaff(data: {
     .single();
 
   if (!profile?.store_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
-    throw new Error('Sem permissão');
+    throw new Error('Sem permissÃ£o');
   }
 
   const { data: staff, error } = await supabase

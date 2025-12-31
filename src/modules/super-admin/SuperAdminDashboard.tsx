@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -15,12 +15,12 @@ import { format } from 'date-fns';
 
 // MOCK LIVE EVENTS (Unchanged)
 const EVENT_TEMPLATES = [
-   { text: "Barbearia do Zé: Novo agendamento (Corte + Barba)", type: "BOOKING" },
+   { text: "Barbearia do ZÃ©: Novo agendamento (Corte + Barba)", type: "BOOKING" },
    { text: "Premium Gold: Venda realizada ($85.00)", type: "SALE", value: 85 },
    { text: "Vintage Cuts: Novo cliente cadastrado", type: "USER" },
    { text: "Elite Grooming: Login do Admin", type: "AUTH" },
-   { text: "Barbearia do Zé: Fechamento de Caixa", type: "FINANCE" },
-   { text: "System: Backup automático iniciado", type: "SYSTEM" },
+   { text: "Barbearia do ZÃ©: Fechamento de Caixa", type: "FINANCE" },
+   { text: "System: Backup automÃ¡tico iniciado", type: "SYSTEM" },
    { text: "System: High memory usage detected on Node-3", type: "ALERT" }
 ];
 
@@ -75,14 +75,14 @@ export const SuperAdminDashboard = () => {
 
   // GOD ACTIONS
   const handleNuke = (id: string) => {
-     if (confirm('⚠️ GOD MODE ALERT: Suspend this tenant immediately? All access will be blocked.')) {
+     if (confirm('âš ï¸ GOD MODE ALERT: Suspend this tenant immediately? All access will be blocked.')) {
         updateTenantStatus(id, 'SUSPENDED');
      }
   };
 
   const handleBless = (_id: string) => {
      void _id;
-     alert('✨ Tenant Blessed! (Feature: Would apply 100% discount for next cycle)');
+     alert('âœ¨ Tenant Blessed! (Feature: Would apply 100% discount for next cycle)');
   };
 
   const handlePlanChange = (tenantId: string, newPlanId: string) => {
@@ -102,7 +102,7 @@ export const SuperAdminDashboard = () => {
              </h2>
              <p className="text-zinc-400 text-sm flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                System Healthy • Latency: 24ms
+                System Healthy â€¢ Latency: 24ms
              </p>
           </div>
           

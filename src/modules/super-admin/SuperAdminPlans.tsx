@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { SAAS_PLANS_BR } from '@/constants';
@@ -10,37 +10,37 @@ export const SuperAdminPlans = () => {
 
   const planHighlights: Record<SaasPlanId, string[]> = {
     FREE: [
-      'Agenda básica',
+      'Agenda bÃ¡sica',
       'Cadastro de clientes',
       'Registro de vendas simples',
     ],
     SOLO: [
       '1 barbeiro',
       'Agenda + Fila Inteligente',
-      'PDV e catálogo de serviços',
+      'PDV e catÃ¡logo de serviÃ§os',
       'Agendamento por link',
-      'Site básico da barbearia',
+      'Site bÃ¡sico da barbearia',
     ],
     SOLO_PRO: [
       '1 barbeiro com modo empresa',
       'Tudo do Solo',
       'Fidelidade e pontos',
-      'Mensagens de aniversário e win-back',
-      'Financeiro avançado (DRE básico)',
+      'Mensagens de aniversÃ¡rio e win-back',
+      'Financeiro avanÃ§ado (DRE bÃ¡sico)',
     ],
     EQUIPE: [
-      'Até 3 barbeiros',
+      'AtÃ© 3 barbeiros',
       'Tudo do Solo PRO',
-      'Gestão de comissões e payout',
+      'GestÃ£o de comissÃµes e payout',
       'Fechamento de caixa cego',
-      'Relatórios por barbeiro',
+      'RelatÃ³rios por barbeiro',
     ],
     STUDIO: [
-      'Até 6 barbeiros e até 2 unidades',
+      'AtÃ© 6 barbeiros e atÃ© 2 unidades',
       'Tudo do Equipe',
-      'Website Premium + domínio próprio',
-      'Relatórios avançados por unidade',
-      'Suporte prioritário',
+      'Website Premium + domÃ­nio prÃ³prio',
+      'RelatÃ³rios avanÃ§ados por unidade',
+      'Suporte prioritÃ¡rio',
     ],
     ENTERPRISE: [],
   };
@@ -55,13 +55,13 @@ export const SuperAdminPlans = () => {
     <div className="min-h-screen bg-zinc-950 text-zinc-50 px-4 py-10 animate-fade-in pb-20">
       <div className="max-w-6xl mx-auto">
         
-        {/* Título da Seção */}
+        {/* TÃ­tulo da SeÃ§Ã£o */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2 flex items-center justify-center gap-2">
             Planos BarberFlow <span className="text-amber-500">Brasil</span>
           </h1>
           <p className="text-zinc-400 text-sm max-w-lg mx-auto">
-            Escolha o plano ideal para o tamanho da sua barbearia. Você pode começar pequeno e evoluir depois com apenas um clique.
+            Escolha o plano ideal para o tamanho da sua barbearia. VocÃª pode comeÃ§ar pequeno e evoluir depois com apenas um clique.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export const SuperAdminPlans = () => {
               <span className={`text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded ${
                  billingMode === 'YEARLY' ? 'bg-black/20 text-black' : 'bg-emerald-500/20 text-emerald-500'
               }`}>
-                2 meses grátis
+                2 meses grÃ¡tis
               </span>
             </button>
           </div>
@@ -122,9 +122,9 @@ export const SuperAdminPlans = () => {
                     {plan.name}
                   </h2>
                   <p className="text-xs text-zinc-500 mt-2 min-h-[40px] leading-relaxed">
-                    {plan.description || (plan.id === 'SOLO' && 'Para barbeiro solo que quer organização e presença online.')}
-                    {plan.id === 'SOLO_PRO' && 'Para barbeiro solo que já pensa como empresa e quer crescer.'}
-                    {plan.id === 'EQUIPE' && 'Para barbearias com pequena equipe que precisam de gestão séria.'}
+                    {plan.description || (plan.id === 'SOLO' && 'Para barbeiro solo que quer organizaÃ§Ã£o e presenÃ§a online.')}
+                    {plan.id === 'SOLO_PRO' && 'Para barbeiro solo que jÃ¡ pensa como empresa e quer crescer.'}
+                    {plan.id === 'EQUIPE' && 'Para barbearias com pequena equipe que precisam de gestÃ£o sÃ©ria.'}
                     {plan.id === 'STUDIO' && 'Para barbershops premium com marca forte e mais cadeiras.'}
                   </p>
                 </div>
@@ -135,7 +135,7 @@ export const SuperAdminPlans = () => {
                       R$ {price.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}
                     </span>
                     <span className="text-xs text-zinc-500 font-medium">
-                      {billingMode === 'MONTHLY' ? '/mês' : '/ano'}
+                      {billingMode === 'MONTHLY' ? '/mÃªs' : '/ano'}
                     </span>
                   </div>
                   {billingMode === 'YEARLY' ? (
@@ -179,7 +179,7 @@ export const SuperAdminPlans = () => {
           })}
         </div>
 
-        {/* Rodapé Enterprise */}
+        {/* RodapÃ© Enterprise */}
         <div className="mt-12 text-center bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
           <p className="text-xs text-zinc-400">
             Precisa de mais de 6 barbeiros ou mais de 2 unidades?{' '}

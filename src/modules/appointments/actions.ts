@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -15,13 +15,13 @@ export async function createAppointment(data: {
   price: number;
   notes?: string;
 }) {
-  // ✅ Validação Zod
+  // âœ… ValidaÃ§Ã£o Zod
   try {
     const validated = createAppointmentSchema.parse(data);
 
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw new Error('Não autenticado');
+    if (!session) throw new Error('NÃ£o autenticado');
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -29,7 +29,7 @@ export async function createAppointment(data: {
       .eq('user_id', session.user.id)
       .single();
 
-    if (!profile?.store_id) throw new Error('Store não encontrado');
+    if (!profile?.store_id) throw new Error('Store nÃ£o encontrado');
 
     const { data: appointment, error } = await supabase
       .from('appointments')
@@ -49,31 +49,31 @@ export async function createAppointment(data: {
       .single();
 
     if (error) {
-      console.error('❌ Erro ao criar agendamento:', error);
+      console.error('âŒ Erro ao criar agendamento:', error);
       throw new Error(error.message);
     }
 
     revalidatePath('/app/agenda');
     revalidatePath('/app/dashboard');
-    console.log('✅ Agendamento criado:', appointment.id);
+    console.log('âœ… Agendamento criado:', appointment.id);
     return appointment;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('❌ Erro de validação:', error.issues);
-      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+      console.error('âŒ Erro de validaÃ§Ã£o:', error.issues);
+      throw new Error(`Dados invÃ¡lidos: ${error.issues[0].message}`);
     }
     throw error;
   }
 }
 
 export async function updateAppointmentStatus(appointmentId: string, status: 'SCHEDULED' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW') {
-  // ✅ Validação Zod
+  // âœ… ValidaÃ§Ã£o Zod
   try {
     const validated = updateAppointmentStatusSchema.parse({ appointmentId, status });
 
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw new Error('Não autenticado');
+    if (!session) throw new Error('NÃ£o autenticado');
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -81,7 +81,7 @@ export async function updateAppointmentStatus(appointmentId: string, status: 'SC
       .eq('user_id', session.user.id)
       .single();
 
-    if (!profile?.store_id) throw new Error('Store não encontrado');
+    if (!profile?.store_id) throw new Error('Store nÃ£o encontrado');
 
     const { data: appointment, error } = await supabase
       .from('appointments')
@@ -92,7 +92,7 @@ export async function updateAppointmentStatus(appointmentId: string, status: 'SC
       .single();
 
     if (error) {
-      console.error('❌ Erro ao atualizar agendamento:', error);
+      console.error('âŒ Erro ao atualizar agendamento:', error);
       throw new Error(error.message);
     }
 
@@ -101,8 +101,8 @@ export async function updateAppointmentStatus(appointmentId: string, status: 'SC
     return appointment;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('❌ Erro de validação:', error.issues);
-      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+      console.error('âŒ Erro de validaÃ§Ã£o:', error.issues);
+      throw new Error(`Dados invÃ¡lidos: ${error.issues[0].message}`);
     }
     throw error;
   }

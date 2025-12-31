@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { FileText, TrendingUp, TrendingDown, Minus } from 'lucide-react';
@@ -28,10 +28,10 @@ export const SimpleDRE: React.FC<SimpleDREProps> = ({
     { label: 'Receita Bruta', value: revenue, type: 'revenue' as const },
     { label: '(+) Gorjetas', value: tips, type: 'add' as const },
     { label: '= Receita Total', value: grossRevenue, type: 'subtotal' as const, bold: true },
-    { label: '(-) Comissões Equipe', value: staffPayouts, type: 'expense' as const },
+    { label: '(-) ComissÃµes Equipe', value: staffPayouts, type: 'expense' as const },
     { label: '= Lucro Bruto', value: grossProfit, type: 'subtotal' as const, bold: true },
     { label: '(-) Custos Fixos', value: fixedExpenses, type: 'expense' as const },
-    { label: '(-) Custos Variáveis', value: variableExpenses, type: 'expense' as const },
+    { label: '(-) Custos VariÃ¡veis', value: variableExpenses, type: 'expense' as const },
     { label: '= Lucro Operacional', value: operatingProfit, type: 'result' as const, bold: true },
   ];
 
@@ -43,7 +43,7 @@ export const SimpleDRE: React.FC<SimpleDREProps> = ({
         </div>
         <div>
           <h3 className="text-lg font-bold text-white">DRE Simplificado</h3>
-          <p className="text-xs text-zinc-500">Demonstração do Resultado</p>
+          <p className="text-xs text-zinc-500">DemonstraÃ§Ã£o do Resultado</p>
         </div>
       </div>
 

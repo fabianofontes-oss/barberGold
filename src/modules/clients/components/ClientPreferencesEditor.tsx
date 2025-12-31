@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { Settings, Scissors, Package, Calendar, Clock, AlertTriangle, Save } from 'lucide-react';
@@ -30,13 +30,13 @@ export const ClientPreferencesEditor: React.FC<ClientPreferencesEditorProps> = (
     setHasChanges(false);
   };
 
-  const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+  const days = ['Segunda', 'TerÃ§a', 'Quarta', 'Quinta', 'Sexta', 'SÃ¡bado', 'Domingo'];
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <p className="text-xs text-zinc-500 font-bold uppercase flex items-center gap-2">
-          <Settings className="w-3 h-3" /> Preferências do Cliente
+          <Settings className="w-3 h-3" /> PreferÃªncias do Cliente
         </p>
         {hasChanges && (
           <button
@@ -49,10 +49,10 @@ export const ClientPreferencesEditor: React.FC<ClientPreferencesEditorProps> = (
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* Serviço preferido */}
+        {/* ServiÃ§o preferido */}
         <div>
           <label className="block text-[10px] text-zinc-500 mb-1 flex items-center gap-1">
-            <Scissors className="w-3 h-3" /> Serviço Preferido
+            <Scissors className="w-3 h-3" /> ServiÃ§o Preferido
           </label>
           <select
             value={prefs.preferredService || ''}
@@ -106,10 +106,10 @@ export const ClientPreferencesEditor: React.FC<ClientPreferencesEditorProps> = (
           </select>
         </div>
 
-        {/* Horário preferido */}
+        {/* HorÃ¡rio preferido */}
         <div>
           <label className="block text-[10px] text-zinc-500 mb-1 flex items-center gap-1">
-            <Clock className="w-3 h-3" /> Horário Preferido
+            <Clock className="w-3 h-3" /> HorÃ¡rio Preferido
           </label>
           <select
             value={prefs.preferredTime || ''}
@@ -117,7 +117,7 @@ export const ClientPreferencesEditor: React.FC<ClientPreferencesEditorProps> = (
             className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-amber-500"
           >
             <option value="">-- Selecionar --</option>
-            <option value="Manhã (8h-12h)">Manhã (8h-12h)</option>
+            <option value="ManhÃ£ (8h-12h)">ManhÃ£ (8h-12h)</option>
             <option value="Tarde (12h-18h)">Tarde (12h-18h)</option>
             <option value="Noite (18h-21h)">Noite (18h-21h)</option>
           </select>
@@ -127,7 +127,7 @@ export const ClientPreferencesEditor: React.FC<ClientPreferencesEditorProps> = (
       {/* Alergias */}
       <div>
         <label className="block text-[10px] text-zinc-500 mb-1 flex items-center gap-1">
-          <AlertTriangle className="w-3 h-3 text-red-500" /> Alergias / Restrições
+          <AlertTriangle className="w-3 h-3 text-red-500" /> Alergias / RestriÃ§Ãµes
         </label>
         <input
           type="text"
@@ -138,13 +138,13 @@ export const ClientPreferencesEditor: React.FC<ClientPreferencesEditorProps> = (
         />
       </div>
 
-      {/* Observações */}
+      {/* ObservaÃ§Ãµes */}
       <div>
-        <label className="block text-[10px] text-zinc-500 mb-1">Observações</label>
+        <label className="block text-[10px] text-zinc-500 mb-1">ObservaÃ§Ãµes</label>
         <textarea
           value={prefs.observations || ''}
           onChange={(e) => handleChange('observations', e.target.value)}
-          placeholder="Ex: Gosta de conversar, prefere silêncio..."
+          placeholder="Ex: Gosta de conversar, prefere silÃªncio..."
           rows={2}
           className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-amber-500 resize-none"
         />

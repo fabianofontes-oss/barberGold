@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { 
     Calendar, 
@@ -28,45 +28,45 @@ const allFeatures = [
         category: 'Agendamento & Clientes',
         items: [
             { icon: Calendar, title: 'Agenda Online', desc: 'Agendamento 24/7 com link personalizado para seus clientes' },
-            { icon: Users, title: 'CRM Completo', desc: 'Histórico de atendimentos, preferências e dados de cada cliente' },
-            { icon: Bell, title: 'Lembretes Automáticos', desc: 'SMS e WhatsApp lembrando o cliente do horário marcado' },
+            { icon: Users, title: 'CRM Completo', desc: 'HistÃ³rico de atendimentos, preferÃªncias e dados de cada cliente' },
+            { icon: Bell, title: 'Lembretes AutomÃ¡ticos', desc: 'SMS e WhatsApp lembrando o cliente do horÃ¡rio marcado' },
             { icon: Clock, title: 'Lista de Espera', desc: 'Preencha cancelamentos automaticamente com clientes da fila' },
         ]
     },
     {
         category: 'Financeiro & Pagamentos',
         items: [
-            { icon: Wallet, title: 'Controle de Caixa', desc: 'Entradas, saídas, sangrias e fechamento diário completo' },
-            { icon: CreditCard, title: 'Múltiplas Formas', desc: 'PIX, cartão, dinheiro e vale - tudo registrado automaticamente' },
-            { icon: PieChart, title: 'Smart Split', desc: 'Divisão automática de comissões entre barbeiros e casa' },
-            { icon: BarChart3, title: 'Relatórios Financeiros', desc: 'DRE, fluxo de caixa e análise de lucratividade por período' },
+            { icon: Wallet, title: 'Controle de Caixa', desc: 'Entradas, saÃ­das, sangrias e fechamento diÃ¡rio completo' },
+            { icon: CreditCard, title: 'MÃºltiplas Formas', desc: 'PIX, cartÃ£o, dinheiro e vale - tudo registrado automaticamente' },
+            { icon: PieChart, title: 'Smart Split', desc: 'DivisÃ£o automÃ¡tica de comissÃµes entre barbeiros e casa' },
+            { icon: BarChart3, title: 'RelatÃ³rios Financeiros', desc: 'DRE, fluxo de caixa e anÃ¡lise de lucratividade por perÃ­odo' },
         ]
     },
     {
-        category: 'Crescimento & Fidelização',
+        category: 'Crescimento & FidelizaÃ§Ã£o',
         items: [
-            { icon: Heart, title: 'Barber Club', desc: 'Planos de assinatura recorrente com débito automático' },
-            { icon: TrendingUp, title: 'Smart Pricing', desc: 'Preços dinâmicos baseados em horário e demanda' },
-            { icon: Gift, title: 'Programa de Indicação', desc: 'Recompense clientes que trazem novos clientes' },
-            { icon: Target, title: 'Recuperação de Clientes', desc: 'Campanhas automáticas para clientes inativos' },
+            { icon: Heart, title: 'Barber Club', desc: 'Planos de assinatura recorrente com dÃ©bito automÃ¡tico' },
+            { icon: TrendingUp, title: 'Smart Pricing', desc: 'PreÃ§os dinÃ¢micos baseados em horÃ¡rio e demanda' },
+            { icon: Gift, title: 'Programa de IndicaÃ§Ã£o', desc: 'Recompense clientes que trazem novos clientes' },
+            { icon: Target, title: 'RecuperaÃ§Ã£o de Clientes', desc: 'Campanhas automÃ¡ticas para clientes inativos' },
         ]
     },
     {
-        category: 'Operação & Estoque',
+        category: 'OperaÃ§Ã£o & Estoque',
         items: [
-            { icon: Package, title: 'Gestão de Estoque', desc: 'Controle de produtos, baixa automática e alertas de reposição' },
-            { icon: FileText, title: 'Catálogo de Serviços', desc: 'Serviços, combos e variações com preços personalizados' },
-            { icon: Zap, title: 'PDV Inteligente', desc: 'Ponto de venda rápido e intuitivo para vendas de produtos' },
-            { icon: Settings, title: 'Múltiplas Unidades', desc: 'Gerencie várias barbearias em um único painel' },
+            { icon: Package, title: 'GestÃ£o de Estoque', desc: 'Controle de produtos, baixa automÃ¡tica e alertas de reposiÃ§Ã£o' },
+            { icon: FileText, title: 'CatÃ¡logo de ServiÃ§os', desc: 'ServiÃ§os, combos e variaÃ§Ãµes com preÃ§os personalizados' },
+            { icon: Zap, title: 'PDV Inteligente', desc: 'Ponto de venda rÃ¡pido e intuitivo para vendas de produtos' },
+            { icon: Settings, title: 'MÃºltiplas Unidades', desc: 'Gerencie vÃ¡rias barbearias em um Ãºnico painel' },
         ]
     },
     {
-        category: 'Comunicação & Marketing',
+        category: 'ComunicaÃ§Ã£o & Marketing',
         items: [
-            { icon: MessageCircle, title: 'WhatsApp Business', desc: 'Integração nativa para confirmações e campanhas' },
-            { icon: Globe, title: 'Página de Agendamento', desc: 'Site bonito e responsivo para sua barbearia' },
-            { icon: Smartphone, title: 'App do Barbeiro', desc: 'Aplicativo para sua equipe ver agenda e comissões' },
-            { icon: Shield, title: 'Gestão de Equipe', desc: 'Horários, folgas, metas e desempenho da equipe' },
+            { icon: MessageCircle, title: 'WhatsApp Business', desc: 'IntegraÃ§Ã£o nativa para confirmaÃ§Ãµes e campanhas' },
+            { icon: Globe, title: 'PÃ¡gina de Agendamento', desc: 'Site bonito e responsivo para sua barbearia' },
+            { icon: Smartphone, title: 'App do Barbeiro', desc: 'Aplicativo para sua equipe ver agenda e comissÃµes' },
+            { icon: Shield, title: 'GestÃ£o de Equipe', desc: 'HorÃ¡rios, folgas, metas e desempenho da equipe' },
         ]
     },
 ];
@@ -80,10 +80,10 @@ export function AllFeaturesSection() {
                         Todos os Recursos
                     </div>
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                        Tudo que você precisa em um só lugar
+                        Tudo que vocÃª precisa em um sÃ³ lugar
                     </h2>
                     <p className="text-lg text-gray-400">
-                        Mais de 20 funcionalidades projetadas especificamente para barbearias. Sem gambiarras, sem integrações complicadas.
+                        Mais de 20 funcionalidades projetadas especificamente para barbearias. Sem gambiarras, sem integraÃ§Ãµes complicadas.
                     </p>
                 </div>
 
@@ -121,12 +121,12 @@ export function AllFeaturesSection() {
                 </div>
 
                 <div className="mt-16 text-center">
-                    <p className="text-gray-500 mb-6">E muito mais sendo lançado todo mês...</p>
+                    <p className="text-gray-500 mb-6">E muito mais sendo lanÃ§ado todo mÃªs...</p>
                     <a 
                         href="/register"
                         className="inline-flex items-center gap-2 bg-[#f79f08] hover:bg-[#d88b06] text-[#231c10] text-base font-bold py-4 px-8 rounded-lg transition-all shadow-[0_0_20px_rgba(247,159,8,0.2)] hover:shadow-[0_0_30px_rgba(247,159,8,0.3)]"
                     >
-                        Começar Teste de 14 Dias Grátis
+                        ComeÃ§ar Teste de 14 Dias GrÃ¡tis
                     </a>
                 </div>
             </div>

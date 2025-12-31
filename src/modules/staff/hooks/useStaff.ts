@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -27,7 +27,7 @@ export function useStaff() {
       try {
         const supabase = createClient();
         
-        // Obter sessão atual
+        // Obter sessÃ£o atual
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session) {
@@ -35,7 +35,7 @@ export function useStaff() {
           return;
         }
 
-        // Obter tenant_id do usuário
+        // Obter tenant_id do usuÃ¡rio
         const { data: profile } = await supabase
           .from('profiles')
           .select('tenant_id')
@@ -59,7 +59,7 @@ export function useStaff() {
           setError(staffError.message);
         } else {
           setStaff(data || []);
-          console.log('✅ Staff carregado do Supabase:', data?.length || 0);
+          console.log('âœ… Staff carregado do Supabase:', data?.length || 0);
         }
       } catch (err) {
         console.error('Erro ao carregar staff:', err);

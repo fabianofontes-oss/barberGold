@@ -1,19 +1,19 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Check, Minus } from 'lucide-react';
 
 export function PricingComparisonSection() {
     const features = [
-        { category: 'Gestão Essencial' },
+        { category: 'GestÃ£o Essencial' },
         { name: 'Agendamento Online', start: true, pro: true, empire: true },
-        { name: 'CRM (Gestão de Clientes)', start: true, pro: true, empire: true },
-        { name: 'Confirmação via WhatsApp', start: false, pro: true, empire: true, highlight: true },
+        { name: 'CRM (GestÃ£o de Clientes)', start: true, pro: true, empire: true },
+        { name: 'ConfirmaÃ§Ã£o via WhatsApp', start: false, pro: true, empire: true, highlight: true },
         { category: 'Financeiro & Lucro' },
         { name: 'Controle de Caixa', start: true, pro: true, empire: true },
-        { name: 'Smart Split (Comissões)', start: false, pro: true, empire: true, highlight: true },
+        { name: 'Smart Split (ComissÃµes)', start: false, pro: true, empire: true, highlight: true },
         { name: 'Barber Club (Assinaturas)', start: false, pro: false, empire: true, highlight: true },
-        { category: 'Escala & Operação' },
-        { name: 'Gestão de Estoque', start: false, pro: true, empire: true },
-        { name: 'Múltiplas Unidades', start: false, pro: false, empire: true },
+        { category: 'Escala & OperaÃ§Ã£o' },
+        { name: 'GestÃ£o de Estoque', start: false, pro: true, empire: true },
+        { name: 'MÃºltiplas Unidades', start: false, pro: false, empire: true },
         { name: 'Atendimento', start: 'Email', pro: 'Chat & Email', empire: 'Gerente VIP', isText: true },
     ];
 
@@ -33,16 +33,16 @@ export function PricingComparisonSection() {
                                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-gray-400 font-medium w-1/3 min-w-[240px]">Recursos & Funcionalidades</th>
                                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
                                         <div className="text-white font-bold text-lg mb-1">Start</div>
-                                        <div className="text-gray-500 text-sm font-normal">R$ 89/mês</div>
+                                        <div className="text-gray-500 text-sm font-normal">R$ 89/mÃªs</div>
                                     </th>
                                     <th className="p-6 bg-[#202024] border-b border-[#f79f08]/20 border-t-4 border-t-[#f79f08] text-center w-1/5 min-w-[160px] relative">
                                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#f79f08] text-[#231c10] text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap shadow-lg shadow-[#f79f08]/20">Recomendado</div>
                                         <div className="text-[#f79f08] font-bold text-xl mb-1" style={{ textShadow: '0 0 20px rgba(247, 159, 8, 0.3)' }}>Pro Gold</div>
-                                        <div className="text-white text-sm font-normal">R$ 149/mês</div>
+                                        <div className="text-white text-sm font-normal">R$ 149/mÃªs</div>
                                     </th>
                                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
                                         <div className="text-white font-bold text-lg mb-1">Empire</div>
-                                        <div className="text-gray-500 text-sm font-normal">R$ 299/mês</div>
+                                        <div className="text-gray-500 text-sm font-normal">R$ 299/mÃªs</div>
                                     </th>
                                 </tr>
                             </thead>

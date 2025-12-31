@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 function uuid(): string {
   return crypto.randomUUID();
@@ -153,7 +153,7 @@ export async function listSubscriptions(tenantId: string): Promise<Subscription[
 }
 
 // ============================================
-// RESGATE DE CRÉDITOS
+// RESGATE DE CRÃ‰DITOS
 // ============================================
 
 export async function redeemCredit(params: {
@@ -168,18 +168,18 @@ export async function redeemCredit(params: {
   const sub = await repo.getSubscriptionByClientId(params.tenantId, params.clientId);
 
   if (!sub) {
-    return { success: false, message: 'Cliente não possui assinatura ativa.' };
+    return { success: false, message: 'Cliente nÃ£o possui assinatura ativa.' };
   }
 
   if (sub.status !== 'ACTIVE') {
-    return { success: false, message: `Assinatura com status ${sub.status}. Não é possível resgatar créditos.` };
+    return { success: false, message: `Assinatura com status ${sub.status}. NÃ£o Ã© possÃ­vel resgatar crÃ©ditos.` };
   }
 
   if (sub.creditsRemaining <= 0) {
-    return { success: false, message: 'Sem créditos disponíveis neste período.' };
+    return { success: false, message: 'Sem crÃ©ditos disponÃ­veis neste perÃ­odo.' };
   }
 
-  // Deduz crédito
+  // Deduz crÃ©dito
   const updatedSub: Subscription = {
     ...sub,
     creditsRemaining: sub.creditsRemaining - 1,
@@ -204,7 +204,7 @@ export async function redeemCredit(params: {
 
   return {
     success: true,
-    message: `Crédito resgatado! Restam ${updatedSub.creditsRemaining} créditos.`,
+    message: `CrÃ©dito resgatado! Restam ${updatedSub.creditsRemaining} crÃ©ditos.`,
     usage,
   };
 }

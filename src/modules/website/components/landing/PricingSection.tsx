@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Check, CheckCircle } from 'lucide-react';
 
 export function PricingSection() {
@@ -9,8 +9,8 @@ export function PricingSection() {
             description: 'Ideal para barbearias em crescimento que precisam organizar a casa.',
             features: [
                 'Agenda Online e Links',
-                'Gestão de Clientes (CRM)',
-                'Financeiro Básico'
+                'GestÃ£o de Clientes (CRM)',
+                'Financeiro BÃ¡sico'
             ],
             highlighted: false,
             buttonText: 'Escolher Start',
@@ -19,12 +19,12 @@ export function PricingSection() {
         {
             name: 'Pro Gold',
             price: '149',
-            description: 'A escolha da elite. Automação completa para maximizar o lucro.',
+            description: 'A escolha da elite. AutomaÃ§Ã£o completa para maximizar o lucro.',
             features: [
                 { text: 'Tudo do plano Start', bold: true },
-                'Smart Split (Comissões)',
-                'Confirmação WhatsApp',
-                'Gestão de Estoque'
+                'Smart Split (ComissÃµes)',
+                'ConfirmaÃ§Ã£o WhatsApp',
+                'GestÃ£o de Estoque'
             ],
             highlighted: true,
             buttonText: 'Escolher Pro Gold',
@@ -37,7 +37,7 @@ export function PricingSection() {
             features: [
                 'Tudo do plano Pro Gold',
                 'Barber Club (Assinaturas)',
-                'Múltiplas Unidades',
+                'MÃºltiplas Unidades',
                 'Gerente de Contas VIP'
             ],
             highlighted: false,
@@ -51,7 +51,7 @@ export function PricingSection() {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Planos que se pagam no primeiro dia</h2>
-                    <p className="text-lg text-gray-400">Escolha a potência ideal para o seu negócio. Sem fidelidade, cancele quando quiser.</p>
+                    <p className="text-lg text-gray-400">Escolha a potÃªncia ideal para o seu negÃ³cio. Sem fidelidade, cancele quando quiser.</p>
                 </div>
                 
                 <div className="grid md:grid-cols-3 gap-8 items-start">
@@ -73,7 +73,7 @@ export function PricingSection() {
                             <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
                             <div className="flex items-baseline gap-1 mb-6">
                                 <span className="text-4xl font-bold text-white">R$ {plan.price}</span>
-                                <span className="text-gray-500">/mês</span>
+                                <span className="text-gray-500">/mÃªs</span>
                             </div>
                             <p className="text-gray-400 text-sm mb-8">{plan.description}</p>
                             

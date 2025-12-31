@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+﻿import { useMemo, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import type { SaasPlan, SaasPlanId, SaasV2TenantStatus, ShopProfile, Tenant, ViewState } from '@/types';
 import { PLANS_BR, type PlanDefinition } from '@/domain/plans';

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -294,7 +294,7 @@ export const Catalog = () => {
                         onClick={() => setProductSubTab('HISTORY')}
                         className={`px-4 py-2 rounded-md text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 ${productSubTab === 'HISTORY' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                      >
-                        <History className="w-3 h-3" /> Histórico de Compras
+                        <History className="w-3 h-3" /> HistÃ³rico de Compras
                      </button>
                   </div>
 
@@ -378,11 +378,11 @@ export const Catalog = () => {
 
                                  <div className="mt-auto grid grid-cols-2 gap-2 text-sm">
                                     <div>
-                                       <span className="text-zinc-500 block text-xs">Preço de Venda</span>
+                                       <span className="text-zinc-500 block text-xs">PreÃ§o de Venda</span>
                                        <span className="text-amber-500 font-bold">R$ {product.price}</span>
                                     </div>
                                     <div>
-                                       <span className="text-zinc-500 block text-xs">Último Custo</span>
+                                       <span className="text-zinc-500 block text-xs">Ãšltimo Custo</span>
                                        <span className="text-zinc-300 font-medium">R$ {product.costPrice || '-'}</span>
                                     </div>
                                  </div>
@@ -401,7 +401,7 @@ export const Catalog = () => {
                                     <th className="px-6 py-4">Data</th>
                                     <th className="px-6 py-4">Nome do Produto</th>
                                     <th className="px-6 py-4 text-center">Qtd Adicionada</th>
-                                    <th className="px-6 py-4 text-right">Custo Unitário</th>
+                                    <th className="px-6 py-4 text-right">Custo UnitÃ¡rio</th>
                                     <th className="px-6 py-4 text-right">Total Gasto</th>
                                  </tr>
                               </thead>
@@ -482,7 +482,7 @@ export const Catalog = () => {
                         onClick={() => setInventorySubTab('HISTORY')}
                         className={`px-4 py-2 rounded-md text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 ${inventorySubTab === 'HISTORY' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                      >
-                        <History className="w-3 h-3" /> Histórico de Entrada
+                        <History className="w-3 h-3" /> HistÃ³rico de Entrada
                      </button>
                      <button
                         onClick={() => setInventorySubTab('SUPPLIERS')}
@@ -504,7 +504,7 @@ export const Catalog = () => {
                                           <h4 className="font-bold text-white text-lg">{item.name}</h4>
                                           {isLow && <AlertTriangle className="w-4 h-4 text-red-500" />}
                                        </div>
-                                       <p className="text-xs text-zinc-500">{item.category} • Cost: R$ {item.costPerUnit}/{item.unit.toLowerCase()}</p>
+                                       <p className="text-xs text-zinc-500">{item.category} â€¢ Cost: R$ {item.costPerUnit}/{item.unit.toLowerCase()}</p>
                                     </div>
                                     <button onClick={() => openEditInventoryItem(item)} className="p-1.5 hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-white transition-all">
                                        <Edit2 className="w-4 h-4" />
@@ -523,7 +523,7 @@ export const Catalog = () => {
                                        onClick={() => adjustInventoryStock(item.id, 1, 'ADD')}
                                        className="flex items-center justify-center gap-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 py-2 rounded-lg text-xs font-bold transition-all"
                                     >
-                                       <Plus className="w-3 h-3" /> Adicionar Rápido
+                                       <Plus className="w-3 h-3" /> Adicionar RÃ¡pido
                                     </button>
                                     <button
                                        onClick={() => adjustInventoryStock(item.id, 1, 'CONSUME')}
@@ -549,7 +549,7 @@ export const Catalog = () => {
                                     <th className="px-6 py-4">Nome do Item</th>
                                     <th className="px-6 py-4">Fornecedor</th>
                                     <th className="px-6 py-4 text-center">Quantidade Adicionada</th>
-                                    <th className="px-6 py-4 text-right">Custo Unitário</th>
+                                    <th className="px-6 py-4 text-right">Custo UnitÃ¡rio</th>
                                     <th className="px-6 py-4 text-right">Total Gasto</th>
                                  </tr>
                               </thead>
@@ -617,7 +617,7 @@ export const Catalog = () => {
                                  </button>
                               </div>
                               <div className="mt-4 flex items-center gap-2 text-xs font-bold text-zinc-500 group-hover:text-white">
-                                 <Eye className="w-3 h-3" /> Ver Produtos e Histórico
+                                 <Eye className="w-3 h-3" /> Ver Produtos e HistÃ³rico
                               </div>
                            </div>
                         ))}
@@ -717,11 +717,11 @@ export const Catalog = () => {
                         </div>
                         <div className="flex items-center gap-6">
                            <div className="text-center">
-                              <span className="block text-xs text-zinc-500 mb-1">Duração</span>
+                              <span className="block text-xs text-zinc-500 mb-1">DuraÃ§Ã£o</span>
                               <span className="text-white font-medium">{service.durationMinutes}m</span>
                            </div>
                            <div className="text-center">
-                              <span className="block text-xs text-zinc-500 mb-1">Preço</span>
+                              <span className="block text-xs text-zinc-500 mb-1">PreÃ§o</span>
                               <span className="text-amber-500 font-bold">R$ {service.price}</span>
                            </div>
 
@@ -773,7 +773,7 @@ export const Catalog = () => {
             onAddSupply={(data) => {
                const unitMap: Record<string, 'UNIT' | 'LITRE' | 'BOX' | 'PACK'> = {
                   'unidade': 'UNIT', 'frasco': 'UNIT', 'pote': 'UNIT', 'lata': 'UNIT', 'bisnaga': 'UNIT',
-                  'litro': 'LITRE', 'galão': 'LITRE',
+                  'litro': 'LITRE', 'galÃ£o': 'LITRE',
                   'caixa': 'BOX',
                   'pacote': 'PACK', 'cartela': 'PACK', 'rolo': 'PACK'
                };

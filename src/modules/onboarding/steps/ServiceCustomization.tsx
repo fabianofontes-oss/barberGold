@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown, ChevronUp, Edit2, Check, X } from 'lucide-react';
@@ -20,7 +20,7 @@ export const ServiceCustomization: React.FC<ServiceCustomizationProps> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Buscar serviços do backend
+    // TODO: Buscar serviÃ§os do backend
     // Por enquanto, mock de dados
     setLoading(false);
   }, [businessType]);
@@ -57,7 +57,7 @@ export const ServiceCustomization: React.FC<ServiceCustomizationProps> = ({
       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 md:p-12">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mb-4"></div>
-          <p className="text-zinc-400">Carregando serviços...</p>
+          <p className="text-zinc-400">Carregando serviÃ§os...</p>
         </div>
       </div>
     );
@@ -67,14 +67,14 @@ export const ServiceCustomization: React.FC<ServiceCustomizationProps> = ({
     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 md:p-12">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-4">Seus Serviços</h2>
+        <h2 className="text-2xl font-bold text-white mb-4">Seus ServiÃ§os</h2>
         
         {/* Search */}
         <div className="relative mb-4">
           <Search className="absolute left-3 top-3 w-5 h-5 text-zinc-500" />
           <input
             type="text"
-            placeholder="Buscar serviço..."
+            placeholder="Buscar serviÃ§o..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-zinc-800 border border-zinc-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
@@ -84,11 +84,11 @@ export const ServiceCustomization: React.FC<ServiceCustomizationProps> = ({
         {/* Stats */}
         <div className="flex items-center gap-4 text-sm">
           <span className="text-zinc-400">
-            📊 {totalCategories} categorias • {selectedCount} serviços
+            ðŸ“Š {totalCategories} categorias â€¢ {selectedCount} serviÃ§os
           </span>
           {selectedCount > 0 && (
             <span className="text-amber-500 font-bold">
-              💰 Ticket médio: ~R$ 50
+              ðŸ’° Ticket mÃ©dio: ~R$ 50
             </span>
           )}
         </div>
@@ -98,9 +98,9 @@ export const ServiceCustomization: React.FC<ServiceCustomizationProps> = ({
       <div className="space-y-3 mb-6 max-h-[400px] overflow-y-auto">
         {Object.keys(groupedServices).length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-zinc-500 mb-4">Nenhum serviço disponível</p>
+            <p className="text-zinc-500 mb-4">Nenhum serviÃ§o disponÃ­vel</p>
             <p className="text-zinc-600 text-sm">
-              Selecione um pacote ou tipo de negócio diferente
+              Selecione um pacote ou tipo de negÃ³cio diferente
             </p>
           </div>
         ) : (
@@ -146,7 +146,7 @@ export const ServiceCustomization: React.FC<ServiceCustomizationProps> = ({
                       <div className="flex-1">
                         <h4 className="text-white font-medium">{service.name}</h4>
                         <p className="text-zinc-500 text-sm">
-                          {service.duration_min}min • R$ {(service.price_cents / 100).toFixed(2)}
+                          {service.duration_min}min â€¢ R$ {(service.price_cents / 100).toFixed(2)}
                         </p>
                       </div>
                       <button className="p-2 text-zinc-500 hover:text-amber-500 transition-colors">
@@ -167,7 +167,7 @@ export const ServiceCustomization: React.FC<ServiceCustomizationProps> = ({
           onClick={() => setSelectedServices(new Set())}
           className="text-zinc-400 hover:text-white text-sm font-medium transition-colors"
         >
-          Limpar seleção
+          Limpar seleÃ§Ã£o
         </button>
         <button
           onClick={handleContinue}

@@ -1,4 +1,4 @@
-import type { PricingRule } from './types';
+﻿import type { PricingRule } from './types';
 
 const STORAGE_KEY = (tenantId: string) => `bf:dynamicpricing:${tenantId}:rules`;
 

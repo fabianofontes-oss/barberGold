@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { Download, FileSpreadsheet, Loader2, Users } from 'lucide-react';
@@ -21,9 +21,9 @@ export const ExportClients: React.FC<ExportClientsProps> = ({ clients, shopName 
       'Email',
       'Data Nascimento',
       'Total Gasto',
-      'Última Visita',
+      'Ãšltima Visita',
       'Pontos Fidelidade',
-      'Código Indicação',
+      'CÃ³digo IndicaÃ§Ã£o',
       'Tags',
       'Dependentes',
     ];
@@ -42,8 +42,8 @@ export const ExportClients: React.FC<ExportClientsProps> = ({ clients, shopName 
     ]);
 
     const csvContent = [
-      `Exportação de Clientes - ${shopName}`,
-      `Gerado em: ${format(new Date(), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}`,
+      `ExportaÃ§Ã£o de Clientes - ${shopName}`,
+      `Gerado em: ${format(new Date(), "dd/MM/yyyy 'Ã s' HH:mm", { locale: ptBR })}`,
       `Total de clientes: ${clients.length}`,
       '',
       headers.join(','),

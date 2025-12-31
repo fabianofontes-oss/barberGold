@@ -1,14 +1,14 @@
-import { PlanFeatureKey, PlanId } from './types';
+﻿import { PlanFeatureKey, PlanId } from './types';
 
 export const FEATURE_LABELS: Record<PlanFeatureKey, string> = {
   AGENDA: 'Agenda',
   PDV: 'PDV',
   CLIENTS: 'Clientes',
-  FINANCE_BASIC: 'Financeiro Básico',
+  FINANCE_BASIC: 'Financeiro BÃ¡sico',
   ONLINE_BOOKING: 'Agendamento Online',
   LOYALTY: 'Fidelidade',
-  ADVANCED_REPORTS: 'Relatórios Avançados',
-  COMMISSIONS: 'Comissões',
+  ADVANCED_REPORTS: 'RelatÃ³rios AvanÃ§ados',
+  COMMISSIONS: 'ComissÃµes',
   BLIND_CASH_CLOSURE: 'Fechamento de Caixa Cego',
   WEBSITE_PREMIUM: 'Website Premium',
   MULTI_SHOP: 'Multi-unidade',

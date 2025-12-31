@@ -1,6 +1,6 @@
-/**
- * Lista de slugs reservados que não podem ser usados como nomes de barbearia
- * Protege rotas do sistema e nomes genéricos
+﻿/**
+ * Lista de slugs reservados que nÃ£o podem ser usados como nomes de barbearia
+ * Protege rotas do sistema e nomes genÃ©ricos
  */
 export const RESERVED_SLUGS = [
   // Rotas do sistema
@@ -22,7 +22,7 @@ export const RESERVED_SLUGS = [
   'forgot-password',
   'unauthorized',
   
-  // Domínios principais
+  // DomÃ­nios principais
   'barber',
   'www',
   'mail',
@@ -35,7 +35,7 @@ export const RESERVED_SLUGS = [
   'images',
   'img',
   
-  // Nomes genéricos/confusos
+  // Nomes genÃ©ricos/confusos
   'test',
   'demo',
   'example',
@@ -49,7 +49,7 @@ export const RESERVED_SLUGS = [
   'config',
   'settings',
   
-  // Palavras ofensivas/inapropriadas (adicione conforme necessário)
+  // Palavras ofensivas/inapropriadas (adicione conforme necessÃ¡rio)
   'spam',
   'abuse',
   'fake',
@@ -70,7 +70,7 @@ export const RESERVED_SLUGS = [
 ];
 
 /**
- * Verifica se um slug é reservado/proibido
+ * Verifica se um slug Ã© reservado/proibido
  */
 export function isSlugReserved(slug: string): boolean {
   const normalized = slug.toLowerCase().trim();
@@ -84,39 +84,39 @@ export function isSlugReserved(slug: string): boolean {
 export function validateSlug(slug: string): { valid: boolean; error?: string } {
   const trimmed = slug.trim();
   
-  // Vazio é permitido (gera automaticamente)
+  // Vazio Ã© permitido (gera automaticamente)
   if (!trimmed) {
     return { valid: true };
   }
   
-  // Mínimo 3 caracteres
+  // MÃ­nimo 3 caracteres
   if (trimmed.length < 3) {
     return { valid: false, error: 'O nome deve ter pelo menos 3 caracteres' };
   }
   
-  // Máximo 30 caracteres
+  // MÃ¡ximo 30 caracteres
   if (trimmed.length > 30) {
-    return { valid: false, error: 'O nome deve ter no máximo 30 caracteres' };
+    return { valid: false, error: 'O nome deve ter no mÃ¡ximo 30 caracteres' };
   }
   
-  // Apenas letras, números e hífens
+  // Apenas letras, nÃºmeros e hÃ­fens
   if (!/^[a-z0-9-]+$/i.test(trimmed)) {
-    return { valid: false, error: 'Use apenas letras, números e hífens' };
+    return { valid: false, error: 'Use apenas letras, nÃºmeros e hÃ­fens' };
   }
   
-  // Não pode começar ou terminar com hífen
+  // NÃ£o pode comeÃ§ar ou terminar com hÃ­fen
   if (trimmed.startsWith('-') || trimmed.endsWith('-')) {
-    return { valid: false, error: 'Não pode começar ou terminar com hífen' };
+    return { valid: false, error: 'NÃ£o pode comeÃ§ar ou terminar com hÃ­fen' };
   }
   
-  // Não pode ter hífens consecutivos
+  // NÃ£o pode ter hÃ­fens consecutivos
   if (trimmed.includes('--')) {
-    return { valid: false, error: 'Não pode ter hífens consecutivos' };
+    return { valid: false, error: 'NÃ£o pode ter hÃ­fens consecutivos' };
   }
   
-  // Verifica se é reservado
+  // Verifica se Ã© reservado
   if (isSlugReserved(trimmed)) {
-    return { valid: false, error: 'Este nome está reservado. Escolha outro' };
+    return { valid: false, error: 'Este nome estÃ¡ reservado. Escolha outro' };
   }
   
   return { valid: true };

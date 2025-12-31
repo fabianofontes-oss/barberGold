@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Crown, Gift, Sparkles, Check, ArrowRight } from 'lucide-react';
@@ -34,11 +34,11 @@ export const ClubPromo: React.FC<ClubPromoProps> = ({ plans, shopName, onSelectP
             </div>
             <div>
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                Barber Club™
+                Barber Clubâ„¢
                 <span className="text-[10px] bg-purple-500 text-white px-2 py-0.5 rounded font-bold">NOVO</span>
               </h3>
               <p className="text-xs text-zinc-400">
-                Economize até 40% com nossos planos
+                Economize atÃ© 40% com nossos planos
               </p>
             </div>
           </div>
@@ -61,10 +61,10 @@ export const ClubPromo: React.FC<ClubPromoProps> = ({ plans, shopName, onSelectP
           <Crown className="w-8 h-8 text-purple-400" />
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-          {shopName} <span className="text-purple-400">Club™</span>
+          {shopName} <span className="text-purple-400">Clubâ„¢</span>
         </h2>
         <p className="text-zinc-400 text-sm md:text-base max-w-md mx-auto">
-          Seja membro e aproveite descontos exclusivos, créditos mensais e benefícios especiais.
+          Seja membro e aproveite descontos exclusivos, crÃ©ditos mensais e benefÃ­cios especiais.
         </p>
       </div>
 
@@ -94,14 +94,14 @@ export const ClubPromo: React.FC<ClubPromoProps> = ({ plans, shopName, onSelectP
                   R$ {plan.price.toFixed(0)}
                 </span>
                 <span className="text-zinc-500 text-sm">
-                  /{plan.billingCycle === 'MONTHLY' ? 'mês' : 'ano'}
+                  /{plan.billingCycle === 'MONTHLY' ? 'mÃªs' : 'ano'}
                 </span>
               </div>
 
               <div className="flex items-center gap-2 mb-4 p-3 bg-purple-500/10 rounded-lg">
                 <Gift className="w-5 h-5 text-purple-400" />
                 <span className="text-sm text-white font-bold">
-                  {plan.credits} créditos/mês
+                  {plan.credits} crÃ©ditos/mÃªs
                 </span>
               </div>
 
@@ -132,7 +132,7 @@ export const ClubPromo: React.FC<ClubPromoProps> = ({ plans, shopName, onSelectP
       {/* Footer */}
       <div className="mt-6 text-center">
         <p className="text-xs text-zinc-500">
-          Cancele quando quiser • Sem fidelidade • Créditos não acumulam
+          Cancele quando quiser â€¢ Sem fidelidade â€¢ CrÃ©ditos nÃ£o acumulam
         </p>
       </div>
     </div>

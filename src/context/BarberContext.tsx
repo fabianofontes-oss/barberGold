@@ -1,4 +1,4 @@
-
+﻿
 import React, { createContext, useContext, useState, ReactNode, PropsWithChildren, useEffect } from 'react';
 import { Appointment, Client, Product, Service, Sale, ViewState, AppointmentStatus, PaymentMethod, CartItem, RecurrenceType, StaffMember, CommissionPlan, Expense, ShopSettings, StaffPayment, ShopProfile, DaySchedule, InventoryItem, Supplier, SupplyTransaction, Category, CategoryType, RegisterClosure, QueueItem, Review, Tenant, SupportTicket, GlobalInvoice, Integration, ReferralSource, LandingPageConfig, MarketingCampaign, GlobalSettings, SaasV2TenantStatus, SaasV2PlanId, SaasPlan, SaasPlanId, CompensationModel } from '@/types';
 // Removido imports de mocks
@@ -58,7 +58,7 @@ const INITIAL_CAMPAIGNS: MarketingCampaign[] = [
 ];
 
 /**
- * Configurações globais da aplicação (modo demo/localStorage)
+ * ConfiguraÃ§Ãµes globais da aplicaÃ§Ã£o (modo demo/localStorage)
  * IMPORTANTE: Chaves de API (Stripe, etc.) devem ser server-side only (env vars)
  */
 const INITIAL_GLOBAL_SETTINGS: GlobalSettings = {
@@ -73,7 +73,7 @@ interface BarberContextType {
   // State
   isAuthenticated: boolean; // NEW: Auth State
   loading: boolean; // Loading state para dados do Supabase
-  currentUser: StaffMember | null; // Who is logged in? (null se não autenticado)
+  currentUser: StaffMember | null; // Who is logged in? (null se nÃ£o autenticado)
   shopProfile: ShopProfile;
   currentView: ViewState;
   appointments: Appointment[];
@@ -246,7 +246,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const [registerClosures, setRegisterClosures] = useState<RegisterClosure[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
 
-  // SUPER ADMIN STATE (mantido vazio - não usado em produção)
+  // SUPER ADMIN STATE (mantido vazio - nÃ£o usado em produÃ§Ã£o)
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [tickets, setTickets] = useState<SupportTicket[]>([]);
   const [globalInvoices, setGlobalInvoices] = useState<GlobalInvoice[]>([]);
@@ -282,7 +282,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         staffId: appt.staff_id,
         staffName: appt.staff_name || 'Barbeiro',
         serviceId: appt.service_id,
-        serviceName: appt.service_name || 'Serviço',
+        serviceName: appt.service_name || 'ServiÃ§o',
         date: new Date(appt.scheduled_at),
         price: Number(appt.price),
         status: appt.status as AppointmentStatus,
@@ -290,7 +290,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         recurrence: RecurrenceType.NONE
       }));
       setAppointments(mappedAppointments);
-      console.log('✅ Appointments carregados do Supabase:', mappedAppointments.length);
+      console.log('âœ… Appointments carregados do Supabase:', mappedAppointments.length);
     }
   }, [appointmentsLoading, realAppointments]);
 
@@ -305,7 +305,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         type: 'SERVICE' as const
       }));
       setServices(mappedServices);
-      console.log('✅ Services carregados do Supabase:', mappedServices.length);
+      console.log('âœ… Services carregados do Supabase:', mappedServices.length);
     }
   }, [servicesLoading, realServices]);
 
@@ -322,7 +322,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         type: 'PRODUCT' as const
       }));
       setProducts(mappedProducts);
-      console.log('✅ Products carregados do Supabase:', mappedProducts.length);
+      console.log('âœ… Products carregados do Supabase:', mappedProducts.length);
     }
   }, [productsLoading, realProducts]);
 
@@ -343,7 +343,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         preferences: client.preferences || {}
       }));
       setClients(mappedClients);
-      console.log('✅ Clients carregados do Supabase:', mappedClients.length);
+      console.log('âœ… Clients carregados do Supabase:', mappedClients.length);
     }
   }, [clientsLoading, realClients]);
 
@@ -370,7 +370,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         }))
       }));
       setStaff(mappedStaff);
-      console.log('✅ Staff carregado do Supabase:', mappedStaff.length);
+      console.log('âœ… Staff carregado do Supabase:', mappedStaff.length);
     }
   }, [staffLoading, realStaff]);
 
@@ -387,35 +387,35 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         tip: Number(sale.tip)
       }));
       setSales(mappedSales);
-      console.log('✅ Sales carregadas do Supabase:', mappedSales.length);
+      console.log('âœ… Sales carregadas do Supabase:', mappedSales.length);
     }
   }, [salesLoading, realSales]);
 
   useEffect(() => {
     if (!inventoryLoading) {
       setInventory(realInventory as InventoryItem[]);
-      console.log('✅ Inventory carregado do Supabase:', realInventory.length);
+      console.log('âœ… Inventory carregado do Supabase:', realInventory.length);
     }
   }, [inventoryLoading, realInventory]);
 
   useEffect(() => {
     if (!suppliersLoading) {
       setSuppliers(realSuppliers as Supplier[]);
-      console.log('✅ Suppliers carregados do Supabase:', realSuppliers.length);
+      console.log('âœ… Suppliers carregados do Supabase:', realSuppliers.length);
     }
   }, [suppliersLoading, realSuppliers]);
 
   useEffect(() => {
     if (!categoriesLoading) {
       setCategories(realCategories as Category[]);
-      console.log('✅ Categories carregadas do Supabase:', realCategories.length);
+      console.log('âœ… Categories carregadas do Supabase:', realCategories.length);
     }
   }, [categoriesLoading, realCategories]);
 
   useEffect(() => {
     if (!commissionPlansLoading) {
       setCommissionPlans(realCommissionPlans as CommissionPlan[]);
-      console.log('✅ Commission Plans carregados do Supabase:', realCommissionPlans.length);
+      console.log('âœ… Commission Plans carregados do Supabase:', realCommissionPlans.length);
     }
   }, [commissionPlansLoading, realCommissionPlans]);
 
@@ -425,11 +425,11 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       try {
         const supabase = createClient();
         
-        // 1. Verificar sessão
+        // 1. Verificar sessÃ£o
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session) {
-          console.warn('⚠️ Sem sessão ativa');
+          console.warn('âš ï¸ Sem sessÃ£o ativa');
           setLoading(false);
           return;
         }
@@ -443,16 +443,16 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
           .single();
 
         if (profileError) {
-          // PGRST116 = "no rows returned" - esperado para usuários sem profile (em /setup)
+          // PGRST116 = "no rows returned" - esperado para usuÃ¡rios sem profile (em /setup)
           if (profileError.code !== 'PGRST116') {
-            console.error('❌ Erro ao buscar profile:', profileError);
+            console.error('âŒ Erro ao buscar profile:', profileError);
           }
           setLoading(false);
           return;
         }
 
         if (profile) {
-          console.log('✅ Profile carregado:', profile.name);
+          console.log('âœ… Profile carregado:', profile.name);
           
           // 3. Mapear para StaffMember
           const mappedUser: StaffMember = {
@@ -480,12 +480,12 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
             .single();
 
           if (tenant) {
-            console.log('✅ Tenant carregado:', tenant.name);
+            console.log('âœ… Tenant carregado:', tenant.name);
             
-            // Mapear operatingHours do tenant.settings ou usar padrão
+            // Mapear operatingHours do tenant.settings ou usar padrÃ£o
             let operatingHours = Array.from({ length: 7 }, (_, i) => ({
               dayIndex: i,
-              isActive: i !== 0, // Domingo fechado por padrão
+              isActive: i !== 0, // Domingo fechado por padrÃ£o
               startTime: '09:00',
               endTime: i === 6 ? '14:00' : '20:00',
               breaks: []
@@ -514,7 +514,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
 
         setLoading(false);
       } catch (error) {
-        console.error('❌ Erro ao carregar dados:', error);
+        console.error('âŒ Erro ao carregar dados:', error);
         setLoading(false);
       }
     }
@@ -534,18 +534,18 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
 
   // ... (keep Landing Page & Shop Settings State) ...
   const [landingPageConfig, setLandingPageConfig] = useState<LandingPageConfig>({
-     heroHeadline: "Aposente o Caderno. Transforme sua Barbearia em uma Máquina de Lucro.",
-     heroSubheadline: "Agenda, Financeiro e Marketing Automático em um só lugar. Tenha o controle total do seu negócio na palma da mão.",
-     heroCtaText: "Começar Teste Grátis",
-     seoTitle: "BarberFlow | Sistema de Gestão para Barbearias",
-     seoDescription: "O melhor sistema para barbearias. Agenda online, controle financeiro e comissões automáticas.",
-     seoKeywords: "barbearia, sistema, agenda, gestão",
+     heroHeadline: "Aposente o Caderno. Transforme sua Barbearia em uma MÃ¡quina de Lucro.",
+     heroSubheadline: "Agenda, Financeiro e Marketing AutomÃ¡tico em um sÃ³ lugar. Tenha o controle total do seu negÃ³cio na palma da mÃ£o.",
+     heroCtaText: "ComeÃ§ar Teste GrÃ¡tis",
+     seoTitle: "BarberFlow | Sistema de GestÃ£o para Barbearias",
+     seoDescription: "O melhor sistema para barbearias. Agenda online, controle financeiro e comissÃµes automÃ¡ticas.",
+     seoKeywords: "barbearia, sistema, agenda, gestÃ£o",
      showPricing: true,
      showTestimonials: true,
      featuredPlanId: 'PRO',
      announcementBar: {
         enabled: true,
-        text: "🎉 BarberFlow.com.br no ar! Aproveite 50% OFF no Plano Anual!",
+        text: "ðŸŽ‰ BarberFlow.com.br no ar! Aproveite 50% OFF no Plano Anual!",
         link: "#pricing"
      }
   });
@@ -555,8 +555,8 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
     returnReminderDays: 28,
     winBackDays: 60,
     fidelityThreshold: 2, 
-    messageTemplateOverdue: "Olá {name}, já faz {days} dias que não te vemos! Agende agora: {booking_link}",
-    messageTemplateWinBack: "Olá {name}, saudades! Volte essa semana e ganhe 5% OFF! Agende: {booking_link}",
+    messageTemplateOverdue: "OlÃ¡ {name}, jÃ¡ faz {days} dias que nÃ£o te vemos! Agende agora: {booking_link}",
+    messageTemplateWinBack: "OlÃ¡ {name}, saudades! Volte essa semana e ganhe 5% OFF! Agende: {booking_link}",
     enableBirthdayDiscount: true,
     enableWinBackDiscount: true,
     enableLoyaltyCard: true,
@@ -573,11 +573,11 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
     website: {
        themeTemplate: 'PREMIUM',
        customColors: { primary: '#09090b', secondary: '#18181b', accent: '#f59e0b', text: '#ffffff', borderRadius: '0.75rem' },
-       heroTitle: "Estilo & Tradição",
-       heroSubtitle: "A experiência premium que você merece. Cuidado clássico para o homem moderno.",
+       heroTitle: "Estilo & TradiÃ§Ã£o",
+       heroSubtitle: "A experiÃªncia premium que vocÃª merece. Cuidado clÃ¡ssico para o homem moderno.",
        heroImage: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=2000",
        aboutTitle: "Sobre a Premium Gold",
-       aboutText: "Fundada com a missão de resgatar a barbearia clássica...",
+       aboutText: "Fundada com a missÃ£o de resgatar a barbearia clÃ¡ssica...",
        aboutImage: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=1000",
        sectionOrder: ['HERO', 'ABOUT', 'SERVICES', 'PRODUCTS', 'GALLERY', 'REVIEWS', 'LOCATION'],
        showTeam: true,
@@ -619,7 +619,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       if (saved.reviews) setReviews(saved.reviews);
       if (saved.shopProfile) setShopProfile(saved.shopProfile);
       if (saved.shopSettings) setShopSettings(prev => ({ ...prev, ...saved.shopSettings }));
-      console.log('✅ Dados carregados do localStorage');
+      console.log('âœ… Dados carregados do localStorage');
     }
     setIsHydrated(true);
   }, []);
@@ -647,9 +647,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   }, [isHydrated, appointments, clients, products, services, sales, staff, expenses, staffPayments, inventory, suppliers, categories, reviews, shopProfile, shopSettings]);
 
   // DEPRECATED: login fake removido - usar Supabase Auth via /login
-  // Esta função agora só é usada para modo demo/fallback
+  // Esta funÃ§Ã£o agora sÃ³ Ã© usada para modo demo/fallback
   const login = (_email: string, _pass: string) => {
-     console.warn('⚠️ login() está deprecated. Use Supabase Auth via /login');
+     console.warn('âš ï¸ login() estÃ¡ deprecated. Use Supabase Auth via /login');
      // Em modo demo, permite login fake para desenvolvimento
      if (process.env.NEXT_PUBLIC_APP_MODE === 'demo') {
         const demoUser = staff[1]; // Alex Owner
@@ -712,12 +712,12 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         .eq('id', userProfile.tenant_id);
       
       if (error) {
-        console.error('❌ Erro ao atualizar tenant:', error);
+        console.error('âŒ Erro ao atualizar tenant:', error);
       } else {
-        console.log('✅ Tenant atualizado no Supabase');
+        console.log('âœ… Tenant atualizado no Supabase');
       }
     } catch (error) {
-      console.error('❌ Erro ao persistir shopProfile:', error);
+      console.error('âŒ Erro ao persistir shopProfile:', error);
     }
   };
   const handleSetView = (view: ViewState, params?: any) => {
@@ -747,7 +747,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         clientName: clients.find(c => c.id === savedAppointment.client_id)?.name || 'Cliente',
         staffId: savedAppointment.staff_id,
         serviceId: savedAppointment.service_id,
-        serviceName: services.find(s => s.id === savedAppointment.service_id)?.name || 'Serviço',
+        serviceName: services.find(s => s.id === savedAppointment.service_id)?.name || 'ServiÃ§o',
         date: new Date(`${savedAppointment.date}T${savedAppointment.start_time}`),
         price: Number(savedAppointment.total_amount),
         status: savedAppointment.status as AppointmentStatus,
@@ -756,9 +756,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       };
       
       setAppointments(prev => [...prev, mappedAppointment]);
-      console.log('✅ Agendamento salvo');
+      console.log('âœ… Agendamento salvo');
     } catch (error) {
-      console.error('❌ Erro ao criar agendamento:', error);
+      console.error('âŒ Erro ao criar agendamento:', error);
       alert('Erro ao salvar agendamento');
       throw error;
     }
@@ -768,9 +768,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       const { updateAppointmentStatus: updateAction } = await import('@/modules/appointments/actions');
       await updateAction(id, status as any);
       setAppointments(prev => prev.map(a => a.id === id ? { ...a, status } : a));
-      console.log('✅ Status atualizado');
+      console.log('âœ… Status atualizado');
     } catch (error) {
-      console.error('❌ Erro ao atualizar status:', error);
+      console.error('âŒ Erro ao atualizar status:', error);
       alert('Erro ao atualizar status');
     }
   };
@@ -834,9 +834,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         }));
       });
       
-      console.log('✅ Venda processada');
+      console.log('âœ… Venda processada');
     } catch (error) {
-      console.error('❌ Erro ao processar venda:', error);
+      console.error('âŒ Erro ao processar venda:', error);
       alert('Erro ao processar venda');
       throw error;
     }
@@ -888,10 +888,10 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       };
       
       setClients(prev => [newClient, ...prev]);
-      console.log('✅ Cliente criado');
+      console.log('âœ… Cliente criado');
       return savedClient.id;
     } catch (error) {
-      console.error('❌ Erro ao criar cliente:', error);
+      console.error('âŒ Erro ao criar cliente:', error);
       alert('Erro ao salvar cliente');
       throw error;
     }
@@ -911,9 +911,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       });
       
       setClients(prev => prev.map(c => c.id === client.id ? client : c));
-      console.log('✅ Cliente atualizado');
+      console.log('âœ… Cliente atualizado');
     } catch (error) {
-      console.error('❌ Erro ao atualizar cliente:', error);
+      console.error('âŒ Erro ao atualizar cliente:', error);
       alert('Erro ao atualizar cliente');
     }
   };
@@ -988,8 +988,8 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       // Recarregar dados
       window.location.reload();
     } catch (error) {
-      console.error('Erro ao criar plano de comissão:', error);
-      alert('Erro ao criar plano de comissão');
+      console.error('Erro ao criar plano de comissÃ£o:', error);
+      alert('Erro ao criar plano de comissÃ£o');
     }
   };
   
@@ -1000,8 +1000,8 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       // Recarregar dados
       window.location.reload();
     } catch (error) {
-      console.error('Erro ao deletar plano de comissão:', error);
-      alert('Erro ao deletar plano de comissão');
+      console.error('Erro ao deletar plano de comissÃ£o:', error);
+      alert('Erro ao deletar plano de comissÃ£o');
     }
   };
   const addExpense = async (e: any) => {
@@ -1016,9 +1016,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         paymentMethod: e.paymentMethod,
       });
       setExpenses(prev => [...prev, { ...e, id: savedExpense.id }]);
-      console.log('✅ Despesa salva');
+      console.log('âœ… Despesa salva');
     } catch (error) {
-      console.error('❌ Erro ao criar despesa:', error);
+      console.error('âŒ Erro ao criar despesa:', error);
       alert('Erro ao salvar despesa');
     }
   };
@@ -1040,9 +1040,9 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         notes: c.notes,
       });
       setRegisterClosures(prev => [...prev, { ...c, id: savedClosure.id }]);
-      console.log('✅ Fechamento salvo');
+      console.log('âœ… Fechamento salvo');
     } catch (error) {
-      console.error('❌ Erro ao criar fechamento:', error);
+      console.error('âŒ Erro ao criar fechamento:', error);
       alert('Erro ao fechar caixa');
     }
   };
@@ -1071,7 +1071,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
         };
      }));
      
-     // Registra transação de suprimento
+     // Registra transaÃ§Ã£o de suprimento
      const item = inventory.find(i => i.id === itemId);
      if (item) {
         setSupplyTransactions(prev => [...prev, {
@@ -1185,7 +1185,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const updateGlobalSettings = (s: any) => setGlobalSettings(prev => ({ ...prev, ...s }));
 
   // Loading state - apenas para rotas protegidas
-  // Não bloqueia rotas públicas (landing, login, register)
+  // NÃ£o bloqueia rotas pÃºblicas (landing, login, register)
   if (loading && typeof window !== 'undefined') {
     const isPublicRoute = ['/login', '/register', '/forgot-password', '/reset-password', '/'].includes(window.location.pathname);
     
@@ -1201,8 +1201,8 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  // NÃO redireciona automaticamente - deixa middleware e AuthGuard fazerem isso
-  // Apenas retorna null se não autenticado em rotas protegidas
+  // NÃƒO redireciona automaticamente - deixa middleware e AuthGuard fazerem isso
+  // Apenas retorna null se nÃ£o autenticado em rotas protegidas
 
   return (
     <BarberContext.Provider value={{

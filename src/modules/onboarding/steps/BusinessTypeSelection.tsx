@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Scissors, Sparkles, Settings } from 'lucide-react';
@@ -12,26 +12,26 @@ export const BusinessTypeSelection: React.FC<BusinessTypeSelectionProps> = ({ on
   const options: BusinessTypeOption[] = [
     {
       type: 'barber',
-      icon: '💈',
+      icon: 'ðŸ’ˆ',
       title: 'Barbearia',
       description: 'Cortes, barba e mais',
       recommended: true
     },
     {
       type: 'salon',
-      icon: '💇‍♀️',
-      title: 'Salão de Beleza',
-      description: 'Cabelo, unhas e estética'
+      icon: 'ðŸ’‡â€â™€ï¸',
+      title: 'SalÃ£o de Beleza',
+      description: 'Cabelo, unhas e estÃ©tica'
     },
     {
       type: 'unisex',
-      icon: '✨',
-      title: 'Barbearia + Salão',
+      icon: 'âœ¨',
+      title: 'Barbearia + SalÃ£o',
       description: 'Atendimento unissex'
     },
     {
       type: 'skip',
-      icon: '⚙️',
+      icon: 'âš™ï¸',
       title: 'Pular',
       description: 'Criar tudo manualmente'
     }
@@ -44,7 +44,7 @@ export const BusinessTypeSelection: React.FC<BusinessTypeSelectionProps> = ({ on
           <Sparkles className="w-8 h-8 text-amber-500" />
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">
-          Vamos montar seus serviços
+          Vamos montar seus serviÃ§os
         </h1>
         <p className="text-zinc-400 text-lg">
           em 30 segundos
@@ -88,7 +88,7 @@ export const BusinessTypeSelection: React.FC<BusinessTypeSelectionProps> = ({ on
 
       <div className="mt-8 text-center">
         <p className="text-zinc-500 text-sm">
-          💡 Você poderá editar tudo depois
+          ðŸ’¡ VocÃª poderÃ¡ editar tudo depois
         </p>
       </div>
     </div>

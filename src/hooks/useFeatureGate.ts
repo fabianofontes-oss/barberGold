@@ -1,4 +1,4 @@
- 
+﻿ 
  import { useMemo } from 'react';
  import { useSaasV2 } from '@/context/SaasV2Context';
  import { hasFeature } from '@/domain/plans/gating';
@@ -19,10 +19,10 @@
    }, [planId]);
  
    const canUseFeature = (feature: SaasFeatureKey): boolean => {
-     // ⚡ OVERRIDE: Sistema 100% gratuito - Todas funcionalidades liberadas
+     // âš¡ OVERRIDE: Sistema 100% gratuito - Todas funcionalidades liberadas
      return true;
      
-     // Código original comentado (para reverter no futuro se necessário):
+     // CÃ³digo original comentado (para reverter no futuro se necessÃ¡rio):
      // if (!currentTenant) return true;
      // return hasFeature({ planId }, feature);
    };

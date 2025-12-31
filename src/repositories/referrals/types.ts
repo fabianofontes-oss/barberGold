@@ -1,4 +1,4 @@
-import type { BillingPeriod, ReferralPartner, ReferralSale } from '@/types';
+﻿import type { BillingPeriod, ReferralPartner, ReferralSale } from '@/types';
 
 export type ReferralSaleCreateInput = {
   referralCode: string;

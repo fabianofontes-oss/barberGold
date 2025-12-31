@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useMemo } from 'react';
 import { useReferral } from '@/context/ReferralContext';
@@ -71,7 +71,7 @@ export const MyReferralsPanel: React.FC = () => {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  // --- Early returns após todos os hooks ---
+  // --- Early returns apÃ³s todos os hooks ---
   if (!currentUser) return null;
 
   // --- 1. STAFF VIEW ---
@@ -82,9 +82,9 @@ export const MyReferralsPanel: React.FC = () => {
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="font-bold text-white text-sm">Programa de indicações indisponível</p>
+              <p className="font-bold text-white text-sm">Programa de indicaÃ§Ãµes indisponÃ­vel</p>
               <p className="text-zinc-400 mt-1 leading-relaxed">
-                Peça para o dono da barbearia ativar o programa e criar um link para você.
+                PeÃ§a para o dono da barbearia ativar o programa e criar um link para vocÃª.
               </p>
             </div>
           </div>
@@ -101,7 +101,7 @@ export const MyReferralsPanel: React.FC = () => {
             <p className="text-[10px] uppercase tracking-widest font-bold text-amber-500 mb-1">Growth Partner</p>
             <h2 className="text-lg font-bold text-white">Meus Resultados</h2>
             <p className="text-zinc-400 mt-1 max-w-sm">
-              Indique barbearias e ganhe comissão no primeiro pagamento anual (liberação D+60).
+              Indique barbearias e ganhe comissÃ£o no primeiro pagamento anual (liberaÃ§Ã£o D+60).
             </p>
           </div>
           
@@ -132,7 +132,7 @@ export const MyReferralsPanel: React.FC = () => {
                   <div className="flex items-center gap-3 overflow-hidden">
                     <div className="p-2 bg-amber-500/10 rounded-lg text-amber-500 flex-shrink-0"><Link2 className="w-4 h-4" /></div>
                     <div className="min-w-0">
-                      <p className="text-[10px] text-zinc-500 font-bold uppercase">Seu Código</p>
+                      <p className="text-[10px] text-zinc-500 font-bold uppercase">Seu CÃ³digo</p>
                       <p className="text-sm font-mono font-bold text-white truncate">{link.code}</p>
                     </div>
                   </div>
@@ -149,16 +149,16 @@ export const MyReferralsPanel: React.FC = () => {
         </div>
 
         <div className="bg-zinc-950 rounded-xl border border-zinc-800 p-4 relative z-10">
-          <p className="text-[10px] text-zinc-500 font-bold uppercase mb-3">Comissões</p>
+          <p className="text-[10px] text-zinc-500 font-bold uppercase mb-3">ComissÃµes</p>
           {staffMySales.length === 0 ? (
-            <p className="text-xs text-zinc-500">Nenhuma comissão registrada ainda.</p>
+            <p className="text-xs text-zinc-500">Nenhuma comissÃ£o registrada ainda.</p>
           ) : (
             <div className="space-y-2">
               {staffMySales.slice(0, 5).map((s) => (
                 <div key={s.id} className="flex items-center justify-between gap-3 text-xs">
                   <div className="min-w-0">
                     <p className="font-mono text-[10px] text-zinc-400 truncate">{s.referralCode}</p>
-                    <p className="text-[10px] text-zinc-600">Libera em: {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : '—'}</p>
+                    <p className="text-[10px] text-zinc-600">Libera em: {s.availableAt ? new Date(s.availableAt).toLocaleDateString('pt-BR') : 'â€”'}</p>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
@@ -177,13 +177,13 @@ export const MyReferralsPanel: React.FC = () => {
     );
   }
 
-  // Função para compartilhar link
+  // FunÃ§Ã£o para compartilhar link
   const handleShare = (code: string) => {
     const shareUrl = `https://barberflow.app/r/${code}`;
-    const shareText = `🚀 Conheça o BarberFlow! Use meu código ${code} e comece a faturar mais na sua barbearia!`;
+    const shareText = `ðŸš€ ConheÃ§a o BarberFlow! Use meu cÃ³digo ${code} e comece a faturar mais na sua barbearia!`;
     
     if (navigator.share) {
-      navigator.share({ title: 'BarberFlow - Indicação', text: shareText, url: shareUrl });
+      navigator.share({ title: 'BarberFlow - IndicaÃ§Ã£o', text: shareText, url: shareUrl });
     } else {
       // Fallback: abre WhatsApp
       window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
@@ -198,7 +198,7 @@ export const MyReferralsPanel: React.FC = () => {
 
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
         <div>
-          <p className="text-[10px] uppercase tracking-widest font-bold text-emerald-400 mb-1">Indicações & Rede</p>
+          <p className="text-[10px] uppercase tracking-widest font-bold text-emerald-400 mb-1">IndicaÃ§Ãµes & Rede</p>
           <h2 className="text-xl font-bold text-white">Performance de Parceiro</h2>
           <p className="text-zinc-400 mt-1 max-w-md">Acompanhe seus ganhos diretos e a receita gerada pela sua equipe.</p>
         </div>
@@ -218,7 +218,7 @@ export const MyReferralsPanel: React.FC = () => {
             <div className="flex items-center gap-3 bg-zinc-950/80 p-3 rounded-xl border border-emerald-500/20">
               <div className="p-2 bg-emerald-500/20 rounded-lg text-emerald-400 flex-shrink-0"><Link2 className="w-4 h-4" /></div>
               <div className="min-w-0">
-                <p className="text-[10px] text-emerald-400/70 font-bold uppercase">Seu Código</p>
+                <p className="text-[10px] text-emerald-400/70 font-bold uppercase">Seu CÃ³digo</p>
                 <p className="text-sm font-mono font-bold text-white">{ownerMyLinks[0].code}</p>
               </div>
               <button type="button" onClick={() => handleShare(ownerMyLinks[0].code)}
@@ -232,7 +232,7 @@ export const MyReferralsPanel: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
         <div className="bg-zinc-950/50 border border-emerald-500/10 p-4 rounded-xl flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-zinc-400 mb-1"><Link2 className="w-4 h-4 text-emerald-400" /><span className="font-bold text-xs uppercase">Direto (Você)</span></div>
+          <div className="flex items-center gap-2 text-zinc-400 mb-1"><Link2 className="w-4 h-4 text-emerald-400" /><span className="font-bold text-xs uppercase">Direto (VocÃª)</span></div>
           <div className="flex justify-between items-end">
             <span className="text-2xl font-bold text-white">{ownerTotals.directCount}</span>
             <span className="text-sm font-bold text-emerald-400">+ R$ {ownerTotals.direct.toFixed(2)}</span>
@@ -255,7 +255,7 @@ export const MyReferralsPanel: React.FC = () => {
 
         <div className="bg-zinc-950/50 border border-emerald-500/10 p-4 rounded-xl flex flex-col justify-center gap-1">
           <div className="flex items-center gap-2 text-zinc-500 text-xs mb-1"><TrendingUp className="w-4 h-4 text-emerald-400" /> Performance</div>
-          <p className="text-xs text-zinc-400 leading-relaxed">Você ganha <span className="text-emerald-400 font-bold">100%</span> das suas indicações diretas e uma parte das indicações da equipe.</p>
+          <p className="text-xs text-zinc-400 leading-relaxed">VocÃª ganha <span className="text-emerald-400 font-bold">100%</span> das suas indicaÃ§Ãµes diretas e uma parte das indicaÃ§Ãµes da equipe.</p>
         </div>
       </div>
     </div>

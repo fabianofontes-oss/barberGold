@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { useSaasV2 } from '@/context/SaasV2Context';
@@ -7,7 +7,7 @@ import { SaasV2FeatureKey, SaasV2PlanId } from '@/types';
 const featureLabels: Record<SaasV2FeatureKey, string> = {
   ONLINE_BOOKING: 'Agendamento Online',
   LOYALTY: 'Fidelidade & Pontos',
-  ADVANCED_REPORTS: 'Relatórios Avançados',
+  ADVANCED_REPORTS: 'RelatÃ³rios AvanÃ§ados',
   MULTI_SHOP: 'Multi-unidade',
   WEBSITE_PREMIUM: 'Website Premium',
 };
@@ -53,7 +53,7 @@ export const PlansV2: React.FC = () => {
           Planos do BarberFlow
         </h1>
         <p className="text-xs text-zinc-400">
-          Defina preços e quais recursos cada plano desbloqueia.
+          Defina preÃ§os e quais recursos cada plano desbloqueia.
         </p>
       </header>
 

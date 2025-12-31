@@ -1,4 +1,4 @@
-import { z } from 'zod';
+﻿import { z } from 'zod';
 import { Database } from '@/types/supabase';
 
 // Types do Banco
@@ -6,11 +6,11 @@ export type ClientDB = Database['public']['Tables']['clients']['Row'];
 export type ClientInsert = Database['public']['Tables']['clients']['Insert'];
 export type ClientUpdate = Database['public']['Tables']['clients']['Update'];
 
-// Schema de Validação
+// Schema de ValidaÃ§Ã£o
 export const clientSchema = z.object({
   id: z.string().uuid().optional(),
   name: z.string().min(2, 'Nome muito curto'),
-  phone: z.string().regex(/^\(\d{2}\) \d{5}-\d{4}$/, 'Formato inválido'),
+  phone: z.string().regex(/^\(\d{2}\) \d{5}-\d{4}$/, 'Formato invÃ¡lido'),
   email: z.string().email().optional().or(z.literal('')),
   birthDate: z.string().optional(),
   document: z.string().optional(),

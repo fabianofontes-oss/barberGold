@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/client';
+﻿import { createClient } from '@/lib/supabase/client';
 import { ClientDB, ClientInsert, ClientUpdate, ClientWithStats } from './types';
 
 export class ClientsRepository {
@@ -30,7 +30,7 @@ export class ClientsRepository {
     const { data, error } = await query;
     if (error) throw error;
 
-    // Calcular estatísticas
+    // Calcular estatÃ­sticas
     const clientsWithStats: ClientWithStats[] = (data || []).map(client => {
       const appointments = client.appointments || [];
       const completedAppointments = appointments.filter((apt: any) => apt.status === 'COMPLETED');

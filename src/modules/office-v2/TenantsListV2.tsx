@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useMemo, useState } from 'react';
 import { useSaasV2 } from '@/context/SaasV2Context';
@@ -54,7 +54,7 @@ export const TenantsListV2: React.FC<TenantsListV2Props> = ({
             Lojas cadastradas
           </h1>
           <p className="text-xs text-zinc-400">
-            Visão geral das barbearias conectadas ao BarberFlow.
+            VisÃ£o geral das barbearias conectadas ao BarberFlow.
           </p>
         </div>
       </header>
@@ -156,7 +156,7 @@ export const TenantsListV2: React.FC<TenantsListV2Props> = ({
               <th className="py-2 pr-4 text-zinc-500 font-medium">MRR</th>
               <th className="py-2 pr-4 text-zinc-500 font-medium">Status</th>
               <th className="py-2 pr-4 text-zinc-500 font-medium text-right">
-                Ações
+                AÃ§Ãµes
               </th>
             </tr>
           </thead>
@@ -174,7 +174,7 @@ export const TenantsListV2: React.FC<TenantsListV2Props> = ({
                         {tenant.shopName}
                       </span>
                       <span className="text-[10px] text-zinc-500">
-                        {tenant.country} • Desde{' '}
+                        {tenant.country} â€¢ Desde{' '}
                         {tenant.createdAt?.toLocaleDateString?.() ?? ''}
                       </span>
                     </div>

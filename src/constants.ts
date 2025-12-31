@@ -1,4 +1,4 @@
-
+﻿
 import { 
   Appointment, Client, Product, Service, StaffMember, CommissionPlan, 
   InventoryItem, Supplier, SupplyTransaction, Category, Tenant, 
@@ -192,7 +192,7 @@ export const MOCK_PLANS: CommissionPlan[] = [
 export const MOCK_INVENTORY: InventoryItem[] = [
   {
     id: 'inv1',
-    name: 'Shampoo (Galão)',
+    name: 'Shampoo (GalÃ£o)',
     category: 'Washing',
     quantity: 2,
     minStock: 1,
@@ -276,14 +276,14 @@ export const MOCK_REFERRALS: ReferralSource[] = [];
 
 /**
  * @deprecated Use PLANS_BR from '@/domain/plans' instead.
- * Esta constante será removida em versões futuras.
- * Fonte única de verdade: src/domain/plans/plans.ts
+ * Esta constante serÃ¡ removida em versÃµes futuras.
+ * Fonte Ãºnica de verdade: src/domain/plans/plans.ts
  */
 export const SAAS_PLANS_BR: SaasPlan[] = [
   {
     id: 'FREE',
     name: 'Free Solo',
-    description: 'Caderno digital para começar.',
+    description: 'Caderno digital para comeÃ§ar.',
     monthlyPriceBRL: 0,
     yearlyPriceBRL: 0,
     maxStaff: 1,
@@ -295,7 +295,7 @@ export const SAAS_PLANS_BR: SaasPlan[] = [
   {
     id: 'SOLO',
     name: 'Start',
-    description: 'Organização com agendamento online.',
+    description: 'OrganizaÃ§Ã£o com agendamento online.',
     monthlyPriceBRL: 49,
     yearlyPriceBRL: 490,
     maxStaff: 1,
@@ -307,7 +307,7 @@ export const SAAS_PLANS_BR: SaasPlan[] = [
   {
     id: 'SOLO_PRO',
     name: 'Pro',
-    description: 'Gestão completa de lucro e fidelização.',
+    description: 'GestÃ£o completa de lucro e fidelizaÃ§Ã£o.',
     monthlyPriceBRL: 59,
     yearlyPriceBRL: 590,
     maxStaff: 1,
@@ -331,7 +331,7 @@ export const SAAS_PLANS_BR: SaasPlan[] = [
   {
     id: 'STUDIO',
     name: 'Elite',
-    description: 'Barbearias que querem marca própria forte.',
+    description: 'Barbearias que querem marca prÃ³pria forte.',
     monthlyPriceBRL: 119,
     yearlyPriceBRL: 1190,
     maxStaff: 6,
@@ -378,12 +378,12 @@ export const EXPENSE_TEMPLATES: ExpenseTemplate[] = [
   { title: 'Aluguel', category: 'RENT', amount: 1500, type: 'FIXED', icon: 'Building2', context: 'BUSINESS', defaultAmount: 1500 },
   { title: 'Energia', category: 'UTILITIES', amount: 300, type: 'FIXED', icon: 'Zap', context: 'BUSINESS', defaultAmount: 300 },
   { title: 'Internet', category: 'UTILITIES', amount: 100, type: 'FIXED', icon: 'Wifi', context: 'BUSINESS', defaultAmount: 100 },
-  { title: 'Água', category: 'UTILITIES', amount: 80, type: 'FIXED', icon: 'Droplets', context: 'BUSINESS', defaultAmount: 80 },
+  { title: 'Ãgua', category: 'UTILITIES', amount: 80, type: 'FIXED', icon: 'Droplets', context: 'BUSINESS', defaultAmount: 80 },
   { title: 'Produtos Limpeza', category: 'SUPPLIES', amount: 150, type: 'VARIABLE', icon: 'SprayCan', context: 'BUSINESS', defaultAmount: 150 },
-  { title: 'Café & Água', category: 'SUPPLIES', amount: 200, type: 'VARIABLE', icon: 'Coffee', context: 'BUSINESS', defaultAmount: 200 },
+  { title: 'CafÃ© & Ãgua', category: 'SUPPLIES', amount: 200, type: 'VARIABLE', icon: 'Coffee', context: 'BUSINESS', defaultAmount: 200 },
   { title: 'Marketing (Ads)', category: 'MARKETING', amount: 500, type: 'VARIABLE', icon: 'Smartphone', context: 'BUSINESS', defaultAmount: 500 },
   { title: 'Sistema (BarberFlow)', category: 'SYSTEM', amount: 59, type: 'FIXED', icon: 'Laptop2', context: 'BUSINESS', defaultAmount: 59 },
-  { title: 'Manutenção', category: 'OTHER', amount: 0, type: 'VARIABLE', icon: 'Wrench', context: 'BUSINESS', defaultAmount: 0 },
+  { title: 'ManutenÃ§Ã£o', category: 'OTHER', amount: 0, type: 'VARIABLE', icon: 'Wrench', context: 'BUSINESS', defaultAmount: 0 },
   { title: 'Aluguel Casa', category: 'RENT', amount: 1200, type: 'FIXED', icon: 'Home', context: 'PERSONAL', defaultAmount: 1200 },
   { title: 'Mercado', category: 'OTHER', amount: 800, type: 'VARIABLE', icon: 'ShoppingCart', context: 'PERSONAL', defaultAmount: 800 },
   { title: 'Academia', category: 'OTHER', amount: 100, type: 'FIXED', icon: 'Dumbbell', context: 'PERSONAL', defaultAmount: 100 },

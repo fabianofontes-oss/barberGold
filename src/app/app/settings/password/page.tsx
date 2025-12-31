@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -20,7 +20,7 @@ export default function PasswordResetPage() {
     setError(null);
     setLoading(true);
 
-    // Validações
+    // ValidaÃ§Ãµes
     if (newPassword.length < 6) {
       setError('A senha deve ter pelo menos 6 caracteres');
       setLoading(false);
@@ -28,7 +28,7 @@ export default function PasswordResetPage() {
     }
 
     if (newPassword !== confirmPassword) {
-      setError('As senhas não coincidem');
+      setError('As senhas nÃ£o coincidem');
       setLoading(false);
       return;
     }
@@ -46,7 +46,7 @@ export default function PasswordResetPage() {
 
       setSuccess(true);
       
-      // Redireciona para dashboard após 2 segundos
+      // Redireciona para dashboard apÃ³s 2 segundos
       setTimeout(() => {
         router.push('/app/dashboard');
       }, 2000);
@@ -109,7 +109,7 @@ export default function PasswordResetPage() {
                   required
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="MÃ­nimo 6 caracteres"
                   disabled={loading}
                   className="w-full pl-10 pr-12 py-3 bg-zinc-950 border border-zinc-800 rounded-lg text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all disabled:opacity-50"
                 />
@@ -162,7 +162,7 @@ export default function PasswordResetPage() {
         </div>
 
         <p className="text-center text-zinc-600 text-xs mt-6">
-          Após atualizar, você será redirecionado automaticamente
+          ApÃ³s atualizar, vocÃª serÃ¡ redirecionado automaticamente
         </p>
       </div>
     </div>

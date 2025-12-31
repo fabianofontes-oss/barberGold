@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -17,7 +17,7 @@ export function useAppointments() {
       try {
         const supabase = createClient();
         
-        // 1. Verificar sessão
+        // 1. Verificar sessÃ£o
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
           setAppointments([]);

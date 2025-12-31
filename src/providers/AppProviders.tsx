@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { SaasV2Provider } from '@/context/SaasV2Context';
 import { ReferralProvider } from '@/context/ReferralContext';

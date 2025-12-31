@@ -1,4 +1,4 @@
-import { ServiceLibrary } from '@/modules/catalog/components/ServiceLibrary';
+﻿import { ServiceLibrary } from '@/modules/catalog/components/ServiceLibrary';
 
 export default function ServiceLibraryPage() {
     return <ServiceLibrary />;

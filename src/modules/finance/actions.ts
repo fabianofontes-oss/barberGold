@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -13,13 +13,13 @@ export async function createExpense(data: {
   supplierId?: string;
   paymentMethod?: string;
 }) {
-  // ✅ Validação Zod
+  // âœ… ValidaÃ§Ã£o Zod
   try {
     const validated = createExpenseSchema.parse(data);
 
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw new Error('Não autenticado');
+    if (!session) throw new Error('NÃ£o autenticado');
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -27,7 +27,7 @@ export async function createExpense(data: {
       .eq('user_id', session.user.id)
       .single();
 
-    if (!profile?.store_id) throw new Error('Store não encontrado');
+    if (!profile?.store_id) throw new Error('Store nÃ£o encontrado');
 
     const { data: expense, error } = await supabase
       .from('expenses')
@@ -44,18 +44,18 @@ export async function createExpense(data: {
       .single();
 
     if (error) {
-      console.error('❌ Erro ao criar despesa:', error);
+      console.error('âŒ Erro ao criar despesa:', error);
       throw new Error(error.message);
     }
 
     revalidatePath('/app/finance');
     revalidatePath('/app/dashboard');
-    console.log('✅ Despesa criada:', expense.id);
+    console.log('âœ… Despesa criada:', expense.id);
     return expense;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('❌ Erro de validação:', error.issues);
-      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+      console.error('âŒ Erro de validaÃ§Ã£o:', error.issues);
+      throw new Error(`Dados invÃ¡lidos: ${error.issues[0].message}`);
     }
     throw error;
   }
@@ -64,7 +64,7 @@ export async function createExpense(data: {
 export async function deleteExpense(expenseId: string) {
   const supabase = await createClient();
   const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
+  if (!session) throw new Error('NÃ£o autenticado');
 
   const { data: profile } = await supabase
     .from('profiles')
@@ -73,7 +73,7 @@ export async function deleteExpense(expenseId: string) {
     .single();
 
   if (!profile?.store_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
-    throw new Error('Sem permissão');
+    throw new Error('Sem permissÃ£o');
   }
 
   const { error } = await supabase
@@ -83,7 +83,7 @@ export async function deleteExpense(expenseId: string) {
     .eq('store_id', profile.store_id);
 
   if (error) {
-    console.error('❌ Erro ao deletar despesa:', error);
+    console.error('âŒ Erro ao deletar despesa:', error);
     throw new Error(error.message);
   }
 
@@ -104,13 +104,13 @@ export async function createRegisterClosure(data: {
   totalPix?: number;
   notes?: string;
 }) {
-  // ✅ Validação Zod
+  // âœ… ValidaÃ§Ã£o Zod
   try {
     const validated = createRegisterClosureSchema.parse(data);
 
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw new Error('Não autenticado');
+    if (!session) throw new Error('NÃ£o autenticado');
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -118,7 +118,7 @@ export async function createRegisterClosure(data: {
       .eq('user_id', session.user.id)
       .single();
 
-    if (!profile?.store_id) throw new Error('Store não encontrado');
+    if (!profile?.store_id) throw new Error('Store nÃ£o encontrado');
 
     const { data: closure, error } = await supabase
       .from('register_closures')
@@ -139,18 +139,18 @@ export async function createRegisterClosure(data: {
       .single();
 
     if (error) {
-      console.error('❌ Erro ao criar fechamento:', error);
+      console.error('âŒ Erro ao criar fechamento:', error);
       throw new Error(error.message);
     }
 
     revalidatePath('/app/finance');
     revalidatePath('/app/dashboard');
-    console.log('✅ Fechamento criado:', closure.id);
+    console.log('âœ… Fechamento criado:', closure.id);
     return closure;
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('❌ Erro de validação:', error.issues);
-      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+      console.error('âŒ Erro de validaÃ§Ã£o:', error.issues);
+      throw new Error(`Dados invÃ¡lidos: ${error.issues[0].message}`);
     }
     throw error;
   }

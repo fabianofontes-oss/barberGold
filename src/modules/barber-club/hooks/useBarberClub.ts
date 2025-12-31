@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useCallback, useEffect, useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -115,7 +115,7 @@ export function useBarberClub() {
       const result = await actions.redeemCredit({ tenantId, ...params });
       if (result.success && result.usage) {
         setUsageHistory((prev) => [result.usage!, ...prev]);
-        // Atualiza créditos restantes na subscription local
+        // Atualiza crÃ©ditos restantes na subscription local
         setSubscriptions((prev) =>
           prev.map((s) =>
             s.clientId === params.clientId && s.status === 'ACTIVE'

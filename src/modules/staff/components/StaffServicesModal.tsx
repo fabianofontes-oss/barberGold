@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { X, Check, Search } from 'lucide-react';
@@ -62,7 +62,7 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
       if (error) throw error;
       setAllServices(data || []);
     } catch (err) {
-      console.error('Erro ao carregar serviços:', err);
+      console.error('Erro ao carregar serviÃ§os:', err);
     } finally {
       setLoading(false);
     }
@@ -79,7 +79,7 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
       if (error) throw error;
       setSelectedServices(data?.map(s => s.service_id) || []);
     } catch (err) {
-      console.error('Erro ao carregar serviços do staff:', err);
+      console.error('Erro ao carregar serviÃ§os do staff:', err);
     }
   };
 
@@ -96,13 +96,13 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
     try {
       const supabase = createClient();
 
-      // Deletar todos os serviços atuais
+      // Deletar todos os serviÃ§os atuais
       await supabase
         .from('staff_services')
         .delete()
         .eq('staff_id', staffId);
 
-      // Inserir novos serviços selecionados
+      // Inserir novos serviÃ§os selecionados
       if (selectedServices.length > 0) {
         const { error } = await supabase
           .from('staff_services')
@@ -118,8 +118,8 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
 
       onClose();
     } catch (err) {
-      console.error('Erro ao salvar serviços:', err);
-      alert('Erro ao salvar configurações');
+      console.error('Erro ao salvar serviÃ§os:', err);
+      alert('Erro ao salvar configuraÃ§Ãµes');
     } finally {
       setSaving(false);
     }
@@ -137,9 +137,9 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
         {/* Header */}
         <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-white">Configurar Serviços</h2>
+            <h2 className="text-2xl font-bold text-white">Configurar ServiÃ§os</h2>
             <p className="text-sm text-zinc-400 mt-1">
-              Selecione os serviços que <span className="text-amber-500 font-bold">{staffName}</span> oferece
+              Selecione os serviÃ§os que <span className="text-amber-500 font-bold">{staffName}</span> oferece
             </p>
           </div>
           <button
@@ -156,24 +156,24 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
             <Search className="absolute left-3 top-3 w-5 h-5 text-zinc-500" />
             <input
               type="text"
-              placeholder="Buscar serviço..."
+              placeholder="Buscar serviÃ§o..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:border-amber-500"
             />
           </div>
           <div className="mt-3 text-sm text-zinc-400">
-            <span className="font-bold text-amber-500">{selectedServices.length}</span> de {allServices.length} serviços selecionados
+            <span className="font-bold text-amber-500">{selectedServices.length}</span> de {allServices.length} serviÃ§os selecionados
           </div>
         </div>
 
         {/* Services List */}
         <div className="flex-1 overflow-y-auto p-6 space-y-2">
           {loading ? (
-            <div className="text-center py-12 text-zinc-500">Carregando serviços...</div>
+            <div className="text-center py-12 text-zinc-500">Carregando serviÃ§os...</div>
           ) : filteredServices.length === 0 ? (
             <div className="text-center py-12 text-zinc-500">
-              {searchQuery ? 'Nenhum serviço encontrado' : 'Nenhum serviço disponível'}
+              {searchQuery ? 'Nenhum serviÃ§o encontrado' : 'Nenhum serviÃ§o disponÃ­vel'}
             </div>
           ) : (
             filteredServices.map(service => {
@@ -193,7 +193,7 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
                       <h3 className="font-bold text-white">{service.name}</h3>
                       <div className="flex items-center gap-3 mt-1 text-sm text-zinc-400">
                         <span>{service.duration}min</span>
-                        <span>•</span>
+                        <span>â€¢</span>
                         <span className="text-amber-500 font-bold">R$ {service.price.toFixed(2)}</span>
                       </div>
                     </div>
@@ -226,7 +226,7 @@ export const StaffServicesModal: React.FC<StaffServicesModalProps> = ({
             disabled={saving}
             className="flex-1 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-zinc-900 rounded-lg font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {saving ? 'Salvando...' : 'Salvar Configurações'}
+            {saving ? 'Salvando...' : 'Salvar ConfiguraÃ§Ãµes'}
           </button>
         </div>
       </div>

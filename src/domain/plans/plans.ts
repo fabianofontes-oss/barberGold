@@ -1,4 +1,4 @@
-import { BillingInterval, PlanDefinition, PlanId } from './types';
+﻿import { BillingInterval, PlanDefinition, PlanId } from './types';
 
 export const PLANS_BR: PlanDefinition[] = [
   {

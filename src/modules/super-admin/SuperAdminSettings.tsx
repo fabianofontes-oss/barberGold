@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -72,7 +72,7 @@ export const SuperAdminSettings = () => {
                            >
                               <option value="USD">USD ($)</option>
                               <option value="BRL">BRL (R$)</option>
-                              <option value="EUR">EUR (€)</option>
+                              <option value="EUR">EUR (â‚¬)</option>
                            </select>
                         </div>
                      </div>

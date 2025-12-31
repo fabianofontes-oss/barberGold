@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { 
@@ -88,7 +88,7 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = ({
 
       {/* Weekday Headers */}
       <div className="grid grid-cols-7 gap-1 mb-2">
-        {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(dayName => (
+        {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'SÃ¡b'].map(dayName => (
           <div key={dayName} className="text-center text-[10px] text-zinc-500 font-bold uppercase py-1">
             {dayName}
           </div>
@@ -162,7 +162,7 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = ({
         </div>
         <div className="flex items-center gap-1">
           <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-          <span>Concluído</span>
+          <span>ConcluÃ­do</span>
         </div>
       </div>
     </div>

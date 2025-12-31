@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useMemo } from 'react';
 import {
@@ -53,7 +53,7 @@ export const ReorderGenerator: React.FC<ReorderGeneratorProps> = ({
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'ALL' | 'PRODUCTS' | 'INVENTORY'>('ALL');
 
-  // Gerar lista de itens para reposição
+  // Gerar lista de itens para reposiÃ§Ã£o
   const reorderItems = useMemo(() => {
     const items: ReorderItem[] = [];
 
@@ -120,13 +120,13 @@ export const ReorderGenerator: React.FC<ReorderGeneratorProps> = ({
 
   // Gerar texto do pedido
   const generateOrderText = () => {
-    const date = format(new Date(), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR });
+    const date = format(new Date(), "dd/MM/yyyy 'Ã s' HH:mm", { locale: ptBR });
     const lines: string[] = [];
 
-    lines.push(`📦 PEDIDO DE REPOSIÇÃO - ${shopName.toUpperCase()}`);
-    lines.push(`📅 Data: ${date}`);
+    lines.push(`ðŸ“¦ PEDIDO DE REPOSIÃ‡ÃƒO - ${shopName.toUpperCase()}`);
+    lines.push(`ðŸ“… Data: ${date}`);
     lines.push('');
-    lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    lines.push('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”');
     lines.push('');
 
     // Agrupar por fornecedor (para insumos)
@@ -146,10 +146,10 @@ export const ReorderGenerator: React.FC<ReorderGeneratorProps> = ({
 
     // Itens sem fornecedor definido
     if (noSupplier.length > 0) {
-      lines.push('📋 ITENS PARA PEDIDO:');
+      lines.push('ðŸ“‹ ITENS PARA PEDIDO:');
       lines.push('');
       noSupplier.forEach((item) => {
-        const icon = item.type === 'PRODUCT' ? '🏷️' : '📦';
+        const icon = item.type === 'PRODUCT' ? 'ðŸ·ï¸' : 'ðŸ“¦';
         lines.push(`${icon} ${item.name}`);
         lines.push(`   Qtd: ${item.orderQty} unidades`);
         lines.push(`   Estoque atual: ${item.currentStock}`);
@@ -160,22 +160,22 @@ export const ReorderGenerator: React.FC<ReorderGeneratorProps> = ({
     // Itens por fornecedor
     Object.entries(bySupplier).forEach(([supplierId, items]) => {
       const supplier = suppliers.find((s) => s.id === supplierId);
-      lines.push(`🚚 FORNECEDOR: ${supplier?.name || 'Desconhecido'}`);
-      if (supplier?.phone) lines.push(`   📞 ${supplier.phone}`);
+      lines.push(`ðŸšš FORNECEDOR: ${supplier?.name || 'Desconhecido'}`);
+      if (supplier?.phone) lines.push(`   ðŸ“ž ${supplier.phone}`);
       lines.push('');
       items.forEach((item) => {
-        lines.push(`   📦 ${item.name} - ${item.orderQty} unidades`);
+        lines.push(`   ðŸ“¦ ${item.name} - ${item.orderQty} unidades`);
       });
       lines.push('');
     });
 
-    lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    lines.push('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”');
     lines.push('');
-    lines.push(`📊 RESUMO:`);
+    lines.push(`ðŸ“Š RESUMO:`);
     lines.push(`   Total de itens: ${totalItems}`);
     lines.push(`   Custo estimado: R$ ${totalCost.toFixed(2)}`);
     lines.push('');
-    lines.push('Gerado por BarberFlow 💈');
+    lines.push('Gerado por BarberFlow ðŸ’ˆ');
 
     return lines.join('\n');
   };
@@ -203,7 +203,7 @@ export const ReorderGenerator: React.FC<ReorderGeneratorProps> = ({
               <ShoppingCart className="w-5 h-5 text-amber-500" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Gerar Pedido de Reposição</h2>
+              <h2 className="text-xl font-bold text-white">Gerar Pedido de ReposiÃ§Ã£o</h2>
               <p className="text-xs text-zinc-500">{reorderItems.length} itens com estoque baixo</p>
             </div>
           </div>
@@ -258,7 +258,7 @@ export const ReorderGenerator: React.FC<ReorderGeneratorProps> = ({
                   <div>
                     <p className="text-sm font-bold text-white">{item.name}</p>
                     <p className="text-[10px] text-zinc-500">
-                      Estoque: <span className="text-red-400">{item.currentStock}</span> / Mín: {item.minStock}
+                      Estoque: <span className="text-red-400">{item.currentStock}</span> / MÃ­n: {item.minStock}
                     </p>
                   </div>
                 </div>

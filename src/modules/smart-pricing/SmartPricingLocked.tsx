@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 
 import React, { useState } from 'react';
@@ -39,7 +39,7 @@ export const SmartPricingLocked = () => {
                   onClick={() => setActiveTab('SUBSCRIPTION')}
                   className={`flex-1 py-2.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-2 ${activeTab === 'SUBSCRIPTION' ? 'bg-zinc-800 text-purple-500 shadow-lg' : 'text-zinc-500 hover:text-zinc-300'}`}
                >
-                  <Repeat className="w-4 h-4" /> Barber Club™
+                  <Repeat className="w-4 h-4" /> Barber Clubâ„¢
                </button>
             </div>
 
@@ -54,13 +54,13 @@ export const SmartPricingLocked = () => {
                   <h2 className="text-3xl font-bold text-white mb-2">Smart Yield Engine</h2>
                   <div className="inline-block bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1 mb-6">
                       <span className="text-[10px] font-bold text-amber-500 uppercase tracking-widest flex items-center gap-2">
-                         <Activity className="w-3 h-3" /> Alpha Lab • Restricted
+                         <Activity className="w-3 h-3" /> Alpha Lab â€¢ Restricted
                       </span>
                   </div>
 
                   <p className="text-zinc-400 mb-8 text-sm leading-relaxed max-w-md">
-                     O primeiro sistema de <b>Precificação Dinâmica</b> para barbearias.
-                     Transforme sua agenda em uma bolsa de valores. Aumente preços na escassez, atraia volume na ociosidade.
+                     O primeiro sistema de <b>PrecificaÃ§Ã£o DinÃ¢mica</b> para barbearias.
+                     Transforme sua agenda em uma bolsa de valores. Aumente preÃ§os na escassez, atraia volume na ociosidade.
                   </p>
 
                   <div className="grid grid-cols-2 gap-4 mb-8 w-full max-w-lg">
@@ -95,7 +95,7 @@ export const SmartPricingLocked = () => {
 
                   <p className="text-zinc-400 mb-8 text-sm leading-relaxed max-w-md">
                      Transforme clientes avulsos em <b>Assinantes Recorrentes</b>.
-                     Garanta receita no dia 01 (MRR) e automatize o comissionamento por &quot;Créditos de Serviço&quot;.
+                     Garanta receita no dia 01 (MRR) e automatize o comissionamento por &quot;CrÃ©ditos de ServiÃ§o&quot;.
                   </p>
 
                   <div className="grid grid-cols-2 gap-4 mb-8 w-full max-w-lg">
@@ -107,11 +107,11 @@ export const SmartPricingLocked = () => {
                         <h4 className="text-zinc-300 font-bold text-sm">Gold Member</h4>
                         <div className="flex items-baseline gap-1 mt-1 mb-2">
                            <span className="text-xl font-bold text-white">$89</span>
-                           <span className="text-[10px] text-zinc-500">/mês</span>
+                           <span className="text-[10px] text-zinc-500">/mÃªs</span>
                         </div>
                         <ul className="text-[10px] text-zinc-500 space-y-1">
-                           <li className="flex items-center gap-1"><span className="text-emerald-500">✓</span> 2 Cortes / Mês</li>
-                           <li className="flex items-center gap-1"><span className="text-emerald-500">✓</span> Barba Ilimitada</li>
+                           <li className="flex items-center gap-1"><span className="text-emerald-500">âœ“</span> 2 Cortes / MÃªs</li>
+                           <li className="flex items-center gap-1"><span className="text-emerald-500">âœ“</span> Barba Ilimitada</li>
                         </ul>
                      </div>
 
@@ -123,17 +123,17 @@ export const SmartPricingLocked = () => {
                         <h4 className="text-white font-bold text-sm flex items-center gap-1">Black Card <span className="text-[8px] bg-purple-500 text-white px-1 rounded">VIP</span></h4>
                         <div className="flex items-baseline gap-1 mt-1 mb-2">
                            <span className="text-xl font-bold text-purple-400">$149</span>
-                           <span className="text-[10px] text-zinc-500">/mês</span>
+                           <span className="text-[10px] text-zinc-500">/mÃªs</span>
                         </div>
                         <ul className="text-[10px] text-zinc-400 space-y-1">
-                           <li className="flex items-center gap-1"><span className="text-purple-500">✓</span> Cortes Ilimitados</li>
-                           <li className="flex items-center gap-1"><span className="text-purple-500">✓</span> Bebida Grátis</li>
+                           <li className="flex items-center gap-1"><span className="text-purple-500">âœ“</span> Cortes Ilimitados</li>
+                           <li className="flex items-center gap-1"><span className="text-purple-500">âœ“</span> Bebida GrÃ¡tis</li>
                         </ul>
                      </div>
                   </div>
                   
                   <div className="flex items-center gap-4 text-xs text-zinc-500 bg-zinc-950/50 px-4 py-2 rounded-lg border border-zinc-800">
-                     <span className="flex items-center gap-1"><CreditCard className="w-3 h-3" /> Cobrança Automática</span>
+                     <span className="flex items-center gap-1"><CreditCard className="w-3 h-3" /> CobranÃ§a AutomÃ¡tica</span>
                      <span className="w-px h-3 bg-zinc-800"></span>
                      <span className="flex items-center gap-1"><BarChart2 className="w-3 h-3" /> MRR Dashboard</span>
                   </div>
@@ -141,7 +141,7 @@ export const SmartPricingLocked = () => {
             )}
 
             <button disabled className="mt-8 w-full max-w-md bg-zinc-800 text-zinc-500 font-bold py-4 rounded-xl border border-zinc-700 cursor-not-allowed uppercase tracking-wider text-xs flex items-center justify-center gap-2">
-               <Lock className="w-3 h-3" /> Módulo em Fase de Teste
+               <Lock className="w-3 h-3" /> MÃ³dulo em Fase de Teste
             </button>
          </div>
       </div>

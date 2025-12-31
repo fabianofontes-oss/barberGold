@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -24,12 +24,12 @@ export const WebsiteEditor = () => {
    };
 
    const handleSave = () => {
-      console.log('Salvando configurações:', {
+      console.log('Salvando configuraÃ§Ãµes:', {
          primaryColor: selectedPrimaryColor,
          accentColor: selectedAccentColor,
          template: selectedTemplate
       });
-      alert(`✅ Site atualizado!\n\nTema: ${selectedTemplate}\nCor Primária: ${selectedPrimaryColor}\nCor Destaque: ${selectedAccentColor}`);
+      alert(`âœ… Site atualizado!\n\nTema: ${selectedTemplate}\nCor PrimÃ¡ria: ${selectedPrimaryColor}\nCor Destaque: ${selectedAccentColor}`);
    };
 
    return (
@@ -73,10 +73,10 @@ export const WebsiteEditor = () => {
          </div>
 
          <div className="flex gap-2 border-b border-zinc-800 overflow-x-auto">
-            <button onClick={() => setActiveTab('CONTENT')} className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'CONTENT' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Type className="w-4 h-4" /> Conteúdo</button>
+            <button onClick={() => setActiveTab('CONTENT')} className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'CONTENT' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Type className="w-4 h-4" /> ConteÃºdo</button>
             <button onClick={() => setActiveTab('LAYOUT')} className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'LAYOUT' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Layout className="w-4 h-4" /> Layout</button>
             <button onClick={() => setActiveTab('THEME')} className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'THEME' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Palette className="w-4 h-4" /> Tema</button>
-            <button onClick={() => setActiveTab('DOMAIN')} className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'DOMAIN' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Globe className="w-4 h-4" /> Domínio</button>
+            <button onClick={() => setActiveTab('DOMAIN')} className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'DOMAIN' ? 'border-amber-500 text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'}`}><Globe className="w-4 h-4" /> DomÃ­nio</button>
          </div>
 
          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -84,14 +84,14 @@ export const WebsiteEditor = () => {
                {activeTab === 'CONTENT' && (
                   <div className="space-y-6 animate-fade-in">
                      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                        <h3 className="text-lg font-bold text-white mb-4">Seção Principal</h3>
+                        <h3 className="text-lg font-bold text-white mb-4">SeÃ§Ã£o Principal</h3>
                         <div className="space-y-4">
                            <div>
-                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Título Principal</label>
+                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">TÃ­tulo Principal</label>
                               <input type="text" defaultValue={shopProfile.name} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none" />
                            </div>
                            <div>
-                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Subtítulo</label>
+                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">SubtÃ­tulo</label>
                               <input type="text" defaultValue="A melhor barbearia da cidade" className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none" />
                            </div>
                            <div>
@@ -108,17 +108,17 @@ export const WebsiteEditor = () => {
                         <h3 className="text-lg font-bold text-white mb-4">Sobre</h3>
                         <div className="space-y-4">
                            <div>
-                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Descrição</label>
+                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">DescriÃ§Ã£o</label>
                               <textarea rows={4} defaultValue="Fundada em 2020, nossa barbearia oferece o melhor em cortes masculinos e tratamentos de barba." className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none resize-none" />
                            </div>
                         </div>
                      </div>
 
                      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-amber-500" /> Localização</h3>
+                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-amber-500" /> LocalizaÃ§Ã£o</h3>
                         <div className="space-y-4">
                            <div>
-                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Endereço</label>
+                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">EndereÃ§o</label>
                               <input type="text" defaultValue={shopProfile.address} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 px-3 text-white focus:border-amber-500 outline-none" />
                            </div>
                         </div>
@@ -132,7 +132,7 @@ export const WebsiteEditor = () => {
                         <h3 className="text-lg font-bold text-white mb-4">Cores do Tema</h3>
                         <div className="grid grid-cols-2 gap-4">
                            <div>
-                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Cor Primária</label>
+                              <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Cor PrimÃ¡ria</label>
                               <div className="flex gap-2">
                                  {['#09090b', '#022c22', '#2e1065', '#0f172a', '#083344'].map(color => (
                                     <button
@@ -211,21 +211,21 @@ export const WebsiteEditor = () => {
                {activeTab === 'DOMAIN' && (
                   <div className="space-y-6 animate-fade-in">
                      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                        <h3 className="text-lg font-bold text-white mb-4">Domínio Gratuito</h3>
+                        <h3 className="text-lg font-bold text-white mb-4">DomÃ­nio Gratuito</h3>
                         <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-4 flex items-center gap-2">
                            <input type="text" defaultValue={slug} className="flex-1 bg-transparent text-white font-mono outline-none text-right" />
                            <span className="text-zinc-500">.barber.gold</span>
                         </div>
-                        <p className="text-xs text-zinc-500 mt-2">Este é o link gratuito do seu site de agendamento.</p>
+                        <p className="text-xs text-zinc-500 mt-2">Este Ã© o link gratuito do seu site de agendamento.</p>
                      </div>
 
                      <div className="bg-zinc-900 border border-amber-500/30 rounded-2xl p-6 relative overflow-hidden">
                         <div className="absolute top-0 right-0 bg-amber-500 text-zinc-900 text-[10px] font-bold px-3 py-1 rounded-bl-lg">PREMIUM</div>
                         <div className="flex items-center gap-3 mb-4">
                            <Lock className="w-6 h-6 text-amber-500" />
-                           <h3 className="text-lg font-bold text-white">Domínio Próprio</h3>
+                           <h3 className="text-lg font-bold text-white">DomÃ­nio PrÃ³prio</h3>
                         </div>
-                        <p className="text-zinc-400 text-sm mb-4">Conecte seu próprio domínio (ex: www.suabarbearia.com.br) para uma experiência profissional.</p>
+                        <p className="text-zinc-400 text-sm mb-4">Conecte seu prÃ³prio domÃ­nio (ex: www.suabarbearia.com.br) para uma experiÃªncia profissional.</p>
                         <button className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold rounded-xl transition-all">
                            Fazer Upgrade para Elite
                         </button>
@@ -236,10 +236,10 @@ export const WebsiteEditor = () => {
                {activeTab === 'LAYOUT' && (
                   <div className="space-y-6 animate-fade-in">
                      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                        <h3 className="text-lg font-bold text-white mb-4">Seções do Site</h3>
-                        <p className="text-zinc-400 text-sm mb-4">Arraste para reordenar as seções do seu site.</p>
+                        <h3 className="text-lg font-bold text-white mb-4">SeÃ§Ãµes do Site</h3>
+                        <p className="text-zinc-400 text-sm mb-4">Arraste para reordenar as seÃ§Ãµes do seu site.</p>
                         <div className="space-y-2">
-                           {['Hero', 'Sobre', 'Serviços', 'Galeria', 'Equipe', 'Localização', 'Contato'].map((section, idx) => (
+                           {['Hero', 'Sobre', 'ServiÃ§os', 'Galeria', 'Equipe', 'LocalizaÃ§Ã£o', 'Contato'].map((section, idx) => (
                               <div key={section} className="flex items-center gap-3 bg-zinc-950 border border-zinc-800 rounded-xl p-3">
                                  <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center text-xs text-zinc-500">{idx + 1}</div>
                                  <span className="flex-1 text-white font-medium">{section}</span>

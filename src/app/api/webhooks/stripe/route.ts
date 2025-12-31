@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+﻿import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { createClient } from '@supabase/supabase-js';
@@ -11,26 +11,26 @@ import Stripe from 'stripe';
  * 
  * Eventos suportados:
  * - checkout.session.completed: Nova assinatura (trial ou pagamento direto)
- * - customer.subscription.updated: Mudança de status (trial -> active, renovação, etc)
+ * - customer.subscription.updated: MudanÃ§a de status (trial -> active, renovaÃ§Ã£o, etc)
  * - customer.subscription.deleted: Cancelamento ou falha de pagamento
  * - customer.subscription.trial_will_end: Aviso 3 dias antes do fim do trial
  */
 
 export async function POST(req: Request) {
-    // Validar env obrigatórias (runtime)
+    // Validar env obrigatÃ³rias (runtime)
     if (!env.NEXT_PUBLIC_SUPABASE_URL) {
-        return new NextResponse('NEXT_PUBLIC_SUPABASE_URL não configurada', { status: 500 });
+        return new NextResponse('NEXT_PUBLIC_SUPABASE_URL nÃ£o configurada', { status: 500 });
     }
 
     if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-        return new NextResponse('SUPABASE_SERVICE_ROLE_KEY não configurada', { status: 500 });
+        return new NextResponse('SUPABASE_SERVICE_ROLE_KEY nÃ£o configurada', { status: 500 });
     }
 
     if (!process.env.STRIPE_WEBHOOK_SECRET) {
-        return new NextResponse('STRIPE_WEBHOOK_SECRET não configurada', { status: 500 });
+        return new NextResponse('STRIPE_WEBHOOK_SECRET nÃ£o configurada', { status: 500 });
     }
 
-    // Configurar Supabase Admin (bypassa RLS para operações de webhook)
+    // Configurar Supabase Admin (bypassa RLS para operaÃ§Ãµes de webhook)
     const supabaseAdmin = createClient(
         env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
 
     // Processar eventos
     switch (event.type) {
-        // A: CLIENTE ASSINOU (Início do Trial ou Pagamento Direto)
+        // A: CLIENTE ASSINOU (InÃ­cio do Trial ou Pagamento Direto)
         case 'checkout.session.completed': {
             const session = event.data.object as Stripe.Checkout.Session;
             
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
                 const customerId = session.customer as string;
 
                 if (tenantId) {
-                    // Buscar detalhes da subscription para verificar se é trial
+                    // Buscar detalhes da subscription para verificar se Ã© trial
                     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
                     const isTrialing = subscription.status === 'trialing';
 
@@ -80,17 +80,17 @@ export async function POST(req: Request) {
                         .eq('id', tenantId);
 
                     if (error) {
-                        console.error('❌ Erro ao atualizar tenant:', error);
+                        console.error('âŒ Erro ao atualizar tenant:', error);
                         return new NextResponse('Internal Server Error', { status: 500 });
                     }
                     
-                    console.log(`✅ Nova assinatura iniciada: ${subscriptionId} (${isTrialing ? 'TRIAL' : 'ACTIVE'})`);
+                    console.log(`âœ… Nova assinatura iniciada: ${subscriptionId} (${isTrialing ? 'TRIAL' : 'ACTIVE'})`);
                 }
             }
             break;
         }
 
-        // B: MUDANÇA DE STATUS (Trial acabou e virou pago, renovação, falha de pagamento)
+        // B: MUDANÃ‡A DE STATUS (Trial acabou e virou pago, renovaÃ§Ã£o, falha de pagamento)
         case 'customer.subscription.updated': {
             const subscription = event.data.object as Stripe.Subscription;
             const customerId = subscription.customer as string;
@@ -126,14 +126,14 @@ export async function POST(req: Request) {
                 .eq('stripe_customer_id', customerId);
 
             if (error) {
-                console.error('❌ Erro ao atualizar subscription:', error);
+                console.error('âŒ Erro ao atualizar subscription:', error);
             } else {
-                console.log(`🔄 Assinatura atualizada. Status: ${subscriptionStatus}`);
+                console.log(`ðŸ”„ Assinatura atualizada. Status: ${subscriptionStatus}`);
             }
             break;
         }
 
-        // C: CLIENTE CANCELOU (ou cartão falhou várias vezes)
+        // C: CLIENTE CANCELOU (ou cartÃ£o falhou vÃ¡rias vezes)
         case 'customer.subscription.deleted': {
             const subscription = event.data.object as Stripe.Subscription;
             const customerId = subscription.customer as string;
@@ -147,9 +147,9 @@ export async function POST(req: Request) {
                 .eq('stripe_customer_id', customerId);
 
             if (error) {
-                console.error('❌ Erro ao cancelar subscription:', error);
+                console.error('âŒ Erro ao cancelar subscription:', error);
             } else {
-                console.log(`❌ Assinatura cancelada: ${subscription.id}`);
+                console.log(`âŒ Assinatura cancelada: ${subscription.id}`);
             }
             break;
         }
@@ -157,13 +157,13 @@ export async function POST(req: Request) {
         // D: AVISO DE FIM DE TRIAL (3 dias antes)
         case 'customer.subscription.trial_will_end': {
             const subscription = event.data.object as Stripe.Subscription;
-            console.log(`⚠️ Trial acaba em 3 dias: ${subscription.id}`);
+            console.log(`âš ï¸ Trial acaba em 3 dias: ${subscription.id}`);
             // TODO: Implementar envio de email de aviso
             break;
         }
 
         default:
-            console.log(`🤷 Evento não tratado: ${event.type}`);
+            console.log(`ðŸ¤· Evento nÃ£o tratado: ${event.type}`);
     }
 
     return new NextResponse(null, { status: 200 });

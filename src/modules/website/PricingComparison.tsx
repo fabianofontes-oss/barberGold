@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 
 export default function PricingComparison() {
     return (
@@ -23,7 +23,7 @@ export default function PricingComparison() {
                                     </th>
                                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
                                         <div className="text-white font-bold text-lg mb-1">Start</div>
-                                        <div className="text-gray-500 text-sm font-normal">R$ 89/mês</div>
+                                        <div className="text-gray-500 text-sm font-normal">R$ 89/mÃªs</div>
                                     </th>
                                     <th className="p-6 bg-[#202024] border-b border-[#f79f08]/20 border-t-4 border-t-[#f79f08] text-center w-1/5 min-w-[160px] relative">
                                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#f79f08] text-[#231c10] text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap shadow-lg shadow-[#f79f08]/20">
@@ -32,39 +32,39 @@ export default function PricingComparison() {
                                         <div className="text-[#f79f08] font-bold text-xl mb-1" style={{ textShadow: '0 0 20px rgba(247, 159, 8, 0.3)' }}>
                                             Pro Gold
                                         </div>
-                                        <div className="text-white text-sm font-normal">R$ 149/mês</div>
+                                        <div className="text-white text-sm font-normal">R$ 149/mÃªs</div>
                                     </th>
                                     <th className="p-6 bg-[#18181b] border-b border-white/5 text-center w-1/5 min-w-[160px]">
                                         <div className="text-white font-bold text-lg mb-1">Empire</div>
-                                        <div className="text-gray-500 text-sm font-normal">R$ 299/mês</div>
+                                        <div className="text-gray-500 text-sm font-normal">R$ 299/mÃªs</div>
                                     </th>
                                 </tr>
                             </thead>
 
                             <tbody className="divide-y divide-white/5 text-sm text-gray-300">
-                                {/* Gestão Essencial */}
+                                {/* GestÃ£o Essencial */}
                                 <tr className="bg-white/[0.02]">
                                     <td className="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colSpan={4}>
-                                        Gestão Essencial
+                                        GestÃ£o Essencial
                                     </td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
                                     <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Agendamento Online</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
-                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">CRM (Gestão de Clientes)</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">CRM (GestÃ£o de Clientes)</td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
-                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium">Confirmação via WhatsApp</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">−</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium">ConfirmaÃ§Ã£o via WhatsApp</td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">âˆ’</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
 
                                 {/* Financeiro & Lucro */}
@@ -75,40 +75,40 @@ export default function PricingComparison() {
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
                                     <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Controle de Caixa</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
-                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium text-white/90">Smart Split (Comissões)</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">−</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium text-white/90">Smart Split (ComissÃµes)</td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">âˆ’</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
                                     <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors font-medium text-white/90">Barber Club (Assinaturas)</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">−</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-gray-700 text-xl">−</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">âˆ’</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-gray-700 text-xl">âˆ’</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
 
-                                {/* Escala & Operação */}
+                                {/* Escala & OperaÃ§Ã£o */}
                                 <tr className="bg-white/[0.02]">
                                     <td className="py-3 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider" colSpan={4}>
-                                        Escala & Operação
+                                        Escala & OperaÃ§Ã£o
                                     </td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
-                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Gestão de Estoque</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">−</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">✓</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">GestÃ£o de Estoque</td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">âˆ’</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-[#f79f08] text-xl">âœ“</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
-                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Múltiplas Unidades</td>
-                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">−</span></td>
-                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-gray-700 text-xl">−</span></td>
-                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">✓</span></td>
+                                    <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">MÃºltiplas Unidades</td>
+                                    <td className="p-5 text-center border-r border-white/5"><span className="text-gray-700 text-xl">âˆ’</span></td>
+                                    <td className="p-5 text-center border-r border-white/5 bg-[#202024]/50"><span className="text-gray-700 text-xl">âˆ’</span></td>
+                                    <td className="p-5 text-center"><span className="text-[#f79f08] text-xl">âœ“</span></td>
                                 </tr>
                                 <tr className="hover:bg-white/5 transition-colors group">
                                     <td className="p-5 border-r border-white/5 group-hover:text-white transition-colors">Atendimento</td>

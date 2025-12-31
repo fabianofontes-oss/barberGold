@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { 
@@ -33,10 +33,10 @@ export default function SuperAdminPage() {
   };
 
   const recentActivity = [
-    { id: 1, type: 'new_tenant', message: 'Nova barbearia cadastrada: Elite Cuts', time: '5 min atrás', icon: CheckCircle, color: 'text-green-500' },
-    { id: 2, type: 'payment', message: 'Pagamento recebido: Premium Barber (R$ 149)', time: '23 min atrás', icon: DollarSign, color: 'text-blue-500' },
-    { id: 3, type: 'support', message: 'Novo ticket de suporte aberto', time: '1h atrás', icon: AlertCircle, color: 'text-yellow-500' },
-    { id: 4, type: 'upgrade', message: 'Upgrade de plano: Style House (Solo → Equipe)', time: '2h atrás', icon: TrendingUp, color: 'text-purple-500' },
+    { id: 1, type: 'new_tenant', message: 'Nova barbearia cadastrada: Elite Cuts', time: '5 min atrÃ¡s', icon: CheckCircle, color: 'text-green-500' },
+    { id: 2, type: 'payment', message: 'Pagamento recebido: Premium Barber (R$ 149)', time: '23 min atrÃ¡s', icon: DollarSign, color: 'text-blue-500' },
+    { id: 3, type: 'support', message: 'Novo ticket de suporte aberto', time: '1h atrÃ¡s', icon: AlertCircle, color: 'text-yellow-500' },
+    { id: 4, type: 'upgrade', message: 'Upgrade de plano: Style House (Solo â†’ Equipe)', time: '2h atrÃ¡s', icon: TrendingUp, color: 'text-purple-500' },
   ];
 
   return (
@@ -57,7 +57,7 @@ export default function SuperAdminPage() {
       {/* Tabs */}
       <div className="flex gap-2 mb-8 border-b border-zinc-800">
         {[
-          { id: 'overview', label: 'Visão Geral', icon: Activity },
+          { id: 'overview', label: 'VisÃ£o Geral', icon: Activity },
           { id: 'tenants', label: 'Barbearias', icon: Users },
           { id: 'billing', label: 'Faturamento', icon: Receipt },
           { id: 'system', label: 'Sistema', icon: Server },
@@ -100,7 +100,7 @@ export default function SuperAdminPage() {
                 <span className="text-xs text-green-500 font-semibold">+8%</span>
               </div>
               <p className="text-2xl font-bold text-white mb-1">{stats.activeUsers}</p>
-              <p className="text-sm text-zinc-400">Usuários Ativos</p>
+              <p className="text-sm text-zinc-400">UsuÃ¡rios Ativos</p>
             </div>
 
             <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
@@ -158,7 +158,7 @@ export default function SuperAdminPage() {
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
           <h2 className="text-xl font-bold text-white mb-4">Faturamento Global</h2>
           <p className="text-zinc-400">Controle de pagamentos e assinaturas.</p>
-          {/* Adicionar gráficos e tabelas de faturamento aqui */}
+          {/* Adicionar grÃ¡ficos e tabelas de faturamento aqui */}
         </div>
       )}
 

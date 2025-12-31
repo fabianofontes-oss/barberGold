@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { X, ChevronRight, ChevronLeft, Plus, Package, Archive, Crown, Check } from 'lucide-react';
@@ -214,7 +214,7 @@ export const QuickAddFromCatalog: React.FC<QuickAddFromCatalogProps> = ({
                         <p className={`font-bold ${isAdded ? 'text-emerald-400' : 'text-white'}`}>{item.name}</p>
                         <p className="text-[10px] text-zinc-500">
                           Custo sugerido: R$ {item.suggestedCost.toFixed(2)}
-                          {item.suggestedPrice && ` • Venda: R$ ${item.suggestedPrice.toFixed(2)}`}
+                          {item.suggestedPrice && ` â€¢ Venda: R$ ${item.suggestedPrice.toFixed(2)}`}
                         </p>
                       </div>
                     </div>
@@ -241,7 +241,7 @@ export const QuickAddFromCatalog: React.FC<QuickAddFromCatalogProps> = ({
               <div className="space-y-3">
                 <div>
                   <label className="block text-xs font-bold text-zinc-500 mb-1.5">
-                    Custo (seu preço de compra)
+                    Custo (seu preÃ§o de compra)
                   </label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm">R$</span>
@@ -262,7 +262,7 @@ export const QuickAddFromCatalog: React.FC<QuickAddFromCatalogProps> = ({
                 {catalogType === 'PRODUCTS' && (
                   <div>
                     <label className="block text-xs font-bold text-zinc-500 mb-1.5">
-                      Preço de Venda
+                      PreÃ§o de Venda
                     </label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm">R$</span>
@@ -311,7 +311,7 @@ export const QuickAddFromCatalog: React.FC<QuickAddFromCatalogProps> = ({
               disabled={!customCost || (catalogType === 'PRODUCTS' && !customPrice)}
               className="w-full flex items-center justify-center gap-2 py-3.5 bg-amber-500 hover:bg-amber-400 disabled:bg-zinc-700 disabled:text-zinc-500 text-zinc-900 font-bold rounded-xl transition-all"
             >
-              <Plus className="w-5 h-5" /> Adicionar ao Catálogo
+              <Plus className="w-5 h-5" /> Adicionar ao CatÃ¡logo
             </button>
           </div>
         )}

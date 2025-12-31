@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -313,7 +313,7 @@ export const Agenda = () => {
                   onClick={() => setViewMode('MONTH')}
                   className={`px-3 py-1.5 text-xs font-bold rounded transition-all ${viewMode === 'MONTH' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-400 hover:text-white'}`}
                >
-                  Mês
+                  MÃªs
                </button>
             </div>
          </div>
@@ -423,7 +423,7 @@ export const Agenda = () => {
                                     if (isNoShowPending) return <span className="text-[8px] bg-orange-500 text-zinc-900 px-1.5 py-0.5 rounded font-bold uppercase animate-pulse">Faltou?</span>;
                                     if (isInProgress) return <span className="text-[8px] bg-amber-500 text-zinc-900 px-1.5 py-0.5 rounded font-bold uppercase animate-pulse">Atendendo</span>;
                                     if (isCheckedIn) return <span className="text-[8px] bg-blue-500 text-white px-1.5 py-0.5 rounded font-bold uppercase">Aguardando</span>;
-                                    if (isCompleted) return <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold uppercase">Concluído</span>;
+                                    if (isCompleted) return <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold uppercase">ConcluÃ­do</span>;
                                     return null;
                                  };
 
@@ -472,14 +472,14 @@ export const Agenda = () => {
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.CHECKED_IN)}
                                                    className="flex-1 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded text-[10px] font-bold text-center"
                                                 >
-                                                   ✓ Chegou
+                                                   âœ“ Chegou
                                                 </button>
                                                 <button 
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.NO_SHOW_PENDING)}
                                                    className="px-2 py-1 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 rounded text-[10px]"
                                                    title="Marcar como faltou (No-Show)"
                                                 >
-                                                   ⊘
+                                                   âŠ˜
                                                 </button>
                                                 <button 
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.CANCELLED)}
@@ -489,16 +489,16 @@ export const Agenda = () => {
                                                 </button>
                                              </>
                                           )}
-                                          {/* NO_SHOW_PENDING: Aguardando confirmação do dono */}
+                                          {/* NO_SHOW_PENDING: Aguardando confirmaÃ§Ã£o do dono */}
                                           {appt.status === AppointmentStatus.NO_SHOW_PENDING && !isBlocked && (
                                              <div className="w-full text-center">
-                                                <span className="text-[9px] text-orange-400 font-bold">⏳ Aguardando confirmação</span>
+                                                <span className="text-[9px] text-orange-400 font-bold">â³ Aguardando confirmaÃ§Ã£o</span>
                                              </div>
                                           )}
                                           {/* NO_SHOW: Confirmado */}
                                           {appt.status === AppointmentStatus.NO_SHOW && !isBlocked && (
                                              <div className="w-full text-center">
-                                                <span className="text-[9px] text-red-400 font-bold">❌ No-Show</span>
+                                                <span className="text-[9px] text-red-400 font-bold">âŒ No-Show</span>
                                              </div>
                                           )}
                                           {/* CHECKED_IN: Start */}
@@ -508,14 +508,14 @@ export const Agenda = () => {
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.IN_PROGRESS)}
                                                    className="flex-1 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded text-[10px] font-bold text-center animate-pulse"
                                                 >
-                                                   ▶ Iniciar
+                                                   â–¶ Iniciar
                                                 </button>
                                                 <button 
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.SCHEDULED)}
                                                    className="px-2 py-1 bg-zinc-700 hover:bg-zinc-600 text-zinc-400 rounded text-[10px]"
                                                    title="Voltar"
                                                 >
-                                                   ↩
+                                                   â†©
                                                 </button>
                                              </>
                                           )}
@@ -525,7 +525,7 @@ export const Agenda = () => {
                                                 onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.COMPLETED)}
                                                 className="flex-1 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-900 rounded text-[10px] font-bold text-center"
                                              >
-                                                ✓ Finalizar
+                                                âœ“ Finalizar
                                              </button>
                                           )}
                                           {isBlocked && (

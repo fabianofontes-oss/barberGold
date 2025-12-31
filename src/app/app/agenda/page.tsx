@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Agenda } from '@/modules/agenda/Agenda';
 

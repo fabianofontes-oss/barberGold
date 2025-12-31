@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Target, Rocket, TrendingUp, Flame, Trophy } from 'lucide-react';
@@ -23,17 +23,17 @@ export const DailyGoalWidget: React.FC<DailyGoalWidgetProps> = ({ currentRevenue
     progressColor = "bg-blue-500";
     progressGlow = "shadow-[0_0_10px_rgba(59,130,246,0.5)]";
   } else if (goalPercentage >= 40 && goalPercentage < 80) {
-    motivationMessage = "We are heating up! 🔥";
+    motivationMessage = "We are heating up! ðŸ”¥";
     MotivationIcon = Flame;
     progressColor = "bg-amber-500";
     progressGlow = "shadow-[0_0_15px_rgba(245,158,11,0.5)]";
   } else if (goalPercentage >= 80 && goalPercentage < 100) {
-    motivationMessage = "So close to the target! 🤏";
+    motivationMessage = "So close to the target! ðŸ¤";
     MotivationIcon = Target;
     progressColor = "bg-orange-500";
     progressGlow = "shadow-[0_0_15px_rgba(249,115,22,0.5)]";
   } else if (goalPercentage >= 100) {
-    motivationMessage = "TARGET SMASHED! EXCELLENT WORK TEAM! 🏆";
+    motivationMessage = "TARGET SMASHED! EXCELLENT WORK TEAM! ðŸ†";
     MotivationIcon = Trophy;
     progressColor = "bg-emerald-500";
     progressGlow = "shadow-[0_0_20px_rgba(16,185,129,0.6)]";

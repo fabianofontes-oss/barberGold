@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -41,7 +41,7 @@ export function useCategories() {
           setError(categoriesError.message);
         } else {
           setCategories(data || []);
-          console.log('✅ Categories carregadas do Supabase:', data?.length || 0);
+          console.log('âœ… Categories carregadas do Supabase:', data?.length || 0);
         }
       } catch (err) {
         console.error('Erro ao carregar categories:', err);

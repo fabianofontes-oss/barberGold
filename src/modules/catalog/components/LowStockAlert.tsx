@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { AlertTriangle, Package, Archive, ChevronRight } from 'lucide-react';
@@ -38,7 +38,7 @@ export const LowStockAlert: React.FC<LowStockAlertProps> = ({
               {totalAlerts} {totalAlerts === 1 ? 'Item' : 'Itens'} com Estoque Baixo
             </h3>
             <p className="text-sm text-zinc-400 mb-3">
-              Recomendamos fazer pedido de reposição para evitar falta de produtos.
+              Recomendamos fazer pedido de reposiÃ§Ã£o para evitar falta de produtos.
             </p>
 
             <div className="flex flex-wrap gap-2">

@@ -1,4 +1,4 @@
-import { DEFAULT_REFERRAL_PROGRAM_CONFIG, computeReferralSale } from './rules';
+﻿import { DEFAULT_REFERRAL_PROGRAM_CONFIG, computeReferralSale } from './rules';
 
 export function runReferralsRulesSelfcheck(): { ok: boolean; errors: string[] } {
   const errors: string[] = [];
@@ -23,10 +23,10 @@ export function runReferralsRulesSelfcheck(): { ok: boolean; errors: string[] } 
   must(owner.ownerCommissionAmountBRL === owner.commissionAmountBRL, 'OWNER deve receber 100%');
 
   const staff = computeReferralSale(cfg, { ...baseInput, partnerType: 'STAFF' });
-  must(staff.staffCommissionAmountBRL > 0, 'STAFF deve ter comissão quando habilitado');
+  must(staff.staffCommissionAmountBRL > 0, 'STAFF deve ter comissÃ£o quando habilitado');
   must(
     Math.round(staff.staffCommissionAmountBRL + staff.ownerCommissionAmountBRL) === Math.round(staff.commissionAmountBRL),
-    'Split 70/30 deve somar 100% da comissão'
+    'Split 70/30 deve somar 100% da comissÃ£o'
   );
 
   const partnerGeneral = computeReferralSale(cfg, { ...baseInput, partnerType: 'PARTNER_GENERAL' });
@@ -36,7 +36,7 @@ export function runReferralsRulesSelfcheck(): { ok: boolean; errors: string[] } 
   must(partnerPro.commissionPercent === 18, 'Parceiro PRO deve ser 18%');
 
   const monthly = computeReferralSale(cfg, { ...baseInput, partnerType: 'OWNER', isAnnual: false });
-  must(monthly.commissionAmountBRL === 0, 'Mensal não deve gerar comissão');
+  must(monthly.commissionAmountBRL === 0, 'Mensal nÃ£o deve gerar comissÃ£o');
 
   return { ok: errors.length === 0, errors };
 }

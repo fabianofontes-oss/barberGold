@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
+﻿import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
@@ -50,17 +50,17 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // 1. Permitir acesso à landing page (/) mesmo logado
-  // Removido redirecionamento automático para dashboard
+  // 1. Permitir acesso Ã  landing page (/) mesmo logado
+  // Removido redirecionamento automÃ¡tico para dashboard
 
-  // 2. Se acessar rotas protegidas "/app/*" e NÃO tiver sessão -> Redireciona para Login
+  // 2. Se acessar rotas protegidas "/app/*" e NÃƒO tiver sessÃ£o -> Redireciona para Login
   if (!user && request.nextUrl.pathname.startsWith('/app')) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // 3. Se acessar Login/Register e JÁ tiver sessão -> Redireciona para Dashboard
+  // 3. Se acessar Login/Register e JÃ tiver sessÃ£o -> Redireciona para Dashboard
   if (user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register'))) {
     const url = request.nextUrl.clone()
     url.pathname = '/app/dashboard'

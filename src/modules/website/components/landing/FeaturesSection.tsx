@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { Heart, DollarSign, PieChart, Package, ArrowRight, CreditCard, Shield } from 'lucide-react';
@@ -10,26 +10,26 @@ export function FeaturesSection() {
         { 
             id: 0, 
             title: 'Barber Club', 
-            desc: 'Crie planos de assinatura recorrente e garanta receita fixa todo mês.',
+            desc: 'Crie planos de assinatura recorrente e garanta receita fixa todo mÃªs.',
             icon: Heart,
             active: true
         },
         { 
             id: 1, 
             title: 'Smart Pricing', 
-            desc: 'Ajuste automático de preços baseado na demanda e horários.',
+            desc: 'Ajuste automÃ¡tico de preÃ§os baseado na demanda e horÃ¡rios.',
             icon: DollarSign
         },
         { 
             id: 2, 
             title: 'Smart Split', 
-            desc: 'Divisão automática e transparente de comissões para a equipe.',
+            desc: 'DivisÃ£o automÃ¡tica e transparente de comissÃµes para a equipe.',
             icon: PieChart
         },
         { 
             id: 3, 
             title: 'Vendas & Estoque', 
-            desc: 'Controle total de produtos, vitrine e baixa automática.',
+            desc: 'Controle total de produtos, vitrine e baixa automÃ¡tica.',
             icon: Package
         },
     ];
@@ -40,7 +40,7 @@ export function FeaturesSection() {
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                     <div className="max-w-2xl">
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Muito mais que uma agenda</h2>
-                        <p className="text-xl text-gray-400">Módulos premium projetados para aumentar o LTV e automatizar sua gestão.</p>
+                        <p className="text-xl text-gray-400">MÃ³dulos premium projetados para aumentar o LTV e automatizar sua gestÃ£o.</p>
                     </div>
                     <div>
                         <a href="#all-features" className="text-[#f79f08] hover:text-white font-bold flex items-center gap-2 transition-colors">
@@ -102,12 +102,12 @@ export function FeaturesSection() {
                             <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f79f08]/20 border border-[#f79f08]/20 text-[#f79f08] text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
                                     <span className="w-2 h-2 rounded-full bg-[#f79f08] animate-pulse"></span>
-                                    Módulo Premium
+                                    MÃ³dulo Premium
                                 </div>
                                 
-                                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Transforme clientes em sócios</h3>
+                                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Transforme clientes em sÃ³cios</h3>
                                 <p className="text-lg text-gray-300 mb-8 max-w-xl">
-                                    Com o <strong>Barber Club</strong>, você cria planos de assinatura (como &quot;Corte Ilimitado&quot; ou &quot;Barba VIP&quot;) e debita automaticamente no cartão do cliente todo mês.
+                                    Com o <strong>Barber Club</strong>, vocÃª cria planos de assinatura (como &quot;Corte Ilimitado&quot; ou &quot;Barba VIP&quot;) e debita automaticamente no cartÃ£o do cliente todo mÃªs.
                                 </p>
                                 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -125,8 +125,8 @@ export function FeaturesSection() {
                                             <Shield className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <p className="text-xs text-gray-400 uppercase">Fidelização</p>
-                                            <p className="text-white font-bold">Retenção Máxima</p>
+                                            <p className="text-xs text-gray-400 uppercase">FidelizaÃ§Ã£o</p>
+                                            <p className="text-white font-bold">RetenÃ§Ã£o MÃ¡xima</p>
                                         </div>
                                     </div>
                                 </div>

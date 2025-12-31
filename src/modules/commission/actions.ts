@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -14,7 +14,7 @@ export async function createCommissionPlan(data: {
 
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
-    throw new Error('Não autenticado');
+    throw new Error('NÃ£o autenticado');
   }
 
   const { data: profile } = await supabase
@@ -24,7 +24,7 @@ export async function createCommissionPlan(data: {
     .single();
 
   if (!profile?.tenant_id) {
-    throw new Error('Tenant não encontrado');
+    throw new Error('Tenant nÃ£o encontrado');
   }
 
   const { data: plan, error } = await supabase
@@ -41,7 +41,7 @@ export async function createCommissionPlan(data: {
     .single();
 
   if (error) {
-    console.error('Erro ao criar plano de comissão:', error);
+    console.error('Erro ao criar plano de comissÃ£o:', error);
     throw new Error(error.message);
   }
 
@@ -54,7 +54,7 @@ export async function deleteCommissionPlan(planId: string) {
 
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
-    throw new Error('Não autenticado');
+    throw new Error('NÃ£o autenticado');
   }
 
   const { data: profile } = await supabase
@@ -64,7 +64,7 @@ export async function deleteCommissionPlan(planId: string) {
     .single();
 
   if (!profile?.tenant_id || !['OWNER', 'ADMIN'].includes(profile.role)) {
-    throw new Error('Sem permissão');
+    throw new Error('Sem permissÃ£o');
   }
 
   const { error } = await supabase
@@ -74,7 +74,7 @@ export async function deleteCommissionPlan(planId: string) {
     .eq('tenant_id', profile.tenant_id);
 
   if (error) {
-    console.error('Erro ao deletar plano de comissão:', error);
+    console.error('Erro ao deletar plano de comissÃ£o:', error);
     throw new Error(error.message);
   }
 

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { X, Crown, Clock, AlertTriangle, Smile, Star, Sparkles, Heart } from 'lucide-react';
@@ -15,7 +15,7 @@ const TAG_CONFIG: Record<ClientTag, { label: string; color: string; icon: React.
   PONTUAL: { label: 'Pontual', color: 'bg-emerald-500 text-white', icon: <Clock className="w-3 h-3" /> },
   ATRASA: { label: 'Atrasa', color: 'bg-red-500 text-white', icon: <AlertTriangle className="w-3 h-3" /> },
   EXIGENTE: { label: 'Exigente', color: 'bg-purple-500 text-white', icon: <Star className="w-3 h-3" /> },
-  FACIL: { label: 'Fácil', color: 'bg-blue-500 text-white', icon: <Smile className="w-3 h-3" /> },
+  FACIL: { label: 'FÃ¡cil', color: 'bg-blue-500 text-white', icon: <Smile className="w-3 h-3" /> },
   NOVO: { label: 'Novo', color: 'bg-cyan-500 text-white', icon: <Sparkles className="w-3 h-3" /> },
   FIEL: { label: 'Fiel', color: 'bg-pink-500 text-white', icon: <Heart className="w-3 h-3" /> },
 };

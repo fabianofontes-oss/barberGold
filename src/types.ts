@@ -1,4 +1,4 @@
-
+﻿
 export type ViewState = 'DASHBOARD' | 'AGENDA' | 'PDV' | 'CLIENTS' | 'FINANCE' | 'CATALOG' | 'SETTINGS' | 'MY_PLAN' | 'GROWTH' | 'SMART_PRICING' | 'BARBER_CLUB' | 'REFERRALS' | 'WEBSITE_EDITOR' | 'SUPER_ADMIN_DASHBOARD' | 'SUPER_ADMIN_TENANTS' | 'SUPER_ADMIN_PLANS' | 'SUPER_ADMIN_PARTNERS' | 'SUPER_ADMIN_SYSTEM' | 'SUPER_ADMIN_SUPPORT' | 'SUPER_ADMIN_BILLING' | 'SUPER_ADMIN_SETTINGS' | 'SUPER_ADMIN_MARKETING' | 'SUPER_ADMIN_MARKETPLACE' | 'SUPER_ADMIN_CMS' | 'SAAS_LANDING' | 'AUTH' | 'ONLINE_BOOKING' | 'TIPS_REVIEW' | 'PUBLIC_WEBSITE' | 'SUPER_OFFICE_V2';
 
 export enum AppointmentStatus {
@@ -8,7 +8,7 @@ export enum AppointmentStatus {
   COMPLETED = 'COMPLETED',
   CANCELLED = 'CANCELLED',
   BLOCKED = 'BLOCKED',
-  NO_SHOW_PENDING = 'NO_SHOW_PENDING',  // Barbeiro marcou como no-show, aguardando aprovação do dono
+  NO_SHOW_PENDING = 'NO_SHOW_PENDING',  // Barbeiro marcou como no-show, aguardando aprovaÃ§Ã£o do dono
   NO_SHOW = 'NO_SHOW'                    // Confirmado pelo dono
 }
 
@@ -552,7 +552,7 @@ export interface GlobalSettings {
   appName: string;
   trialDays: number;
   currency: string;
-  stripeKey?: string; // Deprecated: não deve ser usado no client-side
+  stripeKey?: string; // Deprecated: nÃ£o deve ser usado no client-side
   enableMaintenance: boolean;
   enableSignup: boolean;
 }

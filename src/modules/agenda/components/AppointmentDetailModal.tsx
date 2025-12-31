@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -40,17 +40,17 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
     onClose();
   };
 
-  // Mensagem de lembrete padrão
+  // Mensagem de lembrete padrÃ£o
   const getReminderMessage = () => {
     const time = format(appointment.date, 'HH:mm');
     const date = format(appointment.date, 'dd/MM');
-    return `Olá ${client?.name}! 👋\n\nLembrando do seu horário na *${shopProfile.name}*:\n\n📅 ${date} às ${time}\n✂️ ${appointment.serviceName}\n\nTe esperamos! 💈`;
+    return `OlÃ¡ ${client?.name}! ðŸ‘‹\n\nLembrando do seu horÃ¡rio na *${shopProfile.name}*:\n\nðŸ“… ${date} Ã s ${time}\nâœ‚ï¸ ${appointment.serviceName}\n\nTe esperamos! ðŸ’ˆ`;
   };
 
   const openWhatsApp = (message?: string) => {
     if (client?.phone) {
       const phone = client.phone.replace(/\D/g, '');
-      const text = message || `Olá ${client.name}!`;
+      const text = message || `OlÃ¡ ${client.name}!`;
       window.open(`https://wa.me/55${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }
   };
@@ -77,7 +77,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
       case AppointmentStatus.SCHEDULED: return 'Agendado';
       case AppointmentStatus.CHECKED_IN: return 'Aguardando';
       case AppointmentStatus.IN_PROGRESS: return 'Atendendo';
-      case AppointmentStatus.COMPLETED: return 'Concluído';
+      case AppointmentStatus.COMPLETED: return 'ConcluÃ­do';
       case AppointmentStatus.NO_SHOW_PENDING: return 'Faltou?';
       case AppointmentStatus.NO_SHOW: return 'No-Show';
       case AppointmentStatus.CANCELLED: return 'Cancelado';
@@ -159,7 +159,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
               {daysSinceLastVisit !== null && (
                 <div className="flex items-center gap-2 text-xs text-zinc-500 border-t border-zinc-800 pt-3">
                   <History className="w-3 h-3" />
-                  <span>Última visita: <b className="text-zinc-300">{daysSinceLastVisit} dias atrás</b></span>
+                  <span>Ãšltima visita: <b className="text-zinc-300">{daysSinceLastVisit} dias atrÃ¡s</b></span>
                 </div>
               )}
 
@@ -187,7 +187,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
               {client.preferences && (
                 <div className="border-t border-zinc-800 pt-3 space-y-2">
                   <h4 className="text-xs font-bold text-zinc-500 uppercase flex items-center gap-1">
-                    <Heart className="w-3 h-3" /> Preferências do Cliente
+                    <Heart className="w-3 h-3" /> PreferÃªncias do Cliente
                   </h4>
                   
                   {client.preferences.preferredService && (
@@ -209,7 +209,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
                   {client.preferences.preferredTime && (
                     <div className="flex items-center gap-2 text-sm">
                       <Clock className="w-3 h-3 text-zinc-500" />
-                      <span className="text-zinc-400">Horário:</span>
+                      <span className="text-zinc-400">HorÃ¡rio:</span>
                       <span className="text-white font-medium">{client.preferences.preferredTime}</span>
                     </div>
                   )}
@@ -229,7 +229,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
               {/* Notes */}
               {appointment.notes && (
                 <div className="border-t border-zinc-800 pt-3">
-                  <h4 className="text-xs font-bold text-zinc-500 uppercase mb-1">Observações do Agendamento</h4>
+                  <h4 className="text-xs font-bold text-zinc-500 uppercase mb-1">ObservaÃ§Ãµes do Agendamento</h4>
                   <p className="text-sm text-zinc-300 bg-zinc-800/50 p-2 rounded">{appointment.notes}</p>
                 </div>
               )}
@@ -322,7 +322,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
               onClick={() => handleAction(AppointmentStatus.CANCELLED)}
               className="w-full flex items-center justify-center gap-2 py-3 bg-zinc-700 hover:bg-zinc-600 text-white font-bold rounded-xl"
             >
-              <X className="w-5 h-5" /> Desbloquear Horário
+              <X className="w-5 h-5" /> Desbloquear HorÃ¡rio
             </button>
           )}
         </div>

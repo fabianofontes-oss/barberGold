@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Settings } from '@/modules/settings/Settings';
 

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useCallback, useEffect, useState } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -109,7 +109,7 @@ export function useDynamicPricing() {
   );
 
   // ============================================
-  // CÁLCULO
+  // CÃLCULO
   // ============================================
 
   const calculatePrice = useCallback(

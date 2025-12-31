@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
@@ -29,10 +29,10 @@ export const OnboardingSuccess: React.FC<OnboardingSuccessProps> = ({ stats }) =
     },
     {
       icon: Eye,
-      title: 'Ver como cliente vê',
-      description: 'Preview do cardápio',
+      title: 'Ver como cliente vÃª',
+      description: 'Preview do cardÃ¡pio',
       action: () => window.open('/book', '_blank'),
-      buttonText: 'Preview do cardápio'
+      buttonText: 'Preview do cardÃ¡pio'
     }
   ];
 
@@ -45,35 +45,35 @@ export const OnboardingSuccess: React.FC<OnboardingSuccessProps> = ({ stats }) =
 
       {/* Title */}
       <h1 className="text-4xl font-bold text-white mb-2">
-        🎉 Tudo pronto!
+        ðŸŽ‰ Tudo pronto!
       </h1>
       <p className="text-zinc-400 text-lg mb-8">
-        Seu negócio está no ar
+        Seu negÃ³cio estÃ¡ no ar
       </p>
 
       {/* Stats Card */}
       <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6 mb-8 max-w-md mx-auto">
-        <h3 className="text-white font-bold mb-4">📊 Resumo do seu catálogo</h3>
+        <h3 className="text-white font-bold mb-4">ðŸ“Š Resumo do seu catÃ¡logo</h3>
         <div className="space-y-3 text-left">
           <div className="flex items-center justify-between">
-            <span className="text-zinc-400 text-sm">✓ Serviços ativos</span>
+            <span className="text-zinc-400 text-sm">âœ“ ServiÃ§os ativos</span>
             <span className="text-white font-bold">{stats.totalServices}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-zinc-400 text-sm">✓ Combos configurados</span>
+            <span className="text-zinc-400 text-sm">âœ“ Combos configurados</span>
             <span className="text-white font-bold">{stats.totalCombos}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-zinc-400 text-sm">✓ Categorias disponíveis</span>
+            <span className="text-zinc-400 text-sm">âœ“ Categorias disponÃ­veis</span>
             <span className="text-white font-bold">{stats.totalCategories}</span>
           </div>
           <div className="h-px bg-zinc-700 my-3" />
           <div className="flex items-center justify-between">
-            <span className="text-zinc-400 text-sm">💰 Ticket médio</span>
+            <span className="text-zinc-400 text-sm">ðŸ’° Ticket mÃ©dio</span>
             <span className="text-amber-500 font-bold">R$ {stats.avgPrice}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-zinc-400 text-sm">⏱️ Tempo médio</span>
+            <span className="text-zinc-400 text-sm">â±ï¸ Tempo mÃ©dio</span>
             <span className="text-amber-500 font-bold">{stats.avgDuration}min</span>
           </div>
         </div>
@@ -81,7 +81,7 @@ export const OnboardingSuccess: React.FC<OnboardingSuccessProps> = ({ stats }) =
 
       {/* Next Steps */}
       <div className="mb-8">
-        <h3 className="text-white font-bold mb-4">Próximos passos</h3>
+        <h3 className="text-white font-bold mb-4">PrÃ³ximos passos</h3>
         <div className="space-y-3 max-w-md mx-auto">
           {nextSteps.map((step, idx) => (
             <button
@@ -95,7 +95,7 @@ export const OnboardingSuccess: React.FC<OnboardingSuccessProps> = ({ stats }) =
                 </div>
                 <div className="flex-1">
                   <h4 className="text-white font-bold text-sm mb-1">
-                    {idx + 1}️⃣ {step.title}
+                    {idx + 1}ï¸âƒ£ {step.title}
                   </h4>
                   <p className="text-zinc-500 text-xs">{step.description}</p>
                 </div>
@@ -111,8 +111,8 @@ export const OnboardingSuccess: React.FC<OnboardingSuccessProps> = ({ stats }) =
       {/* Tip */}
       <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 mb-6 max-w-md mx-auto">
         <p className="text-amber-500 text-sm">
-          💡 Você pode editar serviços a qualquer momento em{' '}
-          <span className="font-bold">Painel → Catálogo</span>
+          ðŸ’¡ VocÃª pode editar serviÃ§os a qualquer momento em{' '}
+          <span className="font-bold">Painel â†’ CatÃ¡logo</span>
         </p>
       </div>
 

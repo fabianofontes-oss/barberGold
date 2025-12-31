@@ -1,4 +1,4 @@
-import { Smartphone, MessageCircle } from 'lucide-react';
+﻿import { Smartphone, MessageCircle } from 'lucide-react';
 
 export function MobileExperienceSection() {
     return (
@@ -30,13 +30,13 @@ export function MobileExperienceSection() {
                                 {/* Chat Messages */}
                                 <div className="flex flex-col gap-3 mt-4">
                                     <div className="self-start bg-[#1f1f22] p-3 rounded-2xl rounded-tl-none max-w-[85%]">
-                                        <p className="text-xs text-gray-300">Olá João! Seu corte está confirmado para amanhã às 15h. Deseja adicionar uma Barboterapia com 20% OFF?</p>
+                                        <p className="text-xs text-gray-300">OlÃ¡ JoÃ£o! Seu corte estÃ¡ confirmado para amanhÃ£ Ã s 15h. Deseja adicionar uma Barboterapia com 20% OFF?</p>
                                     </div>
                                     <div className="self-end bg-[#f79f08] p-3 rounded-2xl rounded-tr-none max-w-[85%]">
                                         <p className="text-xs text-[#231c10] font-bold">Sim, pode adicionar!</p>
                                     </div>
                                     <div className="self-start bg-[#1f1f22] p-3 rounded-2xl rounded-tl-none max-w-[85%] flex flex-col gap-2">
-                                        <p className="text-xs text-gray-300">Perfeito! Atualizado. Até amanhã 👊</p>
+                                        <p className="text-xs text-gray-300">Perfeito! Atualizado. AtÃ© amanhÃ£ ðŸ‘Š</p>
                                     </div>
                                 </div>
                                 
@@ -58,7 +58,7 @@ export function MobileExperienceSection() {
                 {/* Text Content */}
                 <div className="lg:w-1/2">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">Zero Barreira de Entrada para seu cliente.</h2>
-                    <p className="text-lg text-gray-400 mb-8">Esqueça aplicativos que ninguém baixa. O BarberGOLD funciona onde seu cliente já está.</p>
+                    <p className="text-lg text-gray-400 mb-8">EsqueÃ§a aplicativos que ninguÃ©m baixa. O BarberGOLD funciona onde seu cliente jÃ¡ estÃ¡.</p>
                     
                     <div className="space-y-6">
                         <div className="flex gap-4">
@@ -67,7 +67,7 @@ export function MobileExperienceSection() {
                             </div>
                             <div>
                                 <h4 className="text-xl font-bold text-white">Sem Login, Sem App</h4>
-                                <p className="text-sm text-gray-400 mt-1">Seu cliente agenda através de um link simples e bonito, sem precisar criar conta ou lembrar senha.</p>
+                                <p className="text-sm text-gray-400 mt-1">Seu cliente agenda atravÃ©s de um link simples e bonito, sem precisar criar conta ou lembrar senha.</p>
                             </div>
                         </div>
                         
@@ -76,8 +76,8 @@ export function MobileExperienceSection() {
                                 <MessageCircle className="w-6 h-6" />
                             </div>
                             <div>
-                                <h4 className="text-xl font-bold text-white">Automação WhatsApp</h4>
-                                <p className="text-sm text-gray-400 mt-1">Lembretes automáticos, confirmações e recuperação de clientes inativos direto no &apos;Zap&apos;.</p>
+                                <h4 className="text-xl font-bold text-white">AutomaÃ§Ã£o WhatsApp</h4>
+                                <p className="text-sm text-gray-400 mt-1">Lembretes automÃ¡ticos, confirmaÃ§Ãµes e recuperaÃ§Ã£o de clientes inativos direto no &apos;Zap&apos;.</p>
                             </div>
                         </div>
                     </div>

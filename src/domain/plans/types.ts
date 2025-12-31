@@ -1,4 +1,4 @@
-export type PlanId = 'FREE' | 'SOLO' | 'SOLO_PRO' | 'EQUIPE' | 'STUDIO' | 'ENTERPRISE';
+﻿export type PlanId = 'FREE' | 'SOLO' | 'SOLO_PRO' | 'EQUIPE' | 'STUDIO' | 'ENTERPRISE';
 
 export type BillingInterval = 'MONTHLY' | 'ANNUAL';
 

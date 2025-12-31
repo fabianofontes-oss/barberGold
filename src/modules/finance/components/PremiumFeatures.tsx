@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Crown, Lock } from 'lucide-react';
@@ -42,10 +42,10 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = (props) => {
         </div>
         <h3 className="text-lg font-bold text-white mb-2">Recursos Premium</h3>
         <p className="text-sm text-zinc-500 mb-4">
-          Gráficos de tendência, DRE, metas e exportação de relatórios estão disponíveis nos planos pagos.
+          GrÃ¡ficos de tendÃªncia, DRE, metas e exportaÃ§Ã£o de relatÃ³rios estÃ£o disponÃ­veis nos planos pagos.
         </p>
         <div className="flex flex-wrap justify-center gap-2 text-xs text-zinc-600">
-          <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> Gráficos</span>
+          <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> GrÃ¡ficos</span>
           <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> DRE</span>
           <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> Metas</span>
           <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> Exportar</span>
@@ -56,7 +56,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = (props) => {
 
   return (
     <div className="space-y-6">
-      {/* Gráficos de tendência */}
+      {/* GrÃ¡ficos de tendÃªncia */}
       <PremiumCharts sales={props.filteredSales} expenses={props.filteredExpenses} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -77,7 +77,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = (props) => {
         />
       </div>
 
-      {/* Exportação */}
+      {/* ExportaÃ§Ã£o */}
       {hasAdvancedReports && (
         <ExportReport
           sales={props.filteredSales}

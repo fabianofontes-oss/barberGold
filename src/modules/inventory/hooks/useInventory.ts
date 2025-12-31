@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -41,7 +41,7 @@ export function useInventory() {
           setError(inventoryError.message);
         } else {
           setInventory(data || []);
-          console.log('✅ Inventory carregado do Supabase:', data?.length || 0);
+          console.log('âœ… Inventory carregado do Supabase:', data?.length || 0);
         }
       } catch (err) {
         console.error('Erro ao carregar inventory:', err);

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { PointOfSale } from '@/modules/pdv/PointOfSale';
 

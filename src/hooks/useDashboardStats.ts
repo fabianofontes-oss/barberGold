@@ -1,4 +1,4 @@
-import { useBarber } from '@/context/BarberContext';
+﻿import { useBarber } from '@/context/BarberContext';
 import { AppointmentStatus } from '@/types';
 
 const ensureDate = (d: Date | string): Date => {

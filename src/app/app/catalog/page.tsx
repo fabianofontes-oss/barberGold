@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Catalog } from '@/modules/catalog/Catalog';
 

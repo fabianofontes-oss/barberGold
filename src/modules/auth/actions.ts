@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
@@ -46,7 +46,7 @@ export async function signOutAction(): Promise<void> {
 }
 
 /**
- * Obtém a sessão atual do usuário (server-side)
+ * ObtÃ©m a sessÃ£o atual do usuÃ¡rio (server-side)
  */
 export async function getSessionAction() {
   const supabase = await createClient();
@@ -64,7 +64,7 @@ export async function getSessionAction() {
 }
 
 /**
- * Cadastro de novo usuário (opcional para P0)
+ * Cadastro de novo usuÃ¡rio (opcional para P0)
  */
 export async function signUpAction(
   email: string,
@@ -97,10 +97,10 @@ export async function signUpAction(
 function getErrorMessage(message: string): string {
   const errorMap: Record<string, string> = {
     'Invalid login credentials': 'Email ou senha incorretos',
-    'Email not confirmed': 'Email não confirmado. Verifique sua caixa de entrada.',
-    'User already registered': 'Este email já está cadastrado',
+    'Email not confirmed': 'Email nÃ£o confirmado. Verifique sua caixa de entrada.',
+    'User already registered': 'Este email jÃ¡ estÃ¡ cadastrado',
     'Password should be at least 6 characters': 'A senha deve ter pelo menos 6 caracteres',
-    'Unable to validate email address: invalid format': 'Formato de email inválido',
+    'Unable to validate email address: invalid format': 'Formato de email invÃ¡lido',
   };
 
   return errorMap[message] || message;

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, Suspense } from 'react';
 import Link from 'next/link';
@@ -29,13 +29,13 @@ function RegisterForm() {
 
         // Validation
         if (password !== confirmPassword) {
-            setError('As senhas não coincidem.');
+            setError('As senhas nÃ£o coincidem.');
             setLoading(false);
             return;
         }
 
         if (!termsAccepted) {
-            setError('Você deve aceitar os Termos de Serviço.');
+            setError('VocÃª deve aceitar os Termos de ServiÃ§o.');
             setLoading(false);
             return;
         }
@@ -56,7 +56,7 @@ function RegisterForm() {
                 return;
             }
 
-            // Redirecionar para dashboard (modal de setup aparecerá se necessário)
+            // Redirecionar para dashboard (modal de setup aparecerÃ¡ se necessÃ¡rio)
             window.location.href = '/app/dashboard';
         } catch {
             setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
@@ -112,10 +112,10 @@ function RegisterForm() {
                     {/* Hero Text */}
                     <div className="max-w-md">
                         <h1 className="text-4xl font-black leading-tight tracking-tight mb-4 text-white">
-                            Entre para o Padrão Ouro.
+                            Entre para o PadrÃ£o Ouro.
                         </h1>
                         <p className="text-[#ccb58f] text-lg font-medium leading-relaxed">
-                            Gerencie sua barbearia com precisão e estilo. Organize agendamentos, gerencie equipe e faça seu negócio crescer com a plataforma feita para profissionais.
+                            Gerencie sua barbearia com precisÃ£o e estilo. Organize agendamentos, gerencie equipe e faÃ§a seu negÃ³cio crescer com a plataforma feita para profissionais.
                         </p>
                         <div className="mt-8 flex gap-2">
                             <div className="h-1 w-12 rounded-full bg-[#f79f08]"></div>
@@ -126,7 +126,7 @@ function RegisterForm() {
                     
                     {/* Footer Text */}
                     <div className="text-sm text-[#ccb58f]/60">
-                        © 2025 BarberGOLD Inc. All rights reserved.
+                        Â© 2025 BarberGOLD Inc. All rights reserved.
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@ function RegisterForm() {
                     {/* Form Header */}
                     <div className="space-y-2">
                         <h2 className="text-white text-3xl font-bold leading-tight tracking-tight">Criar Conta</h2>
-                        <p className="text-[#ccb58f] text-base">Crie sua conta. Você configurará sua barbearia na próxima etapa.</p>
+                        <p className="text-[#ccb58f] text-base">Crie sua conta. VocÃª configurarÃ¡ sua barbearia na prÃ³xima etapa.</p>
                     </div>
 
                     {error && (
@@ -166,7 +166,7 @@ function RegisterForm() {
                                 required
                                 value={fullname}
                                 onChange={(e) => setFullname(e.target.value)}
-                                placeholder="Ex: João Silva"
+                                placeholder="Ex: JoÃ£o Silva"
                                 disabled={loading}
                                 className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
@@ -248,11 +248,11 @@ function RegisterForm() {
                             <label htmlFor="terms" className="text-sm font-normal text-[#ccb58f] leading-tight cursor-pointer select-none">
                                 Eu concordo com os{' '}
                                 <Link href="/termos" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
-                                    Termos de Serviço
+                                    Termos de ServiÃ§o
                                 </Link>
                                 {' '}e{' '}
                                 <Link href="/privacidade" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
-                                    Política de Privacidade
+                                    PolÃ­tica de Privacidade
                                 </Link>.
                             </label>
                         </div>
@@ -299,7 +299,7 @@ function RegisterForm() {
                     {/* Login Link */}
                     <div className="text-center mt-2">
                         <p className="text-[#ccb58f] text-sm">
-                            Já tem uma conta?{' '}
+                            JÃ¡ tem uma conta?{' '}
                             <Link href="/login" className="text-[#f79f08] font-bold hover:underline ml-1">
                                 Entrar
                             </Link>

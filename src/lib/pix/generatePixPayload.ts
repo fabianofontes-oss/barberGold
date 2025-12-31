@@ -1,4 +1,4 @@
-export interface PixPayloadParams {
+﻿export interface PixPayloadParams {
   pixKey: string;
   beneficiaryName: string;
   city?: string;

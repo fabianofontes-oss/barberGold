@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import {
@@ -70,7 +70,7 @@ export const PricingDashboard: React.FC = () => {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-white">Dynamic Pricing</h1>
-          <p className="text-sm text-zinc-500">Regras de preço por horário e dia da semana.</p>
+          <p className="text-sm text-zinc-500">Regras de preÃ§o por horÃ¡rio e dia da semana.</p>
         </div>
       </div>
 
@@ -107,7 +107,7 @@ export const PricingDashboard: React.FC = () => {
       </div>
 
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-white">Regras de Preço</h2>
+        <h2 className="text-lg font-bold text-white">Regras de PreÃ§o</h2>
         <button
           onClick={() => setIsCreating(true)}
           className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold text-sm rounded-xl flex items-center gap-2"
@@ -121,7 +121,7 @@ export const PricingDashboard: React.FC = () => {
           <Zap className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
           <h3 className="text-lg font-bold text-white mb-2">Nenhuma regra criada</h3>
           <p className="text-sm text-zinc-500 mb-4">
-            Crie regras de preço dinâmico para aumentar lucro em horários de pico ou atrair clientes em horários ociosos.
+            Crie regras de preÃ§o dinÃ¢mico para aumentar lucro em horÃ¡rios de pico ou atrair clientes em horÃ¡rios ociosos.
           </p>
           <button
             onClick={() => setIsCreating(true)}
