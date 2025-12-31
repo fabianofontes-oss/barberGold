@@ -110,7 +110,7 @@ const SOLO_PLANS_INFO: PlanInfo[] = [
         title: 'Agendamento Online',
         included: true,
         items: [
-          'Link único para agendamento (barber.app/seu-nome)',
+          'Link único para agendamento (barber.gold/seu-nome)',
           'Wizard: Serviço → Dia → Horário → Confirmação',
           'Gestão de horários e pausas',
           'Templates prontos para WhatsApp com link'

@@ -40,7 +40,7 @@ export const WebsiteBuilder = () => {
              Fazer Upgrade Agora
            </button>
            <p className="text-[10px] text-zinc-500 mt-4">
-             Seu site básico continua funcionando normalmente no link barber.app.
+             Seu site básico continua funcionando normalmente no link barber.gold.
            </p>
         </div>
       </div>
@@ -59,7 +59,7 @@ export const WebsiteBuilder = () => {
 
   const copyBookingLink = () => {
      const slug = shopProfile.slug || shopProfile.name.toLowerCase().replace(/\s+/g, '-');
-     const domain = shopProfile.customDomain || `barber.app/${slug}`;
+     const domain = shopProfile.customDomain || `barber.gold/${slug}`;
      navigator.clipboard.writeText(`https://${domain}`);
      alert('Link copiado!');
   };
@@ -534,7 +534,7 @@ export const WebsiteBuilder = () => {
                                </div>
                                <div className="flex items-center">
                                   <span className="bg-zinc-900 border border-r-0 border-zinc-800 text-zinc-400 px-4 py-3 rounded-l-xl text-lg font-mono">
-                                     barber.app/
+                                     barber.gold/
                                   </span>
                                   <input 
                                      type="text" 
@@ -575,7 +575,7 @@ export const WebsiteBuilder = () => {
                                </div>
                                <div className="mt-3 bg-blue-500/10 border border-blue-500/20 p-3 rounded-lg">
                                   <p className="text-[10px] text-blue-300 leading-relaxed">
-                                     To connect your domain, add a <b>CNAME</b> record in your DNS provider pointing to <b>sites.barber.app</b>.
+                                     To connect your domain, add a <b>CNAME</b> record in your DNS provider pointing to <b>sites.barber.gold</b>.
                                   </p>
                                </div>
                                <button className="mt-4 w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold rounded-xl border border-zinc-700 transition-all">

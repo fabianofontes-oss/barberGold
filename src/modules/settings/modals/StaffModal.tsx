@@ -1,4 +1,4 @@
-Ôªø'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useBarber } from '@/context/BarberContext';
@@ -228,20 +228,20 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                 <div className="space-y-4">
                    <h4 className="text-sm font-bold text-amber-500 uppercase tracking-wider border-b border-zinc-800 pb-2 mb-4">Role & Contract</h4>
                    <div>
-                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Endere√ßo Completo</label>
-                     <input type="text" placeholder="Rua, n√∫mero, bairro, cidade" value={newStaff.address || ''} onChange={e => setNewStaff({...newStaff, address: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
+                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">EndereÁo Completo</label>
+                     <input type="text" placeholder="Rua, n˙mero, bairro, cidade" value={newStaff.address || ''} onChange={e => setNewStaff({...newStaff, address: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                    </div>
                    <div>
                       <label className="block text-xs font-medium text-zinc-400 mb-1.5">Cargo no Sistema</label>
                       <div className="grid grid-cols-3 gap-2">
                          <button type="button" onClick={() => setNewStaff({...newStaff, role: 'BARBER'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'BARBER' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Barbeiro</button>
                          <button type="button" onClick={() => setNewStaff({...newStaff, role: 'ASSISTANT'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'ASSISTANT' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Assistente</button>
-                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'OWNER'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'OWNER' ? 'bg-amber-500 border-amber-500 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Propriet√°rio</button>
+                         <button type="button" onClick={() => setNewStaff({...newStaff, role: 'OWNER'})} className={`py-2 text-xs font-bold rounded-lg border ${newStaff.role === 'OWNER' ? 'bg-amber-500 border-amber-500 text-zinc-900' : 'bg-zinc-950 border-zinc-800 text-zinc-400'}`}>Propriet·rio</button>
                       </div>
                    </div>
 
                    <div>
-                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Frequ√™ncia de Pagamento</label>
+                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">FrequÍncia de Pagamento</label>
                       <div className="relative">
                          <CalendarClock className="absolute left-3 top-2.5 w-4 h-4 text-zinc-500" />
                          <select 
@@ -257,7 +257,7 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                    </div>
 
                    <div className="bg-zinc-800/50 p-4 rounded-xl border border-dashed border-zinc-700">
-                      <label className="block text-xs font-bold text-white mb-2">Aplicar Plano de Comiss√£o</label>
+                      <label className="block text-xs font-bold text-white mb-2">Aplicar Plano de Comiss„o</label>
                       <select onChange={(e) => applyPlanToStaff(e.target.value)} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-3 px-3 text-zinc-300 focus:border-amber-500 outline-none text-sm">
                          <option value="">-- Selecione um Plano --</option>
                          {commissionPlans.map(p => (<option key={p.id} value={p.id}>{p.name}</option>))}
@@ -265,11 +265,11 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                    </div>
                    <div className="grid grid-cols-2 gap-3">
                       <div>
-                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Comiss√£o de Servi√ßo %</label>
+                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Comiss„o de ServiÁo %</label>
                          <input type="number" min="0" max="100" value={newStaff.serviceCommissionRate} onChange={e => setNewStaff({...newStaff, serviceCommissionRate: Number(e.target.value)})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                       </div>
                       <div>
-                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Comiss√£o de Produto %</label>
+                         <label className="block text-xs font-medium text-zinc-400 mb-1.5">Comiss„o de Produto %</label>
                          <input type="number" min="0" max="100" value={newStaff.productCommissionRate} onChange={e => setNewStaff({...newStaff, productCommissionRate: Number(e.target.value)})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-3 text-white focus:border-amber-500 outline-none"/>
                       </div>
                    </div>
@@ -282,8 +282,8 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
               <div className="space-y-4">
                  <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800 mb-4">
                     <p className="text-sm text-zinc-400">
-                       Selecione os servi√ßos que <b>{newStaff.name || 'este profissional'}</b> est√° qualificado para realizar. 
-                       Servi√ßos desmarcados n√£o aparecer√£o nas op√ß√µes de agendamento.
+                       Selecione os serviÁos que <b>{newStaff.name || 'este profissional'}</b> est· qualificado para realizar. 
+                       ServiÁos desmarcados n„o aparecer„o nas opÁıes de agendamento.
                     </p>
                  </div>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -300,7 +300,7 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                              </div>
                              <div>
                                 <p className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-zinc-400'}`}>{service.name}</p>
-                                <p className="text-xs text-zinc-500">${service.price} ‚Ä¢ {service.durationMinutes}m</p>
+                                <p className="text-xs text-zinc-500">${service.price} ï {service.durationMinutes}m</p>
                              </div>
                           </div>
                        )
@@ -314,8 +314,8 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
               <div className="space-y-4">
                  <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800 mb-4">
                     <p className="text-sm text-zinc-400">
-                       Defina o hor√°rio de trabalho e <span className="text-amber-500 font-bold">Pausas Planejadas</span>.
-                       <br/><span className="text-xs text-zinc-500">Pausas como Almo√ßo ou Caf√© ser√£o bloqueadas automaticamente na agenda online.</span>
+                       Defina o hor·rio de trabalho e <span className="text-amber-500 font-bold">Pausas Planejadas</span>.
+                       <br/><span className="text-xs text-zinc-500">Pausas como AlmoÁo ou CafÈ ser„o bloqueadas automaticamente na agenda online.</span>
                     </p>
                  </div>
                  
@@ -382,8 +382,8 @@ export const StaffModal: React.FC<StaffModalProps> = ({ isOpen, onClose, staffTo
                                             onChange={(e) => updateBreak(idx, blk.id, 'type', e.target.value)}
                                             className="bg-zinc-950 border border-zinc-800 rounded-lg py-1 pl-7 pr-2 text-zinc-300 text-xs focus:border-amber-500 outline-none w-24"
                                          >
-                                            <option value="LUNCH">Almo√ßo</option>
-                                            <option value="COFFEE">Caf√©</option>
+                                            <option value="LUNCH">AlmoÁo</option>
+                                            <option value="COFFEE">CafÈ</option>
                                             <option value="OTHER">Fora</option>
                                          </select>
                                       </div>
