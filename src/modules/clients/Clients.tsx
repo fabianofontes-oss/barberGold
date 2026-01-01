@@ -208,9 +208,10 @@ export const Clients = () => {
 
       {/* Search */}
       <div className="mb-6 relative">
-        <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
+        <Search aria-hidden="true" className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
+          aria-label={t('clients.searchPlaceholder')}
           placeholder={canViewContacts ? t('clients.searchPlaceholder') : t('common.search') + '...'}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -303,16 +304,35 @@ export const Clients = () => {
           <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-md md:rounded-2xl border-0 md:border border-zinc-800 p-6 shadow-2xl overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
                <h3 className="text-xl font-bold text-white">Add New Client</h3>
-               <button onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
+               <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"
+                  aria-label={t('common.close')}
+               >
+                  <X aria-hidden="true" className="w-5 h-5"/>
+               </button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div>
+                 <label htmlFor="client-name" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo <span aria-hidden="true">*</span></label>
+                 <input id="client-name" type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
+              <div>
+                 <label htmlFor="client-phone" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone <span aria-hidden="true">*</span></label>
+                 <input id="client-phone" type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
               
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div>
+                 <label htmlFor="client-email" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label>
+                 <input id="client-email" type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
               
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label><input type="date" value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div>
+                 <label htmlFor="client-birthdate" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label>
+                 <input id="client-birthdate" type="date" value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
               
               <div className="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-4">
                 <label className="block text-sm md:text-xs font-bold text-emerald-400 uppercase mb-2 flex items-center gap-2">
@@ -339,7 +359,14 @@ export const Clients = () => {
                     {formData.dependents.map((dep, idx) => (
                        <div key={idx} className="flex justify-between items-center text-sm bg-zinc-900 p-2 rounded border border-zinc-800">
                           <span className="text-zinc-300">{dep.name}</span>
-                          <button type="button" onClick={() => removeDependent(dep.id)} className="text-red-500 hover:text-red-400"><X className="w-3 h-3" /></button>
+                          <button
+                             type="button"
+                             onClick={() => removeDependent(dep.id)}
+                             className="text-red-500 hover:text-red-400"
+                             aria-label={`${t('common.remove')} ${dep.name}`}
+                          >
+                             <X aria-hidden="true" className="w-3 h-3" />
+                          </button>
                        </div>
                     ))}
                  </div>
@@ -380,7 +407,13 @@ export const Clients = () => {
                        </div>
                     </div>
                  </div>
-                 <button onClick={() => setSelectedClient(null)} className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
+                 <button
+                    onClick={() => setSelectedClient(null)}
+                    className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"
+                    aria-label={t('common.close')}
+                 >
+                    <X aria-hidden="true" className="w-6 h-6" />
+                 </button>
               </div>
 
               {/* Tabs */}
@@ -412,7 +445,7 @@ export const Clients = () => {
                  {activeDetailTab === 'HISTORY' && (
                     <div className="space-y-4">
                        <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Recent Appointments</h4>
-                       {clientHistory.length === 0 ? <div className="text-center py-10 text-zinc-500"><Clock className="w-10 h-10 mx-auto mb-3 opacity-30" /><p>No completed services yet.</p></div> : clientHistory.map(appt => (
+                       {clientHistory.length === 0 ? <div className="text-center py-10 text-zinc-500"><Clock aria-hidden="true" className="w-10 h-10 mx-auto mb-3 opacity-30" /><p>No completed services yet.</p></div> : clientHistory.map(appt => (
                           <div key={appt.id} className="flex gap-4 p-4 rounded-xl border border-zinc-800 bg-zinc-950/50">
                              <div className="flex flex-col items-center justify-center px-2 border-r border-zinc-800 text-zinc-400 min-w-[60px]"><span className="text-sm font-bold">{format(appt.date, 'MMM')}</span><span className="text-xl font-bold text-white">{format(appt.date, 'd')}</span></div>
                              <div><h4 className="font-bold text-white text-lg">{appt.serviceName}</h4><p className="text-sm text-zinc-500">Provided by <span className="text-amber-500">{appt.staffId}</span></p><p className="text-xs text-zinc-600 mt-2">{format(appt.date, 'HH:mm')} • ${appt.price}</p></div>
@@ -444,7 +477,13 @@ export const Clients = () => {
                                       <p className="text-xs text-zinc-500">{dep.preferredStaffId ? `Prefers: ${staff.find(s => s.id === dep.preferredStaffId)?.name}` : 'No preference'}</p>
                                    </div>
                                 </div>
-                                <button onClick={() => removeDependent(dep.id)} className="text-zinc-600 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                                <button
+                                   onClick={() => removeDependent(dep.id)}
+                                   className="text-zinc-600 hover:text-red-500"
+                                   aria-label={`${t('common.remove')} ${dep.name}`}
+                                >
+                                   <Trash2 aria-hidden="true" className="w-4 h-4" />
+                                </button>
                              </div>
                           ))}
                        </div>
