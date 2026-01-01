@@ -21,10 +21,42 @@ import { useCommissionPlans } from '@/modules/commission/hooks/useCommissionPlan
 // --- LOCALSTORAGE HELPERS ---
 const STORAGE_KEY = 'barberflow_data';
 
+// Exported for testing purposes
+export const sanitizeSettingsForStorage = (data: any) => {
+  const sanitizedData = { ...data };
+
+  if (sanitizedData.shopSettings?.gatewayConfig) {
+    // Create a deep copy of gatewayConfig to modify it without affecting state
+    const safeGatewayConfig = JSON.parse(JSON.stringify(sanitizedData.shopSettings.gatewayConfig));
+
+    const sensitiveFields = ['secretKey', 'accessToken', 'token', 'apiKey', 'appKey', 'stoneCode'];
+    const providers = ['stripe', 'mercadoPago', 'pagSeguro', 'infinitePay', 'stone'];
+
+    providers.forEach(provider => {
+      if (safeGatewayConfig[provider]) {
+        sensitiveFields.forEach(field => {
+          if (field in safeGatewayConfig[provider]) {
+            delete safeGatewayConfig[provider][field];
+          }
+        });
+      }
+    });
+
+    sanitizedData.shopSettings = {
+      ...sanitizedData.shopSettings,
+      gatewayConfig: safeGatewayConfig
+    };
+  }
+  return sanitizedData;
+};
+
 const saveToStorage = (data: any) => {
   try {
+    // 🛡️ SECURITY: Sanitize sensitive keys before saving to local storage
+    const sanitizedData = sanitizeSettingsForStorage(data);
+
     // Converte Dates para strings antes de salvar
-    const serialized = JSON.stringify(data, (key, value) => {
+    const serialized = JSON.stringify(sanitizedData, (key, value) => {
       if (value instanceof Date) return { __type: 'Date', value: value.toISOString() };
       return value;
     });
