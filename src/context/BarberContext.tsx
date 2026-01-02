@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode, PropsWithChildren, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode, PropsWithChildren, useEffect, useCallback } from 'react';
 import { Appointment, Client, Product, Service, Sale, ViewState, AppointmentStatus, PaymentMethod, CartItem, RecurrenceType, StaffMember, CommissionPlan, Expense, ShopSettings, StaffPayment, ShopProfile, DaySchedule, InventoryItem, Supplier, SupplyTransaction, Category, CategoryType, RegisterClosure, QueueItem, Review, Tenant, SupportTicket, GlobalInvoice, Integration, ReferralSource, LandingPageConfig, MarketingCampaign, GlobalSettings, SaasV2TenantStatus, SaasV2PlanId, SaasPlan, SaasPlanId, CompensationModel } from '@/types';
 // Removido imports de mocks
 import { addDays, addWeeks, addMonths, isAfter, areIntervalsOverlapping, addMinutes, set, getDay, isSameDay } from 'date-fns';
@@ -1102,7 +1102,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
   const deleteSupplier = (id: string) => setSuppliers(prev => prev.filter(s => s.id !== id));
   const addCategory = (n: string, t: any) => setCategories(prev => [...prev, { id: Math.random().toString(36).substr(2, 9), name: n, type: t }]);
   const deleteCategory = (id: string) => setCategories(prev => prev.filter(c => c.id !== id));
-  const getAvailableSlots = (date: Date, staffId: string, durationMinutes: number): Date[] => {
+  const getAvailableSlots = useCallback((date: Date, staffId: string, durationMinutes: number): Date[] => {
      const staffMember = staff.find(s => s.id === staffId);
      if (!staffMember) return [];
      
@@ -1158,7 +1158,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
      }
      
      return slots;
-  };
+  }, [staff, appointments, services]);
   
   // --- SUPER ADMIN ACTIONS ---
   const addTenant = (t: any) => setTenants(prev => [...prev, { ...t, id: Math.random().toString(36).substr(2, 9), status: 'ACTIVE', joinedDate: new Date() }]);

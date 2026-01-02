@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { 
@@ -115,6 +115,106 @@ export const OnlineBookingWizard = () => {
   const [isExistingClient, setIsExistingClient] = useState(false);
   const [activeClientProfile, setActiveClientProfile] = useState<Partial<Client> | null>(null);
 
+  // --- TIME & LOGIC ---
+  const getEntityDuration = useCallback((entity: BookingEntity) => {
+     return services.filter(s => entity.serviceIds.includes(s.id)).reduce((acc, s) => acc + s.durationMinutes, 0);
+  }, [services]);
+
+  const calculateGroupTiming = useCallback(() => {
+     const staffLoad: Record<string, number> = {};
+     let sequentialTotal = 0;
+
+     bookingEntities.forEach(entity => {
+        const staffId = entity.assignedStaffId || 'unassigned';
+        const duration = getEntityDuration(entity);
+        sequentialTotal += duration;
+
+        if (staffId !== 'unassigned') {
+           staffLoad[staffId] = (staffLoad[staffId] || 0) + duration;
+        }
+     });
+
+     const staffLoads = Object.values(staffLoad);
+     const maxStaffLoad = staffLoads.length > 0 ? Math.max(...staffLoads) : 0;
+
+     return {
+        sequential: sequentialTotal,
+        parallelOptimized: maxStaffLoad,
+        isFaster: maxStaffLoad < sequentialTotal && staffLoads.length > 1
+     };
+  }, [bookingEntities, getEntityDuration]);
+
+  // 1. Staff Based Slots (Services)
+  const getMultiEntityAvailableSlots = useCallback((date: Date) => {
+     const staffAssignments: Record<string, number> = {};
+
+     bookingEntities.forEach(entity => {
+        if (!entity.serviceIds.length) return;
+        const staffId = entity.assignedStaffId || staff[0].id;
+        const duration = getEntityDuration(entity);
+        staffAssignments[staffId] = (staffAssignments[staffId] || 0) + duration;
+     });
+
+     const involvedStaffIds = Object.keys(staffAssignments);
+     if (involvedStaffIds.length === 0) return [];
+
+     const slotsPerStaff: Record<string, Date[]> = {};
+     involvedStaffIds.forEach(staffId => {
+        slotsPerStaff[staffId] = getAvailableSlots(date, staffId, staffAssignments[staffId]);
+     });
+
+     const baseStaffId = involvedStaffIds[0];
+     const baseSlots = slotsPerStaff[baseStaffId] || [];
+
+     return baseSlots.filter(slot => {
+        const slotTime = slot.getTime();
+        return involvedStaffIds.every(id => {
+           if (id === baseStaffId) return true;
+           return slotsPerStaff[id].some(s => s.getTime() === slotTime);
+        });
+     });
+  }, [bookingEntities, staff, getAvailableSlots, getEntityDuration]);
+
+  // 2. Shop Based Slots (Pickup Only)
+  const getShopPickupSlots = useCallback((date: Date) => {
+     const dayIndex = getDay(date);
+     const schedule = shopProfile.operatingHours?.find(d => d.dayIndex === dayIndex);
+
+     if (!schedule || !schedule.isActive) return [];
+
+     const [startHour, startMin] = schedule.startTime.split(':').map(Number);
+     const [endHour, endMin] = schedule.endTime.split(':').map(Number);
+
+     let currentSlot = set(date, { hours: startHour, minutes: startMin, seconds: 0, milliseconds: 0 });
+     const endOfDay = set(date, { hours: endHour, minutes: endMin, seconds: 0, milliseconds: 0 });
+
+     const slots: Date[] = [];
+     while (currentSlot < endOfDay) {
+        if (!isSameDay(date, new Date()) || currentSlot > new Date()) {
+           slots.push(new Date(currentSlot));
+        }
+        currentSlot = addMinutes(currentSlot, 30); // 30 min intervals for pickup
+     }
+     return slots;
+  }, [shopProfile.operatingHours]);
+
+  // --- COMPUTED VALUES ---
+
+  // Generate dates for the next 14 days
+  const availableDates = Array.from({ length: 14 }, (_, i) => addDays(startOfToday(), i));
+
+  // Flatten all services from all entities to calculate total stats
+  const allSelectedServiceIds = bookingEntities.flatMap(e => e.serviceIds);
+  const hasServices = allSelectedServiceIds.length > 0;
+
+  const availableSlots = useMemo(() => {
+     return hasServices
+      ? getMultiEntityAvailableSlots(selectedDate)
+      : getShopPickupSlots(selectedDate);
+  }, [hasServices, selectedDate, getMultiEntityAvailableSlots, getShopPickupSlots]);
+
+  const timingInfo = useMemo(() => calculateGroupTiming(), [calculateGroupTiming]);
+
   if (!hasOnlineBooking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-50 px-4">
@@ -127,15 +227,6 @@ export const OnlineBookingWizard = () => {
       </div>
     );
   }
-
-  // --- COMPUTED VALUES ---
-  
-  // Generate dates for the next 14 days
-  const availableDates = Array.from({ length: 14 }, (_, i) => addDays(startOfToday(), i));
-
-  // Flatten all services from all entities to calculate total stats
-  const allSelectedServiceIds = bookingEntities.flatMap(e => e.serviceIds);
-  const hasServices = allSelectedServiceIds.length > 0;
 
   // Calculate Price
   const totalServicePrice = bookingEntities.reduce((acc, entity) => {
@@ -344,95 +435,6 @@ export const OnlineBookingWizard = () => {
         setStep(4); // Start at Service List
      }
   };
-
-  // --- TIME & LOGIC ---
-  const getEntityDuration = (entity: BookingEntity) => {
-     return services.filter(s => entity.serviceIds.includes(s.id)).reduce((acc, s) => acc + s.durationMinutes, 0);
-  };
-
-  const calculateGroupTiming = () => {
-     const staffLoad: Record<string, number> = {};
-     let sequentialTotal = 0; 
-
-     bookingEntities.forEach(entity => {
-        const staffId = entity.assignedStaffId || 'unassigned';
-        const duration = getEntityDuration(entity);
-        sequentialTotal += duration;
-        
-        if (staffId !== 'unassigned') {
-           staffLoad[staffId] = (staffLoad[staffId] || 0) + duration;
-        }
-     });
-
-     const staffLoads = Object.values(staffLoad);
-     const maxStaffLoad = staffLoads.length > 0 ? Math.max(...staffLoads) : 0;
-     
-     return {
-        sequential: sequentialTotal,
-        parallelOptimized: maxStaffLoad,
-        isFaster: maxStaffLoad < sequentialTotal && staffLoads.length > 1
-     };
-  };
-
-  // 1. Staff Based Slots (Services)
-  const getMultiEntityAvailableSlots = (date: Date) => {
-     const staffAssignments: Record<string, number> = {}; 
-     
-     bookingEntities.forEach(entity => {
-        if (!entity.serviceIds.length) return;
-        const staffId = entity.assignedStaffId || staff[0].id; 
-        const duration = getEntityDuration(entity);
-        staffAssignments[staffId] = (staffAssignments[staffId] || 0) + duration;
-     });
-
-     const involvedStaffIds = Object.keys(staffAssignments);
-     if (involvedStaffIds.length === 0) return [];
-
-     const slotsPerStaff: Record<string, Date[]> = {};
-     involvedStaffIds.forEach(staffId => {
-        slotsPerStaff[staffId] = getAvailableSlots(date, staffId, staffAssignments[staffId]);
-     });
-
-     const baseStaffId = involvedStaffIds[0];
-     const baseSlots = slotsPerStaff[baseStaffId] || [];
-
-     return baseSlots.filter(slot => {
-        const slotTime = slot.getTime();
-        return involvedStaffIds.every(id => {
-           if (id === baseStaffId) return true;
-           return slotsPerStaff[id].some(s => s.getTime() === slotTime);
-        });
-     });
-  };
-
-  // 2. Shop Based Slots (Pickup Only)
-  const getShopPickupSlots = (date: Date) => {
-     const dayIndex = getDay(date);
-     const schedule = shopProfile.operatingHours?.find(d => d.dayIndex === dayIndex);
-     
-     if (!schedule || !schedule.isActive) return [];
-
-     const [startHour, startMin] = schedule.startTime.split(':').map(Number);
-     const [endHour, endMin] = schedule.endTime.split(':').map(Number);
-
-     let currentSlot = set(date, { hours: startHour, minutes: startMin, seconds: 0, milliseconds: 0 });
-     const endOfDay = set(date, { hours: endHour, minutes: endMin, seconds: 0, milliseconds: 0 });
-
-     const slots: Date[] = [];
-     while (currentSlot < endOfDay) {
-        if (!isSameDay(date, new Date()) || currentSlot > new Date()) {
-           slots.push(new Date(currentSlot));
-        }
-        currentSlot = addMinutes(currentSlot, 30); // 30 min intervals for pickup
-     }
-     return slots;
-  };
-
-  const availableSlots = hasServices 
-      ? getMultiEntityAvailableSlots(selectedDate) 
-      : getShopPickupSlots(selectedDate);
-      
-  const timingInfo = calculateGroupTiming();
 
   // --- CONFIRMATION ---
   const handlePreConfirm = () => {
