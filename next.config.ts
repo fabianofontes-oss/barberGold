@@ -45,6 +45,23 @@ const nextConfig: NextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()'
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: `
+              default-src 'self';
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://m.stripe.network;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' blob: data: https://images.unsplash.com https://*.stripe.com;
+              font-src 'self';
+              object-src 'none';
+              base-uri 'self';
+              form-action 'self';
+              frame-ancestors 'none';
+              frame-src 'self' https://js.stripe.com https://hooks.stripe.com;
+              connect-src 'self' https://*.supabase.co https://*.supabase.in wss://*.supabase.co wss://*.supabase.in https://api.stripe.com;
+              upgrade-insecure-requests;
+            `.replace(/\s{2,}/g, ' ').trim()
           }
         ],
       },
