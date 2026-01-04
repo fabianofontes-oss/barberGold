@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { useI18n } from '@/hooks/useI18n';
@@ -8,26 +8,24 @@ import {
   Search, 
   UserPlus, 
   Phone, 
-  Trophy,
   Star,
   X,
   History,
   FileText,
   Save,
   Clock,
-  AlertCircle,
   Gift,
   Lock,
   Unlock,
-  ShieldCheck,
   Users,
   Trash2
  } from 'lucide-react';
-import { format, differenceInDays } from 'date-fns';
+import { format } from 'date-fns';
 import { AppointmentStatus, Client, Dependent, ClientTag } from '@/types';
-import { ClientTagsBadges, ClientTagsManager } from './components/ClientTagsManager';
+import { ClientTagsManager } from './components/ClientTagsManager';
 import { ClientPreferencesEditor } from './components/ClientPreferencesEditor';
 import { ExportClients } from './components/ExportClients';
+import { ClientCard } from './components/ClientCard';
 
 export const Clients = () => {
   const { clients, addClient, appointments, updateClient, shopSettings, currentUser, staff, services, products, shopProfile } = useBarber();
@@ -53,44 +51,52 @@ export const Clients = () => {
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
 
-  // Validação de segurança
-  if (!currentUser) return null;
-
-  const isOwner = currentUser.role === 'OWNER';
+  const isOwner = currentUser?.role === 'OWNER';
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
-  const myServedClientIds = new Set(
-     appointments
-        .filter(a => a.staffId === currentUser.id)
-        .map(a => a.clientId)
-  );
+  const myLoyalClients = useMemo(() => {
+    if (!currentUser) return [];
+    return clients.filter(c => c.preferredStaffId === currentUser.id);
+  }, [clients, currentUser]);
+
+  const myServedClientIds = useMemo(() => {
+     if (!currentUser) return new Set();
+     return new Set(
+        appointments
+           .filter(a => a.staffId === currentUser.id)
+           .map(a => a.clientId)
+     );
+  }, [appointments, currentUser]);
   
-  const myHistoryClients = clients.filter(c => {
-     if (c.preferredStaffId === currentUser.id) return false;
-     return myServedClientIds.has(c.id);
-  });
+  const myHistoryClients = useMemo(() => {
+     if (!currentUser) return [];
+     return clients.filter(c => {
+        if (c.preferredStaffId === currentUser.id) return false;
+        return myServedClientIds.has(c.id);
+     });
+  }, [clients, currentUser, myServedClientIds]);
 
-  let displayedClients: Client[] = [];
-  if (isOwner) {
-     displayedClients = clients; 
-  } else {
-     if (activeTab === 'PORTFOLIO') {
-        displayedClients = myLoyalClients;
-     } else {
-        displayedClients = myHistoryClients;
-     }
-  }
+  const displayedClients = useMemo(() => {
+    if (isOwner) {
+       return clients;
+    } else {
+       if (activeTab === 'PORTFOLIO') {
+          return myLoyalClients;
+       } else {
+          return myHistoryClients;
+       }
+    }
+  }, [isOwner, clients, activeTab, myLoyalClients, myHistoryClients]);
 
-  const filteredClients = displayedClients.filter(c => {
+  const filteredClients = useMemo(() => displayedClients.filter(c => {
     return (
        c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
        (canViewContacts && c.phone.includes(searchQuery))
     );
-  });
+  }), [displayedClients, searchQuery, canViewContacts]);
 
   // --- HANDLERS ---
 
@@ -142,11 +148,11 @@ export const Clients = () => {
      }
   };
 
-  const handleClientClick = (client: Client) => {
+  const handleClientClick = useCallback((client: Client) => {
     setSelectedClient(client);
     setNoteText(client.notes || '');
     setActiveDetailTab('HISTORY');
-  };
+  }, []);
 
   const saveNotes = () => {
     if (selectedClient) {
@@ -155,27 +161,12 @@ export const Clients = () => {
   };
 
   // Get Client History
-  const clientHistory = appointments
+  const clientHistory = useMemo(() => appointments
     .filter(a => a.clientId === selectedClient?.id && a.status === AppointmentStatus.COMPLETED)
-    .sort((a, b) => b.date.getTime() - a.date.getTime());
+    .sort((a, b) => b.date.getTime() - a.date.getTime()), [appointments, selectedClient?.id]);
 
-  const getReturnStatus = (lastVisit?: Date) => {
-    if (!lastVisit) return { status: 'NEW', days: 0 };
-    const daysSince = differenceInDays(new Date(), lastVisit);
-    if (daysSince >= shopSettings.winBackDays) return { status: 'LOST', days: daysSince };
-    if (daysSince >= shopSettings.returnReminderDays) return { status: 'OVERDUE', days: daysSince };
-    if (daysSince >= (shopSettings.returnReminderDays - 7)) return { status: 'WARNING', days: daysSince };
-    return { status: 'OK', days: daysSince };
-  };
-
-  const getStatusStyles = (status: string) => {
-     switch(status) {
-        case 'LOST': return 'bg-red-600 border-red-600 hover:border-red-400 text-white';
-        case 'OVERDUE': return 'bg-zinc-900 border-red-500/50 hover:border-red-400';
-        case 'WARNING': return 'bg-zinc-900 border-amber-500/50 hover:border-amber-400';
-        default: return 'bg-zinc-900 border-zinc-800 hover:border-amber-500/50';
-     }
-  };
+  // Validação de segurança movida para baixo dos hooks
+  if (!currentUser) return null;
 
   return (
     <div className="h-full flex flex-col animate-fade-in">
@@ -226,75 +217,17 @@ export const Clients = () => {
 
       {/* Client List */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
-        {filteredClients.map((client) => {
-             const returnStatus = getReturnStatus(client.lastVisit);
-             const points = client.loyaltyPoints || 0;
-             const cardStyle = getStatusStyles(returnStatus.status);
-             const isLoyalToMe = client.preferredStaffId === currentUser.id;
-             const hasDependents = client.dependents && client.dependents.length > 0;
-
-             const textPrimary = returnStatus.status === 'LOST' ? 'text-white' : 'text-white';
-             const textSecondary = returnStatus.status === 'LOST' ? 'text-white/80' : 'text-zinc-400';
-             const iconColor = returnStatus.status === 'LOST' ? 'text-white' : 'text-zinc-600';
-
-             return (
-               <button 
-                 key={client.id} 
-                 onClick={() => handleClientClick(client)}
-                 className={`text-left rounded-xl p-5 border transition-all group relative overflow-hidden shadow-lg ${cardStyle} ${isLoyalToMe ? 'ring-1 ring-emerald-500/50' : ''}`}
-               >
-                 <div className="flex justify-between items-start mb-4 relative z-10">
-                   <div className="flex items-center gap-3">
-                     <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl border ${returnStatus.status === 'LOST' ? 'bg-white text-red-600 border-white' : 'bg-zinc-800 text-amber-500 border-zinc-700'}`}>
-                       {client.name.charAt(0)}
-                     </div>
-                     <div>
-                       <div className="flex items-center gap-2">
-                          <h3 className={`font-bold text-lg ${textPrimary}`}>{client.name}</h3>
-                          {isLoyalToMe && <span className="bg-emerald-500 text-zinc-900 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1 shadow-sm"><ShieldCheck className="w-2.5 h-2.5" /> MY PORTFOLIO</span>}
-                       </div>
-                       
-                       {hasLoyalty && (
-                          <div className={`flex items-center gap-1 text-xs font-bold uppercase tracking-wider ${returnStatus.status === 'LOST' ? 'text-white/80' : (points >= 10 ? 'text-amber-400' : 'text-zinc-500')}`}>
-                            {points >= 10 ? <Gift className="w-3 h-3" /> : <Trophy className="w-3 h-3" />}
-                            {points >= 10 ? 'Reward Available' : `${points}/10 Stamps`}
-                          </div>
-                       )}
-                     </div>
-                   </div>
-                   
-                   {/* Status Badges */}
-                   <div className="flex flex-col items-end gap-2">
-                      {returnStatus.status === 'WARNING' && <span className="text-amber-500 text-xs font-bold flex items-center gap-1"><AlertCircle className="w-3 h-3" /> Due Soon</span>}
-                      {returnStatus.status === 'OVERDUE' && <div className="flex items-center gap-2"><span className="text-red-400 text-xs font-bold flex items-center gap-1"><Clock className="w-3 h-3" /> {returnStatus.days} Days</span></div>}
-                   </div>
-                 </div>
-
-                 <div className="space-y-3 mb-6 relative z-10 min-h-[1.5rem]">
-                   {canViewContacts ? <div className={`flex items-center gap-3 text-sm ${textSecondary}`}><Phone className={`w-4 h-4 ${iconColor}`} /><span>{client.phone}</span></div> : <div className="h-5"></div>}
-                   {hasDependents && (
-                      <div className={`flex items-center gap-3 text-xs ${textSecondary}`}>
-                         <Users className={`w-4 h-4 ${iconColor}`} />
-                         <span>{client.dependents!.length} Dependents</span>
-                      </div>
-                   )}
-                   {client.tags && client.tags.length > 0 && (
-                      <ClientTagsBadges tags={client.tags} />
-                   )}
-                 </div>
-
-                 <div className={`grid grid-cols-2 gap-3 pt-4 border-t relative z-10 ${returnStatus.status === 'LOST' ? 'border-white/20' : 'border-zinc-800'}`}>
-                   <div className={`${returnStatus.status === 'LOST' ? 'bg-black/20 text-white' : 'bg-zinc-950/50 text-zinc-200'} rounded-lg p-3`}>
-                     <p className="font-medium text-sm">{client.lastVisit ? format(client.lastVisit, 'MMM d') : 'New'}</p>
-                   </div>
-                   <div className={`${returnStatus.status === 'LOST' ? 'bg-black/20 text-white' : 'bg-zinc-950/50 text-white'} rounded-lg p-3`}>
-                     <p className="font-bold text-sm">${client.totalSpent.toFixed(2)}</p>
-                   </div>
-                 </div>
-               </button>
-             );
-           })
-        }
+        {filteredClients.map((client) => (
+             <ClientCard
+               key={client.id}
+               client={client}
+               currentUser={currentUser}
+               shopSettings={shopSettings}
+               canViewContacts={canViewContacts}
+               hasLoyalty={hasLoyalty}
+               onClick={handleClientClick}
+             />
+        ))}
       </div>
 
       {/* Add Client Modal */}
