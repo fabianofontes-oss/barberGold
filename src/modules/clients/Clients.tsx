@@ -211,6 +211,7 @@ export const Clients = () => {
         <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
+          aria-label={t('common.search')}
           placeholder={canViewContacts ? t('clients.searchPlaceholder') : t('common.search') + '...'}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -299,11 +300,22 @@ export const Clients = () => {
 
       {/* Add Client Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900 md:bg-black/70 md:backdrop-blur-sm p-0 md:p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-add-client-title"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900 md:bg-black/70 md:backdrop-blur-sm p-0 md:p-4"
+        >
           <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-md md:rounded-2xl border-0 md:border border-zinc-800 p-6 shadow-2xl overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
-               <h3 className="text-xl font-bold text-white">Add New Client</h3>
-               <button onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
+               <h3 id="modal-add-client-title" className="text-xl font-bold text-white">Add New Client</h3>
+               <button
+                 onClick={() => setIsModalOpen(false)}
+                 aria-label="Close"
+                 className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"
+               >
+                 <X className="w-5 h-5"/>
+               </button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
@@ -356,14 +368,19 @@ export const Clients = () => {
 
       {/* Client Detail / CRM Modal */}
       {selectedClient && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900 md:bg-black/70 md:backdrop-blur-sm p-0 md:p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-client-detail-title"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900 md:bg-black/70 md:backdrop-blur-sm p-0 md:p-4"
+        >
            <div className="bg-zinc-900 w-full h-full md:h-[650px] md:max-w-2xl md:rounded-2xl border-0 md:border border-zinc-800 flex flex-col shadow-2xl overflow-hidden">
               {/* Header */}
               <div className="p-6 border-b border-zinc-800 flex justify-between items-start bg-zinc-950/50">
                  <div className="flex gap-4">
                     <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center text-zinc-950 font-bold text-2xl shadow-lg shadow-amber-500/20">{selectedClient.name.charAt(0)}</div>
                     <div className="flex-1">
-                       <h2 className="text-2xl font-bold text-white">{selectedClient.name}</h2>
+                       <h2 id="modal-client-detail-title" className="text-2xl font-bold text-white">{selectedClient.name}</h2>
                        <div className="flex flex-col gap-2 mt-2">
                           {/* Contact Info */}
                           <div className="flex items-center gap-3 text-sm text-zinc-400">
@@ -380,7 +397,13 @@ export const Clients = () => {
                        </div>
                     </div>
                  </div>
-                 <button onClick={() => setSelectedClient(null)} className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
+                 <button
+                   onClick={() => setSelectedClient(null)}
+                   aria-label="Close"
+                   className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"
+                 >
+                   <X className="w-6 h-6" />
+                 </button>
               </div>
 
               {/* Tabs */}
@@ -444,7 +467,13 @@ export const Clients = () => {
                                       <p className="text-xs text-zinc-500">{dep.preferredStaffId ? `Prefers: ${staff.find(s => s.id === dep.preferredStaffId)?.name}` : 'No preference'}</p>
                                    </div>
                                 </div>
-                                <button onClick={() => removeDependent(dep.id)} className="text-zinc-600 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                                <button
+                                  onClick={() => removeDependent(dep.id)}
+                                  aria-label="Remove dependent"
+                                  className="text-zinc-600 hover:text-red-500"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
                              </div>
                           ))}
                        </div>
