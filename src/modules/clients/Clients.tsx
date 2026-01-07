@@ -211,6 +211,7 @@ export const Clients = () => {
         <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
+          aria-label="Search clients"
           placeholder={canViewContacts ? t('clients.searchPlaceholder') : t('common.search') + '...'}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -303,7 +304,7 @@ export const Clients = () => {
           <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-md md:rounded-2xl border-0 md:border border-zinc-800 p-6 shadow-2xl overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
                <h3 className="text-xl font-bold text-white">Add New Client</h3>
-               <button onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
+               <button onClick={() => setIsModalOpen(false)} aria-label="Close modal" className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
@@ -339,7 +340,7 @@ export const Clients = () => {
                     {formData.dependents.map((dep, idx) => (
                        <div key={idx} className="flex justify-between items-center text-sm bg-zinc-900 p-2 rounded border border-zinc-800">
                           <span className="text-zinc-300">{dep.name}</span>
-                          <button type="button" onClick={() => removeDependent(dep.id)} className="text-red-500 hover:text-red-400"><X className="w-3 h-3" /></button>
+                          <button type="button" onClick={() => removeDependent(dep.id)} aria-label="Remove dependent" className="text-red-500 hover:text-red-400"><X className="w-3 h-3" /></button>
                        </div>
                     ))}
                  </div>
@@ -380,7 +381,7 @@ export const Clients = () => {
                        </div>
                     </div>
                  </div>
-                 <button onClick={() => setSelectedClient(null)} className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
+                 <button onClick={() => setSelectedClient(null)} aria-label="Close details" className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
               </div>
 
               {/* Tabs */}
@@ -444,7 +445,7 @@ export const Clients = () => {
                                       <p className="text-xs text-zinc-500">{dep.preferredStaffId ? `Prefers: ${staff.find(s => s.id === dep.preferredStaffId)?.name}` : 'No preference'}</p>
                                    </div>
                                 </div>
-                                <button onClick={() => removeDependent(dep.id)} className="text-zinc-600 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                                <button onClick={() => removeDependent(dep.id)} aria-label="Remove dependent" className="text-zinc-600 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
                              </div>
                           ))}
                        </div>
