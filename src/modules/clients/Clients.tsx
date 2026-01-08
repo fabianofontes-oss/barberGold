@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { useI18n } from '@/hooks/useI18n';
@@ -53,44 +53,49 @@ export const Clients = () => {
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
 
-  // Validação de segurança
-  if (!currentUser) return null;
-
-  const isOwner = currentUser.role === 'OWNER';
+  const isOwner = currentUser?.role === 'OWNER';
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
-  const myServedClientIds = new Set(
-     appointments
-        .filter(a => a.staffId === currentUser.id)
-        .map(a => a.clientId)
+  const myLoyalClients = useMemo(() =>
+    currentUser ? clients.filter(c => c.preferredStaffId === currentUser.id) : [],
+    [clients, currentUser]
   );
+
+  const myServedClientIds = useMemo(() => new Set(
+     currentUser ? appointments
+        .filter(a => a.staffId === currentUser.id)
+        .map(a => a.clientId) : []
+  ), [appointments, currentUser]);
   
-  const myHistoryClients = clients.filter(c => {
-     if (c.preferredStaffId === currentUser.id) return false;
-     return myServedClientIds.has(c.id);
-  });
+  const myHistoryClients = useMemo(() => {
+     if (!currentUser) return [];
+     return clients.filter(c => {
+        if (c.preferredStaffId === currentUser.id) return false;
+        return myServedClientIds.has(c.id);
+     });
+  }, [clients, currentUser, myServedClientIds]);
 
-  let displayedClients: Client[] = [];
-  if (isOwner) {
-     displayedClients = clients; 
-  } else {
-     if (activeTab === 'PORTFOLIO') {
-        displayedClients = myLoyalClients;
-     } else {
-        displayedClients = myHistoryClients;
-     }
-  }
+  const displayedClients = useMemo(() => {
+    if (isOwner) {
+       return clients;
+    } else {
+       if (activeTab === 'PORTFOLIO') {
+          return myLoyalClients;
+       } else {
+          return myHistoryClients;
+       }
+    }
+  }, [isOwner, clients, activeTab, myLoyalClients, myHistoryClients]);
 
-  const filteredClients = displayedClients.filter(c => {
+  const filteredClients = useMemo(() => displayedClients.filter(c => {
     return (
        c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
        (canViewContacts && c.phone.includes(searchQuery))
     );
-  });
+  }), [displayedClients, searchQuery, canViewContacts]);
 
   // --- HANDLERS ---
 
@@ -159,14 +164,14 @@ export const Clients = () => {
     .filter(a => a.clientId === selectedClient?.id && a.status === AppointmentStatus.COMPLETED)
     .sort((a, b) => b.date.getTime() - a.date.getTime());
 
-  const getReturnStatus = (lastVisit?: Date) => {
+  const getReturnStatus = useCallback((lastVisit?: Date) => {
     if (!lastVisit) return { status: 'NEW', days: 0 };
     const daysSince = differenceInDays(new Date(), lastVisit);
     if (daysSince >= shopSettings.winBackDays) return { status: 'LOST', days: daysSince };
     if (daysSince >= shopSettings.returnReminderDays) return { status: 'OVERDUE', days: daysSince };
     if (daysSince >= (shopSettings.returnReminderDays - 7)) return { status: 'WARNING', days: daysSince };
     return { status: 'OK', days: daysSince };
-  };
+  }, [shopSettings.winBackDays, shopSettings.returnReminderDays]);
 
   const getStatusStyles = (status: string) => {
      switch(status) {
@@ -176,6 +181,8 @@ export const Clients = () => {
         default: return 'bg-zinc-900 border-zinc-800 hover:border-amber-500/50';
      }
   };
+
+  if (!currentUser) return null;
 
   return (
     <div className="h-full flex flex-col animate-fade-in">
