@@ -21,6 +21,32 @@ import { useCommissionPlans } from '@/modules/commission/hooks/useCommissionPlan
 // --- LOCALSTORAGE HELPERS ---
 const STORAGE_KEY = 'barberflow_data';
 
+const sanitizeSettingsForStorage = (settings: ShopSettings): ShopSettings => {
+  if (!settings) return settings;
+  // Deep copy to avoid mutating state
+  const sanitized = JSON.parse(JSON.stringify(settings));
+
+  if (sanitized.gatewayConfig) {
+    // Remove Sensitive Keys
+    if (sanitized.gatewayConfig.stripe) {
+       sanitized.gatewayConfig.stripe.secretKey = '';
+    }
+    if (sanitized.gatewayConfig.pagSeguro) {
+       sanitized.gatewayConfig.pagSeguro.token = '';
+    }
+    if (sanitized.gatewayConfig.mercadoPago) {
+       sanitized.gatewayConfig.mercadoPago.accessToken = '';
+    }
+    if (sanitized.gatewayConfig.infinitePay) {
+       sanitized.gatewayConfig.infinitePay.appKey = '';
+    }
+    if (sanitized.gatewayConfig.stone) {
+       sanitized.gatewayConfig.stone.apiKey = '';
+    }
+  }
+  return sanitized;
+};
+
 const saveToStorage = (data: any) => {
   try {
     // Converte Dates para strings antes de salvar
@@ -642,7 +668,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
       categories,
       reviews,
       shopProfile,
-      shopSettings
+      shopSettings: sanitizeSettingsForStorage(shopSettings)
     });
   }, [isHydrated, appointments, clients, products, services, sales, staff, expenses, staffPayments, inventory, suppliers, categories, reviews, shopProfile, shopSettings]);
 
