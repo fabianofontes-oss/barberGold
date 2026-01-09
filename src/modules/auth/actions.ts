@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { authSchema } from './schemas';
+import { z } from 'zod';
 
 export type AuthActionResult = {
   success: boolean;
@@ -16,6 +18,16 @@ export async function signInWithPasswordAction(
   email: string,
   password: string
 ): Promise<AuthActionResult> {
+  // Security Enhancement: Validate input before calling external service
+  try {
+    authSchema.parse({ email, password });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { success: false, error: error.issues[0].message };
+    }
+    return { success: false, error: 'Invalid input data' };
+  }
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -70,6 +82,16 @@ export async function signUpAction(
   email: string,
   password: string
 ): Promise<AuthActionResult> {
+  // Security Enhancement: Validate input before calling external service
+  try {
+    authSchema.parse({ email, password });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { success: false, error: error.issues[0].message };
+    }
+    return { success: false, error: 'Invalid input data' };
+  }
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signUp({
