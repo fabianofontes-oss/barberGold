@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
-import { Eye, EyeOff, Loader2, Sparkles, Store, Globe, CheckCircle2, XCircle } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
 
 function RegisterForm() {
 
@@ -13,8 +13,6 @@ function RegisterForm() {
 
     // Form State
     const [fullname, setFullname] = useState('');
-    const [shopName, setShopName] = useState('');
-    const [shopSlug, setShopSlug] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,52 +20,6 @@ function RegisterForm() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [slugAvailable, setSlugAvailable] = useState<boolean | null>(null);
-    const [checkingSlug, setCheckingSlug] = useState(false);
-
-    // Auto-gerar slug a partir do nome da loja
-    useEffect(() => {
-        if (shopName) {
-            const generatedSlug = shopName
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[^a-z0-9-]/g, '-')
-                .replace(/-+/g, '-')
-                .replace(/^-|-$/g, '');
-            setShopSlug(generatedSlug);
-        }
-    }, [shopName]);
-
-    // Verificar disponibilidade do slug
-    useEffect(() => {
-        const checkSlugAvailability = async () => {
-            if (!shopSlug || shopSlug.length < 3) {
-                setSlugAvailable(null);
-                return;
-            }
-
-            setCheckingSlug(true);
-            const supabase = createClient();
-
-            try {
-                const { data } = await supabase
-                    .from('tenants')
-                    .select('id')
-                    .eq('slug', shopSlug)
-                    .maybeSingle();
-
-                setSlugAvailable(!data);
-            } catch {
-                setSlugAvailable(true);
-            } finally {
-                setCheckingSlug(false);
-            }
-        };
-
-        const timer = setTimeout(checkSlugAvailability, 500);
-        return () => clearTimeout(timer);
-    }, [shopSlug]);
 
     const handleRegister = async (e: React.FormEvent) => {
         const supabase = createClient();
@@ -76,32 +28,14 @@ function RegisterForm() {
         setError(null);
 
         // Validation
-        if (!shopName.trim()) {
-            setError('Nome da barbearia e obrigatorio.');
-            setLoading(false);
-            return;
-        }
-
-        if (!shopSlug || shopSlug.length < 3) {
-            setError('URL da barbearia deve ter pelo menos 3 caracteres.');
-            setLoading(false);
-            return;
-        }
-
-        if (slugAvailable === false) {
-            setError('Esta URL ja esta em uso. Escolha outra.');
-            setLoading(false);
-            return;
-        }
-
         if (password !== confirmPassword) {
-            setError('As senhas nao coincidem.');
+            setError('As senhas não coincidem.');
             setLoading(false);
             return;
         }
 
         if (!termsAccepted) {
-            setError('Voce deve aceitar os Termos de Servico.');
+            setError('Você deve aceitar os Termos de Serviço.');
             setLoading(false);
             return;
         }
@@ -113,9 +47,6 @@ function RegisterForm() {
                 options: {
                     data: {
                         full_name: fullname,
-                        shop_name: shopName,
-                        slug: shopSlug,
-                        plan: 'FREE'
                     }
                 }
             });
@@ -125,8 +56,8 @@ function RegisterForm() {
                 return;
             }
 
-            // Redirecionar para onboarding
-            window.location.href = '/app/onboarding';
+            // Redirecionar para dashboard (modal de setup aparecerá se necessário)
+            window.location.href = '/app/dashboard';
         } catch {
             setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
         } finally {
@@ -140,7 +71,7 @@ function RegisterForm() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/auth/callback?next=/app/onboarding`,
+                    redirectTo: `${window.location.origin}/auth/callback`,
                 },
             });
             if (error) {
@@ -181,10 +112,10 @@ function RegisterForm() {
                     {/* Hero Text */}
                     <div className="max-w-md">
                         <h1 className="text-4xl font-black leading-tight tracking-tight mb-4 text-white">
-                            Entre para o Padrao Ouro.
+                            Entre para o Padrão Ouro.
                         </h1>
                         <p className="text-[#ccb58f] text-lg font-medium leading-relaxed">
-                            Gerencie sua barbearia com precisao e estilo. Organize agendamentos, gerencie equipe e faca seu negocio crescer com a plataforma feita para profissionais.
+                            Gerencie sua barbearia com precisão e estilo. Organize agendamentos, gerencie equipe e faça seu negócio crescer com a plataforma feita para profissionais.
                         </p>
                         <div className="mt-8 flex gap-2">
                             <div className="h-1 w-12 rounded-full bg-[#f79f08]"></div>
@@ -195,13 +126,13 @@ function RegisterForm() {
                     
                     {/* Footer Text */}
                     <div className="text-sm text-[#ccb58f]/60">
-                        2025 BarberGOLD Inc. All rights reserved.
+                        © 2025 BarberGOLD Inc. All rights reserved.
                     </div>
                 </div>
             </div>
 
             {/* Right Side - Form */}
-            <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12 xl:p-20 relative bg-[#231c0f] overflow-y-auto">
+            <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12 xl:p-20 relative bg-[#231c0f]">
                 {/* Mobile Header */}
                 <div className="lg:hidden w-full flex justify-between items-center mb-8">
                     <Link href="/" className="flex items-center gap-2 text-white">
@@ -213,11 +144,11 @@ function RegisterForm() {
                     </Link>
                 </div>
                 
-                <div className="w-full max-w-[480px] flex flex-col gap-6">
+                <div className="w-full max-w-[480px] flex flex-col gap-8">
                     {/* Form Header */}
                     <div className="space-y-2">
                         <h2 className="text-white text-3xl font-bold leading-tight tracking-tight">Criar Conta</h2>
-                        <p className="text-[#ccb58f] text-base">Configure sua barbearia e comece a usar.</p>
+                        <p className="text-[#ccb58f] text-base">Crie sua conta. Você configurará sua barbearia na próxima etapa.</p>
                     </div>
 
                     {error && (
@@ -226,73 +157,19 @@ function RegisterForm() {
                         </div>
                     )}
 
-                    <form onSubmit={handleRegister} className="flex flex-col gap-4">
+                    <form onSubmit={handleRegister} className="flex flex-col gap-5">
                         {/* Full Name */}
                         <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal">Seu Nome</span>
+                            <span className="text-white text-sm font-medium leading-normal">Nome Completo</span>
                             <input
                                 type="text"
                                 required
                                 value={fullname}
                                 onChange={(e) => setFullname(e.target.value)}
-                                placeholder="Ex: Joao Silva"
+                                placeholder="Ex: João Silva"
                                 disabled={loading}
                                 className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
                             />
-                        </label>
-
-                        {/* Shop Name */}
-                        <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal flex items-center gap-2">
-                                <Store className="w-4 h-4 text-[#f79f08]" />
-                                Nome da Barbearia
-                            </span>
-                            <input
-                                type="text"
-                                required
-                                value={shopName}
-                                onChange={(e) => setShopName(e.target.value)}
-                                placeholder="Ex: Barbearia Premium"
-                                disabled={loading}
-                                className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 px-4 text-base font-normal transition-all duration-200 disabled:opacity-50"
-                            />
-                        </label>
-
-                        {/* Shop Slug */}
-                        <label className="flex flex-col gap-2">
-                            <span className="text-white text-sm font-medium leading-normal flex items-center gap-2">
-                                <Globe className="w-4 h-4 text-[#f79f08]" />
-                                URL da Barbearia
-                            </span>
-                            <div className="relative">
-                                <input
-                                    type="text"
-                                    required
-                                    value={shopSlug}
-                                    onChange={(e) => setShopSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-                                    placeholder="minha-barbearia"
-                                    disabled={loading}
-                                    className="w-full rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#f79f08]/50 border border-[#695430] bg-[#342a18] focus:border-[#f79f08] h-12 placeholder:text-[#ccb58f]/50 pl-4 pr-28 text-base font-normal transition-all duration-200 disabled:opacity-50"
-                                />
-                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#ccb58f]/60 text-sm">.barber.gold</span>
-                            </div>
-                            {shopSlug && shopSlug.length >= 3 && (
-                                <div className="flex items-center gap-2 text-xs mt-1">
-                                    {checkingSlug ? (
-                                        <span className="text-[#ccb58f]/60 flex items-center gap-1">
-                                            <Loader2 className="w-3 h-3 animate-spin" /> Verificando...
-                                        </span>
-                                    ) : slugAvailable === true ? (
-                                        <span className="text-green-500 flex items-center gap-1">
-                                            <CheckCircle2 className="w-3 h-3" /> URL disponivel
-                                        </span>
-                                    ) : slugAvailable === false ? (
-                                        <span className="text-red-500 flex items-center gap-1">
-                                            <XCircle className="w-3 h-3" /> URL ja em uso
-                                        </span>
-                                    ) : null}
-                                </div>
-                            )}
                         </label>
 
                         {/* Email Address */}
@@ -371,11 +248,11 @@ function RegisterForm() {
                             <label htmlFor="terms" className="text-sm font-normal text-[#ccb58f] leading-tight cursor-pointer select-none">
                                 Eu concordo com os{' '}
                                 <Link href="/termos" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
-                                    Termos de Servico
+                                    Termos de Serviço
                                 </Link>
                                 {' '}e{' '}
                                 <Link href="/privacidade" className="text-[#f79f08] hover:text-[#f79f08]/80 hover:underline">
-                                    Politica de Privacidade
+                                    Política de Privacidade
                                 </Link>.
                             </label>
                         </div>
@@ -383,13 +260,13 @@ function RegisterForm() {
                         {/* Create Account Button */}
                         <button
                             type="submit"
-                            disabled={loading || slugAvailable === false || checkingSlug}
+                            disabled={loading}
                             className="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-[#f79f08] hover:bg-[#f79f08]/90 active:bg-[#f79f08]/80 text-[#231c0f] text-base font-bold leading-normal tracking-wide transition-all shadow-[0_0_20px_rgba(247,159,8,0.15)] hover:shadow-[0_0_25px_rgba(247,159,8,0.25)] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? (
                                 <>
                                     <Loader2 className="animate-spin h-5 w-5 mr-2" />
-                                    Criando sua barbearia...
+                                    Criando Conta...
                                 </>
                             ) : 'Criar Conta e Continuar'}
                         </button>
@@ -422,7 +299,7 @@ function RegisterForm() {
                     {/* Login Link */}
                     <div className="text-center mt-2">
                         <p className="text-[#ccb58f] text-sm">
-                            Ja tem uma conta?{' '}
+                            Já tem uma conta?{' '}
                             <Link href="/login" className="text-[#f79f08] font-bold hover:underline ml-1">
                                 Entrar
                             </Link>
