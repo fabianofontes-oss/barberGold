@@ -19,9 +19,9 @@ import { useCategories } from '@/modules/categories/hooks/useCategories';
 import { useCommissionPlans } from '@/modules/commission/hooks/useCommissionPlans';
 
 // --- LOCALSTORAGE HELPERS ---
-const STORAGE_KEY = 'barberflow_data';
+// REMOVIDO: const STORAGE_KEY = 'barberflow_data';
 
-const saveToStorage = (data: any) => {
+// REMOVIDO - dados vem do Supabase agora\nconst saveToStorage = (data: any) => { return; // DESATIVADO
   try {
     // Converte Dates para strings antes de salvar
     const serialized = JSON.stringify(data, (key, value) => {
@@ -34,7 +34,7 @@ const saveToStorage = (data: any) => {
   }
 };
 
-const loadFromStorage = () => {
+const loadFromStorage = () => { return null; // DESATIVADO - dados vem do Supabase
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
