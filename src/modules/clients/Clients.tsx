@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { useI18n } from '@/hooks/useI18n';
@@ -32,7 +32,7 @@ import { ExportClients } from './components/ExportClients';
 export const Clients = () => {
   const { clients, addClient, appointments, updateClient, shopSettings, currentUser, staff, services, products, shopProfile } = useBarber();
   const { canUseFeature } = useFeatureGate();
-  const { t, formatCurrency } = useI18n();
+  const { t } = useI18n();
   
   const hasLoyalty = canUseFeature('LOYALTY');
 
@@ -48,50 +48,65 @@ export const Clients = () => {
 
   // VIEW MODE
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'PORTFOLIO' | 'HISTORY'>('PORTFOLIO');
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
 
   // Validação de segurança
-  if (!currentUser) return null;
+  // if (!currentUser) return null; // MOVED DOWN
 
-  const isOwner = currentUser.role === 'OWNER';
+  const isOwner = currentUser?.role === 'OWNER';
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
+  // Optimization: Calculate 'today' once per render to avoid new Date() inside the loop
+  const today = new Date();
+
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
-  const myServedClientIds = new Set(
-     appointments
-        .filter(a => a.staffId === currentUser.id)
-        .map(a => a.clientId)
-  );
-  
-  const myHistoryClients = clients.filter(c => {
-     if (c.preferredStaffId === currentUser.id) return false;
-     return myServedClientIds.has(c.id);
-  });
+  const myLoyalClients = useMemo(() => {
+    if (!currentUser) return [];
+    return clients.filter(c => c.preferredStaffId === currentUser.id);
+  }, [clients, currentUser]);
 
-  let displayedClients: Client[] = [];
-  if (isOwner) {
-     displayedClients = clients; 
-  } else {
-     if (activeTab === 'PORTFOLIO') {
-        displayedClients = myLoyalClients;
-     } else {
-        displayedClients = myHistoryClients;
-     }
-  }
-
-  const filteredClients = displayedClients.filter(c => {
-    return (
-       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-       (canViewContacts && c.phone.includes(searchQuery))
+  const myServedClientIds = useMemo(() => {
+    if (!currentUser) return new Set();
+    return new Set(
+       appointments
+          .filter(a => a.staffId === currentUser.id)
+          .map(a => a.clientId)
     );
-  });
+  }, [appointments, currentUser]);
+  
+  const myHistoryClients = useMemo(() => {
+    if (!currentUser) return [];
+    return clients.filter(c => {
+       if (c.preferredStaffId === currentUser.id) return false;
+       return myServedClientIds.has(c.id);
+    });
+  }, [clients, currentUser, myServedClientIds]);
 
+  const displayedClients = useMemo(() => {
+    if (isOwner) {
+       return clients;
+    }
+    if (activeTab === 'PORTFOLIO') {
+      return myLoyalClients;
+    }
+    return myHistoryClients;
+  }, [isOwner, clients, activeTab, myLoyalClients, myHistoryClients]);
+
+  const filteredClients = useMemo(() => {
+    const lowerQuery = searchQuery.toLowerCase();
+    return displayedClients.filter(c => {
+      return (
+         c.name.toLowerCase().includes(lowerQuery) ||
+         (canViewContacts && c.phone.includes(searchQuery))
+      );
+    });
+  }, [displayedClients, searchQuery, canViewContacts]);
+
+  if (!currentUser) return null;
   // --- HANDLERS ---
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -159,9 +174,9 @@ export const Clients = () => {
     .filter(a => a.clientId === selectedClient?.id && a.status === AppointmentStatus.COMPLETED)
     .sort((a, b) => b.date.getTime() - a.date.getTime());
 
-  const getReturnStatus = (lastVisit?: Date) => {
+  const getReturnStatus = (lastVisit: Date | undefined, referenceDate: Date) => {
     if (!lastVisit) return { status: 'NEW', days: 0 };
-    const daysSince = differenceInDays(new Date(), lastVisit);
+    const daysSince = differenceInDays(referenceDate, lastVisit);
     if (daysSince >= shopSettings.winBackDays) return { status: 'LOST', days: daysSince };
     if (daysSince >= shopSettings.returnReminderDays) return { status: 'OVERDUE', days: daysSince };
     if (daysSince >= (shopSettings.returnReminderDays - 7)) return { status: 'WARNING', days: daysSince };
@@ -227,7 +242,7 @@ export const Clients = () => {
       {/* Client List */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
         {filteredClients.map((client) => {
-             const returnStatus = getReturnStatus(client.lastVisit);
+             const returnStatus = getReturnStatus(client.lastVisit, today);
              const points = client.loyaltyPoints || 0;
              const cardStyle = getStatusStyles(returnStatus.status);
              const isLoyalToMe = client.preferredStaffId === currentUser.id;
