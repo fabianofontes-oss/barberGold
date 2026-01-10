@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useBarber } from '@/context/BarberContext';
 import { useI18n } from '@/hooks/useI18n';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
+import { useLogout } from '@/hooks/useLogout';
 import { 
   LayoutDashboard, 
   CalendarDays, 
@@ -34,7 +35,7 @@ import {
   Handshake, 
   Menu, 
   X,
-  Banknote // Changed from Trophy to Banknote
+  Banknote
 } from 'lucide-react';
 import { ViewState } from '@/types';
 
@@ -45,12 +46,12 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
   const router = useRouter();
-  const { currentUser, logout, shopProfile, shopSettings } = useBarber();
+  const { currentUser, shopProfile, shopSettings } = useBarber();
   const { canUseFeature } = useFeatureGate();
   const { t } = useI18n();
+  const { logout } = useLogout();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-  // Validação de segurança
   if (!currentUser) {
     return null;
   }
@@ -75,11 +76,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
 
   const isOwner = currentUser.role === 'OWNER';
   const isSuperAdmin = currentUser.role === 'SUPER_ADMIN';
-  
-  // Feature Checks
   const hasPremiumWebsite = canUseFeature('WEBSITE_PREMIUM');
-  
-  // Owner Referral Link Construction
   const ownerCode = shopSettings.referralConfig?.ownerReferralCode || 'CODE';
   const ownerLink = `https://barberflow.app/r/${ownerCode}`;
 
@@ -119,7 +116,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
         </div>
 
         <nav className="space-y-2">
-          {/* SUPER ADMIN MENU (GOD MODE) */}
           {isSuperAdmin ? (
              <>
                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider px-4 mb-2 mt-4">{t('sidebar.commandCenter')}</p>
@@ -127,7 +123,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                <NavItem href="/app/super-admin" icon={Users} label={t('sidebar.barbershops')} />
                <NavItem href="/app/super-admin" icon={Layers} label={t('sidebar.plansAndFeatures')} />
                
-               {/* Office God V2 Button */}
                <div className="mx-4 my-2 pt-2 border-t border-zinc-800">
                   <button
                     onClick={() => {
@@ -161,7 +156,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                <NavItem href="/app/super-admin" icon={Settings} label={t('sidebar.globalSettings')} />
              </>
           ) : (
-             /* STANDARD BARBERSHOP MENU */
              <>
                <NavItem href="/app/dashboard" icon={LayoutDashboard} label={t('navigation.panel')} />
                <NavItem href="/app/agenda" icon={CalendarDays} label={t('navigation.calendar')} />
@@ -182,7 +176,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                )}
 
                <div className="pt-4 mt-4 border-t border-zinc-800">
-                 {/* MY_PLAN moved to footer */}
                  <NavItem href="/app/settings" icon={Settings} label={isOwner ? t('navigation.settings') : t('navigation.myProfile')} />
                  
                  {isOwner && (
@@ -195,31 +188,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
       </div>
 
       <div className="absolute bottom-0 w-full bg-zinc-900 border-t border-zinc-800">
-        
-        {/* PLAN PROMO BLOCK - OCULTO (Sistema gratuito) */}
-        {/* {isOwner && !isSuperAdmin && (
-           <button
-              onClick={() => {
-                 setView('MY_PLAN');
-                 onCloseMobile();
-              }}
-              className="w-full bg-violet-600 hover:bg-violet-500 text-white px-4 py-3 flex items-center justify-between group transition-colors relative overflow-hidden border-b border-black/10"
-           >
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-800/50 to-transparent pointer-events-none"></div>
-              
-              <div className="flex items-center gap-3 relative z-10">
-                 <div className="bg-white/20 p-2 rounded-full text-white">
-                    <Crown className="w-4 h-4" />
-                 </div>
-                 <div className="text-left">
-                    <p className="font-bold text-xs leading-none mb-0.5">Assinatura</p>
-                    <p className="text-[10px] text-violet-100 font-medium">Planos e Recursos</p>
-                 </div>
-              </div>
-           </button>
-        )} */}
-
-        {/* REFERRAL PROMO BLOCK (OWNER ONLY - FULL WIDTH GREEN) */}
         {isOwner && !isSuperAdmin && (
            <button
               onClick={() => {
@@ -263,11 +231,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
             <ChevronUp className={`w-4 h-4 text-zinc-500 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
           </button>
           
-          {/* User Menu Dropdown */}
           {isUserMenuOpen && (
             <div className="absolute bottom-full left-0 w-full mb-2 bg-zinc-950 border border-zinc-800 rounded-xl shadow-xl overflow-hidden animate-fade-in z-50">
                <div className="max-h-48 overflow-y-auto">
-                  {/* LOGOUT OPTION */}
                   <button
                      onClick={logout}
                      className="w-full flex items-center gap-3 p-3 hover:bg-red-500/10 hover:text-red-500 text-left transition-colors text-zinc-400"
