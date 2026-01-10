@@ -1,12 +1,11 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useMemo, useState, PropsWithChildren } from 'react';
+import React, { createContext, useContext, useMemo, useState, PropsWithChildren } from 'react';
 import { ReferralPartner, ReferralLink, ReferralSale, BillingPeriod } from '@/types';
 import { MOCK_REFERRAL_PARTNERS, MOCK_REFERRAL_SALES } from '@/constants';
 import { useBarber } from '@/context/BarberContext';
 import { useSaasV2 } from '@/context/SaasV2Context';
 import { getAppMode } from '@/lib/appMode';
-import { getReferralsRepository } from '@/repositories';
 import { buildStaffReferralCode, normalizeReferralCode } from '@/domain/referrals/link';
 import { DEFAULT_REFERRAL_PROGRAM_CONFIG, computeReferralSale } from '@/domain/referrals/rules';
 
@@ -14,8 +13,6 @@ interface ReferralContextType {
   partners: ReferralPartner[];
   links: ReferralLink[];
   sales: ReferralSale[];
-  
-  // Actions
   generateReferralLink: (partnerId: string) => string;
   togglePartnerActive: (partnerId: string) => void;
   processReferralSale: (params: {
@@ -40,39 +37,13 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { shopSettings, currentUser, staff, shopProfile } = useBarber();
   const { currentTenantId } = useSaasV2();
 
-  const repo = useMemo(() => getReferralsRepository(), []);
-
   const tenantKey = currentTenantId || shopProfile.slug || 'standalone';
 
   const [partnersState, setPartnersState] = useState<ReferralPartner[]>(MOCK_REFERRAL_PARTNERS);
   const [sales, setSales] = useState<ReferralSale[]>(MOCK_REFERRAL_SALES);
-  const [ownerCodeOverride, setOwnerCodeOverride] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    (async () => {
-      try {
-        const storedOwnerCode = await repo.resolveOwnerReferralCode({ tenantId: tenantKey });
-        if (!cancelled) setOwnerCodeOverride(storedOwnerCode);
-
-        const storedPartners = await repo.listPartners({ tenantId: tenantKey });
-        if (!cancelled && storedPartners.length > 0) setPartnersState(storedPartners);
-
-        const storedSales = await repo.listSales({ tenantId: tenantKey });
-        if (!cancelled && storedSales.length > 0) setSales(storedSales);
-      } catch {
-        // Fallback silencioso: mantém mocks/memória em caso de piloto sem schema/config
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [repo, tenantKey]);
 
   const referralConfig = shopSettings.referralConfig;
-  const ownerCode = normalizeReferralCode(ownerCodeOverride || referralConfig?.ownerReferralCode || 'CODE');
+  const ownerCode = normalizeReferralCode(referralConfig?.ownerReferralCode || 'CODE');
   const staffEnabled = Boolean(referralConfig?.allowStaffToParticipate);
 
   const config = useMemo(() => {
@@ -107,7 +78,7 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
         tenantId: tenantKey,
         staffId: s.id,
         displayName: s.name,
-        partnerType: 'STAFF',
+        partnerType: 'STAFF' as const,
         baseCommissionPercent: config.programCommissionPercent,
         eligibleForBonus: false,
         isActive: staffEnabled,
@@ -148,7 +119,6 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
     });
 
-    // Parceiros externos (mock)
     partnersState
       .filter((p) => p.partnerType === 'PARTNER_GENERAL' || p.partnerType === 'PARTNER_PRO')
       .forEach((p) => {
@@ -169,33 +139,23 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const partner = partners.find(p => p.id === partnerId);
     if (!partner) throw new Error('Partner not found');
 
-    // OWNER: sempre o link principal
     if (partner.partnerType === 'OWNER') {
       return ownerCode;
     }
 
-    // STAFF: link exclusivo baseado no owner
     if (partner.partnerType === 'STAFF') {
       return buildStaffReferralCode(ownerCode, partner.staffId || 'STAFF');
     }
 
-    // Parceiros: gera código novo (mock)
     const prefix = normalizeReferralCode(partner.displayName.substring(0, 3) || 'PAR');
     const unique = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
-    const newCode = `${prefix}${unique}`;
-
-    return newCode;
+    return `${prefix}${unique}`;
   };
 
   const togglePartnerActive = (partnerId: string) => {
-    setPartnersState((prev) => {
-      const next = prev.map((p) => (p.id === partnerId ? { ...p, isActive: !p.isActive } : p));
-      const updated = next.find((p) => p.id === partnerId);
-      if (updated) {
-        void repo.setPartnerActive({ tenantId: tenantKey, partnerId, isActive: updated.isActive });
-      }
-      return next;
-    });
+    setPartnersState((prev) =>
+      prev.map((p) => (p.id === partnerId ? { ...p, isActive: !p.isActive } : p))
+    );
   };
 
   const processReferralSale: ReferralContextType['processReferralSale'] = (params) => {
@@ -251,11 +211,7 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
       ownerCommissionAmountBRL: partner.partnerType === 'OWNER' || partner.partnerType === 'STAFF' ? computed.ownerCommissionAmountBRL : undefined,
     };
 
-    setSales((prev) => {
-      const next = [sale, ...prev];
-      void repo.createSale({ tenantId: tenantKey, sale });
-      return next;
-    });
+    setSales((prev) => [sale, ...prev]);
     return sale;
   };
 
