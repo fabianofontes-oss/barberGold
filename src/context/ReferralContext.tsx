@@ -2,8 +2,7 @@
 
 import React, { createContext, useContext, useMemo, useState, PropsWithChildren } from 'react';
 import { ReferralPartner, ReferralLink, ReferralSale, BillingPeriod } from '@/types';
-import { MOCK_REFERRAL_PARTNERS, MOCK_REFERRAL_SALES } from '@/constants';
-import { useBarber } from '@/context/BarberContext';
+import { useApp } from '@/context/AppContext';
 import { useSaasV2 } from '@/context/SaasV2Context';
 import { getAppMode } from '@/lib/appMode';
 import { buildStaffReferralCode, normalizeReferralCode } from '@/domain/referrals/link';
@@ -34,26 +33,25 @@ interface ReferralContextType {
 const ReferralContext = createContext<ReferralContextType | undefined>(undefined);
 
 export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const { shopSettings, currentUser, staff, shopProfile } = useBarber();
+  const { shopSettings, currentUser, staff, shopProfile } = useApp();
   const { currentTenantId } = useSaasV2();
 
   const tenantKey = currentTenantId || shopProfile.slug || 'standalone';
 
-  const [partnersState, setPartnersState] = useState<ReferralPartner[]>(MOCK_REFERRAL_PARTNERS);
-  const [sales, setSales] = useState<ReferralSale[]>(MOCK_REFERRAL_SALES);
+  // Estado local - sem mocks
+  const [partnersState, setPartnersState] = useState<ReferralPartner[]>([]);
+  const [sales, setSales] = useState<ReferralSale[]>([]);
 
   const referralConfig = shopSettings.referralConfig;
   const ownerCode = normalizeReferralCode(referralConfig?.ownerReferralCode || 'CODE');
   const staffEnabled = Boolean(referralConfig?.allowStaffToParticipate);
 
-  const config = useMemo(() => {
-    return {
-      ...DEFAULT_REFERRAL_PROGRAM_CONFIG,
-      staffEnabled,
-      programCommissionPercent: referralConfig?.programCommissionPercent ?? DEFAULT_REFERRAL_PROGRAM_CONFIG.programCommissionPercent,
-      appMode: getAppMode(),
-    };
-  }, [referralConfig?.allowStaffToParticipate, referralConfig?.programCommissionPercent, staffEnabled]);
+  const config = useMemo(() => ({
+    ...DEFAULT_REFERRAL_PROGRAM_CONFIG,
+    staffEnabled,
+    programCommissionPercent: referralConfig?.programCommissionPercent ?? DEFAULT_REFERRAL_PROGRAM_CONFIG.programCommissionPercent,
+    appMode: getAppMode(),
+  }), [referralConfig?.programCommissionPercent, staffEnabled]);
 
   const derivedOwnerPartner: ReferralPartner | null = useMemo(() => {
     if (!currentUser || currentUser.role !== 'OWNER') return null;
@@ -88,9 +86,8 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [config.programCommissionPercent, staff, staffEnabled, tenantKey]);
 
   const partners: ReferralPartner[] = useMemo(() => {
-    const fixed = partnersState.filter((p) => p.partnerType === 'PARTNER_GENERAL' || p.partnerType === 'PARTNER_PRO');
     const owner = derivedOwnerPartner ? [derivedOwnerPartner] : [];
-    return [...owner, ...derivedStaffPartners, ...fixed];
+    return [...owner, ...derivedStaffPartners, ...partnersState];
   }, [derivedOwnerPartner, derivedStaffPartners, partnersState]);
 
   const links: ReferralLink[] = useMemo(() => {
@@ -108,10 +105,9 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
 
     derivedStaffPartners.forEach((p) => {
-      const staffId = p.staffId || 'STAFF';
       list.push({
         id: `refl_staff_${p.id}`,
-        code: buildStaffReferralCode(ownerCode, staffId),
+        code: buildStaffReferralCode(ownerCode, p.staffId || 'STAFF'),
         partnerId: p.id,
         region: 'BR',
         createdAt: new Date(),
@@ -119,37 +115,19 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
     });
 
-    partnersState
-      .filter((p) => p.partnerType === 'PARTNER_GENERAL' || p.partnerType === 'PARTNER_PRO')
-      .forEach((p) => {
-        list.push({
-          id: `refl_partner_${p.id}`,
-          code: normalizeReferralCode(p.displayName.substring(0, 5)) + '01',
-          partnerId: p.id,
-          region: 'BR',
-          createdAt: new Date(),
-          isActive: p.isActive,
-        });
-      });
-
     return list;
-  }, [derivedOwnerPartner, derivedStaffPartners, ownerCode, partnersState, staffEnabled]);
+  }, [derivedOwnerPartner, derivedStaffPartners, ownerCode, staffEnabled]);
 
   const generateReferralLink = (partnerId: string) => {
     const partner = partners.find(p => p.id === partnerId);
     if (!partner) throw new Error('Partner not found');
 
-    if (partner.partnerType === 'OWNER') {
-      return ownerCode;
-    }
-
+    if (partner.partnerType === 'OWNER') return ownerCode;
     if (partner.partnerType === 'STAFF') {
       return buildStaffReferralCode(ownerCode, partner.staffId || 'STAFF');
     }
 
-    const prefix = normalizeReferralCode(partner.displayName.substring(0, 3) || 'PAR');
-    const unique = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
-    return `${prefix}${unique}`;
+    return `${normalizeReferralCode(partner.displayName.substring(0, 3))}${Math.floor(Math.random() * 9999).toString().padStart(4, '0')}`;
   };
 
   const togglePartnerActive = (partnerId: string) => {
@@ -160,7 +138,6 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const processReferralSale: ReferralContextType['processReferralSale'] = (params) => {
     const normalizedCode = normalizeReferralCode(params.referralCode);
-
     const link = links.find((l) => normalizeReferralCode(l.code) === normalizedCode && l.isActive);
     if (!link) return null;
 
@@ -183,9 +160,7 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
       new Date()
     );
 
-    if (computed.shouldBlock) {
-      return null;
-    }
+    if (computed.shouldBlock) return null;
 
     const sale: ReferralSale = {
       id: `refs_${Math.random().toString(36).substr(2, 9)}`,
@@ -216,9 +191,7 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <ReferralContext.Provider value={{
-      partners, links, sales, generateReferralLink, togglePartnerActive, processReferralSale
-    }}>
+    <ReferralContext.Provider value={{ partners, links, sales, generateReferralLink, togglePartnerActive, processReferralSale }}>
       {children}
     </ReferralContext.Provider>
   );
@@ -226,7 +199,7 @@ export const ReferralProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
 export const useReferral = () => {
   const context = useContext(ReferralContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useReferral must be used within a ReferralProvider');
   }
   return context;
