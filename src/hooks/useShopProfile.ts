@@ -9,7 +9,7 @@ const DEFAULT_OPERATING_HOURS = Array.from({ length: 7 }, (_, i) => ({
   isActive: i !== 0,
   startTime: '09:00',
   endTime: i === 6 ? '14:00' : '20:00',
-  breaks: [] as { startTime: string; endTime: string }[],
+  breaks: [] as any[],
 }));
 
 const DEFAULT_PROFILE: ShopProfile = {
