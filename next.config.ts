@@ -18,10 +18,31 @@ const nextConfig: NextConfig = {
   },
 
   async headers() {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseDomain = supabaseUrl ? new URL(supabaseUrl).hostname : '*.supabase.co';
+
+    const cspHeader = `
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' blob: data: https://images.unsplash.com https://lh3.googleusercontent.com https://${supabaseDomain} https://*.supabase.co;
+      font-src 'self';
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+      connect-src 'self' https://${supabaseDomain} https://*.supabase.co wss://*.supabase.co https://api.stripe.com;
+      upgrade-insecure-requests;
+    `.replace(/\s{2,}/g, ' ').trim();
+
     return [
       {
         source: '/:path*',
         headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: cspHeader
+          },
           {
             key: 'X-DNS-Prefetch-Control',
             value: 'on'
