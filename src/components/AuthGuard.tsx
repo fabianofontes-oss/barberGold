@@ -7,14 +7,21 @@ interface AuthGuardProps {
 
 /**
  * Componente server-side que protege rotas autenticadas
- * A configuração inicial (setup) agora é uma modal no dashboard
+ * Redireciona para login se nao autenticado
+ * Redireciona para onboarding se nao tem profile/tenant configurado
  */
 export async function AuthGuard({ children }: AuthGuardProps) {
   const profileResult = await getCurrentProfile();
 
-  // Não está logado
+  // Nao esta logado (sem sessao)
   if (!profileResult) {
     redirect('/login');
+  }
+
+  // Esta logado mas nao tem profile/tenant configurado
+  // Isso pode acontecer se o trigger falhou ou esta em processamento
+  if (!profileResult.profile || !profileResult.tenantId) {
+    redirect('/app/onboarding');
   }
 
   return <>{children}</>;
