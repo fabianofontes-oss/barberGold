@@ -663,10 +663,7 @@ export const BarberProvider = ({ children }: PropsWithChildren) => {
      return false;
   };
 
-  const logout = () => {
-     setIsAuthenticated(false);
-     setView('SAAS_LANDING');
-  };
+  const logout = async () => {\n     const supabase = createClient();\n     await supabase.auth.signOut();\n     setIsAuthenticated(false);\n     setView('SAAS_LANDING');\n     window.location.href = '/login';\n  };
 
   const switchUser = (staffId: string) => {
     const user = staff.find(s => s.id === staffId);
