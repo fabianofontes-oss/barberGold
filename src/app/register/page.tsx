@@ -4,12 +4,13 @@ import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
-import { Eye, EyeOff, Loader2, Sparkles, Store, Globe, CheckCircle2, XCircle } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Sparkles, Store, Globe, CheckCircle2, XCircle, Mail } from 'lucide-react';
 
 function RegisterForm() {
-
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
+    const [registeredEmail, setRegisteredEmail] = useState('');
 
     // Form State
     const [fullname, setFullname] = useState('');
@@ -75,7 +76,7 @@ function RegisterForm() {
         setLoading(true);
         setError(null);
 
-        // Validation
+        // Validations
         if (!shopName.trim()) {
             setError('Nome da barbearia e obrigatorio.');
             setLoading(false);
@@ -107,7 +108,7 @@ function RegisterForm() {
         }
 
         try {
-            const { error: authError } = await supabase.auth.signUp({
+            const { data, error: authError } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
@@ -116,7 +117,8 @@ function RegisterForm() {
                         shop_name: shopName,
                         slug: shopSlug,
                         plan: 'FREE'
-                    }
+                    },
+                    emailRedirectTo: `${window.location.origin}/auth/callback?next=/app/onboarding`
                 }
             });
 
@@ -125,8 +127,15 @@ function RegisterForm() {
                 return;
             }
 
-            // Redirecionar para onboarding
-            window.location.href = '/app/onboarding';
+            // Verificar se sessao foi criada (confirmacao de email desativada)
+            if (data.session) {
+                // Sessao criada - redirecionar direto para onboarding
+                window.location.href = '/app/onboarding';
+            } else {
+                // Confirmacao de email ativa - mostrar mensagem
+                setRegisteredEmail(email);
+                setRegistrationSuccess(true);
+            }
         } catch {
             setError('Ocorreu um erro inesperado ao tentar criar sua conta.');
         } finally {
@@ -152,11 +161,45 @@ function RegisterForm() {
         }
     };
 
+    // Tela de sucesso - confirmar email
+    if (registrationSuccess) {
+        return (
+            <div className="min-h-screen bg-[#231c0f] flex items-center justify-center p-6">
+                <div className="max-w-md w-full bg-[#342a18] rounded-2xl p-8 text-center">
+                    <div className="w-16 h-16 bg-[#f79f08]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Mail className="w-8 h-8 text-[#f79f08]" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-white mb-2">Verifique seu email</h2>
+                    <p className="text-[#ccb58f] mb-6">
+                        Enviamos um link de confirmacao para<br />
+                        <span className="text-white font-semibold">{registeredEmail}</span>
+                    </p>
+                    <p className="text-[#ccb58f]/60 text-sm mb-6">
+                        Clique no link do email para ativar sua conta e acessar sua barbearia.
+                    </p>
+                    <div className="space-y-3">
+                        <Link 
+                            href="/login"
+                            className="block w-full bg-[#f79f08] hover:bg-[#f79f08]/90 text-[#231c0f] font-bold py-3 rounded-xl transition-all"
+                        >
+                            Ja confirmei, ir para Login
+                        </Link>
+                        <button
+                            onClick={() => setRegistrationSuccess(false)}
+                            className="block w-full text-[#ccb58f] hover:text-white py-2 transition-colors"
+                        >
+                            Voltar e tentar novamente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-[#231c0f] flex">
             {/* Left Side - Image */}
             <div className="hidden lg:flex lg:w-1/2 xl:w-5/12 relative flex-col justify-between bg-[#1a150b] overflow-hidden">
-                {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <Image
                         src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070"
@@ -168,9 +211,7 @@ function RegisterForm() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#231c0f] via-[#231c0f]/80 to-transparent"></div>
                 </div>
                 
-                {/* Content Overlay */}
                 <div className="relative z-10 p-12 flex flex-col h-full justify-between">
-                    {/* Brand Logo */}
                     <Link href="/" className="flex items-center gap-3 text-[#f79f08]">
                         <div className="size-8 rounded bg-[#f79f08]/20 flex items-center justify-center text-[#f79f08]">
                             <Sparkles className="size-5" />
@@ -178,13 +219,12 @@ function RegisterForm() {
                         <span className="text-xl font-bold tracking-tight text-white">BarberGOLD</span>
                     </Link>
                     
-                    {/* Hero Text */}
                     <div className="max-w-md">
                         <h1 className="text-4xl font-black leading-tight tracking-tight mb-4 text-white">
                             Entre para o Padrao Ouro.
                         </h1>
                         <p className="text-[#ccb58f] text-lg font-medium leading-relaxed">
-                            Gerencie sua barbearia com precisao e estilo. Organize agendamentos, gerencie equipe e faca seu negocio crescer com a plataforma feita para profissionais.
+                            Gerencie sua barbearia com precisao e estilo. Organize agendamentos, gerencie equipe e faca seu negocio crescer.
                         </p>
                         <div className="mt-8 flex gap-2">
                             <div className="h-1 w-12 rounded-full bg-[#f79f08]"></div>
@@ -193,7 +233,6 @@ function RegisterForm() {
                         </div>
                     </div>
                     
-                    {/* Footer Text */}
                     <div className="text-sm text-[#ccb58f]/60">
                         2025 BarberGOLD Inc. All rights reserved.
                     </div>
@@ -202,7 +241,6 @@ function RegisterForm() {
 
             {/* Right Side - Form */}
             <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12 xl:p-20 relative bg-[#231c0f] overflow-y-auto">
-                {/* Mobile Header */}
                 <div className="lg:hidden w-full flex justify-between items-center mb-8">
                     <Link href="/" className="flex items-center gap-2 text-white">
                         <Sparkles className="size-6 text-[#f79f08]" />
@@ -214,7 +252,6 @@ function RegisterForm() {
                 </div>
                 
                 <div className="w-full max-w-[480px] flex flex-col gap-6">
-                    {/* Form Header */}
                     <div className="space-y-2">
                         <h2 className="text-white text-3xl font-bold leading-tight tracking-tight">Criar Conta</h2>
                         <p className="text-[#ccb58f] text-base">Configure sua barbearia e comece a usar.</p>
@@ -227,7 +264,6 @@ function RegisterForm() {
                     )}
 
                     <form onSubmit={handleRegister} className="flex flex-col gap-4">
-                        {/* Full Name */}
                         <label className="flex flex-col gap-2">
                             <span className="text-white text-sm font-medium leading-normal">Seu Nome</span>
                             <input
@@ -241,7 +277,6 @@ function RegisterForm() {
                             />
                         </label>
 
-                        {/* Shop Name */}
                         <label className="flex flex-col gap-2">
                             <span className="text-white text-sm font-medium leading-normal flex items-center gap-2">
                                 <Store className="w-4 h-4 text-[#f79f08]" />
@@ -258,7 +293,6 @@ function RegisterForm() {
                             />
                         </label>
 
-                        {/* Shop Slug */}
                         <label className="flex flex-col gap-2">
                             <span className="text-white text-sm font-medium leading-normal flex items-center gap-2">
                                 <Globe className="w-4 h-4 text-[#f79f08]" />
@@ -295,7 +329,6 @@ function RegisterForm() {
                             )}
                         </label>
 
-                        {/* Email Address */}
                         <label className="flex flex-col gap-2">
                             <span className="text-white text-sm font-medium leading-normal">Email</span>
                             <input
@@ -309,7 +342,6 @@ function RegisterForm() {
                             />
                         </label>
 
-                        {/* Password */}
                         <label className="flex flex-col gap-2">
                             <span className="text-white text-sm font-medium leading-normal">Senha</span>
                             <div className="relative">
@@ -332,7 +364,6 @@ function RegisterForm() {
                             </div>
                         </label>
 
-                        {/* Confirm Password */}
                         <label className="flex flex-col gap-2">
                             <span className="text-white text-sm font-medium leading-normal">Confirmar Senha</span>
                             <div className="relative">
@@ -355,7 +386,6 @@ function RegisterForm() {
                             </div>
                         </label>
 
-                        {/* Terms Checkbox */}
                         <div className="flex items-start gap-3 mt-2">
                             <div className="flex items-center h-5">
                                 <input
@@ -380,7 +410,6 @@ function RegisterForm() {
                             </label>
                         </div>
 
-                        {/* Create Account Button */}
                         <button
                             type="submit"
                             disabled={loading || slugAvailable === false || checkingSlug}
@@ -393,17 +422,14 @@ function RegisterForm() {
                                 </>
                             ) : 'Criar Conta e Continuar'}
                         </button>
-
                     </form>
                     
-                    {/* Divider */}
                     <div className="relative flex items-center py-2">
                         <div className="flex-grow border-t border-[#695430]/50"></div>
                         <span className="flex-shrink-0 mx-4 text-[#ccb58f] text-sm">Ou continue com</span>
                         <div className="flex-grow border-t border-[#695430]/50"></div>
                     </div>
 
-                    {/* Google Button */}
                     <button
                         type="button"
                         disabled={loading}
@@ -419,7 +445,6 @@ function RegisterForm() {
                         Google
                     </button>
 
-                    {/* Login Link */}
                     <div className="text-center mt-2">
                         <p className="text-[#ccb58f] text-sm">
                             Ja tem uma conta?{' '}
