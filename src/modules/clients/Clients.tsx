@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { useI18n } from '@/hooks/useI18n';
@@ -53,44 +53,50 @@ export const Clients = () => {
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
 
-  // Validação de segurança
-  if (!currentUser) return null;
-
-  const isOwner = currentUser.role === 'OWNER';
+  const isOwner = currentUser?.role === 'OWNER';
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
-  const myServedClientIds = new Set(
-     appointments
-        .filter(a => a.staffId === currentUser.id)
-        .map(a => a.clientId)
-  );
-  
-  const myHistoryClients = clients.filter(c => {
-     if (c.preferredStaffId === currentUser.id) return false;
-     return myServedClientIds.has(c.id);
-  });
+  const { myLoyalClients, myHistoryClients } = useMemo(() => {
+    if (!currentUser) return { myLoyalClients: [], myHistoryClients: [] };
 
-  let displayedClients: Client[] = [];
-  if (isOwner) {
-     displayedClients = clients; 
-  } else {
-     if (activeTab === 'PORTFOLIO') {
-        displayedClients = myLoyalClients;
-     } else {
-        displayedClients = myHistoryClients;
-     }
-  }
-
-  const filteredClients = displayedClients.filter(c => {
-    return (
-       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-       (canViewContacts && c.phone.includes(searchQuery))
+    const loyal = clients.filter(c => c.preferredStaffId === currentUser.id);
+    const servedIds = new Set(
+       appointments
+          .filter(a => a.staffId === currentUser.id)
+          .map(a => a.clientId)
     );
-  });
+
+    const history = clients.filter(c => {
+       if (c.preferredStaffId === currentUser.id) return false;
+       return servedIds.has(c.id);
+    });
+
+    return { myLoyalClients: loyal, myHistoryClients: history };
+  }, [clients, appointments, currentUser]);
+
+  const displayedClients = useMemo(() => {
+    if (isOwner) {
+       return clients;
+    } else {
+       if (activeTab === 'PORTFOLIO') {
+          return myLoyalClients;
+       } else {
+          return myHistoryClients;
+       }
+    }
+  }, [isOwner, clients, activeTab, myLoyalClients, myHistoryClients]);
+
+  const filteredClients = useMemo(() => {
+    return displayedClients.filter(c => {
+      return (
+         c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+         (canViewContacts && c.phone.includes(searchQuery))
+      );
+    });
+  }, [displayedClients, searchQuery, canViewContacts]);
 
   // --- HANDLERS ---
 
@@ -155,9 +161,12 @@ export const Clients = () => {
   };
 
   // Get Client History
-  const clientHistory = appointments
-    .filter(a => a.clientId === selectedClient?.id && a.status === AppointmentStatus.COMPLETED)
-    .sort((a, b) => b.date.getTime() - a.date.getTime());
+  const clientHistory = useMemo(() => {
+    if (!selectedClient) return [];
+    return appointments
+      .filter(a => a.clientId === selectedClient.id && a.status === AppointmentStatus.COMPLETED)
+      .sort((a, b) => b.date.getTime() - a.date.getTime());
+  }, [appointments, selectedClient]);
 
   const getReturnStatus = (lastVisit?: Date) => {
     if (!lastVisit) return { status: 'NEW', days: 0 };
@@ -176,6 +185,9 @@ export const Clients = () => {
         default: return 'bg-zinc-900 border-zinc-800 hover:border-amber-500/50';
      }
   };
+
+  // Validação de segurança
+  if (!currentUser) return null;
 
   return (
     <div className="h-full flex flex-col animate-fade-in">
