@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { useI18n } from '@/hooks/useI18n';
@@ -53,44 +53,55 @@ export const Clients = () => {
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
 
-  // Validação de segurança
-  if (!currentUser) return null;
-
-  const isOwner = currentUser.role === 'OWNER';
+  // Validação de segurança - Moved down
+  const isOwner = currentUser?.role === 'OWNER';
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
-  const myServedClientIds = new Set(
-     appointments
-        .filter(a => a.staffId === currentUser.id)
-        .map(a => a.clientId)
-  );
-  
-  const myHistoryClients = clients.filter(c => {
-     if (c.preferredStaffId === currentUser.id) return false;
-     return myServedClientIds.has(c.id);
-  });
+  const myLoyalClients = useMemo(() => {
+    if (!currentUser) return [];
+    return clients.filter(c => c.preferredStaffId === currentUser.id);
+  }, [clients, currentUser]);
 
-  let displayedClients: Client[] = [];
-  if (isOwner) {
-     displayedClients = clients; 
-  } else {
-     if (activeTab === 'PORTFOLIO') {
-        displayedClients = myLoyalClients;
-     } else {
-        displayedClients = myHistoryClients;
-     }
-  }
-
-  const filteredClients = displayedClients.filter(c => {
-    return (
-       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-       (canViewContacts && c.phone.includes(searchQuery))
+  const myHistoryClients = useMemo(() => {
+    if (!currentUser) return [];
+    const myServedClientIds = new Set(
+       appointments
+          .filter(a => a.staffId === currentUser.id)
+          .map(a => a.clientId)
     );
-  });
+
+    return clients.filter(c => {
+       if (c.preferredStaffId === currentUser.id) return false;
+       return myServedClientIds.has(c.id);
+    });
+  }, [clients, appointments, currentUser]);
+
+  const displayedClients = useMemo(() => {
+    if (isOwner) {
+       return clients;
+    } else {
+       if (activeTab === 'PORTFOLIO') {
+          return myLoyalClients;
+       } else {
+          return myHistoryClients;
+       }
+    }
+  }, [isOwner, clients, activeTab, myLoyalClients, myHistoryClients]);
+
+  const filteredClients = useMemo(() => {
+    const query = searchQuery.toLowerCase();
+    return displayedClients.filter(c => {
+      return (
+         c.name.toLowerCase().includes(query) ||
+         (canViewContacts && c.phone.includes(searchQuery))
+      );
+    });
+  }, [displayedClients, searchQuery, canViewContacts]);
+
+  if (!currentUser) return null;
 
   // --- HANDLERS ---
 
