@@ -1,0 +1,3 @@
+## 2024-05-23 - Context Performance Anti-Pattern
+**Learning:** The `AppProvider` (aliased as `BarberProvider`) reconstructs its `value` object on every render. This forces all consumers (virtually the entire app) to re-render whenever *any* state in the provider changes. This "Context Hell" architecture makes memoization in downstream components (like `Clients.tsx`) critical, as they will receive frequent re-render triggers from the context.
+**Action:** When working on this codebase, always assume components re-render frequently. Aggressively memoize expensive derived state (`useMemo`) and callbacks (`useCallback`) in feature modules to protect them from the global context churn. Do not attempt to fix `AppProvider` without a major refactor plan.
