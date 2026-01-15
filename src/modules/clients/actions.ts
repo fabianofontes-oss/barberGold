@@ -72,19 +72,14 @@ export async function createClientAction(data: {
 }) {
   // ✅ Validação Zod
   try {
-    // Adaptar dados para o schema (phone precisa formato brasileiro)
-    const dataToValidate = {
+    // Adaptar dados para o schema
+    createClientSchema.parse({
       name: data.name,
-      phone: data.phone || '(00) 00000-0000', // Default para validação
+      phone: data.phone || '',
       email: data.email,
       birthDate: data.birthDate,
       notes: data.notes
-    };
-
-    // Validar apenas se phone foi fornecido
-    if (data.phone) {
-      const validated = createClientSchema.parse(dataToValidate);
-    }
+    });
 
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
