@@ -75,16 +75,13 @@ export async function createClientAction(data: {
     // Adaptar dados para o schema (phone precisa formato brasileiro)
     const dataToValidate = {
       name: data.name,
-      phone: data.phone || '(00) 00000-0000', // Default para validação
+      phone: data.phone || '',
       email: data.email,
       birthDate: data.birthDate,
       notes: data.notes
     };
 
-    // Validar apenas se phone foi fornecido
-    if (data.phone) {
-      const validated = createClientSchema.parse(dataToValidate);
-    }
+    createClientSchema.parse(dataToValidate);
 
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
