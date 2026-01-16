@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { loginSchema, signUpSchema } from './schemas';
+import { z } from 'zod';
 
 export type AuthActionResult = {
   success: boolean;
@@ -16,6 +18,16 @@ export async function signInWithPasswordAction(
   email: string,
   password: string
 ): Promise<AuthActionResult> {
+  // Input Validation
+  const validation = loginSchema.safeParse({ email, password });
+  if (!validation.success) {
+    console.error('Validation error on login:', validation.error.flatten().fieldErrors);
+    return {
+      success: false,
+      error: validation.error.issues[0].message,
+    };
+  }
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -70,6 +82,15 @@ export async function signUpAction(
   email: string,
   password: string
 ): Promise<AuthActionResult> {
+  // Input Validation
+  const validation = signUpSchema.safeParse({ email, password });
+  if (!validation.success) {
+    return {
+      success: false,
+      error: validation.error.issues[0].message,
+    };
+  }
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signUp({
