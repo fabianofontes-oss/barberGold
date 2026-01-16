@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { loginSchema, registerSchema } from './schemas';
 
 export type AuthActionResult = {
   success: boolean;
@@ -10,12 +11,21 @@ export type AuthActionResult = {
 };
 
 /**
- * Login com email e senha via Supabase Auth
+ * Login with email and password via Supabase Auth
  */
 export async function signInWithPasswordAction(
   email: string,
   password: string
 ): Promise<AuthActionResult> {
+  // Input validation
+  const result = loginSchema.safeParse({ email, password });
+  if (!result.success) {
+    return {
+      success: false,
+      error: result.error.issues[0].message,
+    };
+  }
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -24,7 +34,7 @@ export async function signInWithPasswordAction(
   });
 
   if (error) {
-    console.error('Erro no login:', error.message);
+    console.error('Login error:', error.message);
     return {
       success: false,
       error: getErrorMessage(error.message),
@@ -36,7 +46,7 @@ export async function signInWithPasswordAction(
 }
 
 /**
- * Logout e redireciona para landing
+ * Logout and redirect to landing
  */
 export async function signOutAction(): Promise<void> {
   const supabase = await createClient();
@@ -46,7 +56,7 @@ export async function signOutAction(): Promise<void> {
 }
 
 /**
- * Obtém a sessão atual do usuário (server-side)
+ * Get current user session (server-side)
  */
 export async function getSessionAction() {
   const supabase = await createClient();
@@ -64,12 +74,21 @@ export async function getSessionAction() {
 }
 
 /**
- * Cadastro de novo usuário (opcional para P0)
+ * Register new user
  */
 export async function signUpAction(
   email: string,
   password: string
 ): Promise<AuthActionResult> {
+  // Input validation
+  const result = registerSchema.safeParse({ email, password });
+  if (!result.success) {
+    return {
+      success: false,
+      error: result.error.issues[0].message,
+    };
+  }
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signUp({
@@ -81,7 +100,7 @@ export async function signUpAction(
   });
 
   if (error) {
-    console.error('Erro no cadastro:', error.message);
+    console.error('Registration error:', error.message);
     return {
       success: false,
       error: getErrorMessage(error.message),
@@ -92,15 +111,15 @@ export async function signUpAction(
 }
 
 /**
- * Traduz mensagens de erro do Supabase para PT-BR
+ * Translate Supabase error messages
  */
 function getErrorMessage(message: string): string {
   const errorMap: Record<string, string> = {
-    'Invalid login credentials': 'Email ou senha incorretos',
-    'Email not confirmed': 'Email não confirmado. Verifique sua caixa de entrada.',
-    'User already registered': 'Este email já está cadastrado',
-    'Password should be at least 6 characters': 'A senha deve ter pelo menos 6 caracteres',
-    'Unable to validate email address: invalid format': 'Formato de email inválido',
+    'Invalid login credentials': 'Invalid email or password',
+    'Email not confirmed': 'Email not confirmed. Check your inbox.',
+    'User already registered': 'User already registered',
+    'Password should be at least 6 characters': 'Password should be at least 6 characters',
+    'Unable to validate email address: invalid format': 'Invalid email format',
   };
 
   return errorMap[message] || message;
