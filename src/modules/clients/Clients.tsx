@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { useI18n } from '@/hooks/useI18n';
@@ -62,35 +62,37 @@ export const Clients = () => {
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
-  const myServedClientIds = new Set(
+  const myLoyalClients = useMemo(() => clients.filter(c => c.preferredStaffId === currentUser.id), [clients, currentUser.id]);
+
+  const myServedClientIds = useMemo(() => new Set(
      appointments
         .filter(a => a.staffId === currentUser.id)
         .map(a => a.clientId)
-  );
+  ), [appointments, currentUser.id]);
   
-  const myHistoryClients = clients.filter(c => {
+  const myHistoryClients = useMemo(() => clients.filter(c => {
      if (c.preferredStaffId === currentUser.id) return false;
      return myServedClientIds.has(c.id);
-  });
+  }), [clients, currentUser.id, myServedClientIds]);
 
-  let displayedClients: Client[] = [];
-  if (isOwner) {
-     displayedClients = clients; 
-  } else {
-     if (activeTab === 'PORTFOLIO') {
-        displayedClients = myLoyalClients;
-     } else {
-        displayedClients = myHistoryClients;
-     }
-  }
+  const displayedClients = useMemo(() => {
+    if (isOwner) {
+       return clients;
+    } else {
+       if (activeTab === 'PORTFOLIO') {
+          return myLoyalClients;
+       } else {
+          return myHistoryClients;
+       }
+    }
+  }, [isOwner, clients, activeTab, myLoyalClients, myHistoryClients]);
 
-  const filteredClients = displayedClients.filter(c => {
+  const filteredClients = useMemo(() => displayedClients.filter(c => {
     return (
        c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
        (canViewContacts && c.phone.includes(searchQuery))
     );
-  });
+  }), [displayedClients, searchQuery, canViewContacts]);
 
   // --- HANDLERS ---
 
@@ -155,9 +157,9 @@ export const Clients = () => {
   };
 
   // Get Client History
-  const clientHistory = appointments
+  const clientHistory = useMemo(() => appointments
     .filter(a => a.clientId === selectedClient?.id && a.status === AppointmentStatus.COMPLETED)
-    .sort((a, b) => b.date.getTime() - a.date.getTime());
+    .sort((a, b) => b.date.getTime() - a.date.getTime()), [appointments, selectedClient?.id]);
 
   const getReturnStatus = (lastVisit?: Date) => {
     if (!lastVisit) return { status: 'NEW', days: 0 };
