@@ -211,6 +211,7 @@ export const Clients = () => {
         <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
+          aria-label={t('common.search')}
           placeholder={canViewContacts ? t('clients.searchPlaceholder') : t('common.search') + '...'}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -303,22 +304,35 @@ export const Clients = () => {
           <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-md md:rounded-2xl border-0 md:border border-zinc-800 p-6 shadow-2xl overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
                <h3 className="text-xl font-bold text-white">Add New Client</h3>
-               <button onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
+               <button onClick={() => setIsModalOpen(false)} aria-label="Close modal" className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div>
+                 <label htmlFor="client-name" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo *</label>
+                 <input id="client-name" type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
+              <div>
+                 <label htmlFor="client-phone" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone *</label>
+                 <input id="client-phone" type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
               
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div>
+                 <label htmlFor="client-email" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label>
+                 <input id="client-email" type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
               
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label><input type="date" value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div>
+                 <label htmlFor="client-birthdate" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label>
+                 <input id="client-birthdate" type="date" value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" />
+              </div>
               
               <div className="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-4">
-                <label className="block text-sm md:text-xs font-bold text-emerald-400 uppercase mb-2 flex items-center gap-2">
+                <label htmlFor="client-referral" className="block text-sm md:text-xs font-bold text-emerald-400 uppercase mb-2 flex items-center gap-2">
                   <Gift className="w-4 h-4" /> Código de Indicação
                 </label>
                 <input 
+                  id="client-referral"
                   type="text" 
                   value={formData.referrerCode} 
                   onChange={(e) => setFormData({...formData, referrerCode: e.target.value.toUpperCase()})} 
@@ -380,7 +394,7 @@ export const Clients = () => {
                        </div>
                     </div>
                  </div>
-                 <button onClick={() => setSelectedClient(null)} className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
+                 <button onClick={() => setSelectedClient(null)} aria-label="Close details" className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
               </div>
 
               {/* Tabs */}
