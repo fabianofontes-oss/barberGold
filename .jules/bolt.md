@@ -1,0 +1,1 @@
+## 2025-02-19 - Missing Environment Variables for Frontend\n**Learning:** The development server and tests cannot run because mandatory environment variables (SUPABASE_URL/KEY) are missing in the sandbox.\n**Action:** Rely on static code analysis and 'safe' small changes. Verify logic by reading code carefully instead of running the app.
