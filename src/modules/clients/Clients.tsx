@@ -211,6 +211,7 @@ export const Clients = () => {
         <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
+          aria-label={t('common.search')}
           placeholder={canViewContacts ? t('clients.searchPlaceholder') : t('common.search') + '...'}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -226,6 +227,27 @@ export const Clients = () => {
 
       {/* Client List */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
+        {filteredClients.length === 0 && (
+          <div className="col-span-full flex flex-col items-center justify-center py-20 text-center opacity-60">
+            <div className="bg-zinc-800 p-4 rounded-full mb-4">
+              <Search className="w-8 h-8 text-zinc-500" />
+            </div>
+            <p className="text-zinc-400 font-medium">
+              {searchQuery
+                ? t('common.noResults') || `No clients found for "${searchQuery}"`
+                : t('common.emptyList') || "No clients found."}
+            </p>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="mt-2 text-amber-500 hover:text-amber-400 text-sm font-bold transition-colors"
+              >
+                {t('common.clear') || 'Clear Search'}
+              </button>
+            )}
+          </div>
+        )}
+
         {filteredClients.map((client) => {
              const returnStatus = getReturnStatus(client.lastVisit);
              const points = client.loyaltyPoints || 0;
@@ -303,7 +325,7 @@ export const Clients = () => {
           <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-md md:rounded-2xl border-0 md:border border-zinc-800 p-6 shadow-2xl overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
                <h3 className="text-xl font-bold text-white">Add New Client</h3>
-               <button onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
+               <button aria-label={t('common.close')} onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
@@ -339,7 +361,7 @@ export const Clients = () => {
                     {formData.dependents.map((dep, idx) => (
                        <div key={idx} className="flex justify-between items-center text-sm bg-zinc-900 p-2 rounded border border-zinc-800">
                           <span className="text-zinc-300">{dep.name}</span>
-                          <button type="button" onClick={() => removeDependent(dep.id)} className="text-red-500 hover:text-red-400"><X className="w-3 h-3" /></button>
+                          <button aria-label="Remove dependent" type="button" onClick={() => removeDependent(dep.id)} className="text-red-500 hover:text-red-400"><X className="w-3 h-3" /></button>
                        </div>
                     ))}
                  </div>
@@ -380,7 +402,7 @@ export const Clients = () => {
                        </div>
                     </div>
                  </div>
-                 <button onClick={() => setSelectedClient(null)} className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
+                 <button aria-label={t('common.close')} onClick={() => setSelectedClient(null)} className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
               </div>
 
               {/* Tabs */}
