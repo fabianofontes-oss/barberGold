@@ -10,6 +10,7 @@ import { CommissionPlanModal } from './modals/CommissionPlanModal';
 import { ReferralSettingsPanel } from './ReferralSettingsPanel'; 
 import { ImageUpload } from '@/components/shared/ImageUpload';
 import { MaskedInput } from '@/components/shared/MaskedInput';
+import { SecureSecretInput } from './components/SecureSecretInput';
 import { ViaCepResponse } from '@/lib/masks';
 import { 
   Users, User, Phone, 
@@ -1113,17 +1114,16 @@ export const Settings = () => {
                         </div>
                         <div>
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Access Token</label>
-                           <input 
-                              type="password" 
+                           <SecureSecretInput
                               value={shopSettings.gatewayConfig?.mercadoPago?.accessToken || ''}
-                              onChange={(e) => updateShopSettings({
+                              onChange={(val) => updateShopSettings({
                                  gatewayConfig: {
                                     ...shopSettings.gatewayConfig,
                                     mercadoPago: {
                                        ...shopSettings.gatewayConfig?.mercadoPago,
                                        enabled: shopSettings.gatewayConfig?.mercadoPago?.enabled ?? false,
                                        publicKey: shopSettings.gatewayConfig?.mercadoPago?.publicKey || '',
-                                       accessToken: e.target.value
+                                       accessToken: val
                                     }
                                  }
                               })}
@@ -1189,17 +1189,16 @@ export const Settings = () => {
                         </div>
                         <div>
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Token</label>
-                           <input 
-                              type="password" 
+                           <SecureSecretInput
                               value={shopSettings.gatewayConfig?.pagSeguro?.token || ''}
-                              onChange={(e) => updateShopSettings({
+                              onChange={(val) => updateShopSettings({
                                  gatewayConfig: {
                                     ...shopSettings.gatewayConfig,
                                     pagSeguro: {
                                        ...shopSettings.gatewayConfig?.pagSeguro,
                                        enabled: shopSettings.gatewayConfig?.pagSeguro?.enabled ?? false,
                                        email: shopSettings.gatewayConfig?.pagSeguro?.email || '',
-                                       token: e.target.value
+                                       token: val
                                     }
                                  }
                               })}
@@ -1265,17 +1264,16 @@ export const Settings = () => {
                         </div>
                         <div>
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Secret Key</label>
-                           <input 
-                              type="password" 
+                           <SecureSecretInput
                               value={shopSettings.gatewayConfig?.stripe?.secretKey || ''}
-                              onChange={(e) => updateShopSettings({
+                              onChange={(val) => updateShopSettings({
                                  gatewayConfig: {
                                     ...shopSettings.gatewayConfig,
                                     stripe: {
                                        ...shopSettings.gatewayConfig?.stripe,
                                        enabled: shopSettings.gatewayConfig?.stripe?.enabled ?? false,
                                        publishableKey: shopSettings.gatewayConfig?.stripe?.publishableKey || '',
-                                       secretKey: e.target.value
+                                       secretKey: val
                                     }
                                  }
                               })}
@@ -1341,17 +1339,16 @@ export const Settings = () => {
                         </div>
                         <div>
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">App Key</label>
-                           <input 
-                              type="password" 
+                           <SecureSecretInput
                               value={shopSettings.gatewayConfig?.infinitePay?.appKey || ''}
-                              onChange={(e) => updateShopSettings({
+                              onChange={(val) => updateShopSettings({
                                  gatewayConfig: {
                                     ...shopSettings.gatewayConfig,
                                     infinitePay: {
                                        ...shopSettings.gatewayConfig?.infinitePay,
                                        enabled: shopSettings.gatewayConfig?.infinitePay?.enabled ?? false,
                                        apiKey: shopSettings.gatewayConfig?.infinitePay?.apiKey || '',
-                                       appKey: e.target.value
+                                       appKey: val
                                     }
                                  }
                               })}
@@ -1417,17 +1414,16 @@ export const Settings = () => {
                         </div>
                         <div>
                            <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">API Key</label>
-                           <input 
-                              type="password" 
+                           <SecureSecretInput
                               value={shopSettings.gatewayConfig?.stone?.apiKey || ''}
-                              onChange={(e) => updateShopSettings({
+                              onChange={(val) => updateShopSettings({
                                  gatewayConfig: {
                                     ...shopSettings.gatewayConfig,
                                     stone: {
                                        ...shopSettings.gatewayConfig?.stone,
                                        enabled: shopSettings.gatewayConfig?.stone?.enabled ?? false,
                                        stoneCode: shopSettings.gatewayConfig?.stone?.stoneCode || '',
-                                       apiKey: e.target.value
+                                       apiKey: val
                                     }
                                  }
                               })}
