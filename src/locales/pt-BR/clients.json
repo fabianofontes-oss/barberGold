@@ -7,6 +7,8 @@
     "noClients": "Nenhum cliente cadastrado",
     "noResults": "Nenhum cliente encontrado",
     "addFirst": "Adicione seu primeiro cliente",
+    "searchNoResultsDesc": "Não encontramos clientes com o termo \"{query}\"",
+    "listEmptyDesc": "Comece adicionando seu primeiro cliente ao sistema.",
     "client": {
       "name": "Nome",
       "phone": "Telefone",
