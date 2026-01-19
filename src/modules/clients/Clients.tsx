@@ -226,7 +226,38 @@ export const Clients = () => {
 
       {/* Client List */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
-        {filteredClients.map((client) => {
+        {filteredClients.length === 0 ? (
+          <div className="col-span-full flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-zinc-800 rounded-xl bg-zinc-900/30">
+            <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center mb-4 border border-zinc-800">
+              <Search className="w-8 h-8 text-zinc-600" />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">
+              {searchQuery ? t('clients.noResults') : t('clients.noClients')}
+            </h3>
+            <p className="text-zinc-500 max-w-sm mx-auto mb-6">
+              {searchQuery
+                ? t('clients.searchNoResultsDesc', { query: searchQuery })
+                : t('clients.listEmptyDesc')
+              }
+            </p>
+            {searchQuery ? (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-amber-500 font-bold hover:text-amber-400 text-sm"
+              >
+                {t('common.clearSearch')}
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
+              >
+                <UserPlus className="w-5 h-5" /> {t('clients.newClient')}
+              </button>
+            )}
+          </div>
+        ) : (
+          filteredClients.map((client) => {
              const returnStatus = getReturnStatus(client.lastVisit);
              const points = client.loyaltyPoints || 0;
              const cardStyle = getStatusStyles(returnStatus.status);
@@ -294,7 +325,7 @@ export const Clients = () => {
                </button>
              );
            })
-        }
+        )}
       </div>
 
       {/* Add Client Modal */}
