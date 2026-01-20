@@ -2,7 +2,7 @@
 
 import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { createClientSchema } from './schemas';
+import { createClientSchema, updateClientSchema } from './schemas';
 import { z } from 'zod';
 
 export async function getClients(filters?: { search?: string; tags?: string[] }) {
@@ -72,19 +72,18 @@ export async function createClientAction(data: {
 }) {
   // ✅ Validação Zod
   try {
-    // Adaptar dados para o schema (phone precisa formato brasileiro)
+    // Adaptar dados para o schema
     const dataToValidate = {
       name: data.name,
-      phone: data.phone || '(00) 00000-0000', // Default para validação
-      email: data.email,
-      birthDate: data.birthDate,
-      notes: data.notes
+      phone: data.phone || '',
+      email: data.email || '',
+      birthDate: data.birthDate || '',
+      notes: data.notes || '',
+      tags: data.tags || []
     };
 
-    // Validar apenas se phone foi fornecido
-    if (data.phone) {
-      const validated = createClientSchema.parse(dataToValidate);
-    }
+    // Validar incondicionalmente
+    const validated = createClientSchema.parse(dataToValidate);
 
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
@@ -102,12 +101,12 @@ export async function createClientAction(data: {
       .from('clients')
       .insert({
         store_id: profile.store_id,
-        name: data.name,
-        phone: data.phone || '',
-        email: data.email || '',
-        birth_date: data.birthDate,
-        notes: data.notes || '',
-        tags: data.tags || [],
+        name: validated.name,
+        phone: validated.phone || '',
+        email: validated.email || '',
+        birth_date: validated.birthDate || null, // Convert empty string to null for date column
+        notes: validated.notes || '',
+        tags: validated.tags || [],
         total_spent: 0,
         total_visits: 0,
         loyalty_points: 0,
@@ -141,39 +140,70 @@ export async function updateClientAction(clientId: string, data: {
   notes?: string;
   tags?: string[];
 }) {
-  const supabase = await createSupabaseClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
+  try {
+    const supabase = await createSupabaseClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Não autenticado');
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('store_id')
-    .eq('user_id', session.user.id)
-    .single();
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
 
-  if (!profile?.store_id) throw new Error('Store não encontrado');
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
-  const updateData: any = {};
-  if (data.name) updateData.name = data.name;
-  if (data.phone !== undefined) updateData.phone = data.phone;
-  if (data.email !== undefined) updateData.email = data.email;
-  if (data.birthDate !== undefined) updateData.birth_date = data.birthDate;
-  if (data.notes !== undefined) updateData.notes = data.notes;
-  if (data.tags) updateData.tags = data.tags;
+    // Preparar dados para validação parcial
+    // Como é update, precisamos garantir que o que foi enviado é válido
+    // createClientSchema valida o objeto inteiro, então podemos usar parseAsync com partial() se quiséssemos
+    // mas aqui estamos recebendo um objeto parcial já.
 
-  const { data: client, error } = await supabase
-    .from('clients')
-    .update(updateData)
-    .eq('id', clientId)
-    .eq('store_id', profile.store_id)
-    .select()
-    .single();
+    // Vamos validar campo a campo ou construir um objeto para validar com o schema
+    // O ideal é usar o schema de update que estende o create.
 
-  if (error) {
-    console.error('❌ Erro ao atualizar cliente:', error);
-    throw new Error(error.message);
+    // Buscar o cliente atual para mergear? Não é performático.
+    // Vamos validar apenas os campos enviados usando partial() do Zod.
+
+    const partialSchema = createClientSchema.partial();
+
+    // Ajustar dados vazios
+    const dataToValidate: any = { ...data };
+    if (data.phone === undefined) delete dataToValidate.phone;
+    if (data.email === undefined) delete dataToValidate.email;
+    if (data.birthDate === undefined) delete dataToValidate.birthDate;
+
+    // Se enviou string vazia, mantemos para validação (o schema aceita literal(''))
+
+    const validated = partialSchema.parse(dataToValidate);
+
+    const updateData: any = {};
+    if (validated.name !== undefined) updateData.name = validated.name;
+    if (validated.phone !== undefined) updateData.phone = validated.phone;
+    if (validated.email !== undefined) updateData.email = validated.email;
+    if (validated.birthDate !== undefined) updateData.birth_date = validated.birthDate || null;
+    if (validated.notes !== undefined) updateData.notes = validated.notes;
+    if (validated.tags !== undefined) updateData.tags = validated.tags;
+
+    const { data: client, error } = await supabase
+      .from('clients')
+      .update(updateData)
+      .eq('id', clientId)
+      .eq('store_id', profile.store_id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('❌ Erro ao atualizar cliente:', error);
+      throw new Error(error.message);
+    }
+
+    revalidatePath('/app/clients');
+    return client;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.issues);
+      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+    }
+    throw error;
   }
-
-  revalidatePath('/app/clients');
-  return client;
 }
