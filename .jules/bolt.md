@@ -1,0 +1,3 @@
+## 2024-05-23 - [Unconditional Hooks in Conditional Render Components]
+**Learning:** Components that return early (e.g. `if (!user) return null`) often trap developers into putting hooks after the return, or preventing optimizations like `useMemo` because dependencies might be null. Moving the early return to the *end* of the component and handling nulls safely inside hooks allows for proper memoization and adherence to Rules of Hooks.
+**Action:** Always place `if (!loaded) return null` checks at the very bottom of the component body. Use optional chaining (`?.`) or fallback values inside `useMemo`/`useEffect` to handle the loading state gracefully during the hook execution.
