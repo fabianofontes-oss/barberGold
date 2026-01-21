@@ -2,6 +2,24 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
+/**
+ * Adiciona headers de segurança à resposta
+ * 🛡️ Sentinel Security Enhancement
+ */
+function addSecurityHeaders(response: NextResponse) {
+  response.headers.set('X-Frame-Options', 'DENY')
+  response.headers.set('X-Content-Type-Options', 'nosniff')
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+
+  // HSTS apenas em produção para evitar problemas em localhost
+  if (process.env.NODE_ENV === 'production') {
+    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
+  }
+
+  return response
+}
+
 export async function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || ''
   const { pathname } = request.nextUrl
@@ -19,10 +37,10 @@ export async function middleware(request: NextRequest) {
     response.headers.set('x-tenant-slug', subdomain)
     
     if (pathname === '/') {
-      return NextResponse.rewrite(new URL(`/book?tenant=${subdomain}`, request.url))
+      return addSecurityHeaders(NextResponse.rewrite(new URL(`/book?tenant=${subdomain}`, request.url)))
     }
     
-    return response
+    return addSecurityHeaders(response)
   }
 
   // Criar cliente Supabase para verificar autenticação
@@ -33,7 +51,7 @@ export async function middleware(request: NextRequest) {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    return supabaseResponse
+    return addSecurityHeaders(supabaseResponse)
   }
 
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -57,7 +75,7 @@ export async function middleware(request: NextRequest) {
     pathname.includes('/favicon.ico') ||
     pathname.match(/\.(svg|png|jpg|jpeg|gif|webp)$/)
   ) {
-    return supabaseResponse
+    return addSecurityHeaders(supabaseResponse)
   }
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -66,7 +84,7 @@ export async function middleware(request: NextRequest) {
   if (!user && pathname.startsWith('/app')) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-    return NextResponse.redirect(url)
+    return addSecurityHeaders(NextResponse.redirect(url))
   }
 
   // Se está logado e tenta acessar login/register -> Dashboard
@@ -75,10 +93,10 @@ export async function middleware(request: NextRequest) {
     url.pathname = '/app/dashboard'
     const response = NextResponse.redirect(url)
     request.cookies.getAll().forEach((cookie) => response.cookies.set(cookie.name, cookie.value))
-    return response
+    return addSecurityHeaders(response)
   }
 
-  return supabaseResponse
+  return addSecurityHeaders(supabaseResponse)
 }
 
 export const config = {
