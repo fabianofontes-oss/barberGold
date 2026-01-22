@@ -1,0 +1,4 @@
+## 2024-05-22 - Conditional Validation Bypass
+**Vulnerability:** The `createClientAction` function conditionally skipped the entire Zod schema validation if the optional `phone` field was missing. This allowed creating clients with invalid data (e.g., empty names, invalid emails) by simply omitting the phone number.
+**Learning:** Developers sometimes use conditional checks or dummy values to bypass strict schema validation for optional fields, inadvertently creating security holes. The root cause was a disconnect between the "strict" schema and the "lenient" business logic.
+**Prevention:** Ensure Zod schemas accurately reflect the optionality of fields (using `.optional().or(z.literal(''))`). Always validate input unconditionally (`schema.parse(data)`) and use the returned `validated` object for database operations.
