@@ -38,6 +38,13 @@ export async function GET(request: NextRequest) {
   }
 
   // Redirecionar para dashboard (modal de setup aparecerá se necessário)
-  const destination = next || '/app/dashboard';
+  let destination = next || '/app/dashboard';
+
+  // Security: Prevent Open Redirect
+  // Ensure destination starts with / and not // (protocol relative)
+  if (!destination.startsWith('/') || destination.startsWith('//')) {
+    destination = '/app/dashboard';
+  }
+
   return NextResponse.redirect(new URL(destination, requestUrl.origin));
 }
