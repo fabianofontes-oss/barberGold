@@ -141,39 +141,50 @@ export async function updateClientAction(clientId: string, data: {
   notes?: string;
   tags?: string[];
 }) {
-  const supabase = await createSupabaseClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
+  try {
+    // Validate input using partial schema
+    createClientSchema.partial().parse(data);
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('store_id')
-    .eq('user_id', session.user.id)
-    .single();
+    const supabase = await createSupabaseClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Não autenticado');
 
-  if (!profile?.store_id) throw new Error('Store não encontrado');
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
 
-  const updateData: any = {};
-  if (data.name) updateData.name = data.name;
-  if (data.phone !== undefined) updateData.phone = data.phone;
-  if (data.email !== undefined) updateData.email = data.email;
-  if (data.birthDate !== undefined) updateData.birth_date = data.birthDate;
-  if (data.notes !== undefined) updateData.notes = data.notes;
-  if (data.tags) updateData.tags = data.tags;
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
-  const { data: client, error } = await supabase
-    .from('clients')
-    .update(updateData)
-    .eq('id', clientId)
-    .eq('store_id', profile.store_id)
-    .select()
-    .single();
+    const updateData: any = {};
+    if (data.name) updateData.name = data.name;
+    if (data.phone !== undefined) updateData.phone = data.phone;
+    if (data.email !== undefined) updateData.email = data.email;
+    if (data.birthDate !== undefined) updateData.birth_date = data.birthDate;
+    if (data.notes !== undefined) updateData.notes = data.notes;
+    if (data.tags) updateData.tags = data.tags;
 
-  if (error) {
-    console.error('❌ Erro ao atualizar cliente:', error);
-    throw new Error(error.message);
+    const { data: client, error } = await supabase
+      .from('clients')
+      .update(updateData)
+      .eq('id', clientId)
+      .eq('store_id', profile.store_id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('❌ Erro ao atualizar cliente:', error);
+      throw new Error(error.message);
+    }
+
+    revalidatePath('/app/clients');
+    return client;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.issues);
+      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+    }
+    throw error;
   }
-
-  revalidatePath('/app/clients');
-  return client;
 }
