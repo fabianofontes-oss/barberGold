@@ -225,6 +225,39 @@ export const Clients = () => {
       )}
 
       {/* Client List */}
+      {filteredClients.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
+          {searchQuery ? (
+            <>
+              <div className="bg-zinc-900 p-4 rounded-full mb-4 ring-1 ring-zinc-800">
+                <Search className="w-8 h-8 text-zinc-500" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{t('clients.noResults') || 'Nenhum cliente encontrado'}</h3>
+              <p className="text-zinc-500 max-w-xs mb-6">Tente buscar por outro termo ou limpe o filtro.</p>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-amber-500 hover:text-amber-400 font-bold text-sm transition-colors"
+              >
+                Limpar Busca
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="bg-zinc-900 p-6 rounded-full mb-6 ring-1 ring-zinc-800 border border-dashed border-zinc-700">
+                <Users className="w-12 h-12 text-zinc-600" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{t('clients.noClients') || 'Nenhum cliente cadastrado'}</h3>
+              <p className="text-zinc-500 max-w-sm mb-8">Comece construindo sua base de clientes adicionando o primeiro contato.</p>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 px-8 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
+              >
+                <UserPlus className="w-5 h-5" /> {t('clients.newClient')}
+              </button>
+            </>
+          )}
+        </div>
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
         {filteredClients.map((client) => {
              const returnStatus = getReturnStatus(client.lastVisit);
@@ -296,6 +329,7 @@ export const Clients = () => {
            })
         }
       </div>
+      )}
 
       {/* Add Client Modal */}
       {isModalOpen && (
