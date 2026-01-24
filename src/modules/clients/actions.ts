@@ -72,19 +72,10 @@ export async function createClientAction(data: {
 }) {
   // ✅ Validação Zod
   try {
-    // Adaptar dados para o schema (phone precisa formato brasileiro)
-    const dataToValidate = {
-      name: data.name,
-      phone: data.phone || '(00) 00000-0000', // Default para validação
-      email: data.email,
-      birthDate: data.birthDate,
-      notes: data.notes
-    };
-
-    // Validar apenas se phone foi fornecido
-    if (data.phone) {
-      const validated = createClientSchema.parse(dataToValidate);
-    }
+    const validated = createClientSchema.parse({
+      ...data,
+      phone: data.phone || '', // Garante string vazia se undefined
+    });
 
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
@@ -102,12 +93,12 @@ export async function createClientAction(data: {
       .from('clients')
       .insert({
         store_id: profile.store_id,
-        name: data.name,
-        phone: data.phone || '',
-        email: data.email || '',
-        birth_date: data.birthDate,
-        notes: data.notes || '',
-        tags: data.tags || [],
+        name: validated.name,
+        phone: validated.phone || '',
+        email: validated.email || '',
+        birth_date: validated.birthDate,
+        notes: validated.notes || '',
+        tags: validated.tags || [],
         total_spent: 0,
         total_visits: 0,
         loyalty_points: 0,
