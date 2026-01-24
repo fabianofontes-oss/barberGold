@@ -299,26 +299,32 @@ export const Clients = () => {
 
       {/* Add Client Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900 md:bg-black/70 md:backdrop-blur-sm p-0 md:p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="add-client-title"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900 md:bg-black/70 md:backdrop-blur-sm p-0 md:p-4"
+        >
           <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-md md:rounded-2xl border-0 md:border border-zinc-800 p-6 shadow-2xl overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
-               <h3 className="text-xl font-bold text-white">Add New Client</h3>
-               <button onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
+               <h3 id="add-client-title" className="text-xl font-bold text-white">Add New Client</h3>
+               <button onClick={() => setIsModalOpen(false)} aria-label="Close modal" className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone *</label><input type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div><label htmlFor="client-name" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Nome Completo *</label><input id="client-name" type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div><label htmlFor="client-phone" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Número de Telefone *</label><input id="client-phone" type="tel" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label><input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div><label htmlFor="client-email" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Email</label><input id="client-email" type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="cliente@email.com" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
-              <div><label className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label><input type="date" value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
+              <div><label htmlFor="client-birthdate" className="block text-sm md:text-xs font-bold text-zinc-500 uppercase mb-2">Data de Nascimento</label><input id="client-birthdate" type="date" value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 text-lg md:text-base" /></div>
               
               <div className="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-4">
-                <label className="block text-sm md:text-xs font-bold text-emerald-400 uppercase mb-2 flex items-center gap-2">
+                <label htmlFor="client-referrer" className="block text-sm md:text-xs font-bold text-emerald-400 uppercase mb-2 flex items-center gap-2">
                   <Gift className="w-4 h-4" /> Código de Indicação
                 </label>
                 <input 
+                  id="client-referrer"
                   type="text" 
                   value={formData.referrerCode} 
                   onChange={(e) => setFormData({...formData, referrerCode: e.target.value.toUpperCase()})} 
@@ -330,16 +336,16 @@ export const Clients = () => {
               
               {/* Dependents Section */}
               <div className="bg-zinc-950/50 p-4 rounded-xl border border-zinc-800">
-                 <label className="block text-xs font-bold text-white mb-2 uppercase flex items-center gap-2"><Users className="w-3 h-3 text-amber-500" /> Dependents (Family)</label>
+                 <label htmlFor="dependent-name" className="block text-xs font-bold text-white mb-2 uppercase flex items-center gap-2"><Users className="w-3 h-3 text-amber-500" /> Dependents (Family)</label>
                  <div className="flex gap-2 mb-2">
-                    <input type="text" placeholder="Name (e.g. Son)" value={newDependentName} onChange={e => setNewDependentName(e.target.value)} className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-2 py-1.5 text-sm text-white focus:border-amber-500 outline-none" />
-                    <button type="button" onClick={handleAddDependent} className="bg-zinc-800 hover:bg-zinc-700 text-white px-3 rounded-lg text-sm font-bold">+</button>
+                    <input id="dependent-name" type="text" placeholder="Name (e.g. Son)" value={newDependentName} onChange={e => setNewDependentName(e.target.value)} className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-2 py-1.5 text-sm text-white focus:border-amber-500 outline-none" />
+                    <button type="button" onClick={handleAddDependent} aria-label="Add dependent" className="bg-zinc-800 hover:bg-zinc-700 text-white px-3 rounded-lg text-sm font-bold">+</button>
                  </div>
                  <div className="space-y-2">
                     {formData.dependents.map((dep, idx) => (
                        <div key={idx} className="flex justify-between items-center text-sm bg-zinc-900 p-2 rounded border border-zinc-800">
                           <span className="text-zinc-300">{dep.name}</span>
-                          <button type="button" onClick={() => removeDependent(dep.id)} className="text-red-500 hover:text-red-400"><X className="w-3 h-3" /></button>
+                          <button type="button" onClick={() => removeDependent(dep.id)} aria-label={`Remove dependent ${dep.name}`} className="text-red-500 hover:text-red-400"><X className="w-3 h-3" /></button>
                        </div>
                     ))}
                  </div>
