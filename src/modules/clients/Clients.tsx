@@ -211,6 +211,7 @@ export const Clients = () => {
         <Search className="absolute left-4 top-3.5 w-5 h-5 text-zinc-500" />
         <input 
           type="text"
+          aria-label={t('common.search')}
           placeholder={canViewContacts ? t('clients.searchPlaceholder') : t('common.search') + '...'}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -221,6 +222,35 @@ export const Clients = () => {
       {!hasLoyalty && (
         <div className="mb-4 rounded-xl border border-dashed border-amber-500/60 bg-zinc-900/60 p-3 text-[11px] text-amber-200">
           Programa de fidelidade disponível nos planos <strong>Solo PRO</strong> e acima.
+        </div>
+      )}
+
+      {/* Empty States */}
+      {filteredClients.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-20 bg-zinc-900/50 rounded-2xl border border-zinc-800 border-dashed animate-fade-in">
+          <div className="w-16 h-16 bg-zinc-800 rounded-full flex items-center justify-center mb-4">
+            {searchQuery ? <Search className="w-8 h-8 text-zinc-500" /> : <Users className="w-8 h-8 text-zinc-500" />}
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">
+            {searchQuery ? t('clients.noResults') : t('clients.noClients')}
+          </h3>
+          <p className="text-zinc-400 text-center max-w-sm mb-6">
+            {searchQuery
+              ? `No matches found for "${searchQuery}". Try a different term.`
+              : t('clients.addFirst')}
+          </p>
+          {searchQuery ? (
+             <button onClick={() => setSearchQuery('')} className="text-amber-500 font-bold hover:underline hover:text-amber-400 transition-colors">
+                Clear Search
+             </button>
+          ) : (
+             <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-amber-500/20"
+             >
+                {t('clients.newClient')}
+             </button>
+          )}
         </div>
       )}
 
