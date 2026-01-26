@@ -81,10 +81,8 @@ export async function createClientAction(data: {
       notes: data.notes
     };
 
-    // Validar apenas se phone foi fornecido
-    if (data.phone) {
-      const validated = createClientSchema.parse(dataToValidate);
-    }
+    // Validar sempre (mesmo se phone não fornecido, usa default para permitir validação de outros campos)
+    createClientSchema.parse(dataToValidate);
 
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
