@@ -1,0 +1,3 @@
+## 2024-05-22 - Global Context Re-renders
+**Learning:** `AppProvider` (in `src/context/AppContext.tsx`) reconstructs its `value` object on every render. Since it aggregates state from dozens of hooks, any change in any part of the global state (e.g. `currentUser`, `appointments`) triggers a re-render of `AppProvider`, which creates a new `value` reference, forcing *all* consumers of `useApp` to re-render. This is a massive performance bottleneck.
+**Action:** In future, wrap the `value` object in `useMemo` or split the context into smaller, more focused contexts (e.g., `AuthContext`, `DataContext`, `UIContext`) to prevent unnecessary cascading re-renders.
