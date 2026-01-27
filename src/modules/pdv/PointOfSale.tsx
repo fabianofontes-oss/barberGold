@@ -327,6 +327,7 @@ export const PointOfSale = () => {
               <input 
                 type="text"
                 placeholder="Buscar serviços ou produtos..."
+                aria-label="Buscar serviços ou produtos"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-all"
@@ -356,6 +357,7 @@ export const PointOfSale = () => {
                   onClick={() => setDisplayMode('GRID')}
                   className={`p-1.5 rounded transition-all ${displayMode === 'GRID' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                   title="Grade Grande"
+                  aria-label="Grade Grande"
                 >
                   <LayoutGrid className="w-4 h-4" />
                 </button>
@@ -363,6 +365,7 @@ export const PointOfSale = () => {
                   onClick={() => setDisplayMode('COMPACT')}
                   className={`p-1.5 rounded transition-all ${displayMode === 'COMPACT' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                   title="Grade Compacta"
+                  aria-label="Grade Compacta"
                 >
                   <Grid3X3 className="w-4 h-4" />
                 </button>
@@ -370,6 +373,7 @@ export const PointOfSale = () => {
                   onClick={() => setDisplayMode('LIST')}
                   className={`p-1.5 rounded transition-all ${displayMode === 'LIST' ? 'bg-amber-500 text-zinc-900' : 'text-zinc-500 hover:text-white'}`}
                   title="Lista"
+                  aria-label="Lista"
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -563,7 +567,11 @@ export const PointOfSale = () => {
                           activeDiscount.type === 'WINBACK' ? '👋 Promo Retorno' : 
                           activeDiscount.type === 'CLUB_CREDIT' ? '👑 Crédito do Clube' : '🏆 Recompensa Resgatada'}
                       </span>
-                      <button onClick={() => { setActiveDiscount(null); setClubCreditApplied(false); }} className="text-zinc-500 hover:text-white">
+                      <button
+                        onClick={() => { setActiveDiscount(null); setClubCreditApplied(false); }}
+                        className="text-zinc-500 hover:text-white"
+                        aria-label="Remover desconto"
+                      >
                          <Trash2 className="w-3 h-3" />
                       </button>
                    </div>
@@ -614,7 +622,11 @@ export const PointOfSale = () => {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-amber-500 font-medium">R$ {item.price}</span>
-                    <button onClick={() => removeFromCart(idx)} className="text-zinc-600 hover:text-red-400">
+                    <button
+                      onClick={() => removeFromCart(idx)}
+                      className="text-zinc-600 hover:text-red-400"
+                      aria-label={`Remover ${item.name} do carrinho`}
+                    >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -728,7 +740,11 @@ export const PointOfSale = () => {
                         <span className="text-xs text-zinc-300">{PAYMENT_LABELS[sp.method]}</span>
                         <div className="flex items-center gap-2">
                           <span className="text-sm text-white font-bold">R$ {sp.amount.toFixed(2)}</span>
-                          <button onClick={() => handleRemoveSplitPayment(idx)} className="text-red-400 hover:text-red-300">
+                          <button
+                            onClick={() => handleRemoveSplitPayment(idx)}
+                            className="text-red-400 hover:text-red-300"
+                            aria-label="Remover pagamento dividido"
+                          >
                             <Trash2 className="w-3 h-3" />
                           </button>
                         </div>
@@ -827,7 +843,13 @@ export const PointOfSale = () => {
             <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-sm p-6 shadow-2xl animate-fade-in md:rounded-2xl border-0 md:border md:border-zinc-800 flex flex-col justify-center">
                <div className="flex justify-between items-center mb-6">
                   <h3 className="text-xl font-bold text-white">Adicionar Cliente Rápido</h3>
-                  <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"><X className="w-5 h-5"/></button>
+                  <button
+                    onClick={() => setIsClientModalOpen(false)}
+                    className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"
+                    aria-label="Fechar"
+                  >
+                    <X className="w-5 h-5"/>
+                  </button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-6">
                   <div>
