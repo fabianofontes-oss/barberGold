@@ -328,8 +328,9 @@ export const Settings = () => {
                 <div className="space-y-4">
                    {/* Nome da Barbearia */}
                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome da Barbearia</label>
+                      <label htmlFor="shop-name" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Nome da Barbearia</label>
                       <input 
+                         id="shop-name"
                          type="text" 
                          value={shopProfile.name}
                          onChange={(e) => updateShopProfile({ ...shopProfile, name: e.target.value })}
@@ -341,8 +342,9 @@ export const Settings = () => {
                    {/* Telefone / Contato */}
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Telefone / Contato</label>
+                         <label htmlFor="shop-phone" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Telefone / Contato</label>
                          <MaskedInput
+                            id="shop-phone"
                             type="phone"
                             value={shopProfile.phone || ''}
                             onChange={(val) => updateShopProfile({ ...shopProfile, phone: val })}
@@ -351,8 +353,9 @@ export const Settings = () => {
                          />
                       </div>
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">WhatsApp</label>
+                         <label htmlFor="shop-whatsapp" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">WhatsApp</label>
                          <MaskedInput
+                            id="shop-whatsapp"
                             type="whatsapp"
                             value={shopProfile.whatsapp || ''}
                             onChange={(val) => updateShopProfile({ ...shopProfile, whatsapp: val })}
@@ -364,8 +367,9 @@ export const Settings = () => {
 
                    {/* Instagram */}
                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Instagram</label>
+                      <label htmlFor="shop-instagram" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Instagram</label>
                       <MaskedInput
+                         id="shop-instagram"
                          type="instagram"
                          value={shopProfile.instagram || ''}
                          onChange={(val) => updateShopProfile({ ...shopProfile, instagram: val })}
@@ -378,8 +382,9 @@ export const Settings = () => {
                    {/* CEP com busca automática */}
                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CEP</label>
+                         <label htmlFor="shop-cep" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">CEP</label>
                          <MaskedInput
+                            id="shop-cep"
                             type="cep"
                             value={shopProfile.cep || ''}
                             onChange={(val) => updateShopProfile({ ...shopProfile, cep: val })}
@@ -399,8 +404,9 @@ export const Settings = () => {
                          />
                       </div>
                       <div className="md:col-span-2">
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Rua</label>
+                         <label htmlFor="shop-street" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Rua</label>
                          <input 
+                            id="shop-street"
                             type="text" 
                             value={shopProfile.street || ''}
                             onChange={(e) => updateShopProfile({ ...shopProfile, street: e.target.value })}
@@ -409,8 +415,9 @@ export const Settings = () => {
                          />
                       </div>
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Número</label>
+                         <label htmlFor="shop-number" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Número</label>
                          <input 
+                            id="shop-number"
                             type="text" 
                             value={shopProfile.number || ''}
                             onChange={(e) => updateShopProfile({ ...shopProfile, number: e.target.value })}
@@ -422,8 +429,9 @@ export const Settings = () => {
 
                    {/* Bairro */}
                    <div>
-                      <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Bairro</label>
+                      <label htmlFor="shop-neighborhood" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Bairro</label>
                       <input 
+                         id="shop-neighborhood"
                          type="text" 
                          value={shopProfile.neighborhood || ''}
                          onChange={(e) => updateShopProfile({ ...shopProfile, neighborhood: e.target.value })}
@@ -435,8 +443,9 @@ export const Settings = () => {
                    {/* Cidade e Estado */}
                    <div className="grid grid-cols-2 gap-4">
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Cidade</label>
+                         <label htmlFor="shop-city" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Cidade</label>
                          <input 
+                            id="shop-city"
                             type="text" 
                             value={shopProfile.city || ''}
                             onChange={(e) => updateShopProfile({ ...shopProfile, city: e.target.value })}
@@ -445,8 +454,9 @@ export const Settings = () => {
                          />
                       </div>
                       <div>
-                         <label className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Estado</label>
+                         <label htmlFor="shop-state" className="block text-xs font-bold text-zinc-500 mb-1.5 uppercase">Estado</label>
                          <input 
+                            id="shop-state"
                             type="text" 
                             value={shopProfile.state || ''}
                             onChange={(e) => updateShopProfile({ ...shopProfile, state: e.target.value })}
