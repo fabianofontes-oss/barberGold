@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { isSafeRedirectPath } from '@/lib/validation/url';
 import { NextResponse } from 'next/server';
 import { type NextRequest } from 'next/server';
 
@@ -38,6 +39,10 @@ export async function GET(request: NextRequest) {
   }
 
   // Redirecionar para dashboard (modal de setup aparecerá se necessário)
-  const destination = next || '/app/dashboard';
+  let destination = '/app/dashboard';
+  if (next && isSafeRedirectPath(next)) {
+    destination = next;
+  }
+
   return NextResponse.redirect(new URL(destination, requestUrl.origin));
 }
