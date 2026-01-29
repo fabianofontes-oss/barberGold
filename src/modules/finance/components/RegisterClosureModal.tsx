@@ -27,7 +27,12 @@ const PAYMENT_LABELS: Record<string, string> = {
 export const RegisterClosureModal: React.FC<RegisterClosureModalProps> = ({ isOpen, onClose }) => {
   const { sales, closeRegister, currentUser, shopSettings } = useBarber();
 
+  // Form State - Dynamic keys (hooks must be before any early returns)
+  const [counted, setCounted] = useState<Record<string, string>>({});
+  const [notes, setNotes] = useState('');
+
   if (!currentUser) return null;
+  if (!isOpen) return null;
 
   // Calculate Totals for Today
   const today = new Date();
@@ -44,12 +49,6 @@ export const RegisterClosureModal: React.FC<RegisterClosureModalProps> = ({ isOp
   });
 
   const totalExpected = Object.values(expectedTotals).reduce<number>((sum, val) => sum + val, 0);
-
-  // Form State - Dynamic keys
-  const [counted, setCounted] = useState<Record<string, string>>({});
-  const [notes, setNotes] = useState('');
-
-  if (!isOpen) return null;
 
   // Calculate Totals
   const totalCounted = Object.values(counted).reduce<number>((sum, val) => sum + (Number(val) || 0), 0);

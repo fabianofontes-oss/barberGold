@@ -31,11 +31,7 @@ export function ServiceLibrary() {
     const [editPrice, setEditPrice] = useState('');
     const [editDuration, setEditDuration] = useState('');
 
-    useEffect(() => {
-        loadData();
-    }, []);
-
-    async function loadData() {
+    const loadData = async () => {
         const supabase = createClient();
 
         // Buscar templates
@@ -65,7 +61,11 @@ export function ServiceLibrary() {
         setTemplates(templatesData || []);
         setMyServices(servicesData || []);
         setLoading(false);
-    }
+    };
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
     async function toggleService(template: ServiceTemplate) {
         const supabase = createClient();

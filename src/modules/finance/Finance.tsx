@@ -42,20 +42,7 @@ export const Finance = () => {
   
   const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'EXPENSES' | 'PAYOUTS'>('OVERVIEW');
   const [activeContext, setActiveContext] = useState<'BUSINESS' | 'PERSONAL'>('BUSINESS');
-  const [dateFilter, setDateFilter] = useState<'TODAY' | 'WEEK' | 'MONTH' | 'ALL'>('MONTH'); // NEW: Date Filter
-  
-  if (!currentUser) return null;
-  
-  const isOwner = currentUser.role === 'OWNER';
-  const hasAdvancedReports = canUseFeature('ADVANCED_REPORTS');
-  const isFreePlan = currentTenantPlanId === 'FREE';
-
-  // Force Tab to Payouts if not Owner
-  useEffect(() => {
-     if (!isOwner) {
-        setActiveTab('PAYOUTS');
-     }
-  }, [isOwner]);
+  const [dateFilter, setDateFilter] = useState<'TODAY' | 'WEEK' | 'MONTH' | 'ALL'>('MONTH');
   
   // Modal State
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
@@ -77,6 +64,19 @@ export const Finance = () => {
      type: 'PAYOUT' as 'PAYOUT' | 'ADVANCE',
      notes: ''
   });
+
+  const isOwner = currentUser?.role === 'OWNER';
+  const hasAdvancedReports = canUseFeature('ADVANCED_REPORTS');
+  const isFreePlan = currentTenantPlanId === 'FREE';
+
+  // Force Tab to Payouts if not Owner
+  useEffect(() => {
+     if (!isOwner) {
+        setActiveTab('PAYOUTS');
+     }
+  }, [isOwner]);
+  
+  if (!currentUser) return null;
 
   // --- FILTERING HELPERS ---
   const filterByDate = (date: Date) => {

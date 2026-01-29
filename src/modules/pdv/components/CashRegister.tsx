@@ -25,9 +25,7 @@ interface CashRegisterProps {
 export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) => {
   const { currentUser, sales } = useBarber();
 
-  if (!currentUser) return null;
-
-  // Cash register state (would be in context in production)
+  // Cash register state (hooks must be before any early returns)
   const [registerStatus, setRegisterStatus] = useState<'CLOSED' | 'OPEN'>('CLOSED');
   const [openingAmount, setOpeningAmount] = useState<number>(0);
   const [movements, setMovements] = useState<CashMovement[]>([]);
@@ -35,6 +33,7 @@ export const CashRegister: React.FC<CashRegisterProps> = ({ isOpen, onClose }) =
   const [sangriaAmount, setSangriaAmount] = useState('');
   const [activeTab, setActiveTab] = useState<'STATUS' | 'SANGRIA' | 'CLOSE'>('STATUS');
 
+  if (!currentUser) return null;
   if (!isOpen) return null;
 
   const todaySales = sales.filter(s => 
