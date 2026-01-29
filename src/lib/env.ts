@@ -31,10 +31,17 @@ const envSchema = z.object({
 export type AppMode = 'demo' | 'pilot' | 'prod';
 
 /**
- * Variáveis de ambiente validadas
- * Acessar via env.NEXT_PUBLIC_SUPABASE_URL etc.
+ * Cache para lazy loading das variáveis de ambiente
  */
-function getEnv() {
+let _env: z.infer<typeof envSchema> | null = null;
+
+/**
+ * Variáveis de ambiente validadas (lazy loading)
+ * Não valida durante o build, apenas quando acessado em runtime
+ */
+function getEnv(): z.infer<typeof envSchema> {
+  if (_env) return _env;
+
   const parsed = envSchema.safeParse({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -56,7 +63,6 @@ function getEnv() {
     console.error('2. Configure: NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY');
     console.error('3. Redeploy a aplicação\n');
 
-    // SEMPRE falha, tanto em dev quanto em prod
     throw new Error(
       `❌ Variáveis de ambiente obrigatórias faltando!\n\n` +
       `Detalhes: ${errorDetails}\n\n` +
@@ -67,10 +73,19 @@ function getEnv() {
     );
   }
 
-  return parsed.data;
+  _env = parsed.data;
+  return _env;
 }
 
-export const env = getEnv();
+/**
+ * Proxy para acessar variáveis de ambiente com lazy loading
+ * Não valida durante o build/import, apenas quando uma propriedade é acessada
+ */
+export const env = new Proxy({} as z.infer<typeof envSchema>, {
+  get(_, prop: string) {
+    return getEnv()[prop as keyof z.infer<typeof envSchema>];
+  },
+});
 
 /**
  * Helpers para verificar modo do app

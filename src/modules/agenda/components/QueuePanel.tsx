@@ -213,7 +213,7 @@ export const QueuePanel = () => {
          <div className="p-4 bg-zinc-900 border-b border-zinc-800 animate-fade-in">
             <form onSubmit={handleJoinQueue} className="space-y-3">
                <div>
-                  <label className="text-[10px] uppercase font-bold text-zinc-500">Cliente (Obrigat�rio)</label>
+                  <label className="text-[10px] uppercase font-bold text-zinc-500">Cliente (Obrigatório)</label>
                   <div className="flex gap-2">
                      <select
                         required
@@ -245,7 +245,7 @@ export const QueuePanel = () => {
                </div>
                
                <div>
-                  <label className="text-[10px] uppercase font-bold text-zinc-500">Servi�o</label>
+                  <label className="text-[10px] uppercase font-bold text-zinc-500">Serviço</label>
                   <select 
                      className="w-full bg-zinc-950 border border-zinc-700 rounded-lg py-2 px-3 text-sm text-white focus:border-amber-500 outline-none"
                      value={formData.serviceId}
@@ -256,14 +256,14 @@ export const QueuePanel = () => {
                </div>
 
                <div>
-                  <label className="text-[10px] uppercase font-bold text-zinc-500">Prefer�ncia de Profissional</label>
+                  <label className="text-[10px] uppercase font-bold text-zinc-500">Preferência de Profissional</label>
                   <select 
                      className="w-full bg-zinc-950 border border-zinc-700 rounded-lg py-2 px-3 text-sm text-white focus:border-amber-500 outline-none"
                      value={formData.preferredStaffId}
                      onChange={e => setFormData({...formData, preferredStaffId: e.target.value})}
                   >
                      <option value="">
-                        Qualquer / Pr�ximo 
+                        Qualquer / Próximo 
                         {recommendedStaffId && ` (Rec: ${staff.find(s => s.id === recommendedStaffId)?.name.split(' ')[0]})`}
                      </option>
                      {staff.map(s => {
@@ -282,7 +282,7 @@ export const QueuePanel = () => {
                   disabled={!formData.clientId}
                   className="w-full bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2 rounded-lg text-xs transition-all"
                >
-                  Adicionar � Fila
+                  Adicionar à Fila
                </button>
             </form>
          </div>
@@ -331,9 +331,9 @@ export const QueuePanel = () => {
                            <span className="text-amber-500 font-bold">{staffName} (Solicitado)</span>
                         ) : (
                            shopSettings.queueDistributionRule === 'MANUAL' ? (
-                              <span className="text-zinc-500 italic">Aguardando atribui��o</span>
+                              <span className="text-zinc-500 italic">Aguardando atribuição</span>
                            ) : (
-                              <span className="text-emerald-500">{staffName} ({shopSettings.queueDistributionRule === 'SPEED' ? 'Mais R�pido' : 'Pr�xima Vez'})</span>
+                              <span className="text-emerald-500">{staffName} ({shopSettings.queueDistributionRule === 'SPEED' ? 'Mais Rápido' : 'Próxima Vez'})</span>
                            )
                         )}
                      </div>
@@ -374,7 +374,7 @@ export const QueuePanel = () => {
          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
             <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-sm p-6 shadow-2xl animate-fade-in">
                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold text-white">Adicionar Cliente R�pido</h3>
+                  <h3 className="text-xl font-bold text-white">Adicionar Cliente Rápido</h3>
                   <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white"><X className="w-5 h-5"/></button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-4">
@@ -389,7 +389,7 @@ export const QueuePanel = () => {
                      />
                   </div>
                   <div>
-                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Telefone (Obrigat�rio)</label>
+                     <label className="block text-xs font-medium text-zinc-400 mb-1.5">Telefone (Obrigatório)</label>
                      <input 
                         type="tel" 
                         required 

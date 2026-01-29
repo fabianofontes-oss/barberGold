@@ -13,8 +13,8 @@ interface RegisterClosureModalProps {
 
 const PAYMENT_LABELS: Record<string, string> = {
    [PaymentMethod.CASH]: 'Dinheiro (Gaveta)',
-   [PaymentMethod.CREDIT_CARD]: 'Cart�o Cr�dito',
-   [PaymentMethod.DEBIT_CARD]: 'Cart�o D�bito',
+   [PaymentMethod.CREDIT_CARD]: 'Cartão Crédito',
+   [PaymentMethod.DEBIT_CARD]: 'Cartão Débito',
    [PaymentMethod.PIX]: 'Pix',
    [PaymentMethod.GOOGLE_PAY]: 'Google Pay',
    [PaymentMethod.APPLE_PAY]: 'Apple Pay',
