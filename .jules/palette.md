@@ -1,0 +1,3 @@
+## 2024-10-24 - Modal Accessibility Gaps
+**Learning:** Custom React modals often lack semantic attributes, making them inaccessible. The "Add Client" and "Client Detail" modals were missing `role="dialog"`, `aria-modal`, and proper label associations.
+**Action:** Standardize modal implementation to always include `role="dialog"`, `aria-modal="true"`, and `aria-labelledby`. Ensure all form inputs have explicit `id`s linked to `label`s via `htmlFor`.
