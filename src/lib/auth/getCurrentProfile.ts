@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { isDemoMode } from '@/lib/env';
 
 export type UserProfile = {
   id: string;
@@ -32,6 +33,28 @@ export type CurrentProfileResult = {
  * @returns CurrentProfileResult ou null se não autenticado
  */
 export async function getCurrentProfile(): Promise<CurrentProfileResult | null> {
+  // DEMO MODE BYPASS
+  if (isDemoMode()) {
+    return {
+      user: {
+        id: 'demo-user-id',
+        email: 'demo@barber.com',
+      },
+      profile: {
+        id: 'demo-profile-id',
+        userId: 'demo-user-id',
+        tenantId: 'demo-tenant-id',
+        role: 'OWNER',
+        displayName: 'Demo User',
+        email: 'demo@barber.com',
+        phone: '1234567890',
+        isActive: true,
+      },
+      tenantId: 'demo-tenant-id',
+      role: 'OWNER',
+    };
+  }
+
   const supabase = await createClient();
 
   // 1. Verifica usuário autenticado
@@ -90,6 +113,8 @@ export async function getCurrentProfile(): Promise<CurrentProfileResult | null> 
  * Verifica se o usuário está autenticado (server-side)
  */
 export async function isAuthenticated(): Promise<boolean> {
+  if (isDemoMode()) return true;
+
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   return !!user;

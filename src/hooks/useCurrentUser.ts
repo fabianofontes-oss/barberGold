@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { isDemoMode } from '@/lib/env';
 import type { StaffMember, CompensationModel } from '@/types';
 
 interface CurrentUserState {
@@ -20,6 +21,27 @@ export function useCurrentUser(): CurrentUserState {
 
   useEffect(() => {
     async function loadUser() {
+      // DEMO MODE BYPASS
+      if (isDemoMode()) {
+        setCurrentUser({
+          id: 'demo-profile-id',
+          name: 'Demo User',
+          role: 'OWNER',
+          email: 'demo@barber.com',
+          phone: '1234567890',
+          commissionModel: 'PERCENTAGE',
+          serviceCommissionRate: 50,
+          productCommissionRate: 50,
+          rentalFee: 0,
+          paymentFrequency: 'WEEKLY',
+          workSchedule: [],
+        });
+        setIsAuthenticated(true);
+        setTenantId('demo-tenant-id');
+        setLoading(false);
+        return;
+      }
+
       try {
         const supabase = createClient();
         const { data: { session } } = await supabase.auth.getSession();
@@ -70,6 +92,12 @@ export function useCurrentUser(): CurrentUserState {
   }, []);
 
   const logout = async () => {
+    if (isDemoMode()) {
+        setCurrentUser(null);
+        setIsAuthenticated(false);
+        window.location.href = '/login';
+        return;
+    }
     const supabase = createClient();
     await supabase.auth.signOut();
     setCurrentUser(null);
