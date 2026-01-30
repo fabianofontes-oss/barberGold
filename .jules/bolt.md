@@ -1,0 +1,3 @@
+## 2024-05-23 - AppContext Performance Bottleneck
+**Learning:** The `AppProvider` in `src/context/AppContext.tsx` creates a new `value` object on every render, causing all consumers (which is almost every component) to re-render whenever `AppProvider` updates. This is a significant bottleneck. `AppProvider` has too many dependencies to easily memoize the entire value object without risk.
+**Action:** In the future, split `AppProvider` into smaller contexts (e.g., `AuthContext`, `ShopContext`, `DataContext`) or use a state management library that supports selectors to avoid this issue. For now, memoizing expensive calculations in consuming components (like `Clients.tsx`) is a safer, localized fix.
