@@ -26,7 +26,8 @@
     "confirm": "Confirm",
     "back": "Back",
     "next": "Next",
-    "finish": "Finish"
+    "finish": "Finish",
+    "close": "Close"
   },
   "currency": {
     "symbol": "$",

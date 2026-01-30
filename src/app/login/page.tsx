@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { useI18n } from '@/hooks/useI18n';
+import { isDemoMode } from '@/lib/env';
 import { Scissors, Eye, EyeOff, Loader2, Check } from 'lucide-react';
 
 export default function LoginPage() {
@@ -20,6 +21,14 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    // DEMO MODE BYPASS
+    if (isDemoMode()) {
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      window.location.href = '/app/dashboard';
+      return;
+    }
 
     const supabase = createClient();
     try {
