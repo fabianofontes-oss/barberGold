@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useBarber } from '@/context/BarberContext';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
 import { useI18n } from '@/hooks/useI18n';
@@ -53,44 +53,60 @@ export const Clients = () => {
   const [activeDetailTab, setActiveDetailTab] = useState<'HISTORY' | 'NOTES' | 'DEPENDENTS'>('HISTORY');
   const [noteText, setNoteText] = useState('');
 
-  // Validação de segurança
-  if (!currentUser) return null;
-
-  const isOwner = currentUser.role === 'OWNER';
+  const isOwner = currentUser?.role === 'OWNER';
 
   // STEALTH MODE CHECK
   const canViewContacts = isOwner || !shopSettings.hideClientContactInfo;
 
   // --- DATA PREPARATION ---
-  const myLoyalClients = clients.filter(c => c.preferredStaffId === currentUser.id);
-  const myServedClientIds = new Set(
-     appointments
-        .filter(a => a.staffId === currentUser.id)
-        .map(a => a.clientId)
+  const myLoyalClients = useMemo(() =>
+    currentUser ? clients.filter(c => c.preferredStaffId === currentUser.id) : [],
+    [clients, currentUser]
   );
+
+  const myServedClientIds = useMemo(() => {
+    const ids = new Set<string>();
+    if (!currentUser) return ids;
+    appointments.forEach(a => {
+      if (a.staffId === currentUser.id) {
+        ids.add(a.clientId);
+      }
+    });
+    return ids;
+  }, [appointments, currentUser]);
   
-  const myHistoryClients = clients.filter(c => {
-     if (c.preferredStaffId === currentUser.id) return false;
-     return myServedClientIds.has(c.id);
-  });
+  const myHistoryClients = useMemo(() =>
+    currentUser ? clients.filter(c => {
+      if (c.preferredStaffId === currentUser.id) return false;
+      return myServedClientIds.has(c.id);
+    }) : [],
+    [clients, currentUser, myServedClientIds]
+  );
 
-  let displayedClients: Client[] = [];
-  if (isOwner) {
-     displayedClients = clients; 
-  } else {
-     if (activeTab === 'PORTFOLIO') {
-        displayedClients = myLoyalClients;
-     } else {
-        displayedClients = myHistoryClients;
-     }
-  }
+  const displayedClients = useMemo(() => {
+    if (isOwner) {
+       return clients;
+    } else {
+       if (activeTab === 'PORTFOLIO') {
+          return myLoyalClients;
+       } else {
+          return myHistoryClients;
+       }
+    }
+  }, [isOwner, clients, activeTab, myLoyalClients, myHistoryClients]);
 
-  const filteredClients = displayedClients.filter(c => {
-    return (
-       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-       (canViewContacts && c.phone.includes(searchQuery))
-    );
-  });
+  const filteredClients = useMemo(() =>
+    displayedClients.filter(c => {
+      return (
+         c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+         (canViewContacts && c.phone.includes(searchQuery))
+      );
+    }),
+    [displayedClients, searchQuery, canViewContacts]
+  );
+
+  // Validação de segurança
+  if (!currentUser) return null;
 
   // --- HANDLERS ---
 
