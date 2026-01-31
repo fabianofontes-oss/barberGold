@@ -72,18 +72,12 @@ export async function createClientAction(data: {
 }) {
   // ✅ Validação Zod
   try {
-    // Adaptar dados para o schema (phone precisa formato brasileiro)
-    const dataToValidate = {
-      name: data.name,
-      phone: data.phone || '(00) 00000-0000', // Default para validação
-      email: data.email,
-      birthDate: data.birthDate,
-      notes: data.notes
-    };
+    // 🛡️ Sentinel: Validate core fields regardless of phone presence
+    createClientSchema.omit({ phone: true }).parse(data);
 
-    // Validar apenas se phone foi fornecido
+    // Validate phone only if provided (strict format)
     if (data.phone) {
-      const validated = createClientSchema.parse(dataToValidate);
+      createClientSchema.pick({ phone: true }).parse({ phone: data.phone });
     }
 
     const supabase = await createSupabaseClient();
@@ -152,6 +146,22 @@ export async function updateClientAction(clientId: string, data: {
     .single();
 
   if (!profile?.store_id) throw new Error('Store não encontrado');
+
+  // 🛡️ Sentinel: Validate update input
+  try {
+    const { tags, ...dataToValidate } = data;
+    createClientSchema.omit({ phone: true }).partial().parse(dataToValidate);
+
+    if (data.phone) {
+      createClientSchema.pick({ phone: true }).parse({ phone: data.phone });
+    }
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.issues);
+      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+    }
+    throw error;
+  }
 
   const updateData: any = {};
   if (data.name) updateData.name = data.name;
