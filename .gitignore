@@ -62,3 +62,7 @@ setup-database.js
 
 # Outros deploys
 netlify.toml
+
+# Playwright
+playwright-report/
+test-results/
