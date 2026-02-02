@@ -14,6 +14,7 @@ import {
   History,
   FileText,
   Save,
+  Loader2,
   Clock,
   AlertCircle,
   Gift,
@@ -45,6 +46,8 @@ export const Clients = () => {
   // Dependent Form State
   const [newDependentName, setNewDependentName] = useState('');
   const [newDependentStaffId, setNewDependentStaffId] = useState('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // VIEW MODE
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
@@ -94,20 +97,27 @@ export const Clients = () => {
 
   // --- HANDLERS ---
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
     
-    addClient({
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email, 
-      birthDate: formData.birthDate,
-      referrerCode: formData.referrerCode,
-      dependents: formData.dependents
-    });
-    setFormData({ name: '', phone: '', email: '', birthDate: '', referrerCode: '', dependents: [] });
-    setIsModalOpen(false);
+    setIsSubmitting(true);
+    try {
+      await addClient({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        birthDate: formData.birthDate,
+        referrerCode: formData.referrerCode,
+        dependents: formData.dependents
+      });
+      setFormData({ name: '', phone: '', email: '', birthDate: '', referrerCode: '', dependents: [] });
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleAddDependent = () => {
@@ -148,9 +158,16 @@ export const Clients = () => {
     setActiveDetailTab('HISTORY');
   };
 
-  const saveNotes = () => {
+  const saveNotes = async () => {
     if (selectedClient) {
-      updateClient({ ...selectedClient, notes: noteText });
+      setIsSubmitting(true);
+      try {
+        await updateClient({ ...selectedClient, notes: noteText });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -303,7 +320,7 @@ export const Clients = () => {
           <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-md md:rounded-2xl border-0 md:border border-zinc-800 p-6 shadow-2xl overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
                <h3 className="text-xl font-bold text-white">Add New Client</h3>
-               <button onClick={() => setIsModalOpen(false)} className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
+               <button onClick={() => setIsModalOpen(false)} aria-label="Close modal" className="bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white"><X className="w-5 h-5"/></button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6 md:space-y-4">
@@ -347,7 +364,9 @@ export const Clients = () => {
 
               <div className="flex gap-3 mt-8 pt-4 border-t border-zinc-800">
                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 md:py-3 text-zinc-400 font-medium hover:text-white transition-colors">Cancel</button>
-                <button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-4 md:py-3 rounded-xl transition-all">Save Client</button>
+                <button type="submit" disabled={isSubmitting} className="flex-1 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-4 md:py-3 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                  {isSubmitting ? <><Loader2 className="w-5 h-5 animate-spin" /> Saving...</> : 'Save Client'}
+                </button>
               </div>
             </form>
           </div>
@@ -380,7 +399,7 @@ export const Clients = () => {
                        </div>
                     </div>
                  </div>
-                 <button onClick={() => setSelectedClient(null)} className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
+                 <button onClick={() => setSelectedClient(null)} aria-label="Close modal" className="text-zinc-500 hover:text-white transition-colors bg-zinc-800 p-2 rounded-full"><X className="w-6 h-6" /></button>
               </div>
 
               {/* Tabs */}
@@ -484,7 +503,12 @@ export const Clients = () => {
                        <div className="flex-1 flex flex-col">
                           <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Private Barber Notes</label>
                           <textarea className="flex-1 w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-300 focus:border-amber-500 outline-none resize-none leading-relaxed min-h-[100px]" placeholder="E.g. Likes skin fade..." value={noteText} onChange={(e) => setNoteText(e.target.value)}></textarea>
-                          <div className="mt-4 flex justify-end"><button onClick={saveNotes} className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 md:py-2.5 px-6 rounded-xl shadow-lg shadow-amber-500/20 transition-all"><Save className="w-4 h-4" /> Save Notes</button></div>
+                          <div className="mt-4 flex justify-end">
+                             <button onClick={saveNotes} disabled={isSubmitting} className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold py-3 md:py-2.5 px-6 rounded-xl shadow-lg shadow-amber-500/20 transition-all disabled:opacity-70 disabled:cursor-not-allowed">
+                                {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                                {isSubmitting ? 'Saving...' : 'Save Notes'}
+                             </button>
+                          </div>
                        </div>
                     </div>
                  )}
