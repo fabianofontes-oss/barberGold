@@ -1,9 +1,10 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, PropsWithChildren } from 'react';
+import React, { createContext, useContext, useState, useCallback, PropsWithChildren, useMemo } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useShopProfile } from '@/hooks/useShopProfile';
 import { useShopSettings } from '@/hooks/useShopSettings';
+import { sanitizeShopSettings } from '@/lib/security';
 import { useQueue } from '@/hooks/useQueue';
 import { useAppointments } from '@/modules/appointments';
 import { useServices } from '@/modules/services/hooks/useServices';
@@ -170,6 +171,15 @@ export function AppProvider({ children }: PropsWithChildren) {
   const { currentUser, isAuthenticated, loading: userLoading, logout } = useCurrentUser();
   const { shopProfile, loading: profileLoading, updateShopProfile } = useShopProfile();
   const { shopSettings, updateShopSettings } = useShopSettings();
+
+  // Security: Sanitize settings for non-owners
+  const safeShopSettings = useMemo(() => {
+    if (currentUser?.role === 'OWNER') {
+      return shopSettings;
+    }
+    return sanitizeShopSettings(shopSettings);
+  }, [shopSettings, currentUser]);
+
   const { queue, joinQueue, leaveQueue } = useQueue();
   const { currentTenantId } = useSaasV2();
 
@@ -457,7 +467,7 @@ export function AppProvider({ children }: PropsWithChildren) {
     logout,
     shopProfile,
     updateShopProfile,
-    shopSettings,
+    shopSettings: safeShopSettings,
     updateShopSettings,
     currentView,
     setView,
