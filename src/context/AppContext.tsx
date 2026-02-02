@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, PropsWithChildren } from 'react';
+import React, { createContext, useContext, useState, useCallback, PropsWithChildren, useMemo } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useShopProfile } from '@/hooks/useShopProfile';
 import { useShopSettings } from '@/hooks/useShopSettings';
@@ -239,7 +239,7 @@ export function AppProvider({ children }: PropsWithChildren) {
   const commissionPlans = rawCommissionPlans as unknown as CommissionPlan[];
 
   const loading = userLoading || profileLoading;
-  const todayRevenue = (sales || []).reduce((acc, sale) => acc + (sale?.total || 0), 0);
+  const todayRevenue = useMemo(() => (sales || []).reduce((acc, sale) => acc + (sale?.total || 0), 0), [sales]);
 
   // Navigation
   const setView = useCallback((view: ViewState, params?: any) => {
@@ -450,7 +450,7 @@ export function AppProvider({ children }: PropsWithChildren) {
 
   const getAvailableSlots = useCallback(() => [] as Date[], []);
 
-  const value: AppContextType = {
+  const value: AppContextType = useMemo(() => ({
     isAuthenticated,
     loading,
     currentUser,
@@ -547,7 +547,102 @@ export function AppProvider({ children }: PropsWithChildren) {
     deleteMarketingCampaign,
     updateGlobalSettings,
     getAvailableSlots,
-  };
+  }), [
+    isAuthenticated,
+    loading,
+    currentUser,
+    logout,
+    shopProfile,
+    updateShopProfile,
+    shopSettings,
+    updateShopSettings,
+    currentView,
+    setView,
+    appointments,
+    services,
+    products,
+    sales,
+    clients,
+    staff,
+    inventory,
+    suppliers,
+    categories,
+    commissionPlans,
+    queue,
+    expenses,
+    staffPayments,
+    supplyTransactions,
+    registerClosures,
+    reviews,
+    todayRevenue,
+    tenants,
+    tickets,
+    globalInvoices,
+    integrations,
+    referrals,
+    landingPageConfig,
+    saasPlans,
+    marketingCampaigns,
+    globalSettings,
+    currentTenantId,
+    isImpersonating,
+    activeReviewAppointmentId,
+    login,
+    switchUser,
+    addAppointment,
+    updateAppointmentStatus,
+    joinQueue,
+    leaveQueue,
+    processSale,
+    submitReview,
+    addLateTip,
+    addClient,
+    updateClient,
+    updateService,
+    addService,
+    deleteService,
+    updateProduct,
+    addProduct,
+    deleteProduct,
+    addStaff,
+    updateStaff,
+    addCommissionPlan,
+    deleteCommissionPlan,
+    addInventoryItem,
+    updateInventoryItem,
+    deleteInventoryItem,
+    adjustInventoryStock,
+    restockInventoryItem,
+    restockProduct,
+    addSupplier,
+    updateSupplier,
+    deleteSupplier,
+    addCategory,
+    deleteCategory,
+    addExpense,
+    removeExpense,
+    addStaffPayment,
+    closeRegister,
+    addReferralSource,
+    updateReferralSource,
+    deleteReferralSource,
+    addTenant,
+    updateTenantStatus,
+    updateTenantPlan,
+    deleteTenant,
+    impersonateTenant,
+    exitImpersonation,
+    resolveTicket,
+    markInvoicePaid,
+    updateIntegration,
+    updateLandingPageConfig,
+    addSaasPlan,
+    updateSaasPlan,
+    addMarketingCampaign,
+    deleteMarketingCampaign,
+    updateGlobalSettings,
+    getAvailableSlots,
+  ]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

@@ -1,0 +1,3 @@
+## 2024-05-23 - Massive Context Re-renders
+**Learning:** The `AppProvider` in `src/context/AppContext.tsx` aggregates a massive amount of state and actions. Prior to optimization, the context `value` object was recreated on every render (triggered by any state change in any hook), causing widespread re-renders across the application for consumers of `useApp`.
+**Action:** When working with "God Object" contexts, always memoize the context value object using `useMemo`, even if the dependency list is extensive, to prevent reference instability from propagating re-renders. Also, memoize derived calculations (like `todayRevenue`) within the provider.
