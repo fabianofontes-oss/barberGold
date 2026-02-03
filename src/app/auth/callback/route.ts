@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { type NextRequest } from 'next/server';
+import { isSafeRedirectPath } from '@/lib/validation/url';
 
 /**
  * Route Handler para callback do Supabase Auth
@@ -38,6 +39,9 @@ export async function GET(request: NextRequest) {
   }
 
   // Redirecionar para dashboard (modal de setup aparecerá se necessário)
-  const destination = next || '/app/dashboard';
+  // 🛡️ Segurança: Validar se o path é seguro para evitar Open Redirect
+  const rawDestination = next || '/app/dashboard';
+  const destination = isSafeRedirectPath(rawDestination) ? rawDestination : '/app/dashboard';
+
   return NextResponse.redirect(new URL(destination, requestUrl.origin));
 }
