@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, PropsWithChildren } from 'react';
+import React, { createContext, useContext, useState, useCallback, PropsWithChildren, useMemo } from 'react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useShopProfile } from '@/hooks/useShopProfile';
 import { useShopSettings } from '@/hooks/useShopSettings';
@@ -239,7 +239,8 @@ export function AppProvider({ children }: PropsWithChildren) {
   const commissionPlans = rawCommissionPlans as unknown as CommissionPlan[];
 
   const loading = userLoading || profileLoading;
-  const todayRevenue = (sales || []).reduce((acc, sale) => acc + (sale?.total || 0), 0);
+  // Memoize revenue calculation to avoid O(N) iteration on every render
+  const todayRevenue = useMemo(() => (sales || []).reduce((acc, sale) => acc + (sale?.total || 0), 0), [sales]);
 
   // Navigation
   const setView = useCallback((view: ViewState, params?: any) => {

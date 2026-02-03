@@ -1,0 +1,3 @@
+## 2026-02-03 - "God Object" Context Performance
+**Learning:** The `AppContext` uses a "God Object" pattern where all state and actions are aggregated into a single value object. This object is not memoized at the top level, causing it to be referentially new on every render. Furthermore, because it includes *all* state, any state update triggers a re-render of *all* consumers (which is the entire app).
+**Action:** While splitting the context is the long-term architectural fix, a high-impact immediate mitigation is to memoize expensive derived state calculations (like `todayRevenue` reducing large arrays) inside the Provider. This prevents CPU-intensive operations from running during the frequent re-renders, even if the re-renders themselves persist.
