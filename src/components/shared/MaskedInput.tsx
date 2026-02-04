@@ -10,6 +10,7 @@ interface MaskedInputProps {
   className?: string;
   icon?: React.ReactNode;
   disabled?: boolean;
+  id?: string;
 }
 
 export const MaskedInput: React.FC<MaskedInputProps> = ({
@@ -20,7 +21,8 @@ export const MaskedInput: React.FC<MaskedInputProps> = ({
   placeholder,
   className = '',
   icon,
-  disabled = false
+  disabled = false,
+  id
 }) => {
   const [isLoadingCep, setIsLoadingCep] = useState(false);
   const [cepError, setCepError] = useState('');
@@ -74,6 +76,7 @@ export const MaskedInput: React.FC<MaskedInputProps> = ({
       <div className={`flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}>
         {icon && <div className="text-zinc-500">{icon}</div>}
         <input
+          id={id}
           type="text"
           value={value}
           onChange={handleChange}
