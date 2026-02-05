@@ -204,6 +204,7 @@ export const QueuePanel = () => {
         <button 
            onClick={() => setIsAdding(!isAdding)}
            className={`p-2 rounded-lg transition-all ${isAdding ? 'bg-zinc-800 text-zinc-400' : 'bg-amber-500 text-zinc-900'}`}
+           aria-label="Toggle add to queue form"
         >
            <Plus className="w-5 h-5" />
         </button>
@@ -238,6 +239,7 @@ export const QueuePanel = () => {
                         onClick={() => setIsClientModalOpen(true)}
                         className="bg-zinc-800 hover:bg-zinc-700 text-white p-2 rounded-lg transition-colors border border-zinc-700"
                         title="Novo Cliente"
+                        aria-label="Add new client"
                      >
                         <UserPlus className="w-4 h-4" />
                      </button>
@@ -359,6 +361,7 @@ export const QueuePanel = () => {
                         <button 
                            onClick={() => leaveQueue(item.id)}
                            className="p-1.5 text-zinc-600 hover:text-red-500 hover:bg-zinc-800 rounded-lg transition-all"
+                           aria-label="Remove from queue"
                         >
                            <Trash2 className="w-4 h-4" />
                         </button>
@@ -375,7 +378,13 @@ export const QueuePanel = () => {
             <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-sm p-6 shadow-2xl animate-fade-in">
                <div className="flex justify-between items-center mb-4">
                   <h3 className="text-xl font-bold text-white">Adicionar Cliente Rápido</h3>
-                  <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white"><X className="w-5 h-5"/></button>
+                  <button
+                     onClick={() => setIsClientModalOpen(false)}
+                     className="text-zinc-500 hover:text-white"
+                     aria-label="Close client modal"
+                  >
+                     <X className="w-5 h-5"/>
+                  </button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-4">
                   <div>

@@ -275,6 +275,7 @@ export const Agenda = () => {
                   onClick={copyBookingLink}
                   className="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold p-2.5 rounded-xl flex items-center justify-center transition-all border border-zinc-700"
                   title="Copy Online Booking Link"
+                  aria-label="Copy booking link"
                >
                   <Share2 className="w-5 h-5" />
                </button>
@@ -282,6 +283,7 @@ export const Agenda = () => {
                <button 
                   onClick={() => setShowQueue(!showQueue)}
                   className={`md:hidden p-3 rounded-xl border transition-all ${showQueue ? 'bg-amber-500 border-amber-500 text-zinc-950' : 'bg-zinc-800 border-zinc-700 text-zinc-300'}`}
+                  aria-label="Toggle queue"
                >
                   <List className="w-5 h-5" />
                </button>
@@ -478,12 +480,14 @@ export const Agenda = () => {
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.NO_SHOW_PENDING)}
                                                    className="px-2 py-1 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 rounded text-[10px]"
                                                    title="Marcar como faltou (No-Show)"
+                                                   aria-label="Mark as no-show"
                                                 >
                                                    ⊘
                                                 </button>
                                                 <button 
                                                    onClick={() => updateAppointmentStatus(appt.id, AppointmentStatus.CANCELLED)}
                                                    className="px-2 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded text-[10px]"
+                                                   aria-label="Cancel appointment"
                                                 >
                                                    <XCircle className="w-3 h-3" />
                                                 </button>
@@ -577,7 +581,11 @@ export const Agenda = () => {
                <h3 className="text-2xl md:text-xl font-bold text-white">
                   {bookingType === 'BLOCK' ? 'Block Time' : 'New Appointment'}
                </h3>
-               <button onClick={() => setIsModalOpen(false)} className="p-2 bg-zinc-800 rounded-full text-zinc-400 hover:text-white">
+               <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="p-2 bg-zinc-800 rounded-full text-zinc-400 hover:text-white"
+                  aria-label="Close modal"
+               >
                   <X className="w-6 h-6" />
                </button>
             </div>
@@ -614,6 +622,7 @@ export const Agenda = () => {
                           onClick={() => setIsClientModalOpen(true)}
                           className="bg-zinc-800 hover:bg-zinc-700 text-white p-3 rounded-xl transition-colors border border-zinc-800"
                           title="New Client"
+                          aria-label="Add new client"
                        >
                           <UserPlus className="w-5 h-5" />
                        </button>
@@ -775,7 +784,13 @@ export const Agenda = () => {
             <div className="bg-zinc-900 w-full h-full md:h-auto md:max-w-sm p-6 shadow-2xl animate-fade-in md:rounded-2xl border-0 md:border md:border-zinc-800 flex flex-col justify-center">
                <div className="flex justify-between items-center mb-6">
                   <h3 className="text-xl font-bold text-white">Quick Add Client</h3>
-                  <button onClick={() => setIsClientModalOpen(false)} className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"><X className="w-5 h-5"/></button>
+                  <button
+                     onClick={() => setIsClientModalOpen(false)}
+                     className="text-zinc-500 hover:text-white bg-zinc-800 p-2 rounded-full"
+                     aria-label="Close client modal"
+                  >
+                     <X className="w-5 h-5"/>
+                  </button>
                </div>
                <form onSubmit={handleQuickAddClient} className="space-y-6">
                   <div>
