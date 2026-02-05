@@ -101,6 +101,7 @@ export const AppointmentDetailModal: React.FC<AppointmentDetailModalProps> = ({
           <button 
             onClick={onClose} 
             className="p-2 bg-zinc-800 rounded-full text-zinc-400 hover:text-white"
+            aria-label="Close detail modal"
           >
             <X className="w-5 h-5" />
           </button>
