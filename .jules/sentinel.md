@@ -1,0 +1,4 @@
+## 2024-05-24 - Conditional Validation Bypass in Server Actions
+**Vulnerability:** Found a pattern where validation logic was wrapped in a conditional check (`if (data.phone) { validate() }`), allowing invalid data (e.g., short names) to bypass validation if the optional field was missing. Also found a lack of validation in the update action.
+**Learning:** Server actions must validate *all* inputs unconditionally before processing. Assuming partial data implies partial validation requirements can lead to bypasses.
+**Prevention:** Always run schema validation at the top of the function. For partial updates, use `schema.partial().parse(data)` explicitly. Ensure `zod` schemas handle optional fields correctly (e.g., `optional().or(literal(''))`) so that validation logic doesn't need "helpers" that can be skipped.

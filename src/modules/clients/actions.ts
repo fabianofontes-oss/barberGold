@@ -81,10 +81,8 @@ export async function createClientAction(data: {
       notes: data.notes
     };
 
-    // Validar apenas se phone foi fornecido
-    if (data.phone) {
-      const validated = createClientSchema.parse(dataToValidate);
-    }
+    // Validar dados
+    createClientSchema.parse(dataToValidate);
 
     const supabase = await createSupabaseClient();
     const { data: { session } } = await supabase.auth.getSession();
@@ -141,39 +139,53 @@ export async function updateClientAction(clientId: string, data: {
   notes?: string;
   tags?: string[];
 }) {
-  const supabase = await createSupabaseClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) throw new Error('Não autenticado');
+  try {
+    // Validar ID
+    z.string().uuid('ID inválido').parse(clientId);
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('store_id')
-    .eq('user_id', session.user.id)
-    .single();
+    // Validar dados parciais
+    createClientSchema.partial().parse(data);
 
-  if (!profile?.store_id) throw new Error('Store não encontrado');
+    const supabase = await createSupabaseClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Não autenticado');
 
-  const updateData: any = {};
-  if (data.name) updateData.name = data.name;
-  if (data.phone !== undefined) updateData.phone = data.phone;
-  if (data.email !== undefined) updateData.email = data.email;
-  if (data.birthDate !== undefined) updateData.birth_date = data.birthDate;
-  if (data.notes !== undefined) updateData.notes = data.notes;
-  if (data.tags) updateData.tags = data.tags;
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('store_id')
+      .eq('user_id', session.user.id)
+      .single();
 
-  const { data: client, error } = await supabase
-    .from('clients')
-    .update(updateData)
-    .eq('id', clientId)
-    .eq('store_id', profile.store_id)
-    .select()
-    .single();
+    if (!profile?.store_id) throw new Error('Store não encontrado');
 
-  if (error) {
-    console.error('❌ Erro ao atualizar cliente:', error);
-    throw new Error(error.message);
+    const updateData: any = {};
+    if (data.name) updateData.name = data.name;
+    if (data.phone !== undefined) updateData.phone = data.phone;
+    if (data.email !== undefined) updateData.email = data.email;
+    if (data.birthDate !== undefined) updateData.birth_date = data.birthDate;
+    if (data.notes !== undefined) updateData.notes = data.notes;
+    if (data.tags) updateData.tags = data.tags;
+
+    const { data: client, error } = await supabase
+      .from('clients')
+      .update(updateData)
+      .eq('id', clientId)
+      .eq('store_id', profile.store_id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('❌ Erro ao atualizar cliente:', error);
+      throw new Error(error.message);
+    }
+
+    revalidatePath('/app/clients');
+    return client;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('❌ Erro de validação:', error.issues);
+      throw new Error(`Dados inválidos: ${error.issues[0].message}`);
+    }
+    throw error;
   }
-
-  revalidatePath('/app/clients');
-  return client;
 }
